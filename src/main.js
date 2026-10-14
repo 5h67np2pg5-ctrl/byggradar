@@ -43,6 +43,7 @@ const tradePresets = [
 
 const savedFiltersKey = "byggradar.filters.v1";
 const markedProjectsKey = "byggradar.markedProjects.v1";
+const authSessionKey = "byggradar.session.v1";
 const standardProjectLimit = 200;
 const loadMoreStep = 20;
 const weeklyDeliveryCount = 50;
@@ -178,6 +179,15 @@ const app = document.querySelector("#app");
 init();
 
 async function init() {
+  if (!readSavedValue(authSessionKey)) {
+    renderLogin();
+    return;
+  }
+
+  await initApplication();
+}
+
+async function initApplication() {
   try {
     renderShell();
     restoreSavedFilters();
@@ -196,6 +206,37 @@ async function init() {
     `;
     console.error(error);
   }
+}
+
+function renderLogin() {
+  app.innerHTML = `
+    <main class="login-screen">
+      <section class="login-panel" aria-labelledby="loginTitle">
+        <div class="login-brand">
+          <img src="/assets/byggradar-radar.png" alt="" class="login-logo" />
+          <div class="login-wordmark">ByggRadar</div>
+        </div>
+        <div class="login-copy">
+          <p class="login-eyebrow">Prosjekter før alle andre ser dem</p>
+          <h1 id="loginTitle">Velkommen til ByggRadar</h1>
+          <p>Finn relevante byggeprosjekter, tiltak og anskaffelser i områdene du arbeider i.</p>
+        </div>
+        <label class="remember-choice">
+          <input id="rememberSession" type="checkbox" checked />
+          <span>Husk meg i denne nettleseren</span>
+        </label>
+        <button class="login-button" id="loginButton" type="button">Logg inn</button>
+        <p class="login-note">Dette er en forenklet tilgang i testfasen.</p>
+      </section>
+    </main>
+  `;
+
+  document.querySelector("#loginButton")?.addEventListener("click", () => {
+    if (document.querySelector("#rememberSession")?.checked) {
+      writeSavedValue(authSessionKey, "active");
+    }
+    initApplication();
+  });
 }
 
 async function loadProjects() {
@@ -924,6 +965,16 @@ function renderMiniMap() {
   addBaseMap(state.miniMap, { compact: true });
   addProjectMarkers(state.miniMap, mapPointProjects(), selectedPoint, { compact: true });
   refreshMapSize(state.miniMap);
+
+  // Et utvidet kort kan åpnes før hovedkartet er vist. Kjør derfor samme
+  // adresse- og matrikkeloppslag her, slik at Bjørnafjorden og andre
+  // kommuner får eiendommens faktiske plassering også i småkartet.
+  if (state.selected && !state.selected.hasMapPoint && hasMapLookupValue(state.selected)) {
+    resolveMissingMapPoints([state.selected]).then((changed) => {
+      if (!changed || !state.selected || !document.querySelector("#miniMapCanvas")) return;
+      renderMiniMap();
+    });
+  }
 }
 
 function openFullMap(project) {

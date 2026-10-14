@@ -16,6 +16,116 @@ body {
   background: #eef5fb;
 }
 
+.login-screen {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(45, 171, 198, 0.15), transparent 30%),
+    linear-gradient(145deg, #071c2d 0%, #0b2b43 55%, #103c58 100%);
+}
+
+.login-panel {
+  display: grid;
+  gap: 20px;
+  width: min(440px, 100%);
+  padding: 34px 28px 28px;
+  border: 1px solid rgba(137, 213, 231, 0.28);
+  border-radius: 16px;
+  background: rgba(7, 26, 42, 0.86);
+  color: #f4fbff;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+  text-align: center;
+}
+
+.login-brand {
+  display: grid;
+  justify-items: center;
+  gap: 9px;
+}
+
+.login-logo {
+  width: min(210px, 62vw);
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 0 20px rgba(0, 255, 190, 0.22));
+}
+
+.login-wordmark {
+  color: #e9fff8;
+  font-size: 1.32rem;
+  font-weight: 650;
+  letter-spacing: 0;
+}
+
+.login-copy {
+  display: grid;
+  gap: 8px;
+}
+
+.login-copy h1,
+.login-copy p {
+  margin: 0;
+}
+
+.login-copy h1 {
+  font-size: clamp(1.45rem, 6vw, 2rem);
+  line-height: 1.15;
+}
+
+.login-copy p:not(.login-eyebrow) {
+  color: #b8d3df;
+  font-size: 0.95rem;
+  line-height: 1.48;
+}
+
+.login-eyebrow {
+  color: #65e5cc;
+  font-size: 0.78rem;
+  font-weight: 760;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.remember-choice {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  color: #c9e0e8;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.remember-choice input {
+  width: 17px;
+  height: 17px;
+  accent-color: #32d4b2;
+}
+
+.login-button {
+  min-height: 46px;
+  border: 1px solid #4de2c2;
+  border-radius: 8px;
+  background: #35c8ab;
+  color: #062238;
+  cursor: pointer;
+  font-weight: 780;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.login-button:hover {
+  background: #5ce5c8;
+  transform: translateY(-1px);
+}
+
+.login-note {
+  margin: 0;
+  color: #88aebd;
+  font-size: 0.76rem;
+}
+
 button,
 input {
   font: inherit;
@@ -373,6 +483,7 @@ a {
   display: grid;
   gap: 10px;
   padding: 0 11px 12px 109px;
+  min-width: 0;
 }
 
 .expanded-main {
@@ -384,6 +495,7 @@ a {
   display: grid;
   gap: 10px;
   min-width: 0;
+  max-width: 100%;
 }
 
 .close-button {
@@ -432,11 +544,16 @@ a {
   color: #5f7688;
   font-size: 0.88rem;
   line-height: 1.4;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .expanded-preview-fields {
   display: grid;
   gap: 9px;
+  min-width: 0;
+  max-width: 100%;
   padding: 11px;
   border: 1px solid #bcd9eb;
   border-radius: 8px;
@@ -499,6 +616,8 @@ a {
 .contact-quality {
   display: grid;
   gap: 6px;
+  min-width: 0;
+  max-width: 100%;
   padding: 10px 11px;
   border: 1px solid #c7ddeb;
   border-radius: 8px;
@@ -1050,5 +1169,54 @@ body.has-map-dialog .mini-map-card {
   .map-canvas {
     height: 420px;
     min-height: 420px;
+  }
+}
+
+@media (max-width: 819px) {
+  .project-expanded {
+    padding: 4px 12px 14px 48px;
+  }
+
+  .expanded-main,
+  .expanded-info {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .expanded-info {
+    text-align: center;
+  }
+
+  .expanded-info .facts,
+  .expanded-info .expanded-preview-fields,
+  .expanded-info .contact-quality,
+  .expanded-info .contact-line {
+    text-align: left;
+  }
+
+  .facts.compact {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .expanded-text {
+    width: 100%;
+    text-align: center;
+  }
+
+  .expanded-preview-fields,
+  .contact-quality,
+  .contact-line,
+  .attachment-list,
+  .lookup-line {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .contact-line {
+    align-items: flex-start;
+  }
+
+  .close-button {
+    justify-self: center;
   }
 }
