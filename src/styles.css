@@ -46,9 +46,9 @@ body {
 }
 
 .login-logo {
-  width: min(210px, 62vw);
+  width: min(210px, 62vw); aspect-ratio: 1;
   height: auto;
-  display: block;
+  display: block; border-radius: 50%; object-fit: cover;
   filter: drop-shadow(0 0 20px rgba(0, 255, 190, 0.22));
 }
 
@@ -525,7 +525,7 @@ a {
 }
 
 .mini-map-canvas {
-  display: block;
+  display: block; border-radius: 50%; object-fit: cover;
   height: 150px;
   min-height: 150px;
   border: 1px solid #bdd8ea;
@@ -628,7 +628,7 @@ a {
 }
 
 .contact-quality strong {
-  display: block;
+  display: block; border-radius: 50%; object-fit: cover;
   margin-bottom: 2px;
   color: #183247;
 }
@@ -687,7 +687,7 @@ a {
 }
 
 body[data-map="open"] .map-pane {
-  display: block;
+  display: block; border-radius: 50%; object-fit: cover;
 }
 
 .map-canvas {
@@ -829,7 +829,7 @@ body[data-map="open"] .map-pane {
 }
 
 .leaflet-control-zoom a {
-  display: block;
+  display: block; border-radius: 50%; object-fit: cover;
   width: 30px;
   height: 30px;
   color: #1f5278;
