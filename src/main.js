@@ -220,7 +220,7 @@ function renderLogin() {
         <div class="login-copy">
           <p class="login-eyebrow">Få informasjon om prosjekter før andre</p>
           <h1 id="loginTitle">Velkommen til ByggRadar</h1>
-          <p>Relevante byggeprosjekter, tiltak og anskaffelser i tidlig fase</p>
+          <p>Få relevante byggeprosjekter, tiltak og anskaffelser i områdene du arbeider i.</p>
         </div>
         <label class="remember-choice">
           <input id="rememberSession" type="checkbox" checked />
