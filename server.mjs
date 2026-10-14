@@ -22,6 +22,7 @@ const server = http.createServer(async (request, response) => {
     if (requested === "/app.js") requested = "/src/main.js";
     if (requested === "/styles.css") requested = "/src/styles.css";
     if (requested.startsWith("/data/")) requested = `/public${requested}`;
+    if (requested.startsWith("/assets/")) requested = `/public${requested}`;
     const filePath = path.join(root, requested);
     if (!filePath.startsWith(root)) {
       response.writeHead(403);
