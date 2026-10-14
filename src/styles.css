@@ -30,12 +30,12 @@ body {
   display: grid;
   gap: 20px;
   width: min(440px, 100%);
-  padding: 34px 28px 28px;
-  border: 1px solid rgba(137, 213, 231, 0.28);
-  border-radius: 16px;
-  background: rgba(7, 26, 42, 0.86);
+  padding: 16px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   color: #f4fbff;
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+  box-shadow: none;
   text-align: center;
 }
 
