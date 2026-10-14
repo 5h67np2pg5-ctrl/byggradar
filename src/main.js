@@ -218,16 +218,16 @@ function renderLogin() {
           <div class="login-wordmark">ByggRadar</div>
         </div>
         <div class="login-copy">
-          <p class="login-eyebrow">Prosjekter før alle andre ser dem</p>
+          <p class="login-eyebrow">Få informasjon om prosjekter før andre</p>
           <h1 id="loginTitle">Velkommen til ByggRadar</h1>
-          <p>Finn relevante byggeprosjekter, tiltak og anskaffelser i områdene du arbeider i.</p>
+          <p>Relevante byggeprosjekter, tiltak og anskaffelser i tidlig fase</p>
         </div>
         <label class="remember-choice">
           <input id="rememberSession" type="checkbox" checked />
           <span>Husk meg i denne nettleseren</span>
         </label>
         <button class="login-button" id="loginButton" type="button">Logg inn</button>
-        <p class="login-note">Dette er en forenklet tilgang i testfasen.</p>
+        <p class="login-note"></p>
       </section>
     </main>
   `;
