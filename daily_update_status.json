@@ -1,0 +1,22 @@
+{
+  "dateFrom": "2026-07-16",
+  "dateTo": "2026-10-14",
+  "updatedAt": "2026-10-14T11:39:28.250Z",
+  "projects": 2120,
+  "contactProjects": 2120,
+  "standardVisibleProjects": 200,
+  "municipalitiesInRegion": 17,
+  "targetedMunicipalityUpdate": {
+    "dateFrom": "2026-07-16",
+    "dateTo": "2026-10-14",
+    "updatedAt": "2026-10-14T11:39:28.250Z",
+    "targetedMunicipalities": [
+      "Voss herad"
+    ],
+    "addedProjects": 152,
+    "projects": 2120,
+    "byTargetMunicipality": {
+      "Voss herad": 152
+    }
+  }
+}
