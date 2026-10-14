@@ -1,5 +1,5 @@
 :root {
-font-family: "Eurostile", "Eurostyle", "Inter", "Aptos", "Segoe UI", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Inter", "Aptos", "Segoe UI", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   color: #1c2f3e;
   background: #eef5fb;
   font-synthesis: none;
@@ -21,6 +21,7 @@ body {
   display: grid;
   place-items: center;
   padding: 24px 16px;
+  font-family: "Eurostile", "Eurostyle", "Inter", "Aptos", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
   background:
     radial-gradient(circle at 50% 18%, rgba(45, 171, 198, 0.15), transparent 30%),
     linear-gradient(145deg, #071c2d 0%, #0b2b43 55%, #103c58 100%);
@@ -46,9 +47,12 @@ body {
 }
 
 .login-logo {
-  width: min(210px, 62vw); aspect-ratio: 1;
+  width: min(210px, 62vw);
+  aspect-ratio: 1;
   height: auto;
-  display: block; border-radius: 50%; object-fit: cover;
+  display: block;
+  border-radius: 50%;
+  object-fit: cover;
   filter: drop-shadow(0 0 20px rgba(0, 255, 190, 0.22));
 }
 
@@ -525,7 +529,7 @@ a {
 }
 
 .mini-map-canvas {
-  display: block; border-radius: 50%; object-fit: cover;
+  display: block;
   height: 150px;
   min-height: 150px;
   border: 1px solid #bdd8ea;
@@ -628,7 +632,7 @@ a {
 }
 
 .contact-quality strong {
-  display: block; border-radius: 50%; object-fit: cover;
+  display: block;
   margin-bottom: 2px;
   color: #183247;
 }
@@ -687,7 +691,7 @@ a {
 }
 
 body[data-map="open"] .map-pane {
-  display: block; border-radius: 50%; object-fit: cover;
+  display: block;
 }
 
 .map-canvas {
@@ -829,7 +833,7 @@ body[data-map="open"] .map-pane {
 }
 
 .leaflet-control-zoom a {
-  display: block; border-radius: 50%; object-fit: cover;
+  display: block;
   width: 30px;
   height: 30px;
   color: #1f5278;
@@ -1173,6 +1177,30 @@ body.has-map-dialog .mini-map-card {
 }
 
 @media (max-width: 819px) {
+  .project-row {
+    grid-template-columns: 26px minmax(0, 1fr);
+  }
+
+  .project-mark {
+    font-size: 0.95rem;
+  }
+
+  .project-summary {
+    grid-template-columns: 18px 64px minmax(0, 1fr);
+    gap: 6px;
+    padding: 9px 8px;
+  }
+
+  .project-number {
+    font-size: 0.62rem;
+  }
+
+  .date-badge {
+    min-height: 38px;
+    padding: 0 4px;
+    font-size: 0.7rem;
+  }
+
   .project-expanded {
     padding: 4px 12px 14px 48px;
   }
