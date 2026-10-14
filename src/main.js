@@ -215,7 +215,6 @@ function renderLogin() {
       <section class="login-panel" aria-labelledby="loginTitle">
         <div class="login-brand">
           <img src="/assets/byggradar-radar.png" alt="" class="login-logo" />
-          <div class="login-wordmark">ByggRadar</div>
         </div>
         <div class="login-copy">
           <p class="login-eyebrow">Få informasjon om prosjekter før andre</p>
@@ -227,7 +226,6 @@ function renderLogin() {
           <span>Husk meg i denne nettleseren</span>
         </label>
         <button class="login-button" id="loginButton" type="button">Logg inn</button>
-        <p class="login-note"></p>
       </section>
     </main>
   `;
