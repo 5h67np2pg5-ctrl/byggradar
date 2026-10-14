@@ -175,11 +175,12 @@ const stageRank = {
 };
 
 const app = document.querySelector("#app");
+const forceLogin = new URLSearchParams(window.location.search).get("login") === "1";
 
 init();
 
 async function init() {
-  if (!readSavedValue(authSessionKey)) {
+  if (forceLogin || !readSavedValue(authSessionKey)) {
     renderLogin();
     return;
   }
@@ -235,6 +236,7 @@ function renderLogin() {
     if (document.querySelector("#rememberSession")?.checked) {
       writeSavedValue(authSessionKey, "active");
     }
+    if (forceLogin) window.history.replaceState({}, "", window.location.pathname);
     initApplication();
   });
 }
