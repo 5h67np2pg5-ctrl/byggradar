@@ -54,36 +54,41 @@ const server = http.createServer(async (request, response) => {
       }
 
       const query = `${subject} telefonnummer kontakttelefon`;
-      const searchUrl = `https://www.google.com/search?udm=50&q=${encodeURIComponent(query)}`;
-      const googleResponse = await fetch(searchUrl, {
-        headers: {
-          accept: "text/html,application/xhtml+xml",
-          "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/131 Safari/537.36",
-        },
-      });
-      const html = await googleResponse.text();
-      const plainText = decodeHtmlEntities(stripHtml(html)).replace(/\s+/g, " ").trim();
-      if (/unusual traffic|not a robot|captcha|robots are known|solve the captcha/i.test(plainText)) {
-        response.writeHead(200, {
-          "content-type": "application/json; charset=utf-8",
-          "cache-control": "no-store",
-        });
-        response.end(JSON.stringify({
-          query,
-          phone: "",
-          phones: [],
-          info: "Søket ble midlertidig stoppet av søketjenesten. Prøv AI-søk igjen senere.",
-          blocked: true,
-          source: "AI-søk",
-        }));
-        return;
+      const searchUrls = [
+        `https://www.google.com/search?udm=50&q=${encodeURIComponent(query)}`,
+        `https://www.google.com/search?q=${encodeURIComponent(query)}`,
+        `https://www.bing.com/search?q=${encodeURIComponent(query)}`,
+      ];
+      let plainText = "";
+      let firstPhone = "";
+      let phones = [];
+      for (const searchUrl of searchUrls) {
+        let candidateText = "";
+        try {
+          const searchResponse = await fetch(searchUrl, {
+            headers: {
+              accept: "text/html,application/xhtml+xml",
+              "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/131 Safari/537.36",
+            },
+          });
+          candidateText = decodeHtmlEntities(stripHtml(await searchResponse.text())).replace(/\s+/g, " ").trim();
+        } catch {
+          continue;
+        }
+        if (/unusual traffic|not a robot|captcha|robots are known|solve the captcha/i.test(candidateText)) continue;
+        const candidatePhones = extractNorwegianPhones(candidateText);
+        if (candidatePhones.length) {
+          plainText = candidateText;
+          phones = candidatePhones;
+          firstPhone = candidatePhones[0];
+          break;
+        }
+        if (!plainText) plainText = candidateText;
       }
-      const phones = extractNorwegianPhones(plainText);
-      const firstPhone = phones[0] || "";
       const phoneIndex = firstPhone ? plainText.indexOf(firstPhone) : -1;
       const context = phoneIndex >= 0
         ? plainText.slice(Math.max(0, phoneIndex - 180), Math.min(plainText.length, phoneIndex + 260)).trim()
-        : "";
+        : "Telefonnummer ble ikke funnet i søkeresultatene.";
 
       response.writeHead(200, {
         "content-type": "application/json; charset=utf-8",
@@ -95,7 +100,6 @@ const server = http.createServer(async (request, response) => {
         phones,
         info: context,
         source: "AI-søk",
-        searchUrl,
       }));
       return;
     }
