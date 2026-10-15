@@ -159,9 +159,9 @@ a {
   position: sticky;
   top: 0;
   z-index: 10;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr);
   align-items: center;
-  justify-content: space-between;
   gap: 12px;
   padding: 14px 16px;
   background: linear-gradient(180deg, #fbfdff 0%, #fbfdff 62%, #e8f4fc 100%);
@@ -171,7 +171,8 @@ a {
 }
 
 .topbar-copy {
-  flex: 1;
+  grid-column: 2;
+  width: 100%;
   min-width: 0;
   text-align: center;
 }
@@ -216,6 +217,8 @@ a {
 }
 
 .top-actions {
+  grid-column: 3;
+  justify-self: end;
   display: flex;
   align-items: center;
   gap: 8px;
