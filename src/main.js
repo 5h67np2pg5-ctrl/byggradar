@@ -24,6 +24,8 @@ const state = {
   weeklyRefreshTimer: null,
   markedProjectIds: new Set(),
   expandedPreviewIds: new Set(),
+  aiSearchResults: new Map(),
+  aiSearchLoading: new Set(),
 };
 
 const tradePresets = [
@@ -618,6 +620,14 @@ function renderList() {
     state.visibleCount = Math.min(state.visibleCount + loadMoreStep, state.filtered.length);
     render();
   });
+  list.querySelectorAll(".ai-search-link").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const project = state.projects.find((item) => item.id === button.dataset.projectId);
+      if (project) runAiPhoneSearch(project);
+    });
+  });
   document.querySelector(".close-project")?.addEventListener("click", () => {
     state.selected = null;
     writeSavedValue("selectedProjectId", "");
@@ -820,6 +830,8 @@ function renderContactQuality(project) {
   const missingPhone = !project.contact?.phone;
   const aiSearch = sources.find((source) => source.label === "AI-søk");
   const phoneSearchSubject = project.contact?.name || project.lookupSubject || "aktøren";
+  const aiResult = state.aiSearchResults.get(project.id);
+  const aiLoading = state.aiSearchLoading.has(project.id);
   return `
     <div class="contact-quality ${project.contactQuality.level}${missingPhone ? " contact-search-panel" : ""}">
       <div>
@@ -830,7 +842,14 @@ function renderContactQuality(project) {
         <div class="ai-search-result">
           <strong>AI-søk</strong>
           <span>Finn telefonnummer til ${escapeHtml(phoneSearchSubject)}.</span>
-          ${aiSearch ? `<a class="ai-search-link" href="${escapeHtml(aiSearch.url)}" target="_blank" rel="noreferrer">AI-søk etter telefonnummer</a>` : ""}
+          ${aiSearch ? `<button class="ai-search-link" data-project-id="${escapeHtml(project.id)}" type="button" ${aiLoading ? "disabled" : ""}>${aiLoading ? "Søker etter telefonnummer..." : "AI-søk etter telefonnummer"}</button>` : ""}
+          ${aiResult ? `
+            <div class="ai-search-result-data">
+              <strong>Resultat</strong>
+              ${aiResult.phone ? `<a href="tel:${escapeHtml(normalizePhone(aiResult.phone))}">${escapeHtml(aiResult.phone)}</a>` : "<span>Telefonnummer ble ikke funnet.</span>"}
+              ${aiResult.info ? `<span>${escapeHtml(aiResult.info)}</span>` : ""}
+            </div>
+          ` : ""}
         </div>
       ` : ""}
       ${project.actors.length ? `
@@ -843,13 +862,34 @@ function renderContactQuality(project) {
           Søk etter: ${escapeHtml(project.lookupSubject)}
         </div>
       ` : ""}
-      ${sources.length ? `
+      ${sources.filter((source) => source.label !== "AI-søk").length ? `
         <div class="lookup-line">
-          ${sources.map((source) => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${escapeHtml(source.label)}</a>`).join("")}
+          ${sources.filter((source) => source.label !== "AI-søk").map((source) => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${escapeHtml(source.label)}</a>`).join("")}
         </div>
       ` : ""}
     </div>
   `;
+}
+
+async function runAiPhoneSearch(project) {
+  const subject = String(project.contact?.name || project.lookupSubject || "").trim();
+  if (!subject || state.aiSearchLoading.has(project.id)) return;
+  state.aiSearchLoading.add(project.id);
+  render();
+  try {
+    const response = await fetch(`/api/ai-phone-search?q=${encodeURIComponent(subject)}`);
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || "AI-søk feilet");
+    state.aiSearchResults.set(project.id, result);
+  } catch (error) {
+    state.aiSearchResults.set(project.id, {
+      phone: "",
+      info: "AI-søket kunne ikke gjennomføres akkurat nå.",
+    });
+  } finally {
+    state.aiSearchLoading.delete(project.id);
+    render();
+  }
 }
 
 function renderMap() {
