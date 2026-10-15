@@ -2106,9 +2106,28 @@ function nearestLocationRegion(lat, lon) {
 function findRegionByText(value) {
   const text = normalize(value);
   if (!text) return null;
+
+  // Et konkret kommunenavn skal gi et kommunefilter, ikke utvide søket til
+  // hele Bergensregionen. Regionen velges bare når brukeren skriver selve
+  // regionnavnet eller et annet eksplisitt regionsøk.
+  for (const region of locationRegions) {
+    const municipality = region.municipalities.find((candidate) => {
+      const normalized = normalize(candidate);
+      return normalized === text || normalizeMunicipalityName(candidate) === normalizeMunicipalityName(text);
+    });
+    if (municipality) {
+      return {
+        ...region,
+        id: `municipality:${normalizeMunicipalityName(municipality)}`,
+        name: municipality,
+        municipalities: [municipality],
+      };
+    }
+  }
+
   return locationRegions.find((region) => {
     if (normalize(region.name).includes(text) || text.includes(normalize(region.name))) return true;
-    return region.municipalities.some((municipality) => normalize(municipality).includes(text) || text.includes(normalize(municipality)));
+    return false;
   }) || null;
 }
 
