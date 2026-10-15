@@ -53,13 +53,9 @@ const server = http.createServer(async (request, response) => {
         return;
       }
 
-      const query = `telefonnummer til aktør "${subject}"`;
+      const query = `Finn kun telefonnummeret til aktøren "${subject}". Søk etter aktørens eget nettsted eller direkte kontaktinformasjon. Svar med telefonnummer, aktørnavn og kilde. Ikke bruk Proff eller regnskapskilder. Ikke ta med organisasjonsnummer, regnskapstall, aksjekapital, årstall eller andre tall som ikke er telefonnummer.`;
       const searchUrls = [
         `https://www.google.com/search?udm=50&q=${encodeURIComponent(query)}`,
-        `https://www.google.com/search?q=${encodeURIComponent(`"${subject}" telefonnummer`)}`,
-        `https://www.bing.com/search?q=${encodeURIComponent(`"${subject}" telefonnummer`)}`,
-        `https://html.duckduckgo.com/html/?q=${encodeURIComponent(`"${subject}" telefon`)}`,
-        `https://www.proff.no/s%C3%B8k-etter-firmanavn?q=${encodeURIComponent(subject)}`,
       ];
       let plainText = "";
       let firstPhone = "";
@@ -79,7 +75,7 @@ const server = http.createServer(async (request, response) => {
           continue;
         }
         if (/unusual traffic|not a robot|captcha|robots are known|solve the captcha|søket ble midlertidig stoppet/i.test(candidateText)) continue;
-        const candidatePhones = extractNorwegianPhones(candidateText);
+        const candidatePhones = extractNorwegianPhones(candidateText, subject);
         if (candidatePhones.length) {
           plainText = candidateText;
           phones = candidatePhones;
@@ -147,11 +143,29 @@ function decodeHtmlEntities(value) {
     .replace(/&gt;/gi, ">");
 }
 
-function extractNorwegianPhones(value) {
+function extractNorwegianPhones(value, subject = "") {
   // Hent hele tallsekvenser før validering. Ellers kan et ni-sifret
   // organisasjonsnummer bli feiltolket som de første åtte sifrene i et
   // telefonnummer.
-  const matches = String(value || "").match(/(?<!\d)(?:\+47[\s.-]?)?[\d][\d\s.-]{6,20}\d(?!\d)/g) || [];
+  const text = String(value || "");
+  const pattern = /(?<!\d)(?:\+47[\s.-]?)?[\d][\d\s.-]{6,20}\d(?!\d)/g;
+  const matches = [];
+  const subjectTerms = String(subject || "")
+    .toLocaleLowerCase("nb-NO")
+    .split(/[^\p{L}\p{N}]+/u)
+    .filter((term) => term.length > 2 && !/^(aksjeselskap|as|asa|ans|da|sa|ba|nuf)$/.test(term));
+  let match;
+  while ((match = pattern.exec(text))) {
+    const before = text.slice(Math.max(0, match.index - 80), match.index);
+    const after = text.slice(match.index + match[0].length, Math.min(text.length, match.index + match[0].length + 50));
+    const context = `${before} ${match[0]} ${after}`;
+    const subjectInContext = subjectTerms.length === 0 || subjectTerms.some((term) => context.toLocaleLowerCase("nb-NO").includes(term));
+    const phoneLabelNearNumber = /telefon|tlf\.?|tel\.?|mobil|kontakttelefon|phone|ring/i.test(before.slice(-50))
+      || /telefon|tlf\.?|tel\.?|mobil|kontakttelefon|phone|ring/i.test(after.slice(0, 35));
+    if (subjectInContext && phoneLabelNearNumber) {
+      matches.push(match[0]);
+    }
+  }
   return [...new Set(matches.map((phone) => phone.trim()).filter((phone) => {
     const digits = phone.replace(/\D/g, "");
     if (digits.length === 8) return /^[2-9]\d{7}$/.test(digits);
