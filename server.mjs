@@ -47,13 +47,13 @@ const server = http.createServer(async (request, response) => {
 
     if (url.pathname === "/api/ai-phone-search") {
       const subject = String(url.searchParams.get("q") || "").trim().slice(0, 180);
-      if (!subject) {
+      if (!subject || /^(telefon(?:nummer)?\s+(?:ikke funnet|ble ikke funnet)|ukjent|aktør)$/i.test(subject)) {
         response.writeHead(400, { "content-type": "application/json; charset=utf-8" });
         response.end(JSON.stringify({ error: "Mangler søkeord" }));
         return;
       }
 
-      const query = `Finn kun telefonnummeret til aktøren "${subject}". Søk etter aktørens eget nettsted eller direkte kontaktinformasjon. Svar med telefonnummer, aktørnavn og kilde. Ikke bruk Proff eller regnskapskilder. Ikke ta med organisasjonsnummer, regnskapstall, aksjekapital, årstall eller andre tall som ikke er telefonnummer.`;
+      const query = `Finn telefonnummer til "${subject}"`;
       const searchUrls = [
         `https://www.google.com/search?udm=50&q=${encodeURIComponent(query)}`,
       ];
@@ -162,7 +162,8 @@ function extractNorwegianPhones(value, subject = "") {
     const subjectInContext = subjectTerms.length === 0 || subjectTerms.some((term) => context.toLocaleLowerCase("nb-NO").includes(term));
     const phoneLabelNearNumber = /telefon|tlf\.?|tel\.?|mobil|kontakttelefon|phone|ring/i.test(before.slice(-50))
       || /telefon|tlf\.?|tel\.?|mobil|kontakttelefon|phone|ring/i.test(after.slice(0, 35));
-    if (subjectInContext && phoneLabelNearNumber) {
+    const explicitNorwegianNumber = /^\s*\+47[\s.-]?/.test(match[0]);
+    if (subjectInContext && (phoneLabelNearNumber || explicitNorwegianNumber)) {
       matches.push(match[0]);
     }
   }

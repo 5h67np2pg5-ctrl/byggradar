@@ -953,6 +953,7 @@ async function runAiPhoneSearch(project) {
 function phoneLookupSubject(project) {
   const genericName = /^(virksomhet|aktør|ukjent|flere mottakere|kontakt|saksbehandler|avsender|mottaker)$/i;
   const genericOffice = /(postmottak|byggesak|plan og bygg|kommunedirektør|teknisk avdeling|servicetorg)/i;
+  const missingPhoneText = /telefon(?:nummer)?\s+(?:ikke funnet|ble ikke funnet)|telefonnummeret mangler/i;
   const namedActors = [
     ...(project.actors || []).filter((actor) => actor.type === "company"),
     ...(project.actors || []).filter((actor) => actor.type === "person"),
@@ -962,6 +963,7 @@ function phoneLookupSubject(project) {
       && values.indexOf(value) === index
       && !genericName.test(value)
       && !genericOffice.test(value)
+      && !missingPhoneText.test(value)
       && !/xxxx/i.test(value)
       && !/^[-–—]+$/.test(value);
   });
