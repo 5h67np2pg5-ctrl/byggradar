@@ -473,7 +473,16 @@ function renderShell() {
 
   const helpText = "Forslag: Velg fag og område først, åpne de mest relevante prosjektene, og kontakt tiltakshaver eller ansvarlig aktør tidlig. Start kort: Hei, jeg ser at dere har et prosjekt på gang i [adresse]. Vi jobber med [fag], og kan raskt avklare om vi kan bidra i planlegging eller utførelse. Ønsker dere at jeg sender en kort presentasjon eller tar en rask prat?";
   const helpPill = document.querySelector("#helpPill");
-  helpPill.dataset.tooltip = helpText;
+  helpPill.setAttribute("aria-expanded", "false");
+  helpPill.addEventListener("click", () => {
+    const isOpen = helpPill.getAttribute("aria-expanded") === "true";
+    helpPill.setAttribute("aria-expanded", String(!isOpen));
+    if (isOpen) {
+      helpPill.removeAttribute("data-tooltip");
+    } else {
+      helpPill.dataset.tooltip = helpText;
+    }
+  });
 
   document.querySelector("#mapDialogClose").addEventListener("click", (event) => {
     event.preventDefault();
