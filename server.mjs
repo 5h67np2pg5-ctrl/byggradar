@@ -45,6 +45,46 @@ const server = http.createServer(async (request, response) => {
       return;
     }
 
+    if (url.pathname === "/api/ai-phone-search") {
+      const subject = String(url.searchParams.get("q") || "").trim().slice(0, 180);
+      if (!subject) {
+        response.writeHead(400, { "content-type": "application/json; charset=utf-8" });
+        response.end(JSON.stringify({ error: "Mangler søkeord" }));
+        return;
+      }
+
+      const query = `${subject} telefonnummer kontakttelefon`;
+      const searchUrl = `https://www.google.com/search?udm=50&q=${encodeURIComponent(query)}`;
+      const googleResponse = await fetch(searchUrl, {
+        headers: {
+          accept: "text/html,application/xhtml+xml",
+          "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/131 Safari/537.36",
+        },
+      });
+      const html = await googleResponse.text();
+      const plainText = decodeHtmlEntities(stripHtml(html)).replace(/\s+/g, " ").trim();
+      const phones = extractNorwegianPhones(plainText);
+      const firstPhone = phones[0] || "";
+      const phoneIndex = firstPhone ? plainText.indexOf(firstPhone) : -1;
+      const context = phoneIndex >= 0
+        ? plainText.slice(Math.max(0, phoneIndex - 180), Math.min(plainText.length, phoneIndex + 260)).trim()
+        : "";
+
+      response.writeHead(200, {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "no-store",
+      });
+      response.end(JSON.stringify({
+        query,
+        phone: firstPhone,
+        phones,
+        info: context,
+        source: "Google AI-søk",
+        searchUrl,
+      }));
+      return;
+    }
+
     const safePath = path.normalize(decodeURIComponent(url.pathname)).replace(/^(\.\.[/\\])+/, "");
     let requested = safePath === "/" ? "/index.html" : safePath;
     if (requested === "/app.js") requested = "/src/main.js";
@@ -70,6 +110,28 @@ const server = http.createServer(async (request, response) => {
     response.end("Not found");
   }
 });
+
+function stripHtml(value) {
+  return String(value || "").replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, " ").replace(/<[^>]+>/g, " ");
+}
+
+function decodeHtmlEntities(value) {
+  return String(value || "")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;|&apos;/gi, "'")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">");
+}
+
+function extractNorwegianPhones(value) {
+  const matches = String(value || "").match(/(?:\+47[\s-]?)?(?:\d[\s-]?){8}/g) || [];
+  return [...new Set(matches.map((phone) => phone.trim()).filter((phone) => {
+    const digits = phone.replace(/\D/g, "");
+    return digits.length === 8 || (digits.length === 10 && digits.startsWith("47"));
+  }))].slice(0, 5);
+}
 
 server.listen(port, host, () => {
   console.log(`ByggRadar local UI: http://${host}:${port}/`);
