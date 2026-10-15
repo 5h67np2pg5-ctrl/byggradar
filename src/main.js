@@ -1126,7 +1126,7 @@ async function geocodeProject(project) {
   }
 
   try {
-    const url = `https://api.kartverket.no/adresser/v1/sok?${new URLSearchParams({
+    const url = `/api/geocode?${new URLSearchParams({
       ...query,
       treffPerSide: "1",
       utkoordsys: "4258",
