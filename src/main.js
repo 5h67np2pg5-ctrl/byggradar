@@ -1270,10 +1270,6 @@ function addProjectMarkers(map, projects, selectedProject, options = {}) {
     let handledMarkerSelect = false;
     const handleMarkerSelect = (event) => {
       if (handledMarkerSelect) return;
-      if (isMapGestureActive()) {
-        if (window.L?.DomEvent && event.originalEvent) L.DomEvent.stop(event.originalEvent);
-        return;
-      }
       handledMarkerSelect = true;
       if (window.L?.DomEvent && event.originalEvent) {
         L.DomEvent.stop(event.originalEvent);
