@@ -538,13 +538,14 @@ function renderPresetChips(id, values, onClick) {
 function renderRegionNotice() {
   const notice = document.querySelector("#regionNotice");
   if (!notice) return;
-  if (!state.activeRegion) {
+  const selectedRegion = findRegionByText(state.area) || state.activeRegion;
+  if (!selectedRegion) {
     notice.textContent = "";
     notice.hidden = true;
     return;
   }
   notice.hidden = false;
-  notice.textContent = `Valgt region: ${state.activeRegion.name} (${state.activeRegion.municipalities.length} kommuner)`;
+  notice.textContent = `Valgt område: ${selectedRegion.name} (${selectedRegion.municipalities.length} kommuner)`;
 }
 
 function renderList() {
@@ -1217,7 +1218,7 @@ function projectMapAnchor(project) {
     const anchor = municipalityMapAnchor(candidate);
     if (anchor) return anchor;
   }
-  const region = state.activeRegion || findRegionByText(state.area);
+  const region = findRegionByText(state.area) || state.activeRegion;
   if (region && projectMatchesRegion(project, region)) return region.anchor;
   if (region) return region.anchor;
   if (locationRegions[0]) return locationRegions[0].anchor;
@@ -1545,7 +1546,7 @@ function renderDetails() {
 function filterProjects() {
   const trade = normalize(state.trade);
   const area = normalize(state.area);
-  const textRegion = state.activeRegion || findRegionByText(state.area);
+  const textRegion = findRegionByText(state.area) || state.activeRegion;
 
   return state.projects
     .filter((project) => !trade || tradeMatches(project, trade))
