@@ -488,8 +488,9 @@ a {
   font-weight: 720;
   line-height: 1.1;
   text-align: center;
-  white-space: normal;
-  overflow-wrap: anywhere;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .project-expanded {
@@ -1192,7 +1193,7 @@ body.has-map-dialog .mini-map-card {
   }
 
   .project-summary {
-    grid-template-columns: 18px 70px minmax(0, 1fr);
+    grid-template-columns: 18px 82px minmax(0, 1fr);
     gap: 6px;
     padding: 9px 8px;
   }
@@ -1205,6 +1206,9 @@ body.has-map-dialog .mini-map-card {
     min-height: 38px;
     padding: 0 4px;
     font-size: 0.7rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .project-expanded {
