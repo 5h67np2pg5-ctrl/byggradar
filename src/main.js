@@ -829,7 +829,7 @@ function renderContactQuality(project) {
   const sources = project.contactLookupSources || [];
   const missingPhone = !project.contact?.phone;
   const aiSearch = sources.find((source) => source.label === "AI-søk");
-  const phoneSearchSubject = project.contact?.name || project.lookupSubject || "aktøren";
+  const phoneSearchSubject = phoneLookupSubject(project) || "aktøren";
   const aiResult = state.aiSearchResults.get(project.id);
   const aiLoading = state.aiSearchLoading.has(project.id);
   return `
@@ -872,7 +872,7 @@ function renderContactQuality(project) {
 }
 
 async function runAiPhoneSearch(project) {
-  const subject = String(project.contact?.name || project.lookupSubject || "").trim();
+  const subject = phoneLookupSubject(project);
   if (!subject || state.aiSearchLoading.has(project.id)) return;
   state.aiSearchLoading.add(project.id);
   render();
@@ -890,6 +890,16 @@ async function runAiPhoneSearch(project) {
     state.aiSearchLoading.delete(project.id);
     render();
   }
+}
+
+function phoneLookupSubject(project) {
+  const namedActors = [
+    project.contact?.name,
+    ...(project.actors || []).map((actor) => actor.name),
+  ].map((value) => String(value || "").trim()).filter((value) => {
+    return value && !/^(virksomhet|aktør|ukjent|flere mottakere)$/i.test(value) && !/xxxx/i.test(value);
+  });
+  return namedActors[0] || String(project.address || project.place || project.lookupSubject || "").trim();
 }
 
 function renderMap() {
