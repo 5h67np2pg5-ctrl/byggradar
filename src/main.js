@@ -1030,7 +1030,7 @@ function openFullMap(project) {
     onMarkerClick: openProjectFromMap,
   });
   bindFullMapTouchGuards();
-  bindFullMapProjectSelection(points);
+  bindFullMapProjectSelection();
   refreshMapSize(state.fullMap);
 }
 
@@ -1309,41 +1309,14 @@ function addProjectMarkers(map, projects, selectedProject, options = {}) {
   });
 }
 
-function bindFullMapProjectSelection(projects) {
+function bindFullMapProjectSelection() {
   const canvas = document.querySelector("#fullMapCanvas");
   if (!canvas || !state.fullMap) return;
   canvas.addEventListener("click", (event) => {
-    if (isMapGestureActive()) {
-      event.preventDefault();
-      event.stopPropagation();
-      event.stopImmediatePropagation?.();
-      return;
-    }
-    if (event.target.closest(".leaflet-control")) return;
-    const match = nearestProjectFromPointer(event, projects);
-    if (!match) return;
-    event.preventDefault();
-    event.stopPropagation();
-    event.stopImmediatePropagation?.();
-    openProjectFromMap(match.project);
+    // Bakgrunnsklikk etter panorering skal aldri åpne et prosjekt. Selve
+    // markøren har egen klikkbehandling i addProjectMarkers().
+    if (!event.target.closest(".project-map-marker")) return;
   }, true);
-}
-
-function nearestProjectFromPointer(event, projects) {
-  if (!state.fullMap || !window.L) return null;
-  const container = state.fullMap.getContainer();
-  const rect = container.getBoundingClientRect();
-  const clickPoint = L.point(event.clientX - rect.left, event.clientY - rect.top);
-  let nearest = null;
-  for (const project of projects) {
-    const markerPoint = state.fullMap.latLngToContainerPoint([project.lat, project.lon]);
-    const distance = clickPoint.distanceTo(markerPoint);
-    const threshold = state.selected?.id === project.id ? 28 : 20;
-    if (distance <= threshold && (!nearest || distance < nearest.distance)) {
-      nearest = { project, distance };
-    }
-  }
-  return nearest;
 }
 
 function openProjectFromMap(project) {
