@@ -833,9 +833,9 @@ function renderContactQuality(project) {
       </div>
       ${missingPhone ? `
         <div class="ai-search-result">
-          <strong>Google AI-søk</strong>
-          <span>Nøkkelinfo som brukes i søket: ${escapeHtml(keyInfo.join(" · ") || "prosjektinformasjon")}</span>
-          ${aiSearch ? `<a class="ai-search-link" href="${escapeHtml(aiSearch.url)}" target="_blank" rel="noreferrer">Åpne Google AI-søk</a>` : ""}
+          <strong>Telefonnummer søkes</strong>
+          <span>Google AI søker etter telefonnummer til ${escapeHtml(keyInfo[0] || "aktøren")}${keyInfo[1] ? ` på ${escapeHtml(keyInfo[1])}` : ""}.</span>
+          ${aiSearch ? `<a class="ai-search-link" href="${escapeHtml(aiSearch.url)}" target="_blank" rel="noreferrer">Søk etter telefonnummer i Google AI</a>` : ""}
         </div>
       ` : ""}
       ${project.actors.length ? `
@@ -1768,7 +1768,7 @@ function contactLookupSources(subject) {
   if (!text) return [];
   const query = encodeURIComponent(text);
   return [
-    { label: "AI-søk", url: `https://www.google.com/search?udm=50&q=${query}+telefon+epost` },
+    { label: "AI-søk", url: `https://www.google.com/search?udm=50&q=${query}+telefonnummer+kontakttelefon` },
     { label: "1881", url: `https://www.1881.no/?query=${query}` },
     { label: "Gule Sider", url: `https://www.gulesider.no/${query}/bedrifter` },
     { label: "Proff", url: `https://www.proff.no/s%C3%B8k?q=${query}` },
