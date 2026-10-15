@@ -223,13 +223,15 @@ function renderLogin() {
           <p>Få relevante byggeprosjekter, tiltak og anskaffelser i områdene du arbeider i.</p>
         </div>
         <label class="remember-choice">
-          <input id="rememberSession" type="checkbox" />
+          <input id="rememberSession" type="checkbox" autocomplete="off" />
           <span>Husk meg i denne nettleseren</span>
         </label>
         <button class="login-button" id="loginButton" type="button">Logg inn</button>
       </section>
     </main>
   `;
+
+  document.querySelector("#rememberSession").checked = false;
 
   document.querySelector("#loginButton")?.addEventListener("click", () => {
     if (document.querySelector("#rememberSession")?.checked) {
