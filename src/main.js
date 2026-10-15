@@ -873,18 +873,6 @@ function renderContactQuality(project) {
         <span>${escapeHtml(project.contactQuality.message)}</span>
       </div>
       ${missingPhone ? `
-        <div class="ai-search-result">
-          <strong>AI-søk</strong>
-          <span>Finn telefonnummer til ${escapeHtml(phoneSearchSubject)}.</span>
-          ${aiSearch ? `<button class="ai-search-link" data-project-id="${escapeHtml(project.id)}" type="button" ${aiLoading ? "disabled" : ""}>${aiLoading ? "Søker etter telefonnummer..." : "AI-søk etter telefonnummer"}</button>` : ""}
-          ${aiResult ? `
-            <div class="ai-search-result-data">
-              <strong>Resultat</strong>
-              ${aiResult.phone ? `<a href="tel:${escapeHtml(normalizePhone(aiResult.phone))}">${escapeHtml(aiResult.phone)}</a>` : "<span>Telefonnummer ble ikke funnet.</span>"}
-              ${aiResult.info ? `<span>${escapeHtml(aiResult.info)}</span>` : ""}
-            </div>
-          ` : ""}
-        </div>
       ` : ""}
       ${project.actors.length ? `
         <div class="actor-line">
@@ -896,9 +884,23 @@ function renderContactQuality(project) {
           Søk etter: ${escapeHtml(project.lookupSubject)}
         </div>
       ` : ""}
-      ${sources.filter((source) => source.label !== "AI-søk").length ? `
+      ${sources.filter((source) => source.label === "Proff").length ? `
         <div class="lookup-line">
-          ${sources.filter((source) => source.label !== "AI-søk").map((source) => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${escapeHtml(source.label)}</a>`).join("")}
+          ${sources.filter((source) => source.label === "Proff").map((source) => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${escapeHtml(source.label)}</a>`).join("")}
+        </div>
+      ` : ""}
+      ${missingPhone ? `
+        <div class="ai-search-result">
+          <strong>AI-søk</strong>
+          <span>Finn telefonnummer til ${escapeHtml(phoneSearchSubject)}.</span>
+          ${aiResult ? `
+            <div class="ai-search-result-data">
+              <strong>Resultat</strong>
+              ${aiResult.phone ? `<a href="tel:${escapeHtml(normalizePhone(aiResult.phone))}">${escapeHtml(aiResult.phone)}</a>` : "<span>Telefonnummer ble ikke funnet.</span>"}
+              ${aiResult.info ? `<span>${escapeHtml(aiResult.info)}</span>` : ""}
+            </div>
+          ` : ""}
+          ${aiSearch ? `<button class="ai-search-link" data-project-id="${escapeHtml(project.id)}" type="button" ${aiLoading ? "disabled" : ""}>${aiLoading ? "Søker etter telefonnummer..." : "AI-søk etter telefonnummer"}</button>` : ""}
         </div>
       ` : ""}
     </div>
@@ -1876,8 +1878,6 @@ function contactLookupSources(subject) {
   const query = encodeURIComponent(text);
   return [
     { label: "AI-søk", url: `https://www.google.com/search?udm=50&q=${query}+telefonnummer+kontakttelefon` },
-    { label: "1881", url: `https://www.1881.no/?query=${query}` },
-    { label: "Gule Sider", url: `https://www.gulesider.no/${query}/bedrifter` },
     { label: "Proff", url: `https://www.proff.no/s%C3%B8k?q=${query}` },
   ];
 }
