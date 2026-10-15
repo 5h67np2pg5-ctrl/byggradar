@@ -1064,7 +1064,10 @@ function bindFullMapTouchGuards() {
 }
 
 function mapPointProjects() {
-  return activeMapProjects()
+  // Kartet skal følge standardleveransen nøyaktig: maksimalt 200 prosjekter
+  // fra samme utvalg som vises i hovedlisten. Ekstra prosjekter som lastes
+  // manuelt skal derfor ikke få egne kartprikker.
+  return standardDeliveryProjects()
     .map((project) => projectMapPoint(project))
     .filter(Boolean);
 }
@@ -2179,6 +2182,7 @@ async function applyWeeklyDelivery() {
   state.filtered = filterProjects();
   state.selected = null;
   render();
+  if (state.showMap) renderMap();
 }
 
 function nextMondayAtMidnight(fromDate) {
