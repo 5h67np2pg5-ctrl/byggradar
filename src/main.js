@@ -828,9 +828,9 @@ function renderContactQuality(project) {
       </div>
       ${missingPhone ? `
         <div class="ai-search-result">
-          <strong>Telefonnummer søkes</strong>
-          <span>Google AI søker bredt etter telefonnummer til ${escapeHtml(phoneSearchSubject)}.</span>
-          ${aiSearch ? `<a class="ai-search-link" href="${escapeHtml(aiSearch.url)}" target="_blank" rel="noreferrer">Søk etter telefonnummer i Google AI</a>` : ""}
+          <strong>AI-søk</strong>
+          <span>Finn telefonnummer til ${escapeHtml(phoneSearchSubject)}.</span>
+          ${aiSearch ? `<a class="ai-search-link" href="${escapeHtml(aiSearch.url)}" target="_blank" rel="noreferrer">AI-søk etter telefonnummer</a>` : ""}
         </div>
       ` : ""}
       ${project.actors.length ? `
