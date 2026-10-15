@@ -439,13 +439,31 @@ function normalizeProject(project, contactProject, index) {
       project.shortFacts,
       status,
       tradeRelevance,
+      project.documentTitle,
+      project.caseTitle,
+      project.documentType,
+      project.caseNumber,
+      project.documentNumber,
+      project.matrikkel,
+      project.address,
       project.municipality,
       project.marketArea,
       place,
+      project.sourceLabel,
+      project.fromName,
+      project.toName,
       project.fromOrg,
       project.toOrg,
+      project.buyer,
+      project.owner,
+      project.contactName,
+      project.contactEmail,
+      project.contactPhone,
+      project.files?.map((file) => [file.title, file.name].filter(Boolean).join(" ")).join(" "),
       contactProject?.displayContact?.name,
+      contactProject?.contacts?.map((item) => [item.name, item.queryName, item.email, item.phone].filter(Boolean).join(" ")).join(" "),
       actors.map((actor) => actor.name).join(" "),
+      project.description,
     ].filter(Boolean).join(" ")),
   };
 }
@@ -483,8 +501,11 @@ function renderShell() {
         <div class="area-control">
           <label class="search-field">
             <span>Område</span>
-            <input id="areaInput" type="search" placeholder="kommune, adresse, region" autocomplete="off" />
+            <input id="areaInput" list="areaSuggestions" type="search" placeholder="kommune, adresse, region eller tekst" autocomplete="off" />
           </label>
+          <datalist id="areaSuggestions">
+            ${locationRegions.flatMap((region) => [region.name, ...region.municipalities]).map((value) => `<option value="${escapeHtml(value)}"></option>`).join("")}
+          </datalist>
           <button class="location-button" id="locationButton" type="button">Finn min region</button>
         </div>
         <div class="region-notice" id="regionNotice" aria-live="polite"></div>
@@ -1649,8 +1670,14 @@ function filterProjects() {
   return state.projects
     .filter((project) => !trade || tradeMatches(project, trade))
     .filter((project) => !textRegion || projectMatchesRegion(project, textRegion))
-    .filter((project) => textRegion || !area || normalize([project.place, project.municipality, project.marketArea, project.address].join(" ")).includes(area))
+    .filter((project) => textRegion || !area || searchTextMatches(project.searchText, area))
     .sort(deliverySort);
+}
+
+function searchTextMatches(searchText, query) {
+  const text = normalize(searchText);
+  const terms = normalize(query).split(/\s+/).filter(Boolean);
+  return terms.length > 0 && terms.every((term) => text.includes(term));
 }
 
 function standardDeliveryProjects() {
@@ -2200,7 +2227,8 @@ function saveFilters() {
 function restoreSavedFilters() {
   try {
     const saved = JSON.parse(readSavedValue(savedFiltersKey) || "{}");
-    state.trade = saved.trade || "";
+    const savedTrade = normalize(saved.trade || "");
+    state.trade = tradePresets.includes(savedTrade) ? savedTrade : "";
     state.area = /^min posisjon|^region ved min posisjon/i.test(saved.area || "") ? "" : saved.area || "";
     state.regionKey = regionDataPaths[saved.regionKey] ? saved.regionKey : "bergensregionen";
     state.activeRegion = locationRegions.find((region) => region.id === state.regionKey) || findRegionByText(state.area);
