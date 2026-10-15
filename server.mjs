@@ -148,10 +148,14 @@ function decodeHtmlEntities(value) {
 }
 
 function extractNorwegianPhones(value) {
-  const matches = String(value || "").match(/(?:\+47[\s-]?)?(?:\d[\s-]?){8}/g) || [];
+  // Hent hele tallsekvenser før validering. Ellers kan et ni-sifret
+  // organisasjonsnummer bli feiltolket som de første åtte sifrene i et
+  // telefonnummer.
+  const matches = String(value || "").match(/(?<!\d)(?:\+47[\s.-]?)?[\d][\d\s.-]{6,20}\d(?!\d)/g) || [];
   return [...new Set(matches.map((phone) => phone.trim()).filter((phone) => {
     const digits = phone.replace(/\D/g, "");
-    return digits.length === 8 || (digits.length === 10 && digits.startsWith("47"));
+    if (digits.length === 8) return /^[2-9]\d{7}$/.test(digits);
+    return digits.length === 10 && digits.startsWith("47") && /^[2-9]\d{7}$/.test(digits.slice(2));
   }))].slice(0, 5);
 }
 
