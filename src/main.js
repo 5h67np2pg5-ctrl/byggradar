@@ -1877,7 +1877,7 @@ function contactLookupSources(subject) {
   if (!text) return [];
   const query = encodeURIComponent(text);
   return [
-    { label: "AI-søk", url: `https://www.google.com/search?udm=50&q=${query}+telefonnummer+kontakttelefon` },
+    { label: "AI-søk", url: `https://www.google.com/search?udm=50&q=${query}+telefonnummer+til+aktør+telefon` },
     { label: "Proff", url: `https://www.proff.no/s%C3%B8k?q=${query}` },
   ];
 }

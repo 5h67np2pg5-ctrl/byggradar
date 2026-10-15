@@ -53,7 +53,7 @@ const server = http.createServer(async (request, response) => {
         return;
       }
 
-      const query = `${subject} telefonnummer kontakttelefon`;
+      const query = `telefonnummer til aktør ${subject} telefon kontaktinformasjon`;
       const searchUrls = [
         `https://www.google.com/search?udm=50&q=${encodeURIComponent(query)}`,
         `https://www.google.com/search?q=${encodeURIComponent(query)}`,
