@@ -872,8 +872,6 @@ function renderContactQuality(project) {
         <strong>${escapeHtml(project.contactQuality.label)}</strong>
         <span>${escapeHtml(project.contactQuality.message)}</span>
       </div>
-      ${missingPhone ? `
-      ` : ""}
       ${project.actors.length ? `
         <div class="actor-line">
           Aktør: ${project.actors.slice(0, 3).map((actor) => escapeHtml(actor.name)).join(", ")}
@@ -882,11 +880,6 @@ function renderContactQuality(project) {
       ${project.lookupSubject ? `
         <div class="actor-line">
           Søk etter: ${escapeHtml(project.lookupSubject)}
-        </div>
-      ` : ""}
-      ${sources.filter((source) => source.label === "Proff").length ? `
-        <div class="lookup-line">
-          ${sources.filter((source) => source.label === "Proff").map((source) => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${escapeHtml(source.label)}</a>`).join("")}
         </div>
       ` : ""}
       ${missingPhone ? `
@@ -901,6 +894,11 @@ function renderContactQuality(project) {
             </div>
           ` : ""}
           ${aiSearch ? `<button class="ai-search-link" data-project-id="${escapeHtml(project.id)}" type="button" ${aiLoading ? "disabled" : ""}>${aiLoading ? "Søker etter telefonnummer..." : "AI-søk etter telefonnummer"}</button>` : ""}
+        </div>
+      ` : ""}
+      ${sources.filter((source) => source.label === "Proff").length ? `
+        <div class="lookup-line">
+          ${sources.filter((source) => source.label === "Proff").map((source) => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${escapeHtml(source.label)}</a>`).join("")}
         </div>
       ` : ""}
     </div>
@@ -929,11 +927,19 @@ async function runAiPhoneSearch(project) {
 }
 
 function phoneLookupSubject(project) {
+  const genericName = /^(virksomhet|aktør|ukjent|flere mottakere|kontakt|saksbehandler|avsender|mottaker)$/i;
+  const genericOffice = /(postmottak|byggesak|plan og bygg|kommunedirektør|teknisk avdeling|servicetorg)/i;
   const namedActors = [
-    project.contact?.name,
-    ...(project.actors || []).map((actor) => actor.name),
-  ].map((value) => String(value || "").trim()).filter((value) => {
-    return value && !/^(virksomhet|aktør|ukjent|flere mottakere)$/i.test(value) && !/xxxx/i.test(value);
+    ...(project.actors || []).filter((actor) => actor.type === "company"),
+    ...(project.actors || []).filter((actor) => actor.type === "person"),
+    project.contact ? { name: project.contact.name, type: "contact" } : null,
+  ].filter(Boolean).map((actor) => String(actor.name || "").trim()).filter((value, index, values) => {
+    return value
+      && values.indexOf(value) === index
+      && !genericName.test(value)
+      && !genericOffice.test(value)
+      && !/xxxx/i.test(value)
+      && !/^[-–—]+$/.test(value);
   });
   return namedActors[0] || String(project.address || project.place || project.lookupSubject || "").trim();
 }

@@ -53,11 +53,11 @@ const server = http.createServer(async (request, response) => {
         return;
       }
 
-      const query = `telefonnummer til aktør ${subject} telefon kontaktinformasjon`;
+      const query = `telefonnummer til aktør "${subject}"`;
       const searchUrls = [
         `https://www.google.com/search?udm=50&q=${encodeURIComponent(query)}`,
-        `https://www.google.com/search?q=${encodeURIComponent(query)}`,
-        `https://www.bing.com/search?q=${encodeURIComponent(query)}`,
+        `https://www.google.com/search?q=${encodeURIComponent(`"${subject}" telefonnummer`)}`,
+        `https://www.bing.com/search?q=${encodeURIComponent(`${subject} kontakttelefon`)}`,
       ];
       let plainText = "";
       let firstPhone = "";
