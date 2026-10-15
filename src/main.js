@@ -297,17 +297,10 @@ async function loadProjects() {
 
 async function loadAllRegionProjectCount() {
   const cacheBust = `t=${Date.now()}`;
-  const regionDatasets = await Promise.all(Object.values(regionDataPaths).map(async (dataPath) => {
-    const response = await fetch(`${dataPath}/projects_location_enriched.json?${cacheBust}`);
-    if (!response.ok) return [];
-    const data = await response.json();
-    return data.projects || [];
-  }));
-  const uniqueIds = new Set();
-  regionDatasets.flat().forEach((project, index) => {
-    uniqueIds.add(project.sourceDocumentId || `${project.sourceStream || "project"}:${project.caseNumber || "unknown"}:${index}`);
-  });
-  state.allRegionProjectCount = uniqueIds.size;
+  const response = await fetch(`/data/region_project_counts.json?${cacheBust}`);
+  if (!response.ok) return;
+  const data = await response.json();
+  state.allRegionProjectCount = Number(data.total) || 0;
 }
 
 function deduplicateProjects(projects) {
