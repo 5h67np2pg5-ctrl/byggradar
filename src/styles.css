@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Michroma&display=swap");
+
 :root {
   font-family: "Inter", "Aptos", "Segoe UI", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   color: #1c2f3e;
@@ -21,7 +23,7 @@ body {
   display: grid;
   place-items: center;
   padding: 24px 16px;
-  font-family: "Eurostile", "Eurostyle", "Inter", "Aptos", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  font-family: "Eurostile", "Eurostyle", "Michroma", "Inter", "Aptos", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
   background:
     radial-gradient(circle at 50% 18%, rgba(45, 171, 198, 0.15), transparent 30%),
     linear-gradient(145deg, #071c2d 0%, #0b2b43 55%, #103c58 100%);
