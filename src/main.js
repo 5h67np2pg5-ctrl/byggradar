@@ -1613,7 +1613,34 @@ function filterProjects() {
 }
 
 function standardDeliveryProjects() {
-  return state.filtered.slice(0, standardProjectLimit);
+  const ranked = state.filtered.slice();
+  if (ranked.length <= standardProjectLimit) return ranked;
+
+  // Behold rangeringen, men sørg for at en kommune med aktive prosjekter
+  // ikke forsvinner helt fra standardleveransen fordi andre kommuner har
+  // flere høyt rangerte saker. Dette er også grunnlaget for kartprikkene.
+  const municipalityRepresentatives = [];
+  const includedIds = new Set();
+  const municipalities = new Set(
+    ranked
+      .map((project) => normalizeMunicipalityName(project.municipality))
+      .filter(Boolean),
+  );
+
+  municipalities.forEach((municipality) => {
+    const representative = ranked.find((project) => (
+      normalizeMunicipalityName(project.municipality) === municipality
+    ));
+    if (representative) {
+      municipalityRepresentatives.push(representative);
+      includedIds.add(representative.id);
+    }
+  });
+
+  return [
+    ...municipalityRepresentatives,
+    ...ranked.filter((project) => !includedIds.has(project.id)),
+  ].slice(0, standardProjectLimit);
 }
 
 function visibleDeliveryProjects() {
