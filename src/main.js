@@ -905,7 +905,6 @@ function renderContactQuality(project) {
       ` : ""}
       ${missingPhone ? `
         <div class="ai-search-result">
-          <strong>AI-søk</strong>
           <span>Finn telefonnummer til ${escapeHtml(phoneSearchSubject)}.</span>
           ${aiResult ? `
             <div class="ai-search-result-data">
@@ -914,7 +913,11 @@ function renderContactQuality(project) {
               ${aiResult.info ? `<span>${escapeHtml(aiResult.info)}</span>` : ""}
             </div>
           ` : ""}
-          ${aiSearch ? `<button class="ai-search-link" data-project-id="${escapeHtml(project.id)}" type="button" ${aiLoading ? "disabled" : ""}>${aiLoading ? "Søker etter telefonnummer..." : "AI-søk etter telefonnummer"}</button>` : ""}
+        </div>
+      ` : ""}
+      ${missingPhone && aiSearch ? `
+        <div class="lookup-line">
+          <button class="ai-search-link" data-project-id="${escapeHtml(project.id)}" type="button" ${aiLoading ? "disabled" : ""}>${aiLoading ? "Søker etter telefonnummer..." : "AI-søk"}</button>
         </div>
       ` : ""}
       ${sources.filter((source) => source.label === "Proff").length ? `

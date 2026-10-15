@@ -707,18 +707,22 @@ a {
 }
 
 .ai-search-link {
-  justify-self: start;
-  margin-top: 2px;
-  border: 0;
-  padding: 0;
-  background: transparent;
-  color: #236b9b;
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 9px;
+  border: 1px solid #73aeca;
+  border-radius: 8px;
+  background: #e4f3fb;
+  color: #1f5278;
   cursor: pointer;
   font-weight: 760;
-  text-decoration: none;
+  font: inherit;
 }
 
 .ai-search-link:disabled {
+  border-color: #b8cbd8;
+  background: #f0f5f8;
   color: #6f8798;
   cursor: wait;
 }
