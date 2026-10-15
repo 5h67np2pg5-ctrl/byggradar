@@ -819,12 +819,7 @@ function renderContactQuality(project) {
   const sources = project.contactLookupSources || [];
   const missingPhone = !project.contact?.phone;
   const aiSearch = sources.find((source) => source.label === "AI-søk");
-  const keyInfo = [
-    project.contact?.name || project.lookupSubject,
-    project.place || project.address,
-    project.municipality,
-    project.matrikkel ? `Matrikkel ${project.matrikkel}` : "",
-  ].filter(Boolean);
+  const phoneSearchSubject = project.contact?.name || project.lookupSubject || "aktøren";
   return `
     <div class="contact-quality ${project.contactQuality.level}${missingPhone ? " contact-search-panel" : ""}">
       <div>
@@ -834,7 +829,7 @@ function renderContactQuality(project) {
       ${missingPhone ? `
         <div class="ai-search-result">
           <strong>Telefonnummer søkes</strong>
-          <span>Google AI søker etter telefonnummer til ${escapeHtml(keyInfo[0] || "aktøren")}${keyInfo[1] ? ` på ${escapeHtml(keyInfo[1])}` : ""}.</span>
+          <span>Google AI søker bredt etter telefonnummer til ${escapeHtml(phoneSearchSubject)}.</span>
           ${aiSearch ? `<a class="ai-search-link" href="${escapeHtml(aiSearch.url)}" target="_blank" rel="noreferrer">Søk etter telefonnummer i Google AI</a>` : ""}
         </div>
       ` : ""}
