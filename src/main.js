@@ -656,7 +656,6 @@ function renderExpandedProject(project) {
               ${project.contact.website ? `<a href="${escapeHtml(project.contact.website)}" target="_blank" rel="noreferrer">Nettside</a>` : ""}
             </div>
           ` : `<div class="contact-line muted">Ingen virksomhetskontakt funnet.</div>`}
-          ${renderContactQuality(project)}
         </div>
         ${projectCanOpenMap(project) ? `
           <button class="mini-map-card" type="button" aria-label="Åpne kart for prosjektet">
@@ -664,6 +663,7 @@ function renderExpandedProject(project) {
             <span id="miniMapCanvas" class="mini-map-canvas"></span>
           </button>
         ` : ""}
+        ${renderContactQuality(project)}
       </div>
     </div>
   `;
@@ -817,12 +817,27 @@ function isApprovedMunicipalitySource(value) {
 
 function renderContactQuality(project) {
   const sources = project.contactLookupSources || [];
+  const missingPhone = !project.contact?.phone;
+  const aiSearch = sources.find((source) => source.label === "AI-søk");
+  const keyInfo = [
+    project.contact?.name || project.lookupSubject,
+    project.place || project.address,
+    project.municipality,
+    project.matrikkel ? `Matrikkel ${project.matrikkel}` : "",
+  ].filter(Boolean);
   return `
-    <div class="contact-quality ${project.contactQuality.level}">
+    <div class="contact-quality ${project.contactQuality.level}${missingPhone ? " contact-search-panel" : ""}">
       <div>
         <strong>${escapeHtml(project.contactQuality.label)}</strong>
         <span>${escapeHtml(project.contactQuality.message)}</span>
       </div>
+      ${missingPhone ? `
+        <div class="ai-search-result">
+          <strong>Google AI-søk</strong>
+          <span>Nøkkelinfo som brukes i søket: ${escapeHtml(keyInfo.join(" · ") || "prosjektinformasjon")}</span>
+          ${aiSearch ? `<a class="ai-search-link" href="${escapeHtml(aiSearch.url)}" target="_blank" rel="noreferrer">Åpne Google AI-søk</a>` : ""}
+        </div>
+      ` : ""}
       ${project.actors.length ? `
         <div class="actor-line">
           Aktør: ${project.actors.slice(0, 3).map((actor) => escapeHtml(actor.name)).join(", ")}

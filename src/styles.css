@@ -652,6 +652,30 @@ a {
   line-height: 1.35;
 }
 
+.contact-search-panel {
+  grid-column: 1 / -1;
+}
+
+.ai-search-result {
+  display: grid;
+  gap: 4px;
+  padding-top: 3px;
+  color: #315b76;
+}
+
+.ai-search-result strong {
+  margin: 0;
+  color: #183247;
+}
+
+.ai-search-link {
+  justify-self: start;
+  margin-top: 2px;
+  color: #236b9b;
+  font-weight: 760;
+  text-decoration: none;
+}
+
 .contact-quality strong {
   display: block;
   margin-bottom: 2px;
