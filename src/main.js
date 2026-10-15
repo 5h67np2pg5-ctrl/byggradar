@@ -24,7 +24,6 @@ const state = {
   weeklyRefreshTimer: null,
   markedProjectIds: new Set(),
   expandedPreviewIds: new Set(),
-  pendingAutoAiSearchProjectId: "",
 };
 
 const tradePresets = [
@@ -598,15 +597,9 @@ function renderList() {
       </button>
     ` : ""}
   `;
-  if (state.pendingAutoAiSearchProjectId) {
-    const projectId = state.pendingAutoAiSearchProjectId;
-    state.pendingAutoAiSearchProjectId = "";
-    list.querySelector(`[data-ai-search-project="${cssEscape(projectId)}"]`)?.click();
-  }
   list.querySelectorAll(".project-summary").forEach((row) => {
     row.addEventListener("click", () => {
       state.selected = state.projects.find((project) => project.id === row.dataset.id);
-      state.pendingAutoAiSearchProjectId = state.selected?.id || "";
       if (state.showMap) closeMapPane({ renderAfterClose: false });
       writeSavedValue("selectedProjectId", state.selected?.id || "");
       render();
@@ -837,7 +830,7 @@ function renderContactQuality(project) {
         <div class="ai-search-result">
           <strong>AI-søk</strong>
           <span>Finn telefonnummer til ${escapeHtml(phoneSearchSubject)}.</span>
-          ${aiSearch ? `<a class="ai-search-link" data-ai-search-project="${escapeHtml(project.id)}" href="${escapeHtml(aiSearch.url)}" target="_blank" rel="noreferrer">AI-søk etter telefonnummer</a>` : ""}
+          ${aiSearch ? `<a class="ai-search-link" href="${escapeHtml(aiSearch.url)}" target="_blank" rel="noreferrer">AI-søk etter telefonnummer</a>` : ""}
         </div>
       ` : ""}
       ${project.actors.length ? `
@@ -1357,7 +1350,6 @@ function bindFullMapProjectSelection() {
 function openProjectFromMap(project) {
   const selectedProject = state.projects.find((candidate) => candidate.id === project.id) || project;
   state.selected = selectedProject;
-  state.pendingAutoAiSearchProjectId = selectedProject.id;
   const closeToken = ++state.fullMapCloseToken;
   state.suppressFullMapOpenUntil = Date.now() + 3000;
   state.forceCloseFullMapUntil = Date.now() + 3000;
