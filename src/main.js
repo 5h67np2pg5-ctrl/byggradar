@@ -970,7 +970,10 @@ function renderMiniMap() {
     tap: false,
   }).setView([selectedPoint.lat, selectedPoint.lon], selectedPoint.isMunicipalityFallbackPoint ? 12 : 15);
   addBaseMap(state.miniMap, { compact: true });
-  addProjectMarkers(state.miniMap, mapPointProjects(), selectedPoint, { compact: true });
+  addProjectMarkers(state.miniMap, mapPointProjects(), selectedPoint, {
+    compact: true,
+    onMarkerClick: openProjectFromMap,
+  });
   refreshMapSize(state.miniMap);
 
   // Et utvidet kort kan åpnes før hovedkartet er vist. Kjør derfor samme
@@ -2136,27 +2139,13 @@ function distanceKm(lat1, lon1, lat2, lon2) {
 }
 
 function scheduleRefreshes() {
-  scheduleDailyRefresh();
   scheduleWeeklyDeliveryRefresh();
-}
-
-function scheduleDailyRefresh() {
-  if (state.refreshTimer) clearTimeout(state.refreshTimer);
-  const now = new Date();
-  const next = new Date(now);
-  next.setHours(24, 0, 0, 0);
-  state.refreshTimer = setTimeout(async () => {
-    await loadProjects();
-    state.visibleCount = standardProjectLimit;
-    render();
-    scheduleDailyRefresh();
-  }, next.getTime() - now.getTime());
 }
 
 function scheduleWeeklyDeliveryRefresh() {
   if (state.weeklyRefreshTimer) clearTimeout(state.weeklyRefreshTimer);
   const now = new Date();
-  const next = nextMondayAtSeven(now);
+  const next = nextMondayAtMidnight(now);
   state.weeklyRefreshTimer = setTimeout(async () => {
     await applyWeeklyDelivery();
     scheduleWeeklyDeliveryRefresh();
@@ -2171,12 +2160,12 @@ async function applyWeeklyDelivery() {
   render();
 }
 
-function nextMondayAtSeven(fromDate) {
+function nextMondayAtMidnight(fromDate) {
   const next = new Date(fromDate);
   const currentDay = next.getDay();
   const daysUntilMonday = (8 - currentDay) % 7;
   next.setDate(next.getDate() + daysUntilMonday);
-  next.setHours(7, 0, 0, 0);
+  next.setHours(0, 0, 0, 0);
   if (next <= fromDate) {
     next.setDate(next.getDate() + 7);
   }
@@ -2184,8 +2173,8 @@ function nextMondayAtSeven(fromDate) {
 }
 
 function deliveryInfoText() {
-  const nextDelivery = formatNorwegianDateTime(nextMondayAtSeven(new Date()));
-  return `Standardleveransen er alltid ${standardProjectLimit} prosjekter. Hver mandag kl. 07.00 legges ${weeklyDeliveryCount} nye prosjekter inn i standardlisten, og de ${weeklyDeliveryCount} eldste fjernes. Prosjekter som lastes manuelt utover dette merkes med stjerne. Neste planlagte leveranse: ${nextDelivery}.`;
+  const nextDelivery = formatNorwegianDateTime(nextMondayAtMidnight(new Date()));
+  return `Standardleveransen er alltid ${standardProjectLimit} prosjekter. Hver mandag kl. 00.00 legges ${weeklyDeliveryCount} nye prosjekter inn i standardlisten, og de ${weeklyDeliveryCount} eldste fjernes. Prosjekter som lastes manuelt utover dette merkes med stjerne. Neste planlagte leveranse: ${nextDelivery}.`;
 }
 
 function escapeHtml(value) {
