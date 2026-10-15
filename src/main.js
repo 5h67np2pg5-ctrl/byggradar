@@ -565,12 +565,14 @@ function renderList() {
       </button>
       <button class="project-summary" type="button" data-id="${escapeHtml(project.id)}">
         <span class="project-number">${index + 1}</span>
-        <span class="date-badge" title="${escapeHtml(project.dateFullLabel)}">${index >= standardProjectLimit ? `<span class="extra-star" title="Utenfor standard leveranse">★</span>` : ""}${escapeHtml(project.dateLabel)}</span>
+        <span class="project-meta">
+          <span class="row-status">${escapeHtml(project.statusText)}</span>
+          <span class="date-badge" title="${escapeHtml(project.dateFullLabel)}">${index >= standardProjectLimit ? `<span class="extra-star" title="Utenfor standard leveranse">★</span>` : ""}${escapeHtml(project.dateLabel)}</span>
+        </span>
         <span class="row-copy">
           <span class="line-primary">${escapeHtml(project.firstLine)}</span>
           <span class="line-secondary">${escapeHtml(project.secondLine)}</span>
         </span>
-        <span class="row-status">${escapeHtml(project.statusText)}</span>
       </button>
       ${state.selected?.id === project.id ? renderExpandedProject(project) : ""}
     </article>

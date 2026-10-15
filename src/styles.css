@@ -393,7 +393,7 @@ a {
 
 .project-summary {
   display: grid;
-  grid-template-columns: 22px 88px minmax(0, 1fr);
+  grid-template-columns: 22px 104px minmax(0, 1fr);
   gap: 8px;
   align-items: center;
   width: 100%;
@@ -411,6 +411,13 @@ a {
   font-size: 0.68rem;
   font-weight: 720;
   line-height: 1;
+}
+
+.project-meta {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  align-content: center;
 }
 
 .date-badge {
@@ -474,12 +481,15 @@ a {
 }
 
 .row-status {
-  display: none;
-  justify-self: end;
+  display: block;
+  justify-self: stretch;
   color: #2f6f99;
-  font-size: 0.75rem;
+  font-size: 0.68rem;
   font-weight: 720;
-  white-space: nowrap;
+  line-height: 1.1;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .project-expanded {
@@ -1158,16 +1168,12 @@ body.has-map-dialog .mini-map-card {
   }
 
   .project-summary {
-    grid-template-columns: 28px 104px minmax(0, 1fr) 190px;
+    grid-template-columns: 28px 112px minmax(0, 1fr);
   }
 
   .expanded-main {
     grid-template-columns: minmax(0, 1fr) 330px;
     align-items: start;
-  }
-
-  .row-status {
-    display: inline-flex;
   }
 
   .map-canvas {
@@ -1186,7 +1192,7 @@ body.has-map-dialog .mini-map-card {
   }
 
   .project-summary {
-    grid-template-columns: 18px 64px minmax(0, 1fr);
+    grid-template-columns: 18px 70px minmax(0, 1fr);
     gap: 6px;
     padding: 9px 8px;
   }
