@@ -44,6 +44,7 @@ const tradePresets = [
 const savedFiltersKey = "byggradar.filters.v1";
 const markedProjectsKey = "byggradar.markedProjects.v1";
 const authSessionKey = "byggradar.session.v1";
+const rememberedSessionValue = "active-v2";
 const standardProjectLimit = 200;
 const loadMoreStep = 20;
 const weeklyDeliveryCount = 50;
@@ -180,7 +181,7 @@ const forceLogin = new URLSearchParams(window.location.search).get("login") === 
 init();
 
 async function init() {
-  if (forceLogin || !readSavedValue(authSessionKey)) {
+  if (forceLogin || readSavedValue(authSessionKey) !== rememberedSessionValue) {
     renderLogin();
     return;
   }
@@ -222,7 +223,7 @@ function renderLogin() {
           <p>Få relevante byggeprosjekter, tiltak og anskaffelser i områdene du arbeider i.</p>
         </div>
         <label class="remember-choice">
-          <input id="rememberSession" type="checkbox" checked />
+          <input id="rememberSession" type="checkbox" />
           <span>Husk meg i denne nettleseren</span>
         </label>
         <button class="login-button" id="loginButton" type="button">Logg inn</button>
@@ -232,7 +233,7 @@ function renderLogin() {
 
   document.querySelector("#loginButton")?.addEventListener("click", () => {
     if (document.querySelector("#rememberSession")?.checked) {
-      writeSavedValue(authSessionKey, "active");
+      writeSavedValue(authSessionKey, rememberedSessionValue);
     }
     if (forceLogin) window.history.replaceState({}, "", window.location.pathname);
     initApplication();
