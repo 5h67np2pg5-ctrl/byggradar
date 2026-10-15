@@ -401,6 +401,7 @@ function normalizeProject(project, contactProject, index) {
       sourceStream: project.sourceStream,
       status,
       date,
+      deadline: project.deadline || "",
       hasMapPoint,
       matrikkel: project.matrikkel,
       contact,
@@ -1552,11 +1553,12 @@ function retiringDeliveryBatch() {
 }
 
 function deliverySort(a, b) {
-  // Utvalget skal alltid starte med de ferskeste prosjektene fra kilden.
-  // Faglig attraktivitet og status brukes bare når datoen er lik eller mangler.
-  return parsedDateMs(b.date) - parsedDateMs(a.date) ||
-    b.attractivenessScore - a.attractivenessScore ||
+  // Rangeringen skal vise prosjektene som er nærmest faktisk oppstart først.
+  // Dokumentdato brukes bare som siste tie-breaker, slik at en ny postliste-
+  // linje ikke automatisk skyver et mer aktuelt prosjekt nedover.
+  return b.attractivenessScore - a.attractivenessScore ||
     (stageRank[normalize(a.status)] || 20) - (stageRank[normalize(b.status)] || 20) ||
+    parsedDateMs(b.deadline || b.date) - parsedDateMs(a.deadline || a.date) ||
     b.score - a.score ||
     Number(b.hasMapPoint) - Number(a.hasMapPoint) ||
     String(b.date).localeCompare(String(a.date));
@@ -1604,8 +1606,7 @@ function attractivenessScore(project) {
   };
   score += statusWeights[status] || 25;
 
-  const dateScore = recencyScore(project.date);
-  score += dateScore;
+  score += actualityScore(project.deadline || project.date);
 
   if (project.sourceStream === "postlister_allemannsdata") score += 45;
   if (project.hasMapPoint) score += 20;
@@ -1622,6 +1623,22 @@ function attractivenessScore(project) {
   if (/kvartal/i.test(String(project.date || ""))) score -= 35;
 
   return score;
+}
+
+function actualityScore(value) {
+  const dateMs = parsedDateMs(value);
+  if (!dateMs) return 0;
+
+  const daysUntilStart = Math.round((dateMs - startOfDayMs(new Date())) / 86400000);
+  if (daysUntilStart < -365) return 4;
+  if (daysUntilStart < -90) return 12;
+  if (daysUntilStart < 0) return 30;
+  if (daysUntilStart <= 30) return 110;
+  if (daysUntilStart <= 90) return 92;
+  if (daysUntilStart <= 180) return 72;
+  if (daysUntilStart <= 365) return 48;
+  if (daysUntilStart <= 730) return 24;
+  return 8;
 }
 
 function projectActors(project, contactProject) {
