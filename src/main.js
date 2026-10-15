@@ -590,7 +590,7 @@ function render() {
   state.visibleCount = Math.max(standardProjectLimit, state.visibleCount);
   const visibleProjects = visibleDeliveryProjects();
   const summaryText = document.querySelector("#summaryText");
-  const totalProjectCount = state.rawProjectCount || state.filtered.length;
+  const totalProjectCount = state.filtered.length;
   summaryText.innerHTML = `
     <span>${visibleProjects.length} av ${totalProjectCount} aktive prosjekter vises</span>
     <span>hver måned, med ${weeklyDeliveryCount} nye hver uke</span>
