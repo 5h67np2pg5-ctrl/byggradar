@@ -1266,26 +1266,26 @@ function addProjectMarkers(map, projects, selectedProject, options = {}) {
         project.isMunicipalityFallbackPoint ? "is-municipality-fallback" : "",
       ].filter(Boolean).join(" "),
     });
+    let handledMarkerSelect = false;
+    const handleMarkerSelect = (event) => {
+      if (handledMarkerSelect) return;
+      if (isMapGestureActive()) {
+        if (window.L?.DomEvent && event.originalEvent) L.DomEvent.stop(event.originalEvent);
+        return;
+      }
+      handledMarkerSelect = true;
+      if (window.L?.DomEvent && event.originalEvent) {
+        L.DomEvent.stop(event.originalEvent);
+        event.originalEvent.preventDefault?.();
+        event.originalEvent.stopPropagation?.();
+        event.originalEvent.stopImmediatePropagation?.();
+      }
+      options.onMarkerClick?.(project);
+      setTimeout(() => {
+        handledMarkerSelect = false;
+      }, 300);
+    };
     if (options.onMarkerClick) {
-      let handledMarkerSelect = false;
-      const handleMarkerSelect = (event) => {
-        if (handledMarkerSelect) return;
-        if (isMapGestureActive()) {
-          if (window.L?.DomEvent && event.originalEvent) L.DomEvent.stop(event.originalEvent);
-          return;
-        }
-        handledMarkerSelect = true;
-        if (window.L?.DomEvent && event.originalEvent) {
-          L.DomEvent.stop(event.originalEvent);
-          event.originalEvent.preventDefault?.();
-          event.originalEvent.stopPropagation?.();
-          event.originalEvent.stopImmediatePropagation?.();
-        }
-        options.onMarkerClick(project);
-        setTimeout(() => {
-          handledMarkerSelect = false;
-        }, 250);
-      };
       marker.on("click tap", handleMarkerSelect);
     }
     marker.on("mouseover", (event) => showMapHoverCard(map, project, event.latlng));
@@ -1298,6 +1298,11 @@ function addProjectMarkers(map, projects, selectedProject, options = {}) {
       markerElement.dataset.municipality = project.municipality || "";
       markerElement.setAttribute("role", "button");
       markerElement.setAttribute("aria-label", mapTooltipText(project));
+      if (options.onMarkerClick) {
+        markerElement.addEventListener("click", (event) => {
+          handleMarkerSelect({ originalEvent: event });
+        }, true);
+      }
     }
     if (isSelected) marker.bringToFront();
     return marker;
