@@ -1934,7 +1934,8 @@ function municipalitySuffix(municipality, place) {
 function shortStatus(value) {
   const status = String(value || "Status ukjent");
   if (normalize(status) === "igangsettingstillatelse gitt" || normalize(status) === "ig gitt") return "Igangsettingstillatelse gitt";
-  return status.replace("saksbehandling pågår", "Under behandling");
+  const normalizedStatus = status.replace(/saksbehandling pågår/i, "Under behandling").trim();
+  return normalizedStatus ? normalizedStatus.charAt(0).toLocaleUpperCase("nb-NO") + normalizedStatus.slice(1) : "Status ukjent";
 }
 
 function shortTrade(value) {
