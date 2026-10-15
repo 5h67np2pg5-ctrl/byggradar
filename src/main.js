@@ -324,12 +324,14 @@ function uniqueByKey(values, keyFn) {
 function normalizeProject(project, contactProject, index) {
   const classification = project.classification || {};
   const location = project.locationEnrichment || {};
+  const derivedMatrikkel = extractMatrikkelFromProject(project);
   const title = cleanTitle(project.title || project.shortFacts || project.caseTitle || "Ukjent prosjekt");
   const status = classification.stage || project.status || project.phase || "Ukjent status";
   const projectTypes = classification.projectTypes || [];
   const tradeRelevance = project.tradeRelevance || projectTypes.join("; ") || inferTrade(title, project.documentTitle, project.caseTitle);
   const marketRole = project.marketRole || (project.sourceStream === "bane_nor_procurement_plan" ? "external" : "external");
-  const place = location.address || project.address || project.location || project.municipality || project.marketArea || "Ukjent sted";
+  const address = validAddressCandidate(location.address) || validAddressCandidate(project.address) || "";
+  const place = address || project.location || project.municipality || project.marketArea || "Ukjent sted";
   const date = project.documentDate || project.deadline || project.recordedDate || "";
   const hasMapPoint = Boolean(location.hasMapPoint);
   const contact = contactProject?.displayContact || null;
@@ -357,8 +359,8 @@ function normalizeProject(project, contactProject, index) {
     marketRole,
     marketArea: project.marketArea || marketRoleLabel(marketRole),
     place,
-    address: location.address || project.address || "",
-    matrikkel: project.matrikkel || "",
+    address,
+    matrikkel: derivedMatrikkel,
     lat: Number(location.latitude || project.latitude || project.lat || 0),
     lon: Number(location.longitude || project.longitude || project.lon || 0),
     hasMapPoint,
@@ -1081,6 +1083,17 @@ function projectMapPoint(project) {
     hasMapPoint: true,
     isMunicipalityFallbackPoint: true,
   };
+}
+
+function extractMatrikkelFromProject(project) {
+  const sourceText = [project.caseTitle, project.shortFacts, project.documentTitle, project.address]
+    .filter(Boolean)
+    .join(" | ");
+  const match = sourceText.match(/\bgnr\.?\s*(\d+)\s*(?:,\s*|\s+)bnr\.?\s*(\d+)/i);
+  if (match) {
+    return `${match[1]}/${match[2]}/0/0`;
+  }
+  return project.matrikkel || "";
 }
 
 async function resolveMissingMapPoints(projects) {
