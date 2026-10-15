@@ -1,6 +1,7 @@
 const state = {
   projects: [],
   rawProjectCount: 0,
+  allRegionProjectCount: 0,
   filtered: [],
   selected: null,
   trade: "",
@@ -219,6 +220,7 @@ async function initApplication() {
     restoreSavedFilters();
     restoreMarkedProjects();
     await loadProjects();
+    await loadAllRegionProjectCount();
     state.filtered = filterProjects();
     state.selected = null;
     scheduleRefreshes();
@@ -291,6 +293,21 @@ async function loadProjects() {
   state.projects.forEach((project) => {
     project.isExpandedPreview = true;
   });
+}
+
+async function loadAllRegionProjectCount() {
+  const cacheBust = `t=${Date.now()}`;
+  const regionDatasets = await Promise.all(Object.values(regionDataPaths).map(async (dataPath) => {
+    const response = await fetch(`${dataPath}/projects_location_enriched.json?${cacheBust}`);
+    if (!response.ok) return [];
+    const data = await response.json();
+    return data.projects || [];
+  }));
+  const uniqueIds = new Set();
+  regionDatasets.flat().forEach((project, index) => {
+    uniqueIds.add(project.sourceDocumentId || `${project.sourceStream || "project"}:${project.caseNumber || "unknown"}:${index}`);
+  });
+  state.allRegionProjectCount = uniqueIds.size;
 }
 
 function deduplicateProjects(projects) {
@@ -541,6 +558,7 @@ function renderShell() {
     const notice = document.querySelector("#regionNotice");
     if (notice) notice.textContent = "Laster valgt region ...";
     await loadProjects();
+    await loadAllRegionProjectCount();
     state.filtered = filterProjects();
     render();
   });
@@ -590,7 +608,7 @@ function render() {
   state.visibleCount = Math.max(standardProjectLimit, state.visibleCount);
   const visibleProjects = visibleDeliveryProjects();
   const summaryText = document.querySelector("#summaryText");
-  const totalProjectCount = state.filtered.length;
+  const totalProjectCount = state.allRegionProjectCount || state.filtered.length;
   summaryText.innerHTML = `
     <span>${visibleProjects.length} av ${totalProjectCount} aktive prosjekter vises</span>
     <span>hver måned, med ${weeklyDeliveryCount} nye hver uke</span>
@@ -2360,6 +2378,7 @@ function scheduleWeeklyDeliveryRefresh() {
 
 async function applyWeeklyDelivery() {
   await loadProjects();
+  await loadAllRegionProjectCount();
   state.visibleCount = standardProjectLimit;
   state.filtered = filterProjects();
   state.selected = null;
