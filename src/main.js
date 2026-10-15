@@ -1535,9 +1535,18 @@ function standardDeliveryProjects() {
 }
 
 function visibleDeliveryProjects() {
-  return state.filtered
-    .slice(0, Math.min(state.visibleCount, state.filtered.length))
-    .sort(markedFirstSort);
+  const limit = Math.min(state.visibleCount, state.filtered.length);
+  const visible = state.filtered.slice(0, limit);
+  const selected = state.selected && state.filtered.find((project) => project.id === state.selected.id);
+
+  // Kartet viser alle filtrerte prosjekter. Hvis et valgt prosjekt ligger
+  // utenfor de første 200, må det likevel inn i listen slik at kortet kan
+  // åpnes og brukeren får se full prosjektinformasjon.
+  if (selected && !visible.some((project) => project.id === selected.id)) {
+    visible.splice(Math.max(visible.length - 1, 0), 1, selected);
+  }
+
+  return visible.sort(markedFirstSort);
 }
 
 function weeklyDeliveryBatch() {
