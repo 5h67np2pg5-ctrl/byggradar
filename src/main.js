@@ -472,7 +472,7 @@ function renderShell() {
   app.innerHTML = `
     <main class="app-shell">
       <header class="topbar">
-        <div>
+        <div class="topbar-copy">
           <div class="brand">ByggRadar</div>
           <div class="subtle" id="summaryText" tabindex="0">Laster prosjekter...</div>
         </div>
@@ -591,8 +591,10 @@ function render() {
   const visibleProjects = visibleDeliveryProjects();
   const summaryText = document.querySelector("#summaryText");
   const regionName = state.activeRegion?.name || locationRegions.find((region) => region.id === state.regionKey)?.name || "valgt region";
+  const totalProjectCount = state.filtered.length;
   summaryText.innerHTML = `
-    <span>${visibleProjects.length} aktive for regionen ${escapeHtml(regionName)}, fornyes med ${weeklyDeliveryCount} nye hver uke</span>
+    <span>${visibleProjects.length} aktive prosjekter, av ${totalProjectCount} for ${escapeHtml(regionName)}.</span>
+    <span>Fornyes med ${weeklyDeliveryCount} nye hver uke.</span>
   `;
   summaryText.dataset.tooltip = deliveryInfoText();
   document.body.dataset.map = "closed";

@@ -170,10 +170,17 @@ a {
   box-shadow: 0 1px 12px rgba(35, 69, 98, 0.07);
 }
 
+.topbar-copy {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+}
+
 .brand {
   font-size: 1.28rem;
   line-height: 1.1;
   font-weight: 680;
+  font-family: "Eurostile", "Eurostyle", "Michroma", "Inter", "Aptos", "Segoe UI", sans-serif;
 }
 
 .subtle {
@@ -184,6 +191,7 @@ a {
   font-size: 0.78rem;
   margin-top: 3px;
   line-height: 1.18;
+  justify-items: center;
 }
 
 .subtle[data-tooltip]:hover::after,
