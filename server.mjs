@@ -63,6 +63,21 @@ const server = http.createServer(async (request, response) => {
       });
       const html = await googleResponse.text();
       const plainText = decodeHtmlEntities(stripHtml(html)).replace(/\s+/g, " ").trim();
+      if (/unusual traffic|not a robot|captcha|robots are known|solve the captcha/i.test(plainText)) {
+        response.writeHead(200, {
+          "content-type": "application/json; charset=utf-8",
+          "cache-control": "no-store",
+        });
+        response.end(JSON.stringify({
+          query,
+          phone: "",
+          phones: [],
+          info: "Søket ble midlertidig stoppet av søketjenesten. Prøv AI-søk igjen senere.",
+          blocked: true,
+          source: "AI-søk",
+        }));
+        return;
+      }
       const phones = extractNorwegianPhones(plainText);
       const firstPhone = phones[0] || "";
       const phoneIndex = firstPhone ? plainText.indexOf(firstPhone) : -1;
@@ -79,7 +94,7 @@ const server = http.createServer(async (request, response) => {
         phone: firstPhone,
         phones,
         info: context,
-        source: "Google AI-søk",
+        source: "AI-søk",
         searchUrl,
       }));
       return;
