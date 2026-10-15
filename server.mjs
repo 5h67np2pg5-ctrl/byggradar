@@ -57,7 +57,9 @@ const server = http.createServer(async (request, response) => {
       const searchUrls = [
         `https://www.google.com/search?udm=50&q=${encodeURIComponent(query)}`,
         `https://www.google.com/search?q=${encodeURIComponent(`"${subject}" telefonnummer`)}`,
-        `https://www.bing.com/search?q=${encodeURIComponent(`${subject} kontakttelefon`)}`,
+        `https://www.bing.com/search?q=${encodeURIComponent(`"${subject}" telefonnummer`)}`,
+        `https://html.duckduckgo.com/html/?q=${encodeURIComponent(`"${subject}" telefon`)}`,
+        `https://www.proff.no/s%C3%B8k-etter-firmanavn?q=${encodeURIComponent(subject)}`,
       ];
       let plainText = "";
       let firstPhone = "";
@@ -71,11 +73,12 @@ const server = http.createServer(async (request, response) => {
               "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/131 Safari/537.36",
             },
           });
+          if (!searchResponse.ok) continue;
           candidateText = decodeHtmlEntities(stripHtml(await searchResponse.text())).replace(/\s+/g, " ").trim();
         } catch {
           continue;
         }
-        if (/unusual traffic|not a robot|captcha|robots are known|solve the captcha/i.test(candidateText)) continue;
+        if (/unusual traffic|not a robot|captcha|robots are known|solve the captcha|søket ble midlertidig stoppet/i.test(candidateText)) continue;
         const candidatePhones = extractNorwegianPhones(candidateText);
         if (candidatePhones.length) {
           plainText = candidateText;
@@ -98,7 +101,7 @@ const server = http.createServer(async (request, response) => {
         query,
         phone: firstPhone,
         phones,
-        info: context,
+        info: firstPhone ? context : "",
         source: "AI-søk",
       }));
       return;
