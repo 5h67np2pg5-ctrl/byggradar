@@ -9,6 +9,7 @@ const state = {
   visibleCount: 200,
   userLocation: null,
   activeRegion: null,
+  regionKey: "bergensregionen",
   map: null,
   mapMarkers: [],
   mapViewKey: "",
@@ -43,6 +44,9 @@ const tradePresets = [
   "bolig",
 ];
 
+// Midlertidig visning av regionvalg. Valget kobles til kundens faste region senere.
+const illustrationRegions = ["Bergensregionen", "Stavangerregionen"];
+
 const savedFiltersKey = "byggradar.filters.v1";
 const markedProjectsKey = "byggradar.markedProjects.v1";
 const authSessionKey = "byggradar.session.v1";
@@ -76,7 +80,24 @@ const locationRegions = [
       "Tysnes kommune",
     ],
   },
+  {
+    id: "stavangerregionen",
+    name: "Stavangerregionen",
+    anchor: { lat: 58.9700, lon: 5.7331 },
+    municipalities: [
+      "Stavanger kommune", "Sandnes kommune", "Sola kommune", "Randaberg kommune",
+      "Klepp kommune", "Time kommune", "Hå kommune", "Gjesdal kommune",
+      "Strand kommune", "Kvitsøy kommune", "Hjelmeland kommune", "Bjerkreim kommune",
+      "Eigersund kommune", "Suldal kommune", "Sirdal kommune", "Lund kommune",
+      "Sokndal kommune",
+    ],
+  },
 ];
+
+const regionDataPaths = {
+  bergensregionen: "/data/regions/bergensregionen",
+  stavangerregionen: "/data/regions/stavangerregionen",
+};
 
 const municipalityMapAnchors = {
   "bergen": { lat: 60.39299, lon: 5.32415 },
@@ -247,12 +268,13 @@ function renderLogin() {
 
 async function loadProjects() {
   const cacheBust = `t=${Date.now()}`;
+  const dataPath = regionDataPaths[state.regionKey] || regionDataPaths.bergensregionen;
   const [locationData, contactData] = await Promise.all([
-    fetch(`/data/projects_location_enriched.json?${cacheBust}`).then((response) => {
+    fetch(`${dataPath}/projects_location_enriched.json?${cacheBust}`).then((response) => {
       if (!response.ok) throw new Error(`Kunne ikke hente prosjektdata (${response.status})`);
       return response.json();
     }),
-    fetch(`/data/projects_contact_enriched.json?${cacheBust}`).then((response) => {
+    fetch(`${dataPath}/projects_contact_enriched.json?${cacheBust}`).then((response) => {
       if (!response.ok) throw new Error(`Kunne ikke hente kontaktdata (${response.status})`);
       return response.json();
     }),
@@ -437,6 +459,15 @@ function renderShell() {
           <div class="subtle" id="summaryText" tabindex="0">Laster prosjekter...</div>
         </div>
         <div class="top-actions">
+          <label class="region-picker">
+            <span>Region</span>
+            <select id="regionIllustration" class="filter-select" aria-label="Velg region">
+              ${illustrationRegions.map((region) => {
+                const regionId = locationRegions.find((item) => item.name === region)?.id || "bergensregionen";
+                return `<option value="${escapeHtml(regionId)}" ${regionId === state.regionKey ? "selected" : ""}>${escapeHtml(region)}</option>`;
+              }).join("")}
+            </select>
+          </label>
           <button class="help-pill" id="helpPill" type="button" aria-label="Råd om bruk av ByggRadar">Råd</button>
         </div>
       </header>
@@ -444,7 +475,10 @@ function renderShell() {
       <section class="filters" aria-label="Filtre">
         <label class="search-field">
           <span>Fag/oppdragstype</span>
-          <input id="tradeInput" type="search" placeholder="f.eks. elektro, tømrer, grunnarbeid" autocomplete="off" />
+          <select id="tradeInput" class="filter-select" aria-label="Velg fag eller oppdragstype">
+            <option value="">Alle fag og oppdragstyper</option>
+            ${tradePresets.map((value) => `<option value="${escapeHtml(value)}">${escapeHtml(value[0].toUpperCase() + value.slice(1))}</option>`).join("")}
+          </select>
         </label>
         <div class="area-control">
           <label class="search-field">
@@ -455,7 +489,6 @@ function renderShell() {
         </div>
         <div class="region-notice" id="regionNotice" aria-live="polite"></div>
 
-        <div class="chip-row" id="tradePresets"></div>
       </section>
 
       <section class="workspace">
@@ -475,6 +508,21 @@ function renderShell() {
   `;
 
   const helpText = "Forslag: Velg fag og område først, åpne de mest relevante prosjektene, og kontakt tiltakshaver eller ansvarlig aktør tidlig. Start kort: Hei, jeg ser at dere har et prosjekt på gang i [adresse]. Vi jobber med [fag], og kan raskt avklare om vi kan bidra i planlegging eller utførelse. Ønsker dere at jeg sender en kort presentasjon eller tar en rask prat?";
+  document.querySelector("#regionIllustration")?.addEventListener("change", async (event) => {
+    const selected = event.target.value;
+    if (!regionDataPaths[selected] || selected === state.regionKey) return;
+    state.regionKey = selected;
+    state.activeRegion = locationRegions.find((region) => region.id === selected) || null;
+    state.area = "";
+    state.selected = null;
+    state.visibleCount = standardProjectLimit;
+    saveFilters();
+    const notice = document.querySelector("#regionNotice");
+    if (notice) notice.textContent = "Laster valgt region ...";
+    await loadProjects();
+    state.filtered = filterProjects();
+    render();
+  });
   const helpPill = document.querySelector("#helpPill");
   helpPill.setAttribute("aria-expanded", "false");
   helpPill.addEventListener("click", () => {
@@ -499,7 +547,7 @@ function renderShell() {
 
 function bindInput(id, key) {
   const input = document.querySelector(`#${id}`);
-  input.addEventListener("input", () => {
+  const update = () => {
     state[key] = input.value;
     if (key === "area") {
       state.userLocation = null;
@@ -508,7 +556,8 @@ function bindInput(id, key) {
     state.visibleCount = standardProjectLimit;
     saveFilters();
     render();
-  });
+  };
+  input.addEventListener(input.tagName === "SELECT" ? "change" : "input", update);
 }
 
 function render() {
@@ -529,23 +578,7 @@ function render() {
   document.body.dataset.map = "closed";
   renderRegionNotice();
 
-  renderPresetChips("tradePresets", tradePresets, (value) => {
-    state.trade = toggleTextValue(state.trade, value);
-    document.querySelector("#tradeInput").value = state.trade;
-    state.visibleCount = standardProjectLimit;
-    saveFilters();
-  });
-
   renderList();
-}
-
-function renderPresetChips(id, values, onClick) {
-  const element = document.querySelector(`#${id}`);
-  element.innerHTML = values.map((value) => `<button class="chip" type="button" data-value="${escapeHtml(value)}">${escapeHtml(value)}</button>`).join("");
-  element.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => {
-    onClick(button.dataset.value);
-    render();
-  }));
 }
 
 function renderRegionNotice() {
@@ -1616,31 +1649,32 @@ function standardDeliveryProjects() {
   const ranked = state.filtered.slice();
   if (ranked.length <= standardProjectLimit) return ranked;
 
-  // Behold rangeringen, men sørg for at en kommune med aktive prosjekter
-  // ikke forsvinner helt fra standardleveransen fordi andre kommuner har
-  // flere høyt rangerte saker. Dette er også grunnlaget for kartprikkene.
-  const municipalityRepresentatives = [];
-  const includedIds = new Set();
-  const municipalities = new Set(
-    ranked
-      .map((project) => normalizeMunicipalityName(project.municipality))
-      .filter(Boolean),
-  );
-
-  municipalities.forEach((municipality) => {
-    const representative = ranked.find((project) => (
-      normalizeMunicipalityName(project.municipality) === municipality
-    ));
-    if (representative) {
-      municipalityRepresentatives.push(representative);
-      includedIds.add(representative.id);
-    }
+  // Fordel kartgrunnlaget mellom kommunene. Prosjektene står fortsatt i
+  // aktualitetsrekkefølge internt i hver kommune, men én stor kommune skal
+  // ikke fylle hele 200-grensen og gjøre Øygarden, Askøy, Osterøy med flere
+  // nesten usynlige i kartet.
+  const groups = new Map();
+  ranked.forEach((project) => {
+    const municipality = normalizeMunicipalityName(project.municipality) || "ukjent kommune";
+    if (!groups.has(municipality)) groups.set(municipality, []);
+    groups.get(municipality).push(project);
   });
 
-  return [
-    ...municipalityRepresentatives,
-    ...ranked.filter((project) => !includedIds.has(project.id)),
-  ].slice(0, standardProjectLimit);
+  const balanced = [];
+  let offset = 0;
+  let added = true;
+  while (balanced.length < standardProjectLimit && added) {
+    added = false;
+    for (const projects of groups.values()) {
+      const project = projects[offset];
+      if (!project) continue;
+      balanced.push(project);
+      added = true;
+      if (balanced.length >= standardProjectLimit) break;
+    }
+    offset += 1;
+  }
+  return balanced;
 }
 
 function visibleDeliveryProjects() {
@@ -2154,7 +2188,7 @@ function compactText(value) {
 }
 
 function saveFilters() {
-  writeSavedValue(savedFiltersKey, JSON.stringify({ trade: state.trade, area: state.area, regionId: state.activeRegion?.id || "" }));
+  writeSavedValue(savedFiltersKey, JSON.stringify({ trade: state.trade, area: state.area, regionId: state.activeRegion?.id || "", regionKey: state.regionKey }));
 }
 
 function restoreSavedFilters() {
@@ -2162,13 +2196,16 @@ function restoreSavedFilters() {
     const saved = JSON.parse(readSavedValue(savedFiltersKey) || "{}");
     state.trade = saved.trade || "";
     state.area = /^min posisjon|^region ved min posisjon/i.test(saved.area || "") ? "" : saved.area || "";
-    state.activeRegion = locationRegions.find((region) => region.id === saved.regionId) || findRegionByText(state.area);
+    state.regionKey = regionDataPaths[saved.regionKey] ? saved.regionKey : "bergensregionen";
+    state.activeRegion = locationRegions.find((region) => region.id === state.regionKey) || findRegionByText(state.area);
     document.querySelector("#tradeInput").value = state.trade;
     document.querySelector("#areaInput").value = state.area;
+    document.querySelector("#regionIllustration").value = state.regionKey;
   } catch {
     state.trade = "";
     state.area = "";
-    state.activeRegion = null;
+    state.regionKey = "bergensregionen";
+    state.activeRegion = locationRegions.find((region) => region.id === state.regionKey) || null;
   }
 }
 

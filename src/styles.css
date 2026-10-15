@@ -257,6 +257,21 @@ a {
   border-bottom: 1px solid #d3e3ef;
 }
 
+.region-picker {
+  display: grid;
+  gap: 4px;
+  min-width: 170px;
+  color: #587184;
+  font-size: 0.72rem;
+  font-weight: 680;
+}
+
+.region-picker .filter-select {
+  min-width: 170px;
+  height: 38px;
+  font-size: 0.84rem;
+}
+
 .search-field {
   display: grid;
   gap: 5px;
@@ -277,6 +292,29 @@ a {
 }
 
 .search-field input:focus {
+  border-color: #5a9dcc;
+  box-shadow: 0 0 0 3px rgba(90, 157, 204, 0.16);
+}
+
+.filter-select {
+  width: 100%;
+  height: 42px;
+  border: 1px solid #b9d2e4;
+  border-radius: 8px;
+  padding: 0 38px 0 12px;
+  color: #173b55;
+  background-color: #ffffff;
+  background-image: linear-gradient(45deg, transparent 50%, #39769d 50%), linear-gradient(135deg, #39769d 50%, transparent 50%);
+  background-position: calc(100% - 17px) 18px, calc(100% - 12px) 18px;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  outline: none;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.92rem;
+}
+
+.filter-select:focus {
   border-color: #5a9dcc;
   box-shadow: 0 0 0 3px rgba(90, 157, 204, 0.16);
 }
