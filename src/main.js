@@ -150,6 +150,7 @@ const approvedMunicipalityHosts = new Set([
   "alver.kommune.no",
   "austrheim.kommune.no",
   "bjornafjorden.kommune.no",
+  "www.bjornafjorden.kommune.no",
   "fedje.kommune.no",
   "gulen.kommune.no",
   "innsyn.sing.no",
