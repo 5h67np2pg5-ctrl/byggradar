@@ -17,6 +17,34 @@ const mime = {
 const server = http.createServer(async (request, response) => {
   try {
     const url = new URL(request.url || "/", `http://${host}:${port}`);
+
+    if (url.pathname === "/api/geocode") {
+      const allowedKeys = [
+        "sok",
+        "kommunenummer",
+        "gardsnummer",
+        "bruksnummer",
+        "festenummer",
+        "undernummer",
+        "treffPerSide",
+        "utkoordsys",
+        "filtrer",
+      ];
+      const query = new URLSearchParams();
+      allowedKeys.forEach((key) => {
+        const value = url.searchParams.get(key);
+        if (value) query.set(key, value);
+      });
+      const kartverket = await fetch(`https://api.kartverket.no/adresser/v1/sok?${query}`);
+      const body = await kartverket.text();
+      response.writeHead(kartverket.status, {
+        "content-type": kartverket.headers.get("content-type") || "application/json; charset=utf-8",
+        "cache-control": "no-store",
+      });
+      response.end(body);
+      return;
+    }
+
     const safePath = path.normalize(decodeURIComponent(url.pathname)).replace(/^(\.\.[/\\])+/, "");
     let requested = safePath === "/" ? "/index.html" : safePath;
     if (requested === "/app.js") requested = "/src/main.js";
