@@ -2489,7 +2489,7 @@ function updateCustomerMunicipalityOptions() {
     : "";
   if (selected !== state.customerMunicipality) state.customerMunicipality = selected;
   select.innerHTML = [
-    `<option value="">Velg kommune for nærhetsrangering</option>`,
+    `<option value="">Velg kommune</option>`,
     ...municipalities.map((municipality) => {
       const value = normalizeMunicipalityName(municipality);
       return `<option value="${escapeHtml(value)}" ${value === selected ? "selected" : ""}>${escapeHtml(municipality)}</option>`;
