@@ -230,6 +230,7 @@ const officialMunicipalitySources = {
   "vaksdal": "https://www.vaksdal.kommune.no/f85858ea-00aa-4140-b0f5-e9b1d9c05e16",
   "voss": "https://voss.herad.no/administrasjon/postliste-og-innsyn-i-arkiv/sok/",
   "øygarden": "https://www.oygarden.kommune.no/tjenester/innsyn-og-naring/innsyn/postliste/",
+  "etne": "https://www.etne.kommune.no/om-kommunen/innsyn/sok/",
 };
 
 const approvedMunicipalityHosts = new Set([
@@ -253,6 +254,7 @@ const approvedMunicipalityHosts = new Set([
   "bergen.kommune.no",
   "voss.herad.no",
   "oygarden.kommune.no",
+  "etne.kommune.no",
 ]);
 
 const stageRank = {
@@ -919,6 +921,12 @@ function projectSourceUrl(project) {
 
   if (municipality.includes("alver")) {
     return alverSearchUrl(project);
+  }
+
+  // Etne har egen innsynsportal. Ikke bruk eventuelle eldre dokumentlenker
+  // fra Vindafjord-portalen på Etne-prosjekter.
+  if (municipality.includes("etne")) {
+    return officialMunicipalitySource("Etne kommune");
   }
 
   // Kvam leverer direkte sakslenker i rådataene. Bruk denne når den finnes,
