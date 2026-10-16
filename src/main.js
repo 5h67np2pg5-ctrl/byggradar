@@ -115,6 +115,10 @@ const locationRegions = [
   },
 ];
 
+const coveredMunicipalityCount = new Set(
+  locationRegions.flatMap((region) => region.municipalities.map((municipality) => normalizeMunicipalityName(municipality))),
+).size;
+
 const regionDataPaths = {
   bergensregionen: "/data/regions/bergensregionen",
   stavangerregionen: "/data/regions/stavangerregionen",
@@ -564,7 +568,7 @@ function renderShell() {
       <header class="topbar">
         <div class="topbar-copy">
           <div class="brand">ByggRadar</div>
-          <div class="national-project-count" id="nationalProjectCount">Laster registrerte og aktive byggprosjekter...</div>
+          <div class="national-project-count" id="nationalProjectCount">Laster registrerte og aktive byggprosjekter fra ${coveredMunicipalityCount} kommuner...</div>
           <div class="subtle" id="summaryText" tabindex="0">Laster prosjekter...</div>
         </div>
         <div class="top-actions">
@@ -703,7 +707,7 @@ function render() {
   const totalProjectCount = regionSummaryTotalCount();
   const nationalProjectCount = document.querySelector("#nationalProjectCount");
   if (nationalProjectCount) {
-    nationalProjectCount.textContent = `${state.allRegionProjectCount.toLocaleString("nb-NO")} registrerte og aktive byggprosjekter`;
+    nationalProjectCount.textContent = `${state.allRegionProjectCount.toLocaleString("nb-NO")} registrerte og aktive byggprosjekter fra ${coveredMunicipalityCount} kommuner`;
   }
   if (summaryText) {
     summaryText.textContent = "";
