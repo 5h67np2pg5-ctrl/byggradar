@@ -1340,11 +1340,10 @@ function bindFullMapTouchGuards() {
 }
 
 function mapPointProjects() {
-  // Kartet skal ikke miste prosjekter fordi de ligger utenfor de 200 første
-  // i listen. Alle prosjekter i regionutvalget får enten eksakt punkt,
-  // Kartverket-punkt eller et kontrollert kommuneanker.
-  const sourceProjects = state.filtered.length ? state.filtered : state.projects;
-  return sourceProjects
+  // Kartet følger standardleveransen: bare de 200 prosjektene som vises i
+  // hovedlisten skal ha synlige prikker. Alle prosjekter kan likevel ha
+  // lagret kartposisjon i datagrunnlaget og kommer inn når de blir aktive.
+  return standardDeliveryProjects()
     .map((project) => projectMapPoint(project))
     .filter(Boolean);
 }
