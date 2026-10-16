@@ -455,9 +455,11 @@ function normalizeProject(project, contactProject, index) {
   const date = project.documentDate || project.deadline || project.recordedDate || "";
   const hasMapPoint = trustedLocationPoint(location)
     && validMapCoordinate(location.latitude || project.latitude || project.lat, location.longitude || project.longitude || project.lon);
-  const contact = contactProject?.displayContact || null;
+  const contactSelection = selectProjectContacts(project, contactProject);
+  const contact = contactSelection.primary;
+  const authorityContact = contactSelection.authority;
   const actors = projectActors(project, contactProject);
-  const contactQuality = assessContactQuality(contact, actors, project.hasAnonymizedActor);
+  const contactQuality = assessContactQuality(contact, actors, project.hasAnonymizedActor, authorityContact);
   const lookupSubject = contactLookupSubject(project, place, actors, contact);
   const isPostlistEntry = project.sourceStream === "postlister_allemannsdata";
 
@@ -509,6 +511,9 @@ function normalizeProject(project, contactProject, index) {
     procurementContactName: project.contactName || "",
     deadline: project.deadline || "",
     contact,
+    contactRole: contactSelection.role,
+    authorityContact,
+    contactCandidates: contactSelection.candidates,
     contacts: contactProject?.contacts || [],
     actors,
     contactQuality,
@@ -846,14 +851,7 @@ function renderExpandedProject(project) {
           </dl>
           <div class="expanded-text">${escapeHtml(project.description || "Ingen ekstra prosjektinfo funnet.")}</div>
           ${project.isExpandedPreview ? renderExpandedPreviewFields(project) : ""}
-          ${project.contact ? `
-            <div class="contact-line">
-              <strong>${escapeHtml(project.contact.name || "Virksomhet")}</strong>
-              ${project.contact.phone ? `<a href="tel:${phone}">T: ${escapeHtml(project.contact.phone)}</a>` : `<span>Telefon ikke funnet</span>`}
-              ${project.contact.email ? `<a class="generated-mail-link" href="${escapeHtml(emailHref)}" title="Vil du sende mail?" aria-label="Vil du sende mail? E-post til ${escapeHtml(project.contact.email)}">E: ${escapeHtml(project.contact.email)}</a>` : ""}
-              ${project.contact.website ? `<a href="${escapeHtml(project.contact.website)}" target="_blank" rel="noreferrer">Nettside</a>` : ""}
-            </div>
-          ` : `<div class="contact-line muted">Ingen virksomhetskontakt funnet.</div>`}
+          ${renderProjectContact(project, { compact: true })}
         </div>
         ${projectCanOpenMap(project) ? `
           <button class="mini-map-card" type="button" aria-label="Åpne kart for prosjektet">
@@ -865,6 +863,31 @@ function renderExpandedProject(project) {
       </div>
     </div>
   `;
+}
+
+function renderProjectContact(project, { compact = false } = {}) {
+  const contact = project.contact;
+  const authority = project.authorityContact;
+  if (!contact && authority) {
+    const phone = authority.phone ? normalizePhone(authority.phone) : "";
+    return `<div class="contact-line authority-contact">
+      <strong>${contactRoleLabel("authority")}</strong>
+      <span>${escapeHtml(authority.name || project.municipality || "Kommunen")}</span>
+      ${authority.phone ? `<a href="tel:${phone}">T: ${escapeHtml(authority.phone)}</a>` : ""}
+      ${authority.email ? `<span>E: ${escapeHtml(authority.email)}</span>` : ""}
+      <small>Ansvarlig søker eller tiltakshaver er ikke identifisert.</small>
+    </div>`;
+  }
+  if (!contact) return `<div class="contact-line muted">Ingen prosjektkontakt funnet.</div>`;
+  const phone = contact.phone ? normalizePhone(contact.phone) : "";
+  const emailHref = contact.email ? projectMailtoHref(project) : "";
+  return `<div class="contact-line project-contact">
+    <strong>${escapeHtml(contactRoleLabel(project.contactRole))}</strong>
+    <span>${escapeHtml(contact.name || "Virksomhet")}</span>
+    ${contact.phone ? `<a href="tel:${phone}">T: ${escapeHtml(contact.phone)}</a>` : `<span>Telefon ikke funnet</span>`}
+    ${contact.email && emailHref ? `<a class="generated-mail-link" href="${escapeHtml(emailHref)}" title="Vil du sende mail?" aria-label="Vil du sende mail? E-post til ${escapeHtml(contact.email)}">E: ${escapeHtml(contact.email)}</a>` : contact.email ? `<span>E: ${escapeHtml(contact.email)}</span>` : ""}
+    ${contact.website ? `<a href="${escapeHtml(contact.website)}" target="_blank" rel="noreferrer">Nettside</a>` : ""}
+  </div>`;
 }
 
 function renderExpandedPreviewFields(project) {
@@ -1031,6 +1054,7 @@ function isApprovedMunicipalitySource(value) {
 function renderContactQuality(project) {
   const sources = project.contactLookupSources || [];
   const missingPhone = !project.contact?.phone;
+  const missingProjectContact = !project.contact && (project.authorityContact || ["unknown", "private"].includes(project.contactQuality.level));
   const aiSearch = sources.find((source) => source.label === "AI-søk");
   const phoneSearchSubject = phoneLookupSubject(project) || "aktøren";
   const aiResult = state.aiSearchResults.get(project.id);
@@ -1041,6 +1065,12 @@ function renderContactQuality(project) {
         <strong>${escapeHtml(project.contactQuality.label)}</strong>
         <span>${escapeHtml(project.contactQuality.message)}</span>
       </div>
+      ${missingProjectContact ? `
+        <div class="missing-project-contact">
+          <span>Søker eller ansvarlig aktør er ikke identifisert i prosjektdataene. Se sakspapirene for informasjon om søker, tiltakshaver og prosjektet.</span>
+          ${project.sourceUrl ? `<a class="full-case-link" href="${escapeHtml(project.sourceUrl)}" target="_blank" rel="noreferrer">Se i sakspapirer</a>` : ""}
+        </div>
+      ` : ""}
       ${project.actors.length ? `
         <div class="actor-line">
           Aktør: ${project.actors.slice(0, 3).map((actor) => escapeHtml(actor.name)).join(", ")}
@@ -1916,7 +1946,7 @@ function renderDetails() {
 
     <div class="detail-actions">
       ${phone ? `<a class="primary-action" href="tel:${phone}">Ring</a>` : ""}
-      ${project.contact?.email ? `<a class="primary-action generated-mail-link" href="${escapeHtml(emailHref)}" title="Vil du sende mail?" aria-label="Vil du sende mail? E-post til ${escapeHtml(project.contact.email)}">E-post</a>` : ""}
+      ${project.contact?.email && emailHref ? `<a class="primary-action generated-mail-link" href="${escapeHtml(emailHref)}" title="Vil du sende mail?" aria-label="Vil du sende mail? E-post til ${escapeHtml(project.contact.email)}">E-post</a>` : ""}
     </div>
 
     <dl class="facts">
@@ -1926,15 +1956,10 @@ function renderDetails() {
       <div><dt>Markedsområde</dt><dd>${escapeHtml(project.marketArea)}</dd></div>
     </dl>
 
-    ${project.contact ? `
-      <section class="contact-box">
-        <h2>Kontakt</h2>
-        <strong>${escapeHtml(project.contact.name || "Virksomhet")}</strong>
-        <div>${project.contact.phone ? `T: ${escapeHtml(project.contact.phone)}` : "Telefon ikke funnet"}</div>
-        <div>${project.contact.email ? `E: <a class="generated-mail-link" href="${escapeHtml(emailHref)}" title="Vil du sende mail?" aria-label="Vil du sende mail? E-post til ${escapeHtml(project.contact.email)}">${escapeHtml(project.contact.email)}</a>` : ""}</div>
-        <div>${project.contact.website ? `<a href="${escapeHtml(project.contact.website)}" target="_blank" rel="noreferrer">${escapeHtml(project.contact.website)}</a>` : ""}</div>
-      </section>
-    ` : `<section class="contact-box muted">Ingen virksomhetskontakt funnet.</section>`}
+    <section class="contact-box">
+      <h2>Kontakt</h2>
+      ${renderProjectContact(project)}
+    </section>
 
     <section class="description">
       <h2>Prosjektinfo</h2>
@@ -2126,6 +2151,14 @@ function actualityScore(value) {
 
 function projectActors(project, contactProject) {
   const rawActors = [
+    project.responsibleApplicant,
+    project.responsibleApplicantName,
+    project.applicant,
+    project.applicantName,
+    project.applicantCompany,
+    project.developer,
+    project.owner,
+    project.contactName,
     contactProject?.displayContact?.name,
     ...(contactProject?.contacts || []).map((contact) => contact.name || contact.queryName),
     project.toOrg,
@@ -2140,7 +2173,7 @@ function projectActors(project, contactProject) {
     .slice(0, 6);
 }
 
-function assessContactQuality(contact, actors, hasAnonymizedActor) {
+function assessContactQuality(contact, actors, hasAnonymizedActor, authorityContact) {
   if (contact?.phone && contact?.email) {
     return {
       level: "complete",
@@ -2154,6 +2187,14 @@ function assessContactQuality(contact, actors, hasAnonymizedActor) {
       level: "partial",
       label: "Kontakt delvis funnet",
       message: contact.phone ? "Telefon er funnet, e-post mangler." : "E-post er funnet, telefon mangler.",
+      needsExternalLookup: true,
+    };
+  }
+  if (authorityContact) {
+    return {
+      level: "authority",
+      label: "Kun kommunal kontakt funnet",
+      message: "Kommunens kontakt er vist som informasjonskilde. Ansvarlig søker eller tiltakshaver er ikke identifisert.",
       needsExternalLookup: true,
     };
   }
@@ -2187,9 +2228,68 @@ function contactLineSummary(contactQuality) {
     partial: "kontakt delvis",
     missing: "kontakt må finnes",
     private: "privat/anonymisert",
+    authority: "kun kommunal kontakt",
     unknown: "kontakt uklar",
   };
   return labels[contactQuality.level] || "kontakt uklar";
+}
+
+function selectProjectContacts(project, contactProject) {
+  const candidates = uniqueByKey([
+    contactProject?.displayContact,
+    ...(contactProject?.contacts || []),
+    {
+      name: project.contactName || "",
+      phone: project.contactPhone || "",
+      email: project.contactEmail || "",
+      website: project.contactWebsite || "",
+    },
+  ].filter((contact) => contact && (contact.name || contact.phone || contact.email)), (contact) => normalize(`${contact.name}|${contact.email}|${contact.phone}`));
+
+  const authority = candidates.find((contact) => isMunicipalContact(contact, project)) || null;
+  const primary = candidates.find((contact) => !isMunicipalContact(contact, project)) || null;
+  const role = primary ? contactRoleForProject(primary, project) : authority ? "authority" : "unknown";
+  return { primary, authority, candidates, role };
+}
+
+function isMunicipalContact(contact, project = {}) {
+  const name = normalize(contact?.name || contact?.queryName || "");
+  const email = normalize(contact?.email || "");
+  const website = normalize(contact?.website || "");
+  const organizationForm = normalize(contact?.organizationForm || "");
+  const municipality = normalize(project.municipality || "").replace(/[^a-z0-9]+/g, "");
+  const emailDomain = email.split("@")[1] || "";
+  const municipalityDomain = municipality && emailDomain.includes(municipality);
+
+  return organizationForm === "komm" ||
+    /\b(kommune|herad|fylkeskommune)\b/.test(name) ||
+    /\.(kommune|herad)\.no$/.test(emailDomain) ||
+    municipalityDomain && /^(post|postmottak|byggesak|servicetorg|info)@/.test(email) ||
+    /\.(kommune|herad)\.no/.test(website);
+}
+
+function contactRoleForProject(contact, project) {
+  const text = normalize([
+    contact?.role,
+    contact?.title,
+    project.responsibleApplicant,
+    project.responsibleApplicantName,
+    project.applicant,
+    project.applicantName,
+    project.applicantCompany,
+  ].filter(Boolean).join(" "));
+  if (/ansvarlig soker|ansvarleg sokjar|soker/.test(text)) return "responsible_applicant";
+  if (/tiltakshaver|utvikler|developer|eier|owner/.test(text)) return "applicant";
+  return "company";
+}
+
+function contactRoleLabel(role) {
+  return {
+    responsible_applicant: "Ansvarlig søker",
+    applicant: "Tiltakshaver/utvikler",
+    company: "Virksomhetskontakt",
+    authority: "Kommunens kontakt",
+  }[role] || "Kontakt";
 }
 
 function contactLookupSubject(project, place, actors, contact) {
@@ -2482,6 +2582,7 @@ function normalizePhone(value) {
 }
 
 function projectMailtoHref(project) {
+  if (project.contactRole === "authority" || !project.contact) return "";
   const email = String(project.contact?.email || "").trim();
   if (!email) return "";
   const subject = `Vedr. prosjektet i ${projectMailPlace(project)}`;
