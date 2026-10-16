@@ -1,6 +1,7 @@
 const state = {
   projects: [],
   rawProjectCount: 0,
+  allRegionProjectCount: 0,
   filtered: [],
   selected: null,
   trade: "",
@@ -171,6 +172,36 @@ const municipalityNumbers = {
   "fedje": "4633",
   "masfjorden": "4634",
   "gulen": "4635",
+  "kvinnherad": "4617",
+  "stord": "4614",
+  "fitjar": "4615",
+  "bømlo": "4613",
+  "sveio": "4612",
+  "haugesund": "1106",
+  "karmøy": "1149",
+  "tysvær": "1146",
+  "bokn": "1145",
+  "utsira": "1151",
+  "vindafjord": "1160",
+  "etne": "4611",
+  "sauda": "1135",
+  "stavanger": "1103",
+  "sandnes": "1108",
+  "sola": "1124",
+  "randaberg": "1127",
+  "klepp": "1120",
+  "time": "1121",
+  "hå": "1119",
+  "gjesdal": "1122",
+  "strand": "1130",
+  "kvitsøy": "1144",
+  "hjelmeland": "1133",
+  "bjerkreim": "1114",
+  "eigersund": "1101",
+  "suldal": "1134",
+  "sirdal": "4228",
+  "lund": "1112",
+  "sokndal": "1111",
 };
 
 const sourceLabels = {
@@ -315,7 +346,7 @@ function renderLogin() {
 async function loadProjects() {
   const cacheBust = `t=${Date.now()}`;
   const dataPath = regionDataPaths[state.regionKey] || regionDataPaths.bergensregionen;
-  const [locationData, contactData] = await Promise.all([
+  const [locationData, contactData, regionCountData] = await Promise.all([
     fetch(`${dataPath}/projects_location_enriched.json?${cacheBust}`).then((response) => {
       if (!response.ok) throw new Error(`Kunne ikke hente prosjektdata (${response.status})`);
       return response.json();
@@ -324,12 +355,20 @@ async function loadProjects() {
       if (!response.ok) throw new Error(`Kunne ikke hente kontaktdata (${response.status})`);
       return response.json();
     }),
+    fetch(`/data/region_project_counts.json?${cacheBust}`).then((response) => {
+      if (!response.ok) throw new Error(`Kunne ikke hente regional prosjektstatus (${response.status})`);
+      return response.json();
+    }),
   ]);
 
   const contacts = new Map((contactData.projects || []).map((project) => [project.projectId, project]));
   const rawProjects = locationData.projects || [];
   const normalizedProjects = rawProjects.map((project, index) => normalizeProject(project, contacts.get(project.sourceDocumentId), index));
   state.rawProjectCount = normalizedProjects.length;
+  state.allRegionProjectCount = Object.values(regionCountData.regions || {})
+    .map((count) => Number(count))
+    .filter(Number.isFinite)
+    .reduce((sum, count) => sum + count, 0);
   state.projects = deduplicateProjects(normalizedProjects);
   // Utvidet prosjektinformasjon er nå tilgjengelig på alle prosjekter.
   // Feltene filtreres i renderExpandedPreviewFields slik at tomme etiketter aldri vises.
@@ -405,10 +444,11 @@ function normalizeProject(project, contactProject, index) {
   const projectTypes = classification.projectTypes || [];
   const tradeRelevance = project.tradeRelevance || projectTypes.join("; ") || inferTrade(title, project.documentTitle, project.caseTitle);
   const marketRole = project.marketRole || (project.sourceStream === "bane_nor_procurement_plan" ? "external" : "external");
-  const address = validAddressCandidate(location.address) || validAddressCandidate(project.address) || "";
+  const address = extractAddressFromProject(project, location);
   const place = address || project.location || project.municipality || project.marketArea || "Ukjent sted";
   const date = project.documentDate || project.deadline || project.recordedDate || "";
-  const hasMapPoint = Boolean(location.hasMapPoint);
+  const hasMapPoint = trustedLocationPoint(location)
+    && validMapCoordinate(location.latitude || project.latitude || project.lat, location.longitude || project.longitude || project.lon);
   const contact = contactProject?.displayContact || null;
   const actors = projectActors(project, contactProject);
   const contactQuality = assessContactQuality(contact, actors, project.hasAnonymizedActor);
@@ -522,6 +562,7 @@ function renderShell() {
       <header class="topbar">
         <div class="topbar-copy">
           <div class="brand">ByggRadar</div>
+          <div class="national-project-count" id="nationalProjectCount">Aktive prosjekter listet i NBR: Laster...</div>
           <div class="subtle" id="summaryText" tabindex="0">Laster prosjekter...</div>
         </div>
         <div class="top-actions">
@@ -658,6 +699,10 @@ function render() {
   const summaryText = document.querySelector("#summaryText");
   const regionName = state.activeRegion?.name || locationRegions.find((region) => region.id === state.regionKey)?.name || "valgt region";
   const totalProjectCount = regionSummaryTotalCount();
+  const nationalProjectCount = document.querySelector("#nationalProjectCount");
+  if (nationalProjectCount) {
+    nationalProjectCount.textContent = `Aktive prosjekter listet i NBR: ${state.allRegionProjectCount.toLocaleString("nb-NO")}`;
+  }
   if (summaryText) {
     summaryText.textContent = "";
     summaryText.dataset.tooltip = deliveryInfoText();
@@ -1295,10 +1340,11 @@ function bindFullMapTouchGuards() {
 }
 
 function mapPointProjects() {
-  // Kartet skal følge standardleveransen nøyaktig: maksimalt 200 prosjekter
-  // fra samme utvalg som vises i hovedlisten. Ekstra prosjekter som lastes
-  // manuelt skal derfor ikke få egne kartprikker.
-  return standardDeliveryProjects()
+  // Kartet skal ikke miste prosjekter fordi de ligger utenfor de 200 første
+  // i listen. Alle prosjekter i regionutvalget får enten eksakt punkt,
+  // Kartverket-punkt eller et kontrollert kommuneanker.
+  const sourceProjects = state.filtered.length ? state.filtered : state.projects;
+  return sourceProjects
     .map((project) => projectMapPoint(project))
     .filter(Boolean);
 }
@@ -1316,7 +1362,7 @@ function activeMapProjects() {
 
 function projectMapPoint(project) {
   if (!project) return null;
-  if (project.hasMapPoint && project.lat && project.lon) return project;
+  if (project.hasMapPoint && validMapCoordinate(project.lat, project.lon)) return project;
   const anchor = projectMapAnchor(project);
   if (!anchor) return null;
   const offset = stableMapOffset(project.id);
@@ -1326,7 +1372,38 @@ function projectMapPoint(project) {
     lon: anchor.lon + offset.lon,
     hasMapPoint: true,
     isMunicipalityFallbackPoint: true,
+    mapPointSource: "municipality-fallback",
   };
+}
+
+function validMapCoordinate(latitude, longitude) {
+  const lat = Number(latitude);
+  const lon = Number(longitude);
+  return Number.isFinite(lat) && Number.isFinite(lon)
+    && lat >= 57 && lat <= 72 && lon >= 3 && lon <= 32;
+}
+
+function trustedLocationPoint(location = {}) {
+  return ["Kartverket Adresse-API", "Kartverket Eiendom-API"].includes(String(location.addressSource || ""));
+}
+
+function extractAddressFromProject(project, location = {}) {
+  const explicit = [location.address, project.address]
+    .map(validAddressCandidate)
+    .find(Boolean);
+  if (explicit) return explicit;
+
+  // Kommunale kilder legger ofte adressen i sakstittel eller dokumenttekst.
+  // Hent bare gatenavn med husnummer, slik at gnr/bnr og statusord ikke blir
+  // sendt til adresseoppslaget som om de var adresser.
+  const streetPattern = /\b([A-ZÆØÅ][\p{L}.'-]*(?:\s+[A-ZÆØÅ][\p{L}.'-]*)*\s+(?:vegen|veien|veg|vei|gata|gate|gaten|plassen|bakken|haugen|lia|marka|åsen|stien|tunet|hagen|holmen|myra|odden|berget|toppen|jordet))\s+(\d+[A-Za-z]?)\b/iu;
+  const candidates = [project.caseTitle, project.shortFacts, project.documentTitle, project.title, project.description];
+  for (const candidate of candidates) {
+    const match = String(candidate || "").match(streetPattern);
+    const address = validAddressCandidate(match?.[0] || "");
+    if (address) return address;
+  }
+  return "";
 }
 
 function extractMatrikkelFromProject(project) {
@@ -1345,68 +1422,85 @@ async function resolveMissingMapPoints(projects) {
   const candidates = sourceProjects.filter((project) => !project.hasMapPoint && hasMapLookupValue(project));
   if (!candidates.length) return false;
 
-  const results = await Promise.all(candidates.map((project) => geocodeProject(project)));
-  return results.some(Boolean);
+  let changed = false;
+  // Hold Kartverket-belastningen kontrollert når en region har mange saker.
+  // Kommuneankeret vises umiddelbart, mens eksakte treff erstatter det i puljer.
+  for (let index = 0; index < candidates.length; index += 16) {
+    const batch = candidates.slice(index, index + 16);
+    const results = await Promise.all(batch.map((project) => geocodeProject(project)));
+    changed = results.some(Boolean) || changed;
+  }
+  return changed;
 }
 
 function hasMapLookupValue(project) {
-  return Boolean(validAddressCandidate(project.address) || parseMatrikkel(project.matrikkel));
+  return Boolean(extractAddressFromProject(project) || parseMatrikkel(project.matrikkel));
 }
 
 async function geocodeProject(project) {
-  const query = mapLookupQuery(project);
-  if (!query) return false;
-  const cacheKey = JSON.stringify(query);
-  if (state.mapGeocodeCache.has(cacheKey)) {
-    return applyGeocodeResult(project, state.mapGeocodeCache.get(cacheKey));
-  }
+  const queries = mapLookupQueries(project);
+  if (!queries.length) return false;
 
-  try {
-    const url = `/api/geocode?${new URLSearchParams({
-      ...query,
-      treffPerSide: "1",
-      utkoordsys: "4258",
-      filtrer: "adresser.representasjonspunkt",
-    })}`;
-    const response = await fetch(url, { headers: { Accept: "application/json" } });
-    if (!response.ok) throw new Error(`Kartverket ${response.status}`);
-    const payload = await response.json();
-    const address = payload.adresser?.[0];
-    const point = address?.representasjonspunkt;
-    const result = point?.lat && point?.lon ? {
-      lat: Number(point.lat),
-      lon: Number(point.lon),
-      address: address.adressetekst || "",
-      label: "Kartverket Adresse-API",
-    } : null;
-    state.mapGeocodeCache.set(cacheKey, result);
-    return applyGeocodeResult(project, result);
-  } catch (error) {
-    state.mapGeocodeCache.set(cacheKey, null);
-    console.warn("Kunne ikke plassere prosjektet i kartet", project.id, error);
-    return false;
+  // Adresse har førsteprioritet. Matrikkel brukes bare dersom adressen ikke
+  // gir treff, eller dersom adressen ikke finnes i prosjektet.
+  for (const query of queries) {
+    const cacheKey = JSON.stringify(query);
+    if (state.mapGeocodeCache.has(cacheKey)) {
+      const cachedResult = state.mapGeocodeCache.get(cacheKey);
+      if (cachedResult && applyGeocodeResult(project, cachedResult)) return true;
+      continue;
+    }
+
+    try {
+      const url = `/api/geocode?${new URLSearchParams({
+        ...query,
+        treffPerSide: "1",
+        utkoordsys: "4258",
+        filtrer: "adresser.representasjonspunkt",
+      })}`;
+      const response = await fetch(url, { headers: { Accept: "application/json" } });
+      if (!response.ok) throw new Error(`Kartverket ${response.status}`);
+      const payload = await response.json();
+      const address = payload.adresser?.[0];
+      const point = address?.representasjonspunkt;
+      const result = point?.lat && point?.lon ? {
+        lat: Number(point.lat),
+        lon: Number(point.lon),
+        address: address.adressetekst || "",
+        label: "Kartverket Adresse-API",
+      } : null;
+      state.mapGeocodeCache.set(cacheKey, result);
+      if (result && applyGeocodeResult(project, result)) return true;
+    } catch (error) {
+      state.mapGeocodeCache.set(cacheKey, null);
+      console.warn("Kunne ikke plassere prosjektet i kartet", project.id, error);
+    }
   }
+  return false;
 }
 
-function mapLookupQuery(project) {
+function mapLookupQueries(project) {
   const municipalityName = normalizeMunicipalityName(project.municipality);
   const municipalityNumber = municipalityNumbers[municipalityName];
-  const address = validAddressCandidate(project.address);
+  const address = extractAddressFromProject(project);
+  const queries = [];
   if (address) {
-    return {
+    queries.push({
       sok: `${address} ${municipalityName}`.trim(),
       kommunenummer: municipalityNumber || "",
-    };
+    });
   }
   const matrikkel = parseMatrikkel(project.matrikkel);
-  if (!matrikkel || !municipalityNumber) return null;
-  return {
-    kommunenummer: municipalityNumber,
-    gardsnummer: matrikkel.gnr,
-    bruksnummer: matrikkel.bnr,
-    festenummer: matrikkel.fnr || "",
-    undernummer: matrikkel.unr || "",
-  };
+  if (matrikkel && municipalityNumber) {
+    queries.push({
+      kommunenummer: municipalityNumber,
+      gardsnummer: matrikkel.gnr,
+      bruksnummer: matrikkel.bnr,
+      festenummer: matrikkel.fnr || "",
+      undernummer: matrikkel.unr || "",
+    });
+  }
+  return queries;
 }
 
 function validAddressCandidate(value) {

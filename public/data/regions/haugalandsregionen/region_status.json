@@ -3,12 +3,20 @@
   "collectionGroup": "primary",
   "municipalitiesConfigured": 13,
   "municipalitiesLoaded": 7,
-  "municipalitiesDeferred": ["Fitjar kommune", "Etne kommune", "Sauda kommune", "Bokn kommune", "Utsira kommune"],
-  "municipalitiesWithoutCommonSourceMatch": ["Kvinnherad kommune"],
-  "projectsLoaded": 4250,
-  "projectsWithMapPoint": 1554,
-  "projectsWithPhone": 638,
-  "sourceDateFrom": "2020-01-01",
+  "municipalitiesDeferred": [
+    "Fitjar kommune",
+    "Etne kommune",
+    "Sauda kommune",
+    "Bokn kommune",
+    "Utsira kommune"
+  ],
+  "municipalitiesWithoutCommonSourceMatch": [
+    "Kvinnherad kommune"
+  ],
+  "projectsLoaded": 528,
+  "projectsWithMapPoint": 165,
+  "projectsWithPhone": 70,
+  "sourceDateFrom": "2023-10-15",
   "sourceDateTo": "2024-01-15",
-  "note": "Dette er første prioriterte uttrekk. Små kommuner og kommuner uten verifisert kilde kjøres etter egen kvalitetssikring."
+  "note": "Filtrert til byggesaksrelaterte saker, én prosjektpost per sak, siste tilgjengelige tremånederskilde i første uttrekk."
 }
