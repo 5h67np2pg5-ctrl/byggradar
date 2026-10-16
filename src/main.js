@@ -447,8 +447,13 @@ function normalizeProject(project, contactProject, index) {
   const title = cleanTitle(project.title || project.shortFacts || project.caseTitle || "Ukjent prosjekt");
   const status = classification.stage || project.status || project.phase || "Ukjent status";
   const phaseLabel = classification.phase || classifyProjectPhase(status);
-  const projectTypes = classification.projectTypes || [];
-  const tradeRelevance = project.tradeRelevance || projectTypes.join("; ") || inferTrade(title, project.documentTitle, project.caseTitle);
+  const projectText = projectClassificationText(project, title);
+  const classifiedTypes = (classification.projectTypes || []).filter((type) => !/^ukjent$/i.test(String(type || "").trim()));
+  const inferredTypes = inferProjectTypes(projectText);
+  const projectTypes = classifiedTypes.length ? classifiedTypes : inferredTypes;
+  const tradeRelevance = meaningfulProjectText(project.tradeRelevance)
+    ? project.tradeRelevance
+    : projectTypes.join("; ") || inferTrade(projectText);
   const marketRole = project.marketRole || (project.sourceStream === "bane_nor_procurement_plan" ? "external" : "external");
   const address = extractAddressFromProject(project, location);
   const place = address || project.location || project.municipality || project.marketArea || "Ukjent sted";
@@ -479,6 +484,7 @@ function normalizeProject(project, contactProject, index) {
     date,
     tradeRelevance,
     projectTypes,
+    projectTypeText: projectTypes.join("; ") || "Ukjent tiltak",
     municipality: project.municipality || "",
     marketRole,
     marketArea: project.marketArea || marketRoleLabel(marketRole),
@@ -1857,7 +1863,7 @@ function scrollSelectedProjectIntoView(projectId) {
 }
 
 function mapTooltipText(project) {
-  const typeText = shortTrade(project.tradeRelevance || project.projectTypes?.join("; ") || project.status || "ukjent tiltak");
+  const typeText = shortTrade(project.projectTypeText || project.projectTypes?.join("; ") || project.tradeRelevance || project.status || "Ukjent tiltak");
   const fallback = project.isMunicipalityFallbackPoint ? " | kommunepunkt" : "";
   return `${project.place || project.address || project.municipality || "Ukjent adresse"} | ${typeText}${fallback}`;
 }
@@ -2457,6 +2463,52 @@ function fileDisplayTitle(value) {
     .replace(/\s+/g, " ")
     .trim()
     .slice(0, 100);
+}
+
+function meaningfulProjectText(value) {
+  return Boolean(value && !/^(ukjent|ukjent tiltak|mulig prosjekt|ikke tolket)$/i.test(String(value).trim()));
+}
+
+function projectClassificationText(project, title = "") {
+  const attachments = (project.files || [])
+    .flatMap((file) => [file.title, file.name, file.filename])
+    .filter(Boolean)
+    .map(fileDisplayTitle)
+    .join(" ");
+  return [
+    title,
+    project.title,
+    project.shortFacts,
+    project.caseTitle,
+    project.documentTitle,
+    project.description,
+    project.address,
+    attachments,
+  ].filter(Boolean).join(" ");
+}
+
+function inferProjectTypes(value) {
+  const text = normalize(value);
+  const types = [];
+  const add = (label, pattern) => {
+    if (pattern.test(text) && !types.includes(label)) types.push(label);
+  };
+
+  add("Nybygg", /\b(nybygg|oppforing|ny bustad|ny bolig|nytt bygg|ny fritidsbustad|ny fritidsbolig)\b/);
+  add("Tilbygg/påbygg", /\b(tilbygg|tilbygging|pabygg|utviding|utvidelse)\b/);
+  add("Ombygging/rehabilitering", /\b(ombygg|rehabiliter|oppgradering|modernisering|istandsetting)\b/);
+  add("Bruksendring", /\b(bruksendring|bruksendring|endring av bruk)\b/);
+  add("Riving", /\b(riving|rive|rivning)\b/);
+  add("Bolig", /\b(bolig|bustad|bustadhus|enebolig|tomannsbolig|leilighet|rekkehus)\b/);
+  add("Fritidsbolig/hytte", /\b(fritidsbolig|fritidsbustad|hytte|hytter)\b/);
+  add("Garasje/bod", /\b(garasje|garasj|bod|uthus|carport)\b/);
+  add("Næring/offentlig", /\b(naering|naeringsbygg|kontor|lager|butikk|forretningsbygg|skule|skole|barnehage|sykehjem|offentlig)\b/);
+  add("Brygge/kaianlegg", /\b(brygge|bryggje|kai|kaianlegg|flytebrygge|naust|smabathavn)\b/);
+  add("Terrengarbeid", /\b(terreng|planering|forstotningsmur|stottemur|sprenging|fylling|landskap)\b/);
+  add("Veg/infrastruktur", /\b(veg|vei|veganlegg|infrastruktur|avkjorsel|avkoyrsle|vann- og avlop|va-anlegg|bekkelop)\b/);
+  add("Tekniske installasjoner", /\b(skorstein|vedkomfyr|sanitaer|ventilasjon|elektro|solcelle|transformator|ladestasjon)\b/);
+  add("Fradeling/oppmåling", /\b(fradeling|matrikkeleining|matrikkelforing|oppmalingsforretning|tomtedeling)\b/);
+  return types;
 }
 
 function inferTrade(...values) {
