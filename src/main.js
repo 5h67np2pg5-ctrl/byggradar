@@ -631,7 +631,7 @@ function renderShell() {
 
   updateCustomerMunicipalityOptions();
 
-  const helpText = "Forslag: Velg fag og område først, åpne de mest relevante prosjektene, og kontakt tiltakshaver eller ansvarlig aktør tidlig. Start kort: Hei, jeg ser at dere har et prosjekt på gang i [adresse]. Vi jobber med [fag], og kan raskt avklare om vi kan bidra i planlegging eller utførelse. Ønsker dere at jeg sender en kort presentasjon eller tar en rask prat?";
+  const helpText = "Åpne prosjektene du har interesse for og kontakt tiltakshaver eller ansvarlig aktør så tidlig som mulig.\n\nSi gjerne:\n\"Hei, jeg ser at dere har et prosjekt på gang i [adresse]. Vi jobber med [fag], og kan raskt avklare om vi kan bidra i planleggingen eller i utførelsen. Kan jeg sende en kort mail, eller kan jeg komme på en rask befaring?\"\n\nSender du mail, må du velge faggruppen din først. Det genereres da en e-post direkte til kontaktpersonen når du trykker på e-postadressen i prosjektet.";
   document.querySelector("#regionIllustration")?.addEventListener("change", async (event) => {
     const selected = event.target.value;
     if (!regionDataPaths[selected] || selected === state.regionKey) return;
