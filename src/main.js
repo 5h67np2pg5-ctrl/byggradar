@@ -1832,15 +1832,15 @@ function hideMapHoverCard(map) {
 
 function addBaseMap(map, options = {}) {
   const tileOptions = {
-    maxZoom: 19,
+    maxZoom: 18,
     updateWhenIdle: true,
     keepBuffer: options.compact ? 1 : 4,
-    detectRetina: true,
+    detectRetina: false,
     className: "byggradar-map-tiles",
   };
-  const layer = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  const layer = L.tileLayer("https://cache.kartverket.no/v1/wmts/1.0.0/topo/default/webmercator/{z}/{y}/{x}.png", {
     ...tileOptions,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    attribution: '&copy; <a href="https://www.kartverket.no/">Kartverket</a>',
   });
 
   let fallbackStarted = false;
@@ -1849,10 +1849,9 @@ function addBaseMap(map, options = {}) {
     event.tile.classList.add("tile-load-error");
     if (fallbackStarted) return;
     fallbackStarted = true;
-    const fallbackLayer = L.tileLayer("https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", {
+    const fallbackLayer = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       ...tileOptions,
-      subdomains: "abc",
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of HOT',
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     });
     layer.remove();
     fallbackLayer.addTo(map);
