@@ -1900,9 +1900,11 @@ function addBaseMap(map, options = {}) {
     detectRetina: false,
     className: "byggradar-map-tiles",
   };
-  const layer = L.tileLayer("https://cache.kartverket.no/v1/wmts/1.0.0/topo/default/webmercator/{z}/{y}/{x}.png", {
+  // Bruk et vanlig vei- og gatenett som hovedkart. Topografisk kart er lite
+  // egnet når brukeren skal finne prosjekter og eiendommer raskt.
+  const layer = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}", {
     ...tileOptions,
-    attribution: '&copy; <a href="https://www.kartverket.no/">Kartverket</a>',
+    attribution: '&copy; Esri, HERE, Garmin, Intermap, USGS, METI/NASA',
   });
 
   let fallbackStarted = false;
