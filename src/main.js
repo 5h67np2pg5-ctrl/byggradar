@@ -562,7 +562,7 @@ function renderShell() {
       <header class="topbar">
         <div class="topbar-copy">
           <div class="brand">ByggRadar</div>
-          <div class="national-project-count" id="nationalProjectCount">Aktive prosjekter listet i NBR: Laster...</div>
+          <div class="national-project-count" id="nationalProjectCount">Laster registrerte og aktive byggprosjekter...</div>
           <div class="subtle" id="summaryText" tabindex="0">Laster prosjekter...</div>
         </div>
         <div class="top-actions">
@@ -701,7 +701,7 @@ function render() {
   const totalProjectCount = regionSummaryTotalCount();
   const nationalProjectCount = document.querySelector("#nationalProjectCount");
   if (nationalProjectCount) {
-    nationalProjectCount.textContent = `Aktive prosjekter listet i NBR: ${state.allRegionProjectCount.toLocaleString("nb-NO")}`;
+    nationalProjectCount.textContent = `${state.allRegionProjectCount.toLocaleString("nb-NO")} registrerte og aktive byggprosjekter`;
   }
   if (summaryText) {
     summaryText.textContent = "";
