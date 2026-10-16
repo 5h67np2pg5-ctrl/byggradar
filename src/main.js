@@ -596,7 +596,7 @@ function renderShell() {
         </label>
         <div class="area-control">
           <label class="search-field">
-            <span>Søk om hva du vil i alle prosjekter</span>
+            <span>Søk etter hva du vil i alle prosjekter...</span>
             <input id="areaInput" list="areaSuggestions" type="search" placeholder="kommune, adresse, region eller tekst" autocomplete="off" />
           </label>
           <datalist id="areaSuggestions">
