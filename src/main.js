@@ -607,7 +607,7 @@ function renderShell() {
         <label class="search-field customer-location-field">
           <span>Kundens kommune</span>
           <select id="customerMunicipality" class="filter-select" aria-label="Velg kundens kommune">
-            <option value="">Velg kommune for nærhetsrangering</option>
+            <option value="">Velg kommune</option>
           </select>
         </label>
       </section>
@@ -1328,9 +1328,26 @@ function openFullMap(project) {
 }
 
 function openAreaMap() {
+  const notice = document.querySelector("#regionNotice");
+  if (!state.customerMunicipality) {
+    if (notice) {
+      notice.hidden = false;
+      notice.textContent = "Velg kommune for å åpne Områdekart.";
+    }
+    document.querySelector("#customerMunicipality")?.focus();
+    return;
+  }
+
+  if (!window.L) {
+    if (notice) {
+      notice.hidden = false;
+      notice.textContent = "Kartet er ikke lastet ennå. Last siden på nytt og prøv igjen.";
+    }
+    return;
+  }
+
   const points = mapPointProjects();
   if (!points.length) {
-    const notice = document.querySelector("#regionNotice");
     if (notice) {
       notice.hidden = false;
       notice.textContent = "Ingen kartfestede prosjekter i dette utvalget.";
@@ -1338,8 +1355,8 @@ function openAreaMap() {
     return;
   }
 
-  // Kartet skal alltid kunne åpnes. Kundens kommune påvirker rangering og
-  // nærhetsutvalg når den er valgt, men skal ikke være et krav for kartvisning.
+  // Kundens kommune er origo for rangeringen: standardutvalget består av de
+  // 200 nærmeste prosjektene når kommunen er valgt.
   openFullMap(points[0]);
   if (!state.fullMap) return;
   const bounds = L.latLngBounds(points.map((project) => [project.lat, project.lon]));
