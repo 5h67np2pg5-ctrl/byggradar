@@ -743,10 +743,7 @@ function renderRegionNotice(summary = {}) {
   const visibleCount = summary.visibleCount ?? visibleDeliveryProjects().length;
   const totalCount = summary.totalCount ?? state.filtered.length;
   const regionName = summary.regionName || selectedRegion.name;
-  notice.innerHTML = `
-    <span>Valgt område: ${escapeHtml(selectedRegion.name)} (${selectedRegion.municipalities.length} kommuner)</span>
-    <span>${visibleCount} aktive prosjekter vises, av ${totalCount} for ${escapeHtml(regionName)}.</span>
-  `;
+  notice.textContent = `Valgt område: ${selectedRegion.name} (${selectedRegion.municipalities.length} kommuner) ${visibleCount} aktive prosjekter vises, av ${totalCount} for ${regionName}.`;
 }
 
 function renderList() {
