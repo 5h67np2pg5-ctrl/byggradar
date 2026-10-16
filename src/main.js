@@ -1508,7 +1508,7 @@ function validAddressCandidate(value) {
     .replace(/^[-–—\s]+/, "")
     .replace(/\s+/g, " ")
     .trim();
-  if (!text || /\b(gbnr|gnr|bnr|matrikkel|tiltak på|godkjent|søknad om|løyve|rammeløyve)\b/i.test(text)) return "";
+  if (!text || /\b(gbnr|gnr|bnr|matrikkel|s\.?nr\.?|seksjonsnummer|tiltak på|godkjent|søknad om|løyve|rammeløyve)\b/i.test(text)) return "";
   return /\d/.test(text) ? text.split("|")[0].trim() : "";
 }
 

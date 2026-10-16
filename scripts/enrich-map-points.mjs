@@ -27,7 +27,7 @@ function municipalityName(value) {
 function addressCandidate(project) {
   const explicit = [project.address, project.locationEnrichment?.address]
     .map((value) => String(value || "").replace(/\s+/g, " ").trim())
-    .find((value) => value && /\d/.test(value) && !/\b(gnr|bnr|matrikkel|tiltak på|godkjent|søknad om)\b/i.test(value));
+    .find((value) => value && /\d/.test(value) && !/\b(gbnr|gnr|bnr|matrikkel|s\.?nr\.?|seksjonsnummer|tiltak på|godkjent|søknad om)\b/i.test(value));
   if (explicit) return explicit.split("|")[0].trim();
   for (const value of [project.caseTitle, project.shortFacts, project.documentTitle, project.title, project.description]) {
     const match = String(value || "").match(streetPattern);
