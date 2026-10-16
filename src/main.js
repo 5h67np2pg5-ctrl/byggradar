@@ -2413,12 +2413,11 @@ function projectMailtoHref(project) {
 function projectMailBody(project) {
   const place = projectMailPlace(project);
   const municipality = project.municipality || project.marketArea || "";
-  const title = compactText(project.title || project.description || "prosjektet");
 
   const lines = [
     "Hei,",
     "",
-    `Vi har fått med oss prosjektet ${title} på ${place}${municipality ? ` i ${municipality}` : ""}, og dette ser ut som et prosjekt som kan passe oss godt.`,
+    `Vi har fått med oss prosjektet i ${place}${municipality ? ` i ${municipality}` : ""}, og dette ser ut som et prosjekt som kan passe oss godt.`,
     "",
     "Vi har kapasitet fremover og ønsker derfor gjerne litt mer informasjon om prosjektet, slik at vi kan få tilby våre tjenester.",
     "",
