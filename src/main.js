@@ -602,7 +602,7 @@ function renderShell() {
           <datalist id="areaSuggestions">
             ${locationRegions.flatMap((region) => [region.name, ...region.municipalities]).map((value) => `<option value="${escapeHtml(value)}"></option>`).join("")}
           </datalist>
-          <button class="location-button" id="locationButton" type="button">Finn min region</button>
+          <button class="location-button" id="locationButton" type="button">Områdekart</button>
         </div>
         <label class="search-field customer-location-field">
           <span>Kundens kommune</span>
@@ -669,7 +669,7 @@ function renderShell() {
   });
   bindInput("tradeInput", "trade");
   bindInput("areaInput", "area");
-  document.querySelector("#locationButton").addEventListener("click", useCurrentLocation);
+  document.querySelector("#locationButton").addEventListener("click", openAreaMap);
   document.querySelector("#customerMunicipality").addEventListener("change", (event) => {
     state.customerMunicipality = event.target.value;
     state.visibleCount = standardProjectLimit;
@@ -1328,6 +1328,27 @@ function openFullMap(project) {
   bindFullMapTouchGuards();
   bindFullMapProjectSelection();
   refreshMapSize(state.fullMap);
+}
+
+function openAreaMap() {
+  if (!state.customerMunicipality) {
+    const notice = document.querySelector("#regionNotice");
+    if (notice) {
+      notice.hidden = false;
+      notice.textContent = "Velg kundens kommune før du åpner Områdekart.";
+    }
+    document.querySelector("#customerMunicipality")?.focus();
+    return;
+  }
+
+  const points = mapPointProjects();
+  if (!points.length) return;
+
+  // Gjenbruk den stabile fullkartflyten, men vis hele standardutvalget.
+  openFullMap(points[0]);
+  if (!state.fullMap) return;
+  const bounds = L.latLngBounds(points.map((project) => [project.lat, project.lon]));
+  state.fullMap.fitBounds(bounds.pad(0.16), { maxZoom: 11 });
 }
 
 function markMapGesture(duration = 1100) {
