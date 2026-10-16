@@ -870,7 +870,7 @@ function renderExpandedPreviewFields(project) {
   const sender = [project.fromOrg || project.fromName, project.toOrg || project.toName].filter(Boolean).join(" → ");
   const files = project.files.filter((file) => file && (file.url || file.href)).slice(0, 5).map((file) => {
     const title = fileDisplayTitle(file.title || file.name || "Vedlegg");
-    return `<li><a href="${escapeHtml(file.url || file.href)}" target="_blank" rel="noreferrer">${escapeHtml(title)}</a></li>`;
+    return `<li><a href="${escapeHtml(projectDocumentUrl(project, file))}" target="_blank" rel="noreferrer">${escapeHtml(title)}</a></li>`;
   }).join("");
   const hasProcurementInfo = project.buyer || project.procurementContactName || project.procurementType || project.estimatedValue || project.deadline;
   const facts = [
@@ -898,6 +898,15 @@ function renderExpandedPreviewFields(project) {
       ${project.sourceUrl ? `<a class="full-case-link" href="${escapeHtml(project.sourceUrl)}" target="_blank" rel="noreferrer">Åpne kommunalt saksinnsyn</a>` : ""}
     </section>
   `;
+}
+
+function projectDocumentUrl(project, file) {
+  const candidate = String(file?.url || file?.href || "");
+  const municipality = normalize(project?.municipality || "");
+  if (municipality.includes("etne") && /innsyn\.onacos\.no\/vindafjord\/wfdocument\.ashx/i.test(candidate)) {
+    return candidate.replace("/vindafjord/wfdocument.ashx", "/etne/wfdocument.ashx");
+  }
+  return candidate;
 }
 
 function projectSourceUrl(project) {
