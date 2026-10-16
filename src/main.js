@@ -1525,7 +1525,19 @@ function extractAddressFromProject(project, location = {}) {
   // Hent bare gatenavn med husnummer, slik at gnr/bnr og statusord ikke blir
   // sendt til adresseoppslaget som om de var adresser.
   const streetPattern = /\b([A-ZÆØÅ][\p{L}.'-]*(?:\s+[A-ZÆØÅ][\p{L}.'-]*)*\s+(?:vegen|veien|veg|vei|gata|gate|gaten|plassen|bakken|haugen|lia|marka|åsen|stien|tunet|hagen|holmen|myra|odden|berget|toppen|jordet))\s+(\d+[A-Za-z]?)\b/iu;
-  const candidates = [project.caseTitle, project.shortFacts, project.documentTitle, project.title, project.description];
+  const attachmentText = (project.files || [])
+    .flatMap((file) => [file.title, file.name, file.filename])
+    .filter(Boolean)
+    .map(stripMarkup)
+    .join(" | ");
+  const candidates = [
+    project.caseTitle,
+    project.shortFacts,
+    project.documentTitle,
+    project.title,
+    project.description,
+    attachmentText,
+  ];
   for (const candidate of candidates) {
     const match = String(candidate || "").match(streetPattern);
     const address = validAddressCandidate(match?.[0] || "");
@@ -1535,7 +1547,12 @@ function extractAddressFromProject(project, location = {}) {
 }
 
 function extractMatrikkelFromProject(project) {
-  const sourceText = [project.caseTitle, project.shortFacts, project.documentTitle, project.address]
+  const attachmentText = (project.files || [])
+    .flatMap((file) => [file.title, file.name, file.filename])
+    .filter(Boolean)
+    .map(stripMarkup)
+    .join(" | ");
+  const sourceText = [project.caseTitle, project.shortFacts, project.documentTitle, project.address, project.description, attachmentText]
     .filter(Boolean)
     .join(" | ");
   const match = sourceText.match(/\bgnr\.?\s*(\d+)\s*(?:,\s*|\s+)bnr\.?\s*(\d+)/i);
@@ -1547,6 +1564,17 @@ function extractMatrikkelFromProject(project) {
     return `${slashMatch[1]}/${slashMatch[2]}/0/0`;
   }
   return project.matrikkel || "";
+}
+
+function stripMarkup(value) {
+  return String(value || "")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&(?:oslash|ouml|aring|aelig|ae|o|a);/gi, (entity) => ({
+      "&oslash;": "ø", "&ouml;": "ö", "&aring;": "å", "&aelig;": "æ", "&ae;": "æ", "&o;": "ø", "&a;": "å",
+    }[entity.toLowerCase()] || entity))
+    .replace(/&amp;/gi, "&")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 async function resolveMissingMapPoints(projects) {
@@ -1566,7 +1594,7 @@ async function resolveMissingMapPoints(projects) {
 }
 
 function hasMapLookupValue(project) {
-  return Boolean(extractAddressFromProject(project) || parseMatrikkel(project.matrikkel));
+  return Boolean(extractAddressFromProject(project) || parseMatrikkel(extractMatrikkelFromProject(project)));
 }
 
 async function geocodeProject(project) {
@@ -1622,7 +1650,7 @@ function mapLookupQueries(project) {
       kommunenummer: municipalityNumber || "",
     });
   }
-  const matrikkel = parseMatrikkel(project.matrikkel);
+  const matrikkel = parseMatrikkel(extractMatrikkelFromProject(project));
   if (matrikkel && municipalityNumber) {
     queries.push({
       kommunenummer: municipalityNumber,
