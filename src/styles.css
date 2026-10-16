@@ -321,6 +321,12 @@ a {
   outline: none;
 }
 
+.search-field input::placeholder {
+  font-size: 0.78rem;
+  color: #6e8798;
+  opacity: 1;
+}
+
 .search-field input:focus {
   border-color: #5a9dcc;
   box-shadow: 0 0 0 3px rgba(90, 157, 204, 0.16);
