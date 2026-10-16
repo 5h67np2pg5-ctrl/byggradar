@@ -1,5 +1,6 @@
 const state = {
   projects: [],
+  rawProjectCount: 0,
   filtered: [],
   selected: null,
   trade: "",
@@ -44,7 +45,7 @@ const tradePresets = [
 ];
 
 // Midlertidig visning av regionvalg. Valget kobles til kundens faste region senere.
-const illustrationRegions = ["Bergensregionen", "Stavangerregionen"];
+const illustrationRegions = ["Bergensregionen", "Stavangerregionen", "Haugalandsregionen"];
 
 const savedFiltersKey = "byggradar.filters.v1";
 const markedProjectsKey = "byggradar.markedProjects.v1";
@@ -91,11 +92,32 @@ const locationRegions = [
       "Sokndal kommune",
     ],
   },
+  {
+    id: "haugalandsregionen",
+    name: "Haugalandsregionen",
+    anchor: { lat: 59.505, lon: 5.70 },
+    municipalities: [
+      "Kvinnherad kommune",
+      "Stord kommune",
+      "Fitjar kommune",
+      "Bømlo kommune",
+      "Sveio kommune",
+      "Haugesund kommune",
+      "Karmøy kommune",
+      "Tysvær kommune",
+      "Bokn kommune",
+      "Utsira kommune",
+      "Vindafjord kommune",
+      "Etne kommune",
+      "Sauda kommune",
+    ],
+  },
 ];
 
 const regionDataPaths = {
   bergensregionen: "/data/regions/bergensregionen",
   stavangerregionen: "/data/regions/stavangerregionen",
+  haugalandsregionen: "/data/regions/haugalandsregionen",
 };
 
 const municipalityMapAnchors = {
@@ -116,6 +138,19 @@ const municipalityMapAnchors = {
   "fedje": { lat: 60.77821, lon: 4.71495 },
   "gulen": { lat: 60.98112, lon: 5.07417 },
   "tysnes": { lat: 60.04076, lon: 5.53129 },
+  "kvinnherad": { lat: 59.985, lon: 5.996 },
+  "stord": { lat: 59.780, lon: 5.500 },
+  "fitjar": { lat: 59.918, lon: 5.316 },
+  "bømlo": { lat: 59.794, lon: 5.180 },
+  "sveio": { lat: 59.542, lon: 5.354 },
+  "haugesund": { lat: 59.413, lon: 5.267 },
+  "karmøy": { lat: 59.280, lon: 5.300 },
+  "tysvær": { lat: 59.420, lon: 5.440 },
+  "bokn": { lat: 59.230, lon: 5.430 },
+  "utsira": { lat: 59.310, lon: 4.890 },
+  "vindafjord": { lat: 59.550, lon: 5.880 },
+  "etne": { lat: 59.665, lon: 5.930 },
+  "sauda": { lat: 59.650, lon: 6.350 },
 };
 
 const municipalityNumbers = {
@@ -294,6 +329,7 @@ async function loadProjects() {
   const contacts = new Map((contactData.projects || []).map((project) => [project.projectId, project]));
   const rawProjects = locationData.projects || [];
   const normalizedProjects = rawProjects.map((project, index) => normalizeProject(project, contacts.get(project.sourceDocumentId), index));
+  state.rawProjectCount = normalizedProjects.length;
   state.projects = deduplicateProjects(normalizedProjects);
   // Utvidet prosjektinformasjon er nå tilgjengelig på alle prosjekter.
   // Feltene filtreres i renderExpandedPreviewFields slik at tomme etiketter aldri vises.
@@ -621,7 +657,7 @@ function render() {
   const visibleProjects = visibleDeliveryProjects();
   const summaryText = document.querySelector("#summaryText");
   const regionName = state.activeRegion?.name || locationRegions.find((region) => region.id === state.regionKey)?.name || "valgt region";
-  const totalProjectCount = state.filtered.length;
+  const totalProjectCount = regionSummaryTotalCount();
   if (summaryText) {
     summaryText.textContent = "";
     summaryText.dataset.tooltip = deliveryInfoText();
@@ -630,6 +666,18 @@ function render() {
   renderRegionNotice({ visibleCount: visibleProjects.length, totalCount: totalProjectCount, regionName });
 
   renderList();
+}
+
+function regionSummaryTotalCount() {
+  const area = normalize(state.area);
+  const trade = normalize(state.trade);
+  const areaRegion = findRegionByText(state.area);
+  const selectedRegionId = state.activeRegion?.id || state.regionKey;
+  const isRegionLevelView = !trade && (!area || areaRegion?.id === selectedRegionId);
+
+  // På regionnivå skal totalen komme fra hele den innlastede regionfilen.
+  // Kommune- og fagfilter skal fortsatt vise den faktiske filtrerte totalen.
+  return isRegionLevelView ? state.rawProjectCount : state.filtered.length;
 }
 
 function renderRegionNotice(summary = {}) {
