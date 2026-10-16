@@ -746,7 +746,7 @@ function renderRegionNotice(summary = {}) {
   const regionName = summary.regionName || selectedRegion.name;
   notice.innerHTML = `
     <span>Valgt område: ${escapeHtml(selectedRegion.name)} (${selectedRegion.municipalities.length} kommuner)</span>
-    <span>${visibleCount} aktive prosjekter, av ${totalCount} for ${escapeHtml(regionName)}.</span>
+    <span>${visibleCount} aktive prosjekter vises, av ${totalCount} for ${escapeHtml(regionName)}.</span>
   `;
 }
 
