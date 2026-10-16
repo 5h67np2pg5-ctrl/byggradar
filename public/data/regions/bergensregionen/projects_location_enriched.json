@@ -594,9 +594,9 @@
       "address": "- Godkjent igangsettingsløyve (IG2) til tiltak på gnr. 44 bnr. 46",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "280/26/0/0",
-      "gnr": "280",
-      "bnr": "26",
+      "matrikkel": "44/46/0/0",
+      "gnr": "44",
+      "bnr": "46",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -611,12 +611,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent igangsettingsløyve (IG2) til tiltak på gnr. 44 bnr. 46",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38835649214621,
+        "longitude": 6.200263864847125,
+        "lookupKey": "4622/44/46/0/0"
       }
     },
     {
@@ -7494,11 +7499,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "11/270/0/0",
+      "gnr": "11",
+      "bnr": "270",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "igangsetting søkt",
@@ -7512,12 +7517,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.37004466193881,
+        "longitude": 6.145032366180923,
+        "lookupKey": "4622/11/270/0/0"
       }
     },
     {
@@ -12596,9 +12606,9 @@
       "address": "- Godkjent rammeløyve til tiltak på gnr 12 bnr 18",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "217/26/0/0",
-      "gnr": "217",
-      "bnr": "26",
+      "matrikkel": "12/18/0/0",
+      "gnr": "12",
+      "bnr": "18",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -12614,12 +12624,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent rammeløyve til tiltak på gnr 12 bnr 18",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.36971770946243,
+        "longitude": 6.112778506498961,
+        "lookupKey": "4622/12/18/0/0"
       }
     },
     {
@@ -14319,11 +14334,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "42/40/0/0",
+      "gnr": "42",
+      "bnr": "40",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "tillatelse gitt",
@@ -14337,12 +14352,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38085489606333,
+        "longitude": 6.204162271439614,
+        "lookupKey": "4622/42/40/0/0"
       }
     },
     {
@@ -16829,9 +16849,9 @@
       "address": "- Godkjent søknad om rammeløyve og fråvik frå TEK på forretningsbygg på gnr 11",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "243/26/0/0",
-      "gnr": "243",
-      "bnr": "26",
+      "matrikkel": "11/89/0/0",
+      "gnr": "11",
+      "bnr": "89",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -16848,12 +16868,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent søknad om rammeløyve og fråvik frå TEK på forretningsbygg på gnr 11",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.37048397973489,
+        "longitude": 6.144893216143501,
+        "lookupKey": "4622/11/89/0/0"
       }
     },
     {
@@ -22144,9 +22169,9 @@
       "address": "- Godkjent oppretting av ny matrikkeleining (festegrunn) i sameige gnr. 57 bnr. 1",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "260/26/0/0",
-      "gnr": "260",
-      "bnr": "26",
+      "matrikkel": "57/3/0/0",
+      "gnr": "57",
+      "bnr": "3",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -22161,12 +22186,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent oppretting av ny matrikkeleining (festegrunn) i sameige gnr. 57 bnr. 1",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.51340099743656,
+        "longitude": 6.092820253139186,
+        "lookupKey": "4622/57/3/0/0"
       }
     },
     {
@@ -22748,11 +22778,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "42/40/0/0",
+      "gnr": "42",
+      "bnr": "40",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "tillatelse gitt",
@@ -22766,12 +22796,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38085489606333,
+        "longitude": 6.204162271439614,
+        "lookupKey": "4622/42/40/0/0"
       }
     },
     {
@@ -23075,11 +23110,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "42/40/0/0",
+      "gnr": "42",
+      "bnr": "40",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "tillatelse gitt",
@@ -23093,12 +23128,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38085489606333,
+        "longitude": 6.204162271439614,
+        "lookupKey": "4622/42/40/0/0"
       }
     },
     {
@@ -26127,11 +26167,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "42/55/0/0",
+      "gnr": "42",
+      "bnr": "55",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -26146,12 +26186,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38046423082926,
+        "longitude": 6.204267639739799,
+        "lookupKey": "4622/42/55/0/0"
       }
     },
     {
@@ -26196,11 +26241,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "42/55/0/0",
+      "gnr": "42",
+      "bnr": "55",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -26215,12 +26260,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38046423082926,
+        "longitude": 6.204267639739799,
+        "lookupKey": "4622/42/55/0/0"
       }
     },
     {
@@ -26746,11 +26796,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "42/55/0/0",
+      "gnr": "42",
+      "bnr": "55",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -26765,12 +26815,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38046423082926,
+        "longitude": 6.204267639739799,
+        "lookupKey": "4622/42/55/0/0"
       }
     },
     {
@@ -26878,11 +26933,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "42/55/0/0",
+      "gnr": "42",
+      "bnr": "55",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -26897,12 +26952,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38046423082926,
+        "longitude": 6.204267639739799,
+        "lookupKey": "4622/42/55/0/0"
       }
     },
     {
@@ -26945,11 +27005,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "42/55/0/0",
+      "gnr": "42",
+      "bnr": "55",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -26964,12 +27024,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38046423082926,
+        "longitude": 6.204267639739799,
+        "lookupKey": "4622/42/55/0/0"
       }
     },
     {
@@ -31052,11 +31117,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "77/52/0/0",
+      "gnr": "77",
+      "bnr": "52",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "rammetillatelse gitt",
@@ -31070,12 +31135,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.43063920194426,
+        "longitude": 6.40491194930459,
+        "lookupKey": "4622/77/52/0/0"
       }
     },
     {
@@ -31350,9 +31420,9 @@
       "address": "- Godkjent søknad om sanitærabonnement gnr 11 bnr 106",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "268/26/0/0",
-      "gnr": "268",
-      "bnr": "26",
+      "matrikkel": "11/106/0/0",
+      "gnr": "11",
+      "bnr": "106",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -31369,12 +31439,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent søknad om sanitærabonnement gnr 11 bnr 106",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.36832142818066,
+        "longitude": 6.138915404409839,
+        "lookupKey": "4622/11/106/0/0"
       }
     },
     {
@@ -33050,9 +33125,9 @@
       "address": "- Godkjent søknad om igangsettingsløyve til tiltak på gnr. 19 bnr. 981",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "245/26/0/0",
-      "gnr": "245",
-      "bnr": "26",
+      "matrikkel": "19/981/0/0",
+      "gnr": "19",
+      "bnr": "981",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -33067,12 +33142,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent søknad om igangsettingsløyve til tiltak på gnr. 19 bnr. 981",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.3921933407771,
+        "longitude": 5.961694721398421,
+        "lookupKey": "4622/19/981/0/0"
       }
     },
     {
@@ -33598,9 +33678,9 @@
       "address": "- Godkjent igangsettingsløyve (IG2) til tiltak på gnr. 44 bnr. 46",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "280/26/0/0",
-      "gnr": "280",
-      "bnr": "26",
+      "matrikkel": "44/46/0/0",
+      "gnr": "44",
+      "bnr": "46",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -33615,12 +33695,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent igangsettingsløyve (IG2) til tiltak på gnr. 44 bnr. 46",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38835649214621,
+        "longitude": 6.200263864847125,
+        "lookupKey": "4622/44/46/0/0"
       }
     },
     {
@@ -34203,9 +34288,9 @@
       "address": "- Pålegg om retting av ulovleg forhold på gnr. 10 bnr. 95",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "278/26/0/0",
-      "gnr": "278",
-      "bnr": "26",
+      "matrikkel": "10/95/0/0",
+      "gnr": "10",
+      "bnr": "95",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -34220,12 +34305,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Pålegg om retting av ulovleg forhold på gnr. 10 bnr. 95",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.365404982110384,
+        "longitude": 6.150016090369954,
+        "lookupKey": "4622/10/95/0/0"
       }
     },
     {
@@ -35344,9 +35434,9 @@
       "address": "",
       "addressLookupStatus": "må slås opp fra matrikkel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "261/26/0/0",
-      "gnr": "261",
-      "bnr": "26",
+      "matrikkel": "57/3/0/0",
+      "gnr": "57",
+      "bnr": "3",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -35361,12 +35451,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.51340099743656,
+        "longitude": 6.092820253139186,
+        "lookupKey": "4622/57/3/0/0"
       }
     },
     {
@@ -36792,9 +36887,9 @@
       "address": "- Pålegg om retting av ulovleg tiltak på gnr. 43 bnr. 4",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "279/26/0/0",
-      "gnr": "279",
-      "bnr": "26",
+      "matrikkel": "43/4/0/0",
+      "gnr": "43",
+      "bnr": "4",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -36809,12 +36904,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Pålegg om retting av ulovleg tiltak på gnr. 43 bnr. 4",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.386347977958955,
+        "longitude": 6.200705835973517,
+        "lookupKey": "4622/43/4/0/0"
       }
     },
     {
@@ -38420,11 +38520,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "42/40/0/0",
+      "gnr": "42",
+      "bnr": "40",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "saksbehandling pågår",
@@ -38438,12 +38538,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38085489606333,
+        "longitude": 6.204162271439614,
+        "lookupKey": "4622/42/40/0/0"
       }
     },
     {
@@ -41802,11 +41907,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "44/46/0/0",
+      "gnr": "44",
+      "bnr": "46",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "igangsetting søkt",
@@ -41819,12 +41924,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38835649214621,
+        "longitude": 6.200263864847125,
+        "lookupKey": "4622/44/46/0/0"
       }
     },
     {
@@ -47045,9 +47155,9 @@
       "address": "",
       "addressLookupStatus": "må slås opp fra matrikkel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "26/23109/0/0",
-      "gnr": "26",
-      "bnr": "23109",
+      "matrikkel": "10/95/0/0",
+      "gnr": "10",
+      "bnr": "95",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -47062,12 +47172,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.365404982110384,
+        "longitude": 6.150016090369954,
+        "lookupKey": "4622/10/95/0/0"
       }
     },
     {
@@ -49672,9 +49787,9 @@
       "address": "- Godkjent dispensasjon og rammeløyve til tiltak på gnr. 22 bnr. 159",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "211/26/0/0",
-      "gnr": "211",
-      "bnr": "26",
+      "matrikkel": "22/159/0/0",
+      "gnr": "22",
+      "bnr": "159",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -49689,12 +49804,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent dispensasjon og rammeløyve til tiltak på gnr. 22 bnr. 159",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.376757511746526,
+        "longitude": 6.01649998926133,
+        "lookupKey": "4622/22/159/0/0"
       }
     },
     {
@@ -50790,9 +50910,9 @@
       "address": "- Godkjent søknad om igangsetjingsløyve (IG) på gnr 44",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "257/26/0/0",
-      "gnr": "257",
-      "bnr": "26",
+      "matrikkel": "44/701/0/0",
+      "gnr": "44",
+      "bnr": "701",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -50807,12 +50927,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent søknad om igangsetjingsløyve (IG) på gnr 44",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.39003793153583,
+        "longitude": 6.194682467538121,
+        "lookupKey": "4622/44/701/0/0"
       }
     },
     {
@@ -51455,9 +51580,9 @@
       "address": "- Godkjent søknad om sanitærabonnement gnr 44 bnr 701",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "270/26/0/0",
-      "gnr": "270",
-      "bnr": "26",
+      "matrikkel": "44/701/0/0",
+      "gnr": "44",
+      "bnr": "701",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -51472,12 +51597,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent søknad om sanitærabonnement gnr 44 bnr 701",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.39003793153583,
+        "longitude": 6.194682467538121,
+        "lookupKey": "4622/44/701/0/0"
       }
     },
     {
@@ -53418,11 +53548,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "57/3/0/0",
+      "gnr": "57",
+      "bnr": "3",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "tillatelse gitt",
@@ -53435,12 +53565,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.51340099743656,
+        "longitude": 6.092820253139186,
+        "lookupKey": "4622/57/3/0/0"
       }
     },
     {
@@ -54768,11 +54903,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "57/3/0/0",
+      "gnr": "57",
+      "bnr": "3",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "tillatelse gitt",
@@ -54785,12 +54920,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.51340099743656,
+        "longitude": 6.092820253139186,
+        "lookupKey": "4622/57/3/0/0"
       }
     },
     {
@@ -56118,9 +56258,9 @@
       "address": "- Godkjent dispensasjon og frådeling av tilleggsareal frå gnr. 86 bnr. 12",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "274/26/0/0",
-      "gnr": "274",
-      "bnr": "26",
+      "matrikkel": "86/12/0/0",
+      "gnr": "86",
+      "bnr": "12",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -56135,12 +56275,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent dispensasjon og frådeling av tilleggsareal frå gnr. 86 bnr. 12",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.28825337717603,
+        "longitude": 6.177461058626834,
+        "lookupKey": "4622/86/12/0/0"
       }
     },
     {
@@ -58190,9 +58335,9 @@
       "address": "- Godkjent søknad om endring av løyve i sak DRAD 412/25 på gnr 10",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "263/26/0/0",
-      "gnr": "263",
-      "bnr": "26",
+      "matrikkel": "10/58/0/0",
+      "gnr": "10",
+      "bnr": "58",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -58207,12 +58352,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent søknad om endring av løyve i sak DRAD 412/25 på gnr 10",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.36195824221619,
+        "longitude": 6.1553976742200645,
+        "lookupKey": "4622/10/58/0/0"
       }
     },
     {
@@ -63335,9 +63485,9 @@
       "address": "- Godkjent søknad om igangsetjingsløyve (IG2) på nærings-/bustadbygg på gnr 77",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "273/26/0/0",
-      "gnr": "273",
-      "bnr": "26",
+      "matrikkel": "77/51/0/0",
+      "gnr": "77",
+      "bnr": "51",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -63352,12 +63502,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent søknad om igangsetjingsløyve (IG2) på nærings-/bustadbygg på gnr 77",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.43116328021203,
+        "longitude": 6.431598349520683,
+        "lookupKey": "4622/77/51/0/0"
       }
     },
     {
@@ -64914,11 +65069,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "11/106/0/0",
+      "gnr": "11",
+      "bnr": "106",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -64933,12 +65088,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.36832142818066,
+        "longitude": 6.138915404409839,
+        "lookupKey": "4622/11/106/0/0"
       }
     },
     {
@@ -71284,11 +71444,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "10/95/0/0",
+      "gnr": "10",
+      "bnr": "95",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -71301,12 +71461,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.365404982110384,
+        "longitude": 6.150016090369954,
+        "lookupKey": "4622/10/95/0/0"
       }
     },
     {
@@ -71342,11 +71507,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "10/95/0/0",
+      "gnr": "10",
+      "bnr": "95",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -71359,12 +71524,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.365404982110384,
+        "longitude": 6.150016090369954,
+        "lookupKey": "4622/10/95/0/0"
       }
     },
     {
@@ -71405,11 +71575,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "10/95/0/0",
+      "gnr": "10",
+      "bnr": "95",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -71422,12 +71592,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.365404982110384,
+        "longitude": 6.150016090369954,
+        "lookupKey": "4622/10/95/0/0"
       }
     },
     {
@@ -71463,11 +71638,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "10/95/0/0",
+      "gnr": "10",
+      "bnr": "95",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -71480,12 +71655,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.365404982110384,
+        "longitude": 6.150016090369954,
+        "lookupKey": "4622/10/95/0/0"
       }
     },
     {
@@ -71702,11 +71882,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "10/95/0/0",
+      "gnr": "10",
+      "bnr": "95",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -71719,12 +71899,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.365404982110384,
+        "longitude": 6.150016090369954,
+        "lookupKey": "4622/10/95/0/0"
       }
     },
     {
@@ -72167,11 +72352,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "11/89/0/0",
+      "gnr": "11",
+      "bnr": "89",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "rammetillatelse gitt",
@@ -72184,12 +72369,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.37048397973489,
+        "longitude": 6.144893216143501,
+        "lookupKey": "4622/11/89/0/0"
       }
     },
     {
@@ -75370,11 +75560,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "43/4/0/0",
+      "gnr": "43",
+      "bnr": "4",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "tillatelse gitt",
@@ -75387,12 +75577,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.386347977958955,
+        "longitude": 6.200705835973517,
+        "lookupKey": "4622/43/4/0/0"
       }
     },
     {
@@ -75562,9 +75757,9 @@
       "address": "- Godkjent søknad om løyve til tiltak på gnr. 95 bnr. 7",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "175/26/0/0",
-      "gnr": "175",
-      "bnr": "26",
+      "matrikkel": "95/7/0/0",
+      "gnr": "95",
+      "bnr": "7",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -75580,12 +75775,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent søknad om løyve til tiltak på gnr. 95 bnr. 7",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.26454855669219,
+        "longitude": 6.14670179112823,
+        "lookupKey": "4622/95/7/0/0"
       }
     },
     {
@@ -76421,9 +76621,9 @@
       "address": "- Godkjent dispensasjon og byggjeløyve i eit steg til tiltak pågnr. 19 bnr. 682",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "202/26/0/0",
-      "gnr": "202",
-      "bnr": "26",
+      "matrikkel": "19/682/0/0",
+      "gnr": "19",
+      "bnr": "682",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -76438,12 +76638,17 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent dispensasjon og byggjeløyve i eit steg til tiltak pågnr. 19 bnr. 682",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.37015856547709,
+        "longitude": 6.028921602011943,
+        "lookupKey": "4622/19/682/0/0"
       }
     },
     {
@@ -78563,11 +78768,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "45/1/0/0",
+      "gnr": "45",
+      "bnr": "1",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -78581,12 +78786,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.389360203133734,
+        "longitude": 6.203689881066062,
+        "lookupKey": "4622/45/1/0/0"
       }
     },
     {
@@ -79051,11 +79261,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "77/135/0/0",
+      "gnr": "77",
+      "bnr": "135",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "tillatelse gitt",
@@ -79068,12 +79278,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.43265835235841,
+        "longitude": 6.4371983090501885,
+        "lookupKey": "4622/77/135/0/0"
       }
     },
     {
@@ -80213,9 +80428,9 @@
       "address": "- Godkjent søknad om sanitærabonnement gnr 77 bnr 51",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "267/26/0/0",
-      "gnr": "267",
-      "bnr": "26",
+      "matrikkel": "77/51/0/0",
+      "gnr": "77",
+      "bnr": "51",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -80230,12 +80445,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent søknad om sanitærabonnement gnr 77 bnr 51",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.43116328021203,
+        "longitude": 6.431598349520683,
+        "lookupKey": "4622/77/51/0/0"
       }
     },
     {
@@ -80274,11 +80494,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "22/159/0/0",
+      "gnr": "22",
+      "bnr": "159",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "rammetillatelse gitt",
@@ -80291,12 +80511,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.376757511746526,
+        "longitude": 6.01649998926133,
+        "lookupKey": "4622/22/159/0/0"
       }
     },
     {
@@ -80945,11 +81170,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "11/89/0/0",
+      "gnr": "11",
+      "bnr": "89",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -80962,12 +81187,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.37048397973489,
+        "longitude": 6.144893216143501,
+        "lookupKey": "4622/11/89/0/0"
       }
     },
     {
@@ -81006,11 +81236,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "11/89/0/0",
+      "gnr": "11",
+      "bnr": "89",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -81023,12 +81253,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.37048397973489,
+        "longitude": 6.144893216143501,
+        "lookupKey": "4622/11/89/0/0"
       }
     },
     {
@@ -81304,9 +81539,9 @@
       "address": "- Godkjent søknad om igangsetjingsløyve (IG2",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "234/26/0/0",
-      "gnr": "234",
-      "bnr": "26",
+      "matrikkel": "36/25/0/0",
+      "gnr": "36",
+      "bnr": "25",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -81321,12 +81556,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent søknad om igangsetjingsløyve (IG2",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.37656417270062,
+        "longitude": 6.201511432506778,
+        "lookupKey": "4622/36/25/0/0"
       }
     },
     {
@@ -82538,11 +82778,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "21/5/0/0",
+      "gnr": "21",
+      "bnr": "5",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "rammetillatelse gitt",
@@ -82555,12 +82795,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38459583677302,
+        "longitude": 5.9678184174959465,
+        "lookupKey": "4622/21/5/0/0"
       }
     },
     {
@@ -82950,11 +83195,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "7/32/0/0",
+      "gnr": "7",
+      "bnr": "32",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "rammetillatelse gitt",
@@ -82967,12 +83212,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.35169454622343,
+        "longitude": 6.166459585494246,
+        "lookupKey": "4622/7/32/0/0"
       }
     },
     {
@@ -83912,11 +84162,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "44/701/0/0",
+      "gnr": "44",
+      "bnr": "701",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "rammetillatelse gitt",
@@ -83929,12 +84179,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.39003793153583,
+        "longitude": 6.194682467538121,
+        "lookupKey": "4622/44/701/0/0"
       }
     },
     {
@@ -84030,11 +84285,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "44/701/0/0",
+      "gnr": "44",
+      "bnr": "701",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "rammetillatelse gitt",
@@ -84047,12 +84302,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.39003793153583,
+        "longitude": 6.194682467538121,
+        "lookupKey": "4622/44/701/0/0"
       }
     },
     {
@@ -84847,11 +85107,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "126/11/0/0",
+      "gnr": "126",
+      "bnr": "11",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -84865,12 +85125,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.2461731654384,
+        "longitude": 6.007082118508269,
+        "lookupKey": "4622/126/11/0/0"
       }
     },
     {
@@ -85485,11 +85750,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "21/5/0/0",
+      "gnr": "21",
+      "bnr": "5",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "rammetillatelse gitt",
@@ -85502,12 +85767,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38459583677302,
+        "longitude": 5.9678184174959465,
+        "lookupKey": "4622/21/5/0/0"
       }
     },
     {
@@ -85672,11 +85942,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "44/701/0/0",
+      "gnr": "44",
+      "bnr": "701",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "rammetillatelse gitt",
@@ -85689,12 +85959,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.39003793153583,
+        "longitude": 6.194682467538121,
+        "lookupKey": "4622/44/701/0/0"
       }
     },
     {
@@ -85731,11 +86006,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "21/5/0/0",
+      "gnr": "21",
+      "bnr": "5",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "rammetillatelse gitt",
@@ -85748,12 +86023,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38459583677302,
+        "longitude": 5.9678184174959465,
+        "lookupKey": "4622/21/5/0/0"
       }
     },
     {
@@ -86958,11 +87238,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "21/5/0/0",
+      "gnr": "21",
+      "bnr": "5",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "rammetillatelse gitt",
@@ -86975,12 +87255,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38459583677302,
+        "longitude": 5.9678184174959465,
+        "lookupKey": "4622/21/5/0/0"
       }
     },
     {
@@ -87533,11 +87818,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "33/128/0/0",
+      "gnr": "33",
+      "bnr": "128",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -87551,12 +87836,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.366801653585206,
+        "longitude": 6.168148766009517,
+        "lookupKey": "4622/33/128/0/0"
       }
     },
     {
@@ -87652,11 +87942,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "126/11/0/0",
+      "gnr": "126",
+      "bnr": "11",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -87670,12 +87960,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.2461731654384,
+        "longitude": 6.007082118508269,
+        "lookupKey": "4622/126/11/0/0"
       }
     },
     {
@@ -87801,9 +88096,9 @@
       "address": "- Godkjent tiltak på gnr. 32 bnr. 434",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "232/26/0/0",
-      "gnr": "232",
-      "bnr": "26",
+      "matrikkel": "32/434/0/0",
+      "gnr": "32",
+      "bnr": "434",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -87818,12 +88113,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent tiltak på gnr. 32 bnr. 434",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.37225223382659,
+        "longitude": 6.164742909013651,
+        "lookupKey": "4622/32/434/0/0"
       }
     },
     {
@@ -87867,9 +88167,9 @@
       "address": "- Søknad om tilkopling til off. vass- og avløpsanlegg på gnr 32",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "242/26/0/0",
-      "gnr": "242",
-      "bnr": "26",
+      "matrikkel": "32/434/0/0",
+      "gnr": "32",
+      "bnr": "434",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -87884,12 +88184,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Søknad om tilkopling til off. vass- og avløpsanlegg på gnr 32",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.37225223382659,
+        "longitude": 6.164742909013651,
+        "lookupKey": "4622/32/434/0/0"
       }
     },
     {
@@ -88049,9 +88354,9 @@
       "address": "- Godkjent søknad om løyve til tiltak utan ansvarsrett på gnr 7",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "235/26/0/0",
-      "gnr": "235",
-      "bnr": "26",
+      "matrikkel": "7/101/0/0",
+      "gnr": "7",
+      "bnr": "101",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -88066,12 +88371,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent søknad om løyve til tiltak utan ansvarsrett på gnr 7",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.34880176842829,
+        "longitude": 6.186060971150091,
+        "lookupKey": "4622/7/101/0/0"
       }
     },
     {
@@ -88358,11 +88668,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "44/701/0/0",
+      "gnr": "44",
+      "bnr": "701",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "rammetillatelse gitt",
@@ -88375,12 +88685,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.39003793153583,
+        "longitude": 6.194682467538121,
+        "lookupKey": "4622/44/701/0/0"
       }
     },
     {
@@ -88421,11 +88736,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "44/701/0/0",
+      "gnr": "44",
+      "bnr": "701",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "rammetillatelse gitt",
@@ -88438,12 +88753,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.39003793153583,
+        "longitude": 6.194682467538121,
+        "lookupKey": "4622/44/701/0/0"
       }
     },
     {
@@ -88654,9 +88974,9 @@
       "address": "- Godkjent opning av bekkelp på gnr. 36 bnr.8",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "218/26/0/0",
-      "gnr": "218",
-      "bnr": "26",
+      "matrikkel": "36/8/0/0",
+      "gnr": "36",
+      "bnr": "8",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -88671,12 +88991,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent opning av bekkelp på gnr. 36 bnr.8",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.37740684556023,
+        "longitude": 6.202628238141881,
+        "lookupKey": "4622/36/8/0/0"
       }
     },
     {
@@ -90579,11 +90904,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "22/158/0/0",
+      "gnr": "22",
+      "bnr": "158",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "tillatelse gitt",
@@ -90596,12 +90921,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.37686716994901,
+        "longitude": 6.015957142174368,
+        "lookupKey": "4622/22/158/0/0"
       }
     },
     {
@@ -90638,11 +90968,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "31/15/0/0",
+      "gnr": "31",
+      "bnr": "15",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "tillatelse gitt",
@@ -90655,12 +90985,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.375239966895315,
+        "longitude": 6.150132953441505,
+        "lookupKey": "4622/31/15/0/0"
       }
     },
     {
@@ -90869,11 +91204,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "31/15/0/0",
+      "gnr": "31",
+      "bnr": "15",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "tillatelse gitt",
@@ -90886,12 +91221,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.375239966895315,
+        "longitude": 6.150132953441505,
+        "lookupKey": "4622/31/15/0/0"
       }
     },
     {
@@ -91012,11 +91352,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "127/4/0/0",
+      "gnr": "127",
+      "bnr": "4",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "tillatelse gitt",
@@ -91029,12 +91369,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.242550014596915,
+        "longitude": 6.003903276769198,
+        "lookupKey": "4622/127/4/0/0"
       }
     },
     {
@@ -91497,9 +91842,9 @@
       "address": "- Godkjent søknad om løyve til tiltak utan ansvarsrett på gnr 43",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "252/26/0/0",
-      "gnr": "252",
-      "bnr": "26",
+      "matrikkel": "43/134/0/0",
+      "gnr": "43",
+      "bnr": "134",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -91514,12 +91859,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent søknad om løyve til tiltak utan ansvarsrett på gnr 43",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38585424330735,
+        "longitude": 6.1943631550455995,
+        "lookupKey": "4622/43/134/0/0"
       }
     },
     {
@@ -91837,9 +92187,9 @@
       "address": "Kolltveitveien 63",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "233/26/0/0",
-      "gnr": "233",
-      "bnr": "26",
+      "matrikkel": "96/8/0/0",
+      "gnr": "96",
+      "bnr": "8",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -91854,12 +92204,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "Kolltveitveien 63",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.26263608616982,
+        "longitude": 6.1392021964929215,
+        "lookupKey": "4622/96/8/0/0"
       }
     },
     {
@@ -92714,11 +93069,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "7/101/0/0",
+      "gnr": "7",
+      "bnr": "101",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -92731,12 +93086,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.34880176842829,
+        "longitude": 6.186060971150091,
+        "lookupKey": "4622/7/101/0/0"
       }
     },
     {
@@ -92805,11 +93165,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "7/101/0/0",
+      "gnr": "7",
+      "bnr": "101",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -92822,12 +93182,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.34880176842829,
+        "longitude": 6.186060971150091,
+        "lookupKey": "4622/7/101/0/0"
       }
     },
     {
@@ -92870,11 +93235,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "19/256/0/0",
+      "gnr": "19",
+      "bnr": "256",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -92887,12 +93252,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.39151833872285,
+        "longitude": 5.963184740792915,
+        "lookupKey": "4622/19/256/0/0"
       }
     },
     {
@@ -93565,11 +93935,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "19/256/0/0",
+      "gnr": "19",
+      "bnr": "256",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -93582,12 +93952,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.39151833872285,
+        "longitude": 5.963184740792915,
+        "lookupKey": "4622/19/256/0/0"
       }
     },
     {
@@ -93702,11 +94077,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "19/256/0/0",
+      "gnr": "19",
+      "bnr": "256",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -93719,12 +94094,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.39151833872285,
+        "longitude": 5.963184740792915,
+        "lookupKey": "4622/19/256/0/0"
       }
     },
     {
@@ -93820,9 +94200,9 @@
       "address": "",
       "addressLookupStatus": "må slås opp fra matrikkel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "26/14554/0/0",
-      "gnr": "26",
-      "bnr": "14554",
+      "matrikkel": "32/36/0/0",
+      "gnr": "32",
+      "bnr": "36",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -93837,12 +94217,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.36906545961188,
+        "longitude": 6.160531053332354,
+        "lookupKey": "4622/32/36/0/0"
       }
     },
     {
@@ -101680,11 +102065,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "21/5/0/0",
+      "gnr": "21",
+      "bnr": "5",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "rammetillatelse gitt",
@@ -101697,12 +102082,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38459583677302,
+        "longitude": 5.9678184174959465,
+        "lookupKey": "4622/21/5/0/0"
       }
     },
     {
@@ -101802,11 +102192,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "21/5/0/0",
+      "gnr": "21",
+      "bnr": "5",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "rammetillatelse gitt",
@@ -101819,12 +102209,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38459583677302,
+        "longitude": 5.9678184174959465,
+        "lookupKey": "4622/21/5/0/0"
       }
     },
     {
@@ -102032,11 +102427,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "121/10/0/0",
+      "gnr": "121",
+      "bnr": "10",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -102049,12 +102444,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.256084316808874,
+        "longitude": 6.008500337358023,
+        "lookupKey": "4622/121/10/0/0"
       }
     },
     {
@@ -102100,9 +102500,9 @@
       "address": "- Godkjent søknad om løyve til tiltak utan ansvarsrett på gnr 32 bnr 378",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "271/26/0/0",
-      "gnr": "271",
-      "bnr": "26",
+      "matrikkel": "32/378/0/0",
+      "gnr": "32",
+      "bnr": "378",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -102117,12 +102517,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent søknad om løyve til tiltak utan ansvarsrett på gnr 32 bnr 378",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.37162724336148,
+        "longitude": 6.164315535682674,
+        "lookupKey": "4622/32/378/0/0"
       }
     },
     {
@@ -103386,11 +103791,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "126/11/0/0",
+      "gnr": "126",
+      "bnr": "11",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -103404,12 +103809,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.2461731654384,
+        "longitude": 6.007082118508269,
+        "lookupKey": "4622/126/11/0/0"
       }
     },
     {
@@ -103624,11 +104034,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "21/5/0/0",
+      "gnr": "21",
+      "bnr": "5",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "rammetillatelse gitt",
@@ -103641,12 +104051,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38459583677302,
+        "longitude": 5.9678184174959465,
+        "lookupKey": "4622/21/5/0/0"
       }
     },
     {
@@ -104408,9 +104823,9 @@
       "address": "- Godkjent søknad om løyve til tiltak uten ansvarsrett på gnr 44",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "248/26/0/0",
-      "gnr": "248",
-      "bnr": "26",
+      "matrikkel": "44/754/0/0",
+      "gnr": "44",
+      "bnr": "754",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -104425,12 +104840,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent søknad om løyve til tiltak uten ansvarsrett på gnr 44",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.394016640197286,
+        "longitude": 6.19145589942027,
+        "lookupKey": "4622/44/754/0/0"
       }
     },
     {
@@ -104474,9 +104894,9 @@
       "address": "- Godkjent søknad om endring av gitt løyve i sak DRAD 109/26 på gnr 44",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "249/26/0/0",
-      "gnr": "249",
-      "bnr": "26",
+      "matrikkel": "44/245/0/0",
+      "gnr": "44",
+      "bnr": "245",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -104491,12 +104911,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent søknad om endring av gitt løyve i sak DRAD 109/26 på gnr 44",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.388244100953656,
+        "longitude": 6.1976138301202415,
+        "lookupKey": "4622/44/245/0/0"
       }
     },
     {
@@ -104592,11 +105017,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "126/11/0/0",
+      "gnr": "126",
+      "bnr": "11",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -104610,12 +105035,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.2461731654384,
+        "longitude": 6.007082118508269,
+        "lookupKey": "4622/126/11/0/0"
       }
     },
     {
@@ -104845,11 +105275,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "44/701/0/0",
+      "gnr": "44",
+      "bnr": "701",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "rammetillatelse gitt",
@@ -104862,12 +105292,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.39003793153583,
+        "longitude": 6.194682467538121,
+        "lookupKey": "4622/44/701/0/0"
       }
     },
     {
@@ -104905,11 +105340,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "77/96/0/0",
+      "gnr": "77",
+      "bnr": "96",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -104924,12 +105359,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.43216186284367,
+        "longitude": 6.441006925454367,
+        "lookupKey": "4622/77/96/0/0"
       }
     },
     {
@@ -105026,11 +105466,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "126/11/0/0",
+      "gnr": "126",
+      "bnr": "11",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -105044,12 +105484,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.2461731654384,
+        "longitude": 6.007082118508269,
+        "lookupKey": "4622/126/11/0/0"
       }
     },
     {
@@ -105169,11 +105614,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "77/96/0/0",
+      "gnr": "77",
+      "bnr": "96",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -105187,12 +105632,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.43216186284367,
+        "longitude": 6.441006925454367,
+        "lookupKey": "4622/77/96/0/0"
       }
     },
     {
@@ -105233,11 +105683,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "21/5/0/0",
+      "gnr": "21",
+      "bnr": "5",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "rammetillatelse gitt",
@@ -105250,12 +105700,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38459583677302,
+        "longitude": 5.9678184174959465,
+        "lookupKey": "4622/21/5/0/0"
       }
     },
     {
@@ -105307,9 +105762,9 @@
       "address": "og 238/26",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "239/26/0/0",
-      "gnr": "239",
-      "bnr": "26",
+      "matrikkel": "101/10/0/0",
+      "gnr": "101",
+      "bnr": "10",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -105324,12 +105779,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "og 238/26",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.257328670439385,
+        "longitude": 6.075801774440556,
+        "lookupKey": "4622/101/10/0/0"
       }
     },
     {
@@ -105602,11 +106062,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "21/5/0/0",
+      "gnr": "21",
+      "bnr": "5",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "rammetillatelse gitt",
@@ -105619,12 +106079,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38459583677302,
+        "longitude": 5.9678184174959465,
+        "lookupKey": "4622/21/5/0/0"
       }
     },
     {
@@ -106017,11 +106482,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "126/11/0/0",
+      "gnr": "126",
+      "bnr": "11",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -106035,12 +106500,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.2461731654384,
+        "longitude": 6.007082118508269,
+        "lookupKey": "4622/126/11/0/0"
       }
     },
     {
@@ -106446,9 +106916,9 @@
       "address": "- Godkjent opning av bekkeløp på gnr. 36 bnr.8",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "218/26/0/0",
-      "gnr": "218",
-      "bnr": "26",
+      "matrikkel": "36/8/0/0",
+      "gnr": "36",
+      "bnr": "8",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -106463,12 +106933,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent opning av bekkeløp på gnr. 36 bnr.8",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.37740684556023,
+        "longitude": 6.202628238141881,
+        "lookupKey": "4622/36/8/0/0"
       }
     },
     {
@@ -107077,11 +107552,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "126/11/0/0",
+      "gnr": "126",
+      "bnr": "11",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -107095,12 +107570,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.2461731654384,
+        "longitude": 6.007082118508269,
+        "lookupKey": "4622/126/11/0/0"
       }
     },
     {
@@ -107421,9 +107901,9 @@
       "address": "- Godkjent søknad om tiltak på gnr. 42 bnr. 6",
       "addressLookupStatus": "adresse funnet i tittel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "213/26/0/0",
-      "gnr": "213",
-      "bnr": "26",
+      "matrikkel": "42/6/0/0",
+      "gnr": "42",
+      "bnr": "6",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -107438,12 +107918,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "- Godkjent søknad om tiltak på gnr. 42 bnr. 6",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38551465908059,
+        "longitude": 6.191000520929504,
+        "lookupKey": "4622/42/6/0/0"
       }
     },
     {
@@ -107706,11 +108191,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "21/5/0/0",
+      "gnr": "21",
+      "bnr": "5",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "rammetillatelse gitt",
@@ -107723,12 +108208,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38459583677302,
+        "longitude": 5.9678184174959465,
+        "lookupKey": "4622/21/5/0/0"
       }
     },
     {
@@ -107849,11 +108339,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "126/11/0/0",
+      "gnr": "126",
+      "bnr": "11",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -107867,12 +108357,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.2461731654384,
+        "longitude": 6.007082118508269,
+        "lookupKey": "4622/126/11/0/0"
       }
     },
     {
@@ -107910,11 +108405,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "126/11/0/0",
+      "gnr": "126",
+      "bnr": "11",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -107928,12 +108423,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.2461731654384,
+        "longitude": 6.007082118508269,
+        "lookupKey": "4622/126/11/0/0"
       }
     },
     {
@@ -108608,11 +109108,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "21/7/0/0",
+      "gnr": "21",
+      "bnr": "7",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -108625,12 +109125,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.36724965856841,
+        "longitude": 6.090826435526429,
+        "lookupKey": "4622/21/7/0/0"
       }
     },
     {
@@ -108672,11 +109177,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "7/164/0/0",
+      "gnr": "7",
+      "bnr": "164",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -108690,12 +109195,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.347955898002176,
+        "longitude": 6.174983854299571,
+        "lookupKey": "4622/7/164/0/0"
       }
     },
     {
@@ -108741,11 +109251,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "7/164/0/0",
+      "gnr": "7",
+      "bnr": "164",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -108759,12 +109269,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.347955898002176,
+        "longitude": 6.174983854299571,
+        "lookupKey": "4622/7/164/0/0"
       }
     },
     {
@@ -108804,11 +109319,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "45/1/0/0",
+      "gnr": "45",
+      "bnr": "1",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -108821,12 +109336,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.389360203133734,
+        "longitude": 6.203689881066062,
+        "lookupKey": "4622/45/1/0/0"
       }
     },
     {
@@ -108869,11 +109389,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "77/51/0/0",
+      "gnr": "77",
+      "bnr": "51",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -108886,12 +109406,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.43116328021203,
+        "longitude": 6.431598349520683,
+        "lookupKey": "4622/77/51/0/0"
       }
     },
     {
@@ -108930,11 +109455,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "145/8/0/0",
+      "gnr": "145",
+      "bnr": "8",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -108947,12 +109472,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.14958876270035,
+        "longitude": 5.899586222779095,
+        "lookupKey": "4622/145/8/0/0"
       }
     },
     {
@@ -108995,11 +109525,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "145/8/0/0",
+      "gnr": "145",
+      "bnr": "8",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -109012,12 +109542,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.14958876270035,
+        "longitude": 5.899586222779095,
+        "lookupKey": "4622/145/8/0/0"
       }
     },
     {
@@ -109356,11 +109891,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "19/2/0/0",
+      "gnr": "19",
+      "bnr": "2",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -109373,12 +109908,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.40086306707232,
+        "longitude": 6.012497731676975,
+        "lookupKey": "4622/19/2/0/0"
       }
     },
     {
@@ -109420,11 +109960,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "87/135/0/0",
+      "gnr": "87",
+      "bnr": "135",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -109437,12 +109977,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.30503525229576,
+        "longitude": 6.1656015339849235,
+        "lookupKey": "4622/87/135/0/0"
       }
     },
     {
@@ -109480,11 +110025,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "19/2/0/0",
+      "gnr": "19",
+      "bnr": "2",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -109497,12 +110042,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.40086306707232,
+        "longitude": 6.012497731676975,
+        "lookupKey": "4622/19/2/0/0"
       }
     },
     {
@@ -110283,11 +110833,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "20/1/0/0",
+      "gnr": "20",
+      "bnr": "1",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -110300,12 +110850,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.388622679723305,
+        "longitude": 5.956587079786949,
+        "lookupKey": "4622/20/1/0/0"
       }
     },
     {
@@ -112298,11 +112853,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "20/1/0/0",
+      "gnr": "20",
+      "bnr": "1",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -112315,12 +112870,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.388622679723305,
+        "longitude": 5.956587079786949,
+        "lookupKey": "4622/20/1/0/0"
       }
     },
     {
@@ -112415,11 +112975,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "118/6/0/0",
+      "gnr": "118",
+      "bnr": "6",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -112432,12 +112992,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.27083247674787,
+        "longitude": 6.020041101418689,
+        "lookupKey": "4622/118/6/0/0"
       }
     },
     {
@@ -112533,11 +113098,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "135/2/0/0",
+      "gnr": "135",
+      "bnr": "2",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -112550,12 +113115,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.21020618609893,
+        "longitude": 5.96301561364777,
+        "lookupKey": "4622/135/2/0/0"
       }
     },
     {
@@ -112828,11 +113398,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "118/6/0/0",
+      "gnr": "118",
+      "bnr": "6",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -112845,12 +113415,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.27083247674787,
+        "longitude": 6.020041101418689,
+        "lookupKey": "4622/118/6/0/0"
       }
     },
     {
@@ -113229,11 +113804,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "121/122/0/0",
+      "gnr": "121",
+      "bnr": "122",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -113246,12 +113821,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.26062966285343,
+        "longitude": 6.011041670203183,
+        "lookupKey": "4622/121/122/0/0"
       }
     },
     {
@@ -113634,11 +114214,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "121/122/0/0",
+      "gnr": "121",
+      "bnr": "122",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -113651,12 +114231,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.26062966285343,
+        "longitude": 6.011041670203183,
+        "lookupKey": "4622/121/122/0/0"
       }
     },
     {
@@ -114385,11 +114970,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "77/1/0/0",
+      "gnr": "77",
+      "bnr": "1",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -114402,12 +114987,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.43396182096159,
+        "longitude": 6.42689137238847,
+        "lookupKey": "4622/77/1/0/0"
       }
     },
     {
@@ -114676,11 +115266,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "77/1/0/0",
+      "gnr": "77",
+      "bnr": "1",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -114693,12 +115283,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.43396182096159,
+        "longitude": 6.42689137238847,
+        "lookupKey": "4622/77/1/0/0"
       }
     },
     {
@@ -114734,11 +115329,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "77/1/0/0",
+      "gnr": "77",
+      "bnr": "1",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -114751,12 +115346,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.43396182096159,
+        "longitude": 6.42689137238847,
+        "lookupKey": "4622/77/1/0/0"
       }
     },
     {
@@ -114986,11 +115586,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "77/1/0/0",
+      "gnr": "77",
+      "bnr": "1",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -115003,12 +115603,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.43396182096159,
+        "longitude": 6.42689137238847,
+        "lookupKey": "4622/77/1/0/0"
       }
     },
     {
@@ -115920,11 +116525,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "32/434/0/0",
+      "gnr": "32",
+      "bnr": "434",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -115937,12 +116542,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.37225223382659,
+        "longitude": 6.164742909013651,
+        "lookupKey": "4622/32/434/0/0"
       }
     },
     {
@@ -118945,11 +119555,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "53/22/0/0",
+      "gnr": "53",
+      "bnr": "22",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -118962,12 +119572,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.51320666380953,
+        "longitude": 6.091011164831707,
+        "lookupKey": "4622/53/22/0/0"
       }
     },
     {
@@ -119123,11 +119738,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "21/5/0/0",
+      "gnr": "21",
+      "bnr": "5",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -119140,12 +119755,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38459583677302,
+        "longitude": 5.9678184174959465,
+        "lookupKey": "4622/21/5/0/0"
       }
     },
     {
@@ -119759,9 +120379,9 @@
       "address": "",
       "addressLookupStatus": "må slås opp fra matrikkel",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "210/26/0/0",
-      "gnr": "210",
-      "bnr": "26",
+      "matrikkel": "21/951/0/0",
+      "gnr": "21",
+      "bnr": "951",
       "fnr": "0",
       "snr": "0",
       "classification": {
@@ -119776,12 +120396,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.39133340936316,
+        "longitude": 5.9789228977596345,
+        "lookupKey": "4622/21/951/0/0"
       }
     },
     {
@@ -120426,11 +121051,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "43/134/0/0",
+      "gnr": "43",
+      "bnr": "134",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -120444,12 +121069,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38585424330735,
+        "longitude": 6.1943631550455995,
+        "lookupKey": "4622/43/134/0/0"
       }
     },
     {
@@ -120485,11 +121115,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "22/158/0/0",
+      "gnr": "22",
+      "bnr": "158",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "saksbehandling pågår",
@@ -120502,12 +121132,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.37686716994901,
+        "longitude": 6.015957142174368,
+        "lookupKey": "4622/22/158/0/0"
       }
     },
     {
@@ -120544,11 +121179,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "43/134/0/0",
+      "gnr": "43",
+      "bnr": "134",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -120561,12 +121196,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38585424330735,
+        "longitude": 6.1943631550455995,
+        "lookupKey": "4622/43/134/0/0"
       }
     },
     {
@@ -120602,11 +121242,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "43/134/0/0",
+      "gnr": "43",
+      "bnr": "134",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -120619,12 +121259,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38585424330735,
+        "longitude": 6.1943631550455995,
+        "lookupKey": "4622/43/134/0/0"
       }
     },
     {
@@ -120660,11 +121305,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "43/134/0/0",
+      "gnr": "43",
+      "bnr": "134",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -120677,12 +121322,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38585424330735,
+        "longitude": 6.1943631550455995,
+        "lookupKey": "4622/43/134/0/0"
       }
     },
     {
@@ -120758,11 +121408,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "43/134/0/0",
+      "gnr": "43",
+      "bnr": "134",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -120775,12 +121425,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38585424330735,
+        "longitude": 6.1943631550455995,
+        "lookupKey": "4622/43/134/0/0"
       }
     },
     {
@@ -120819,11 +121474,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "10/58/0/0",
+      "gnr": "10",
+      "bnr": "58",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "saksbehandling pågår",
@@ -120836,12 +121491,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.36195824221619,
+        "longitude": 6.1553976742200645,
+        "lookupKey": "4622/10/58/0/0"
       }
     },
     {
@@ -120901,11 +121561,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "96/8/0/0",
+      "gnr": "96",
+      "bnr": "8",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -120918,12 +121578,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.26263608616982,
+        "longitude": 6.1392021964929215,
+        "lookupKey": "4622/96/8/0/0"
       }
     },
     {
@@ -120959,11 +121624,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "96/8/0/0",
+      "gnr": "96",
+      "bnr": "8",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -120976,12 +121641,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.26263608616982,
+        "longitude": 6.1392021964929215,
+        "lookupKey": "4622/96/8/0/0"
       }
     },
     {
@@ -121071,11 +121741,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "7/47/0/0",
+      "gnr": "7",
+      "bnr": "47",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -121088,12 +121758,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.34748682835003,
+        "longitude": 6.187606571160297,
+        "lookupKey": "4622/7/47/0/0"
       }
     },
     {
@@ -121212,11 +121887,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "7/47/0/0",
+      "gnr": "7",
+      "bnr": "47",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -121229,12 +121904,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.34748682835003,
+        "longitude": 6.187606571160297,
+        "lookupKey": "4622/7/47/0/0"
       }
     },
     {
@@ -121275,11 +121955,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "7/47/0/0",
+      "gnr": "7",
+      "bnr": "47",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -121292,12 +121972,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.34748682835003,
+        "longitude": 6.187606571160297,
+        "lookupKey": "4622/7/47/0/0"
       }
     },
     {
@@ -121548,11 +122233,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "32/378/0/0",
+      "gnr": "32",
+      "bnr": "378",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -121565,12 +122250,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.37162724336148,
+        "longitude": 6.164315535682674,
+        "lookupKey": "4622/32/378/0/0"
       }
     },
     {
@@ -121669,11 +122359,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "32/378/0/0",
+      "gnr": "32",
+      "bnr": "378",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -121686,12 +122376,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.37162724336148,
+        "longitude": 6.164315535682674,
+        "lookupKey": "4622/32/378/0/0"
       }
     },
     {
@@ -121812,11 +122507,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "29/1/0/0",
+      "gnr": "29",
+      "bnr": "1",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -121829,12 +122524,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38691544457203,
+        "longitude": 6.145692084844563,
+        "lookupKey": "4622/29/1/0/0"
       }
     },
     {
@@ -122084,11 +122784,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "21/5/0/0",
+      "gnr": "21",
+      "bnr": "5",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -122101,12 +122801,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.38459583677302,
+        "longitude": 5.9678184174959465,
+        "lookupKey": "4622/21/5/0/0"
       }
     },
     {
@@ -122750,11 +123455,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "7/3/0/0",
+      "gnr": "7",
+      "bnr": "3",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -122767,12 +123472,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.34767269158391,
+        "longitude": 6.184659856167828,
+        "lookupKey": "4622/7/3/0/0"
       }
     },
     {
@@ -122937,11 +123647,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "19/707/0/0",
+      "gnr": "19",
+      "bnr": "707",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -122954,12 +123664,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.373543255120865,
+        "longitude": 6.005776306417265,
+        "lookupKey": "4622/19/707/0/0"
       }
     },
     {
@@ -123065,11 +123780,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "19/950/0/0",
+      "gnr": "19",
+      "bnr": "950",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -123082,12 +123797,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.37156548569746,
+        "longitude": 6.026667660469004,
+        "lookupKey": "4622/19/950/0/0"
       }
     },
     {
@@ -123123,11 +123843,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "11/493/0/0",
+      "gnr": "11",
+      "bnr": "493",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -123140,12 +123860,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.3684846409233,
+        "longitude": 6.147466508610823,
+        "lookupKey": "4622/11/493/0/0"
       }
     },
     {
@@ -123185,11 +123910,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "11/493/0/0",
+      "gnr": "11",
+      "bnr": "493",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -123202,12 +123927,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.3684846409233,
+        "longitude": 6.147466508610823,
+        "lookupKey": "4622/11/493/0/0"
       }
     },
     {
@@ -123342,11 +124072,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "44/754/0/0",
+      "gnr": "44",
+      "bnr": "754",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -123359,12 +124089,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.394016640197286,
+        "longitude": 6.19145589942027,
+        "lookupKey": "4622/44/754/0/0"
       }
     },
     {
@@ -123400,11 +124135,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "ikke de-anonymiser privatperson; bruk matrikkel til adresse og behold bare åpne aktørnavn",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "44/754/0/0",
+      "gnr": "44",
+      "bnr": "754",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -123417,12 +124152,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.394016640197286,
+        "longitude": 6.19145589942027,
+        "lookupKey": "4622/44/754/0/0"
       }
     },
     {
@@ -123464,11 +124204,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "7/3/0/0",
+      "gnr": "7",
+      "bnr": "3",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -123481,12 +124221,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.34767269158391,
+        "longitude": 6.184659856167828,
+        "lookupKey": "4622/7/3/0/0"
       }
     },
     {
@@ -123731,11 +124476,11 @@
       "address": "",
       "addressLookupStatus": "mangler matrikkel/adresse",
       "personLookupPolicy": "bruk åpne aktørnavn fra kilde",
-      "matrikkel": "",
-      "gnr": "",
-      "bnr": "",
-      "fnr": "",
-      "snr": "",
+      "matrikkel": "21/348/0/0",
+      "gnr": "21",
+      "bnr": "348",
+      "fnr": "0",
+      "snr": "0",
       "classification": {
         "status": "lead",
         "reason": "søknad mottatt",
@@ -123748,12 +124493,17 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse slått opp fra matrikkel",
+        "postCode": "",
+        "postPlace": "",
+        "latitude": 60.37947405201023,
+        "longitude": 5.980581921090559,
+        "lookupKey": "4622/21/348/0/0"
       }
     },
     {

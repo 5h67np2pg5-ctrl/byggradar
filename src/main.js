@@ -1542,6 +1542,10 @@ function extractMatrikkelFromProject(project) {
   if (match) {
     return `${match[1]}/${match[2]}/0/0`;
   }
+  const slashMatch = sourceText.match(/\b(?:gbnr\s*)?(\d+)\s*\/\s*(\d+)\b/i);
+  if (slashMatch) {
+    return `${slashMatch[1]}/${slashMatch[2]}/0/0`;
+  }
   return project.matrikkel || "";
 }
 
