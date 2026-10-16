@@ -349,6 +349,22 @@ a {
   box-shadow: 0 0 0 3px rgba(90, 157, 204, 0.16);
 }
 
+.customer-municipality-prompt {
+  margin-top: 5px;
+  padding: 6px 9px;
+  border: 1px solid #b9d8eb;
+  border-radius: 7px;
+  background: #eaf6fd;
+  color: #2d6388;
+  font-size: 0.78rem;
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+.customer-municipality-prompt[hidden] {
+  display: none;
+}
+
 .chip-row {
   display: flex;
   flex-wrap: wrap;

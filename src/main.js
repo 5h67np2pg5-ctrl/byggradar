@@ -609,6 +609,7 @@ function renderShell() {
           <select id="customerMunicipality" class="filter-select" aria-label="Velg kundens kommune">
             <option value="">Velg kommune</option>
           </select>
+          <div id="customerMunicipalityPrompt" class="customer-municipality-prompt" hidden>Velg kommune</div>
         </label>
       </section>
 
@@ -674,6 +675,7 @@ function renderShell() {
     state.customerMunicipality = event.target.value;
     state.visibleCount = standardProjectLimit;
     saveFilters();
+    updateCustomerMunicipalityPrompt();
     render();
   });
 }
@@ -2496,6 +2498,13 @@ function updateCustomerMunicipalityOptions() {
     }),
   ].join("");
   select.value = selected;
+  updateCustomerMunicipalityPrompt();
+}
+
+function updateCustomerMunicipalityPrompt() {
+  const prompt = document.querySelector("#customerMunicipalityPrompt");
+  if (!prompt) return;
+  prompt.hidden = Boolean(state.customerMunicipality);
 }
 
 function restoreSavedFilters() {
