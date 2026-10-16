@@ -620,7 +620,7 @@ function renderShell() {
       <section class="map-dialog" id="mapDialog" hidden aria-label="Prosjektkart">
         <div class="map-dialog-panel">
           <div class="map-dialog-toolbar">
-            <strong>Prosjektkart</strong>
+            <strong id="mapTitle">Områdekart</strong>
             <button class="close-button map-dialog-close" id="mapDialogClose" type="button">Lukk</button>
           </div>
           <div id="fullMapCanvas" class="full-map-canvas"></div>
@@ -1297,6 +1297,14 @@ function openFullMap(project) {
   dialog.style.removeProperty("display");
   dialog.classList.remove("is-force-hidden");
   document.body.classList.add("has-map-dialog");
+  const mapTitle = document.querySelector("#mapTitle");
+  const municipalityOption = document.querySelector("#customerMunicipality option:checked");
+  if (mapTitle) {
+    const municipality = municipalityOption?.textContent?.trim() || "";
+    mapTitle.textContent = municipality && municipality !== "Velg kommune"
+      ? `Områdekart for ${municipality}`
+      : "Områdekart";
+  }
 
   if (state.fullMap) {
     state.fullMap.remove();
