@@ -741,7 +741,6 @@ function renderRegionNotice(summary = {}) {
   notice.innerHTML = `
     <span>Valgt område: ${escapeHtml(selectedRegion.name)} (${selectedRegion.municipalities.length} kommuner)</span>
     <span>${visibleCount} aktive prosjekter, av ${totalCount} for ${escapeHtml(regionName)}.</span>
-    <span>Fornyes med ${weeklyDeliveryCount} nye hver uke.</span>
   `;
 }
 
