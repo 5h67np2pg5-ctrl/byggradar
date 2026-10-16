@@ -4,6 +4,7 @@ const state = {
   selected: null,
   trade: "",
   area: "",
+  customerMunicipality: "",
   showMap: false,
   visibleCount: 200,
   userLocation: null,
@@ -197,6 +198,18 @@ const stageRank = {
   "søknad mottatt": 6,
 };
 
+const phaseTwoStatuses = new Set([
+  "igangsettingstillatelse gitt",
+  "igangsetting søkt",
+  "tillatelse gitt",
+]);
+
+const phaseOneStatuses = new Set([
+  "rammetillatelse gitt",
+  "saksbehandling pågår",
+  "søknad mottatt",
+]);
+
 const app = document.querySelector("#app");
 const forceLogin = new URLSearchParams(window.location.search).get("login") === "1";
 
@@ -352,6 +365,7 @@ function normalizeProject(project, contactProject, index) {
   const derivedMatrikkel = extractMatrikkelFromProject(project);
   const title = cleanTitle(project.title || project.shortFacts || project.caseTitle || "Ukjent prosjekt");
   const status = classification.stage || project.status || project.phase || "Ukjent status";
+  const phaseLabel = classification.phase || classifyProjectPhase(status);
   const projectTypes = classification.projectTypes || [];
   const tradeRelevance = project.tradeRelevance || projectTypes.join("; ") || inferTrade(title, project.documentTitle, project.caseTitle);
   const marketRole = project.marketRole || (project.sourceStream === "bane_nor_procurement_plan" ? "external" : "external");
@@ -377,6 +391,7 @@ function normalizeProject(project, contactProject, index) {
     secondLine: `${shortTrade(tradeRelevance)} | ${contactLineSummary(contactQuality)}`,
     status,
     statusText: shortStatus(status),
+    phaseLabel,
     date,
     tradeRelevance,
     projectTypes,
@@ -505,6 +520,12 @@ function renderShell() {
           </datalist>
           <button class="location-button" id="locationButton" type="button">Finn min region</button>
         </div>
+        <label class="search-field customer-location-field">
+          <span>Kundens kommune</span>
+          <select id="customerMunicipality" class="filter-select" aria-label="Velg kundens kommune">
+            <option value="">Velg kommune for nærhetsrangering</option>
+          </select>
+        </label>
         <div class="region-notice" id="regionNotice" aria-live="polite"></div>
 
       </section>
@@ -525,6 +546,8 @@ function renderShell() {
     </main>
   `;
 
+  updateCustomerMunicipalityOptions();
+
   const helpText = "Forslag: Velg fag og område først, åpne de mest relevante prosjektene, og kontakt tiltakshaver eller ansvarlig aktør tidlig. Start kort: Hei, jeg ser at dere har et prosjekt på gang i [adresse]. Vi jobber med [fag], og kan raskt avklare om vi kan bidra i planlegging eller utførelse. Ønsker dere at jeg sender en kort presentasjon eller tar en rask prat?";
   document.querySelector("#regionIllustration")?.addEventListener("change", async (event) => {
     const selected = event.target.value;
@@ -532,6 +555,10 @@ function renderShell() {
     state.regionKey = selected;
     state.activeRegion = locationRegions.find((region) => region.id === selected) || null;
     state.area = "";
+    if (!state.activeRegion?.municipalities.some((municipality) => normalizeMunicipalityName(municipality) === state.customerMunicipality)) {
+      state.customerMunicipality = "";
+    }
+    updateCustomerMunicipalityOptions();
     state.selected = null;
     state.visibleCount = standardProjectLimit;
     saveFilters();
@@ -561,6 +588,12 @@ function renderShell() {
   bindInput("tradeInput", "trade");
   bindInput("areaInput", "area");
   document.querySelector("#locationButton").addEventListener("click", useCurrentLocation);
+  document.querySelector("#customerMunicipality").addEventListener("change", (event) => {
+    state.customerMunicipality = event.target.value;
+    state.visibleCount = standardProjectLimit;
+    saveFilters();
+    render();
+  });
 }
 
 function bindInput(id, key) {
@@ -635,7 +668,7 @@ function renderList() {
       <button class="project-summary" type="button" data-id="${escapeHtml(project.id)}">
         <span class="project-number">${index + 1}</span>
         <span class="project-meta">
-          <span class="row-status">${escapeHtml(project.statusText)}</span>
+          <span class="row-status" title="${escapeHtml(project.statusText)}">${escapeHtml(project.phaseLabel)}</span>
           <span class="date-badge" title="${escapeHtml(project.dateFullLabel)}">${index >= standardProjectLimit ? `<span class="extra-star" title="Utenfor standard leveranse">★</span>` : ""}${escapeHtml(project.dateLabel)}</span>
         </span>
         <span class="row-copy">
@@ -1687,6 +1720,11 @@ function standardDeliveryProjects() {
   const ranked = state.filtered.slice();
   if (ranked.length <= standardProjectLimit) return ranked;
 
+  // Når kunden har valgt kommune, skal de 200 nærmeste prosjektene være
+  // standardleveransen. Kommunebalanseringen brukes ellers for å sikre bred
+  // regional dekning når kunden ikke har valgt et lokalt origo.
+  if (state.customerMunicipality) return ranked.slice(0, standardProjectLimit);
+
   // Fordel kartgrunnlaget mellom kommunene. Prosjektene står fortsatt i
   // aktualitetsrekkefølge internt i hver kommune, men én stor kommune skal
   // ikke fylle hele 200-grensen og gjøre Øygarden, Askøy, Osterøy med flere
@@ -1742,12 +1780,26 @@ function deliverySort(a, b) {
   // Rangeringen skal vise prosjektene som er nærmest faktisk oppstart først.
   // Dokumentdato brukes bare som siste tie-breaker, slik at en ny postliste-
   // linje ikke automatisk skyver et mer aktuelt prosjekt nedover.
+  if (state.customerMunicipality) {
+    const distanceDelta = customerProjectDistance(a) - customerProjectDistance(b);
+    if (distanceDelta !== 0) return distanceDelta;
+  }
   return b.attractivenessScore - a.attractivenessScore ||
     (stageRank[normalize(a.status)] || 20) - (stageRank[normalize(b.status)] || 20) ||
     parsedDateMs(b.deadline || b.date) - parsedDateMs(a.deadline || a.date) ||
     b.score - a.score ||
     Number(b.hasMapPoint) - Number(a.hasMapPoint) ||
     String(b.date).localeCompare(String(a.date));
+}
+
+function customerProjectDistance(project) {
+  const origin = municipalityMapAnchors[state.customerMunicipality];
+  if (!origin) return Infinity;
+  const projectPoint = Number.isFinite(project.lat) && Number.isFinite(project.lon) && project.lat !== 0 && project.lon !== 0
+    ? { lat: project.lat, lon: project.lon }
+    : municipalityMapAnchor(project.municipality || project.place || project.marketArea);
+  if (!projectPoint) return Infinity;
+  return distanceKm(origin.lat, origin.lon, projectPoint.lat, projectPoint.lon);
 }
 
 function markedFirstSort(a, b) {
@@ -2117,6 +2169,14 @@ function shortStatus(value) {
   return normalizedStatus ? normalizedStatus.charAt(0).toLocaleUpperCase("nb-NO") + normalizedStatus.slice(1) : "Status ukjent";
 }
 
+function classifyProjectPhase(status) {
+  const normalized = normalize(status);
+  if (phaseTwoStatuses.has(normalized)) return "Fase 2";
+  if (phaseOneStatuses.has(normalized)) return "Fase 1";
+  if (/igangsetting|tillatelse|rammetillatelse|kontrakt|aktiv konkurranse|anbud/.test(normalized)) return "Fase 2";
+  return "Fase 1";
+}
+
 function shortTrade(value) {
   return String(value || "Fag ikke tolket").replaceAll(";", ",").slice(0, 34);
 }
@@ -2224,7 +2284,32 @@ function compactText(value) {
 }
 
 function saveFilters() {
-  writeSavedValue(savedFiltersKey, JSON.stringify({ trade: state.trade, area: state.area, regionId: state.activeRegion?.id || "", regionKey: state.regionKey }));
+  writeSavedValue(savedFiltersKey, JSON.stringify({
+    trade: state.trade,
+    area: state.area,
+    customerMunicipality: state.customerMunicipality,
+    regionId: state.activeRegion?.id || "",
+    regionKey: state.regionKey,
+  }));
+}
+
+function updateCustomerMunicipalityOptions() {
+  const select = document.querySelector("#customerMunicipality");
+  if (!select) return;
+  const region = locationRegions.find((candidate) => candidate.id === state.regionKey) || locationRegions[0];
+  const municipalities = region?.municipalities || [];
+  const selected = municipalities.some((municipality) => normalizeMunicipalityName(municipality) === state.customerMunicipality)
+    ? state.customerMunicipality
+    : "";
+  if (selected !== state.customerMunicipality) state.customerMunicipality = selected;
+  select.innerHTML = [
+    `<option value="">Velg kommune for nærhetsrangering</option>`,
+    ...municipalities.map((municipality) => {
+      const value = normalizeMunicipalityName(municipality);
+      return `<option value="${escapeHtml(value)}" ${value === selected ? "selected" : ""}>${escapeHtml(municipality)}</option>`;
+    }),
+  ].join("");
+  select.value = selected;
 }
 
 function restoreSavedFilters() {
@@ -2233,14 +2318,17 @@ function restoreSavedFilters() {
     const savedTrade = normalize(saved.trade || "");
     state.trade = tradePresets.includes(savedTrade) ? savedTrade : "";
     state.area = /^min posisjon|^region ved min posisjon/i.test(saved.area || "") ? "" : saved.area || "";
+    state.customerMunicipality = saved.customerMunicipality || "";
     state.regionKey = regionDataPaths[saved.regionKey] ? saved.regionKey : "bergensregionen";
     state.activeRegion = locationRegions.find((region) => region.id === state.regionKey) || findRegionByText(state.area);
     document.querySelector("#tradeInput").value = state.trade;
     document.querySelector("#areaInput").value = state.area;
     document.querySelector("#regionIllustration").value = state.regionKey;
+    updateCustomerMunicipalityOptions();
   } catch {
     state.trade = "";
     state.area = "";
+    state.customerMunicipality = "";
     state.regionKey = "bergensregionen";
     state.activeRegion = locationRegions.find((region) => region.id === state.regionKey) || null;
   }

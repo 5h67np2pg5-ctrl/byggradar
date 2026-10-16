@@ -1258,7 +1258,7 @@ body.has-map-dialog .mini-map-card {
 
 @media (min-width: 820px) {
   .filters {
-    grid-template-columns: minmax(260px, 0.8fr) minmax(320px, 1fr);
+    grid-template-columns: minmax(220px, 0.8fr) minmax(320px, 1fr) minmax(220px, 0.8fr);
     align-items: end;
     padding: 14px 18px;
   }
