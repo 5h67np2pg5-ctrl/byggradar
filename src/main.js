@@ -570,6 +570,7 @@ function renderShell() {
           <div class="brand">ByggRadar</div>
           <div class="national-project-count" id="nationalProjectCount">Laster registrerte og aktive byggprosjekter fra ${coveredMunicipalityCount} kommuner...</div>
           <div class="subtle" id="summaryText" tabindex="0">Laster prosjekter...</div>
+          <div class="region-notice" id="regionNotice" aria-live="polite"></div>
         </div>
         <div class="top-actions">
           <label class="region-picker">
@@ -609,8 +610,6 @@ function renderShell() {
             <option value="">Velg kommune for nærhetsrangering</option>
           </select>
         </label>
-        <div class="region-notice" id="regionNotice" aria-live="polite"></div>
-
       </section>
 
       <section class="workspace">
