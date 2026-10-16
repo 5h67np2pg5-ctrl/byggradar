@@ -1331,20 +1331,18 @@ function openFullMap(project) {
 }
 
 function openAreaMap() {
-  if (!state.customerMunicipality) {
+  const points = mapPointProjects();
+  if (!points.length) {
     const notice = document.querySelector("#regionNotice");
     if (notice) {
       notice.hidden = false;
-      notice.textContent = "Velg kundens kommune før du åpner Områdekart.";
+      notice.textContent = "Ingen kartfestede prosjekter i dette utvalget.";
     }
-    document.querySelector("#customerMunicipality")?.focus();
     return;
   }
 
-  const points = mapPointProjects();
-  if (!points.length) return;
-
-  // Gjenbruk den stabile fullkartflyten, men vis hele standardutvalget.
+  // Kartet skal alltid kunne åpnes. Kundens kommune påvirker rangering og
+  // nærhetsutvalg når den er valgt, men skal ikke være et krav for kartvisning.
   openFullMap(points[0]);
   if (!state.fullMap) return;
   const bounds = L.latLngBounds(points.map((project) => [project.lat, project.lon]));
