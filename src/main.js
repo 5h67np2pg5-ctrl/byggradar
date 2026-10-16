@@ -1327,6 +1327,7 @@ function openFullMap(project) {
     touchZoom: true,
     tap: true,
   }).setView([selectedPoint.lat, selectedPoint.lon], selectedPoint.isMunicipalityFallbackPoint ? 12 : 13);
+  softenFullMapPinchZoom(state.fullMap);
   addBaseMap(state.fullMap);
   const points = mapPointProjects();
   addProjectMarkers(state.fullMap, points, selectedPoint, {
@@ -1335,6 +1336,42 @@ function openFullMap(project) {
   bindFullMapTouchGuards();
   bindFullMapProjectSelection();
   refreshMapSize(state.fullMap);
+}
+
+function softenFullMapPinchZoom(map) {
+  const handler = map?.touchZoom;
+  if (!handler || handler.__byggradarSoftened) return;
+
+  // Leaflet bruker avstanden mellom fingrene direkte som zoomfaktor.
+  // Demp utslaget rundt 1:1, slik at pinch-zoom blir roligere på telefon.
+  const originalStart = handler._onTouchStart;
+  const originalMove = handler._onTouchMove;
+  const sensitivity = 0.5;
+
+  handler.disable();
+  handler._onTouchStart = function (event) {
+    originalStart.call(this, event);
+    if (this._zooming) this._byggradarStartDist = this._startDist;
+  };
+  handler._onTouchMove = function (event) {
+    const mapInstance = this._map;
+    const baseDistance = this._byggradarStartDist;
+    if (!baseDistance || !event.touches || event.touches.length !== 2) {
+      originalMove.call(this, event);
+      return;
+    }
+
+    const first = mapInstance.mouseEventToContainerPoint(event.touches[0]);
+    const second = mapInstance.mouseEventToContainerPoint(event.touches[1]);
+    const currentDistance = first.distanceTo(second);
+    const rawScale = currentDistance / baseDistance;
+    const softenedScale = 1 + (rawScale - 1) * sensitivity;
+    this._startDist = currentDistance / softenedScale;
+    originalMove.call(this, event);
+    this._startDist = baseDistance;
+  };
+  handler.__byggradarSoftened = true;
+  handler.enable();
 }
 
 function openAreaMap() {
