@@ -622,18 +622,17 @@ function render() {
   const summaryText = document.querySelector("#summaryText");
   const regionName = state.activeRegion?.name || locationRegions.find((region) => region.id === state.regionKey)?.name || "valgt region";
   const totalProjectCount = state.filtered.length;
-  summaryText.innerHTML = `
-    <span>${visibleProjects.length} aktive prosjekter, av ${totalProjectCount} for ${escapeHtml(regionName)}.</span>
-    <span>Fornyes med ${weeklyDeliveryCount} nye hver uke.</span>
-  `;
-  summaryText.dataset.tooltip = deliveryInfoText();
+  if (summaryText) {
+    summaryText.textContent = "";
+    summaryText.dataset.tooltip = deliveryInfoText();
+  }
   document.body.dataset.map = "closed";
-  renderRegionNotice();
+  renderRegionNotice({ visibleCount: visibleProjects.length, totalCount: totalProjectCount, regionName });
 
   renderList();
 }
 
-function renderRegionNotice() {
+function renderRegionNotice(summary = {}) {
   const notice = document.querySelector("#regionNotice");
   if (!notice) return;
   const selectedRegion = findRegionByText(state.area) || state.activeRegion;
@@ -643,7 +642,14 @@ function renderRegionNotice() {
     return;
   }
   notice.hidden = false;
-  notice.textContent = `Valgt område: ${selectedRegion.name} (${selectedRegion.municipalities.length} kommuner)`;
+  const visibleCount = summary.visibleCount ?? visibleDeliveryProjects().length;
+  const totalCount = summary.totalCount ?? state.filtered.length;
+  const regionName = summary.regionName || selectedRegion.name;
+  notice.innerHTML = `
+    <span>Valgt område: ${escapeHtml(selectedRegion.name)} (${selectedRegion.municipalities.length} kommuner)</span>
+    <span>${visibleCount} aktive prosjekter, av ${totalCount} for ${escapeHtml(regionName)}.</span>
+    <span>Fornyes med ${weeklyDeliveryCount} nye hver uke.</span>
+  `;
 }
 
 function renderList() {
