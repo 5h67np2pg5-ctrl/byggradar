@@ -134,12 +134,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Haakonsvegen 80",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.42094694537729,
+        "longitude": 5.296935720148056
       }
     },
     {
@@ -272,12 +274,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Salhusvegen 105",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.397445776589514,
+        "longitude": 5.2876138573996965
       }
     },
     {
@@ -419,12 +423,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Longhammarvegen 36",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.397403921604486,
+        "longitude": 5.334734577381073
       }
     },
     {
@@ -874,12 +880,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Høievegen 143",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.4120914133132,
+        "longitude": 5.386893833287445
       }
     },
     {
@@ -1066,12 +1074,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Spannavegen 546",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.379043365508544,
+        "longitude": 5.349090703243305
       }
     },
     {
@@ -1416,12 +1426,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Suldalgata 22B",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.41555349903213,
+        "longitude": 5.283319247202862
       }
     },
     {
@@ -1596,12 +1608,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Olvikvegen 23",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.79337247812166,
+        "longitude": 5.507881501604571
       }
     },
     {
@@ -1650,12 +1664,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Westbøes gate 1",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.40842654040623,
+        "longitude": 5.329666824842116
       }
     },
     {
@@ -1744,12 +1760,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Husøyvegen 179",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.34129802497956,
+        "longitude": 5.294832931506556
       }
     },
     {
@@ -1825,12 +1843,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Bisparhaugvegen 46, 5574 Skjold",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.508654387832905,
+        "longitude": 5.589449829360212
       }
     },
     {
@@ -1997,12 +2017,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Rogalandgata 97",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.41405511317937,
+        "longitude": 5.281526082213708
       }
     },
     {
@@ -2824,12 +2846,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Westbøes gate 1",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.40842654040623,
+        "longitude": 5.329666824842116
       }
     },
     {
@@ -2915,12 +2939,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Damvegen 18",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.429576880165996,
+        "longitude": 5.269316314631991
       }
     },
     {
@@ -3032,12 +3058,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Griegs gate 20",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.388946777585495,
+        "longitude": 5.308034703188583
       }
     },
     {
@@ -3431,12 +3459,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Vikahaugen 10",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.775792944685946,
+        "longitude": 5.489193409758651
       }
     },
     {
@@ -3494,12 +3524,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Askehagen 20",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.28135934483194,
+        "longitude": 5.300315892564409
       }
     },
     {
@@ -3557,12 +3589,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Gunnarshaugvegen 170",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.37620450383389,
+        "longitude": 5.2549528440569
       }
     },
     {
@@ -3620,12 +3654,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Rusvikvegen 25",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.277744882094986,
+        "longitude": 5.319550128498105
       }
     },
     {
@@ -3710,12 +3746,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Skifervegen 1",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.44174787621854,
+        "longitude": 5.271564631346307
       }
     },
     {
@@ -3919,12 +3957,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Skrevegen 378",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.38260195426111,
+        "longitude": 5.366937613674141
       }
     },
     {
@@ -4062,12 +4102,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Raglamyrvegen 25A",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.39022727354596,
+        "longitude": 5.322804274874521
       }
     },
     {
@@ -4196,12 +4238,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Oddagata 24",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.42020912213486,
+        "longitude": 5.273212809465569
       }
     },
     {
@@ -4292,12 +4336,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Austevikvegen 63",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.309557816738995,
+        "longitude": 5.2979529191168355
       }
     },
     {
@@ -4896,12 +4942,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Kattanakkvegen 128",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.436517968013746,
+        "longitude": 5.310929433329983
       }
     },
     {
@@ -5137,12 +5185,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Nesevegen 199",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.781867644826676,
+        "longitude": 5.112381065509199
       }
     },
     {
@@ -5308,12 +5358,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Nysæterhaugen 9",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.7831745178021,
+        "longitude": 5.406033762935083
       }
     },
     {
@@ -5513,12 +5565,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Solheimsvegen 44",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.43365046065908,
+        "longitude": 5.623286935638375
       }
     },
     {
@@ -5577,12 +5631,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Vestlivegen 42",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.80164367863667,
+        "longitude": 5.512575851345468
       }
     },
     {
@@ -5676,12 +5732,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Solåsen 4",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.75270113935557,
+        "longitude": 5.459772540271475
       }
     },
     {
@@ -6483,12 +6541,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Karmsundgata 9",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.399842291373076,
+        "longitude": 5.294437907766382
       }
     },
     {
@@ -6556,12 +6616,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Tresåkervegen 9",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.384080184566365,
+        "longitude": 5.321611842039296
       }
     },
     {
@@ -6614,12 +6676,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Frakkagjerdvegen 202",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.42123000134048,
+        "longitude": 5.405003650685913
       }
     },
     {
@@ -6911,12 +6975,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Lønningsåsen 2",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.78106792187378,
+        "longitude": 5.497272482676048
       }
     },
     {
@@ -7062,12 +7128,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Vikanesvegen 124",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.77917496479885,
+        "longitude": 5.366254891218157
       }
     },
     {
@@ -7180,12 +7248,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Sveinavikvegen 47",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.665077033823216,
+        "longitude": 5.687380400038201
       }
     },
     {
@@ -7931,12 +8001,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Varilds gate 9",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.4026273918178,
+        "longitude": 5.302741911098562
       }
     },
     {
@@ -7986,12 +8058,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Strandgata 106",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.411271892594385,
+        "longitude": 5.270316387255058
       }
     },
     {
@@ -8286,12 +8360,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Jeppevegen 19",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.39623608585761,
+        "longitude": 5.292170523387054
       }
     },
     {
@@ -8500,12 +8576,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Raglamyrvegen 22",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.392719471846235,
+        "longitude": 5.327028151347904
       }
     },
     {
@@ -8612,12 +8690,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Valvatnavegen 24",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.76740324770462,
+        "longitude": 5.429113782591639
       }
     },
     {
@@ -8670,12 +8750,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Almåsvegen 55",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.77473897944318,
+        "longitude": 5.410009293022617
       }
     },
     {
@@ -8752,12 +8834,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Haraldshaugvegen 11",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.4284168324799,
+        "longitude": 5.260982418889076
       }
     },
     {
@@ -8834,12 +8918,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Bjørnsons gate 21",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.407495614502196,
+        "longitude": 5.277837853545654
       }
     },
     {
@@ -8912,12 +8998,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Hervikvegen 5",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.41869196010728,
+        "longitude": 5.289359827143848
       }
     },
     {
@@ -8994,12 +9082,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Balahaugen 8",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.54698849661494,
+        "longitude": 5.860258320691929
       }
     },
     {
@@ -9092,12 +9182,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "- Eidesfjellet 3",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.60398214820067,
+        "longitude": 5.2097453582164235
       }
     },
     {
@@ -9762,12 +9854,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Hålandvegen 17",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.39704197275626,
+        "longitude": 5.26435539832766
       }
     },
     {
@@ -10091,12 +10185,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Vormedalsvegen 83",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.37309733770779,
+        "longitude": 5.300370960659099
       }
     },
     {
@@ -10584,12 +10680,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Bjellandsvegen 35",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.772382577870246,
+        "longitude": 5.485349317553265
       }
     },
     {
@@ -11218,12 +11316,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Sponavikdalen 34 ()",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.773787247755,
+        "longitude": 5.508730074740624
       }
     },
     {
@@ -11285,12 +11385,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Molovegen 35",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.17543140047085,
+        "longitude": 5.190178372617655
       }
     },
     {
@@ -11379,12 +11481,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Hamnegata 15",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.77850823044269,
+        "longitude": 5.500207743840556
       }
     },
     {
@@ -11688,12 +11792,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Espevikvegen 17",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.418235769455514,
+        "longitude": 5.291967274256284
       }
     },
     {
@@ -12344,12 +12450,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Maudvegen 13",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.42373530761122,
+        "longitude": 5.290006781877705
       }
     },
     {
@@ -12463,12 +12571,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Skares gate 2",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.40871917402002,
+        "longitude": 5.330291053269587
       }
     },
     {
@@ -12547,12 +12657,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Sjoargata 53",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.60569431312939,
+        "longitude": 5.80805076503596
       }
     },
     {
@@ -12643,12 +12755,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Hjortåsen 14",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.75655261703729,
+        "longitude": 5.468954066127334
       }
     },
     {
@@ -13245,12 +13359,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Karmsundgata 120",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.40888795046467,
+        "longitude": 5.2793776721806305
       }
     },
     {
@@ -13343,12 +13459,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Skorpens gate 1",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.413126268101536,
+        "longitude": 5.268207628040277
       }
     },
     {
@@ -13485,12 +13603,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Hinderågata 5",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.4179616180852,
+        "longitude": 5.276352688360142
       }
     },
     {
@@ -13744,12 +13864,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Svebakken 44",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.41267828791871,
+        "longitude": 5.317264130953669
       }
     },
     {
@@ -13890,12 +14012,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Karmsundgata 51",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.40265350878246,
+        "longitude": 5.292773078329595
       }
     },
     {
@@ -14263,12 +14387,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Moksheimåsen 100",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.36110270423842,
+        "longitude": 5.320254415359821
       }
     },
     {
@@ -14458,12 +14584,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Klingenbergvegen 24",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.815126101874114,
+        "longitude": 5.528903906715793
       }
     },
     {
@@ -14856,12 +14984,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Bergvegen 11",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.2641307831351,
+        "longitude": 5.204394125390175
       }
     },
     {
@@ -15357,12 +15487,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Kløvervegen 13",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.39946104331361,
+        "longitude": 5.306977736589297
       }
     },
     {
@@ -15522,12 +15654,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Heinavegen 12",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.43423605546427,
+        "longitude": 5.255451590069146
       }
     },
     {
@@ -15680,12 +15814,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Wergelands gate 28",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.40949330504842,
+        "longitude": 5.282132523836021
       }
     },
     {
@@ -15810,12 +15946,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Yrkjesvegen 126",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.404394134228404,
+        "longitude": 5.6850094752913485
       }
     },
     {
@@ -15877,12 +16015,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Stongtunet 2",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.25293240047315,
+        "longitude": 5.184807254043947
       }
     },
     {
@@ -15988,12 +16128,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Sjoargata 30",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.605676616963194,
+        "longitude": 5.806109089917604
       }
     },
     {
@@ -16070,12 +16212,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Ytralandvegen 66",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.30538016040091,
+        "longitude": 5.224049992533242
       }
     },
     {
@@ -16159,12 +16303,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Eventyrvegen 16",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.394003826595565,
+        "longitude": 5.29333115346031
       }
     },
     {
@@ -16221,12 +16367,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Liarvågvegen 81",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.33170070679932,
+        "longitude": 5.6868110118273485
       }
     },
     {
@@ -16281,12 +16429,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Ilsvågkaien 13",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.51945900432498,
+        "longitude": 5.8091807569220855
       }
     },
     {
@@ -16580,12 +16730,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Strandavegen 71",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.25795509907374,
+        "longitude": 5.182666830092186
       }
     },
     {
@@ -17042,12 +17194,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Krabbavikgata 7",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.42436575386094,
+        "longitude": 5.263599605641589
       }
     },
     {
@@ -17277,12 +17431,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Kvernahaugen 20",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.42274247398476,
+        "longitude": 5.29840637020353
       }
     },
     {
@@ -17585,12 +17741,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Lies gate 7",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.40754655062055,
+        "longitude": 5.280882641811648
       }
     },
     {
@@ -18232,12 +18390,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Utsiragata 2",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.389634189965676,
+        "longitude": 5.312629866191924
       }
     },
     {
@@ -18373,12 +18533,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Tjøsvollvegen 123B",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.26296083683893,
+        "longitude": 5.191378647287332
       }
     },
     {
@@ -18652,12 +18814,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Litledalsvegen 7",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.414405196219775,
+        "longitude": 5.291293147867301
       }
     },
     {
@@ -18754,12 +18918,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Tittelsnesvegen 386",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.473962795488575,
+        "longitude": 5.2952535771014135
       }
     },
     {
@@ -19353,12 +19519,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Litlabøvegen 229",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.785015558081085,
+        "longitude": 5.457394417634878
       }
     },
     {
@@ -19658,12 +19826,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Viksevegen 50",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.478749169462716,
+        "longitude": 5.291601341178356
       }
     },
     {
@@ -19825,12 +19995,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Norheimtunet 64",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.38193891197439,
+        "longitude": 5.304040416862794
       }
     },
     {
@@ -19896,12 +20068,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Kanalvegen 6",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.149407711541194,
+        "longitude": 5.256668298682935
       }
     },
     {
@@ -20101,12 +20275,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Granittvegen 53, 5583 Vikedal",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.49255460982656,
+        "longitude": 5.910005531833456
       }
     },
     {
@@ -20297,12 +20473,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Austmannavegen 11",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.393999531057716,
+        "longitude": 5.30489364403124
       }
     },
     {
@@ -20384,12 +20562,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Høievegen 331",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.40176241858273,
+        "longitude": 5.387637035337261
       }
     },
     {
@@ -20744,12 +20924,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Tysværgata 22",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.41946469645438,
+        "longitude": 5.283666154348125
       }
     },
     {
@@ -20879,12 +21061,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Holevegen 51",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.78175117740063,
+        "longitude": 5.4931022337314666
       }
     },
     {
@@ -21029,12 +21213,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Strandgata 98",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.41085817590938,
+        "longitude": 5.270309027685786
       }
     },
     {
@@ -21082,12 +21268,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Strandgata 98",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.41085817590938,
+        "longitude": 5.270309027685786
       }
     },
     {
@@ -21720,12 +21908,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Kjøtteinsvegen 29",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.77611899844948,
+        "longitude": 5.4973994492223985
       }
     },
     {
@@ -22078,12 +22268,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Slettavegen 63",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.2855610104053,
+        "longitude": 5.241436863931089
       }
     },
     {
@@ -22483,12 +22675,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Valens gate 2B",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.40830846410894,
+        "longitude": 5.2959630377960565
       }
     },
     {
@@ -22573,12 +22767,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Haugevegen 36",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.42026170402365,
+        "longitude": 5.262800008831885
       }
     },
     {
@@ -22895,12 +23091,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Skeisvannsvegen 15A",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.421726659995514,
+        "longitude": 5.277561578779997
       }
     },
     {
@@ -23088,12 +23286,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Espevik 70",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.33384379786557,
+        "longitude": 5.679208934886035
       }
     },
     {
@@ -23388,12 +23588,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Hovedgaten 39",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.2837043606393,
+        "longitude": 5.307487050479236
       }
     },
     {
@@ -23889,12 +24091,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Bygnesvegen 55",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.29950813092181,
+        "longitude": 5.302767015904605
       }
     },
     {
@@ -23991,12 +24195,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Karmsundgata 60",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.40392848755358,
+        "longitude": 5.288613909567096
       }
     },
     {
@@ -24306,12 +24512,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Kvartsvegen 15",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.441872730153506,
+        "longitude": 5.268511499914307
       }
     },
     {
@@ -24372,12 +24580,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Jungmannsvegen 13",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.39897954324948,
+        "longitude": 5.319193161022627
       }
     },
     {
@@ -24521,12 +24731,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Aukrusts gate 9",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.392259529866415,
+        "longitude": 5.305982093541577
       }
     },
     {
@@ -24584,12 +24796,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Lisavegen 9",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.272384780065906,
+        "longitude": 5.199457888548546
       }
     },
     {
@@ -24698,12 +24912,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "- Oldereid 2",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.751571197540486,
+        "longitude": 5.269009003214087
       }
     },
     {
@@ -24766,12 +24982,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Melstokkevegen 6",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.2568038665114,
+        "longitude": 5.3241282437184285
       }
     },
     {
@@ -24925,12 +25143,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Furulyvegen 14B",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.78872689125465,
+        "longitude": 5.511102862299537
       }
     },
     {
@@ -25202,12 +25422,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Håtongvegen 30",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.23494790706692,
+        "longitude": 5.3248989795191966
       }
     },
     {
@@ -25264,12 +25486,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Dølevegen 31",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.408781827873014,
+        "longitude": 5.362262163212425
       }
     },
     {
@@ -25322,12 +25546,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Hiskavegen 586",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.73084386712508,
+        "longitude": 5.136988205613676
       }
     },
     {
@@ -25830,12 +26056,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Myrvegen 20",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.31200254121129,
+        "longitude": 5.428047806806312
       }
     },
     {
@@ -25948,12 +26176,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Sjøenvegen 54A",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.25868784022987,
+        "longitude": 5.180251561876903
       }
     },
     {
@@ -26064,12 +26294,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Furulyvegen 8",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.78805338347735,
+        "longitude": 5.510616939432045
       }
     },
     {
@@ -26403,12 +26635,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Kalvatræhagen 1",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.28048163550941,
+        "longitude": 5.312584568613762
       }
     },
     {
@@ -26586,12 +26820,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Nedstrandgata 45",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.417521958466175,
+        "longitude": 5.285837058537568
       }
     },
     {
@@ -26917,12 +27153,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Tverrgardsvegen 5",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.79275686157041,
+        "longitude": 5.516143901746137
       }
     },
     {
@@ -27023,12 +27261,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Tittelsnesvegen 21",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.42708881981708,
+        "longitude": 5.26608664498627
       }
     },
     {
@@ -27393,12 +27633,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Osnesvegen 36",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.40663033555391,
+        "longitude": 5.240165166644389
       }
     },
     {
@@ -27459,12 +27701,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Lauvdalen 88",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.76324811343282,
+        "longitude": 5.482830430130859
       }
     },
     {
@@ -27577,12 +27821,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Rolvsnesvikvegen 45",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.87312719354945,
+        "longitude": 5.160566448733789
       }
     },
     {
@@ -27644,12 +27890,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Valevegen 7 ()",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.78947818814116,
+        "longitude": 5.517942970654569
       }
     },
     {
@@ -27719,12 +27967,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "- Heio 17",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.70480740474492,
+        "longitude": 5.385896884923162
       }
     },
     {
@@ -27906,12 +28156,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Hystadvegen 14",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.78810596988231,
+        "longitude": 5.5119541049159775
       }
     },
     {
@@ -28125,12 +28377,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Salhusvegen 75D",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.39967932509645,
+        "longitude": 5.285238001833955
       }
     },
     {
@@ -28192,12 +28446,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Matrosvegen 16",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.401573776188776,
+        "longitude": 5.320339375766441
       }
     },
     {
@@ -28269,12 +28525,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Mosbronvegen 29",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.25147735977932,
+        "longitude": 5.205088463166074
       }
     },
     {
@@ -28327,12 +28585,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Tjøsvollvegen 7",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.26720839010147,
+        "longitude": 5.194229820446996
       }
     },
     {
@@ -28406,12 +28666,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Vingvegen 1A",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.27559868928597,
+        "longitude": 5.202383887830127
       }
     },
     {
@@ -28484,12 +28746,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "- Tora Mostrastongs veg 2",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.70203453534938,
+        "longitude": 5.382606864812619
       }
     },
     {
@@ -28625,12 +28889,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Brusevegen 4",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.39302997631495,
+        "longitude": 5.292908880237674
       }
     },
     {
@@ -28917,12 +29183,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Valbergåsen 6",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.28481052557011,
+        "longitude": 5.295807085553082
       }
     },
     {
@@ -29012,12 +29280,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Bjørgvingata 34A",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.409127051633405,
+        "longitude": 5.288397173674393
       }
     },
     {
@@ -29096,12 +29366,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Habnavågvegen 50",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.149399725923885,
+        "longitude": 5.228860900770851
       }
     },
     {
@@ -29171,12 +29443,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Brotaneset 36",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.804701732673415,
+        "longitude": 5.355331414558634
       }
     },
     {
@@ -29642,12 +29916,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Storasundvegen 280",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.3944798910701,
+        "longitude": 5.268744470972537
       }
     },
     {
@@ -29704,12 +29980,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Landevegen 90",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.361916844222925,
+        "longitude": 5.251704373971441
       }
     },
     {
@@ -29771,12 +30049,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Skjerpevegen 7",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.387419868992566,
+        "longitude": 5.269346822098883
       }
     },
     {
@@ -30481,12 +30761,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Haraldsgata 79",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.41012163765889,
+        "longitude": 5.2731585940866825
       }
     },
     {
@@ -31204,12 +31486,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Torvastadvegen 568",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.403456781547725,
+        "longitude": 5.246737287733042
       }
     },
     {
@@ -31330,12 +31614,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Saghaugen 24B",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.77668947228419,
+        "longitude": 5.4950651571097096
       }
     },
     {
@@ -31450,12 +31736,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Litlabøvegen 141",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.79083962803423,
+        "longitude": 5.4651290856982655
       }
     },
     {
@@ -31518,12 +31806,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Hundsnesvegen 481",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.361314976503735,
+        "longitude": 5.6105661171618015
       }
     },
     {
@@ -31692,12 +31982,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Myklandvegen 78",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.352230720084165,
+        "longitude": 5.330457352522475
       }
     },
     {
@@ -31770,12 +32062,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Saudavegen 7386",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.522680773726236,
+        "longitude": 5.693901332157492
       }
     },
     {
@@ -32116,12 +32410,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Solåsen 4",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.75270113935557,
+        "longitude": 5.459772540271475
       }
     },
     {
@@ -32396,12 +32692,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Moksheimtunet 38",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.3625568310287,
+        "longitude": 5.313726034242218
       }
     },
     {
@@ -32485,12 +32783,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Sæbøvegen 70",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.38586397523809,
+        "longitude": 5.219630229992175
       }
     },
     {
@@ -32555,12 +32855,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Tostemvegen 204B",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.26530378236978,
+        "longitude": 5.2143477433856065
       }
     },
     {
@@ -32753,12 +33055,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Smeavegen 14",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.29885953479446,
+        "longitude": 5.2206588642253235
       }
     },
     {
@@ -33100,12 +33404,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Longhammarvegen 27B",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.39420010628322,
+        "longitude": 5.332683952140601
       }
     },
     {
@@ -33245,12 +33551,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Beinahaugsvegen 3",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.792868613323144,
+        "longitude": 5.177782919470409
       }
     },
     {
@@ -33353,12 +33661,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Karmsundgata 120",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.40888795046467,
+        "longitude": 5.2793776721806305
       }
     },
     {
@@ -33406,12 +33716,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Skåregata 119",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.41259917969148,
+        "longitude": 5.272344661695826
       }
     },
     {
@@ -33655,12 +33967,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Kanalvegen 6",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.149407711541194,
+        "longitude": 5.256668298682935
       }
     },
     {
@@ -33744,12 +34058,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Fiskebergvegen 11",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.289054729658446,
+        "longitude": 5.222706754573047
       }
     },
     {
@@ -33820,12 +34136,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Agavegen 292",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.84619706584937,
+        "longitude": 5.249133287932571
       }
     },
     {
@@ -34162,12 +34480,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Skåregata 119",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.41259917969148,
+        "longitude": 5.272344661695826
       }
     },
     {
@@ -34412,12 +34732,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Varilds gate 3",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.40316452223984,
+        "longitude": 5.302536989519595
       }
     },
     {
@@ -34472,12 +34794,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Husøyvegen 281",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.33697061953464,
+        "longitude": 5.301725347399978
       }
     },
     {
@@ -34638,12 +34962,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Veslefrikkvegen 11C",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.394214527585774,
+        "longitude": 5.294418505266764
       }
     },
     {
@@ -34779,12 +35105,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Suldalgata 4",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.414443697998465,
+        "longitude": 5.282859024512367
       }
     },
     {
@@ -34841,12 +35169,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Skrevegen 402C",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.3790843702762,
+        "longitude": 5.366186840284773
       }
     },
     {
@@ -34903,12 +35233,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Eikelia 24",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.390456185983574,
+        "longitude": 5.373321419188199
       }
     },
     {
@@ -34965,12 +35297,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Spannavegen 646",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.373192875594206,
+        "longitude": 5.364052406120143
       }
     },
     {
@@ -35027,12 +35361,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Tuastadvegen 70",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.354932530965804,
+        "longitude": 5.33622659721661
       }
     },
     {
@@ -35551,12 +35887,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Vidsteensvegen 11",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.78302607477931,
+        "longitude": 5.501274502724373
       }
     },
     {
@@ -35783,12 +36121,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Storehaugen 40",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.79587732529609,
+        "longitude": 5.504938752135608
       }
     },
     {
@@ -35845,12 +36185,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Sævikdalen 22",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.29607645092349,
+        "longitude": 5.222735952528569
       }
     },
     {
@@ -35918,12 +36260,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Valvatnavegen 1",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.769139358744305,
+        "longitude": 5.429958264826914
       }
     },
     {
@@ -36122,12 +36466,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Slettenesvegen 52",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.22018432815803,
+        "longitude": 5.199222723972789
       }
     },
     {
@@ -36185,12 +36531,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Fiskåvegen 52",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.339588219418616,
+        "longitude": 5.275548397890535
       }
     },
     {
@@ -36251,12 +36599,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Bergvegen 7",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.26405623491953,
+        "longitude": 5.203903762945621
       }
     },
     {
@@ -36313,12 +36663,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Hordalandgata 25",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.419669363722974,
+        "longitude": 5.272884151424679
       }
     },
     {
@@ -36375,12 +36727,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Karmøyvegen 475",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.33288349922881,
+        "longitude": 5.2774795202326
       }
     },
     {
@@ -36437,12 +36791,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Nautanesvegen 8",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.30628314214063,
+        "longitude": 5.288142959567556
       }
     },
     {
@@ -36499,12 +36855,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Postvegen 89",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.15413142003664,
+        "longitude": 5.250680689158773
       }
     },
     {
@@ -36552,12 +36910,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Suldalgata 4",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.414443697998465,
+        "longitude": 5.282859024512367
       }
     },
     {
@@ -36614,12 +36974,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Hatlandsåsen 28A",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.754977021357064,
+        "longitude": 5.443614906344407
       }
     },
     {
@@ -36694,12 +37056,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Husøyvegen 285",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.33570371139756,
+        "longitude": 5.301618652708789
       }
     },
     {
@@ -36804,12 +37168,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Tysværgata 18B",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.41911499788905,
+        "longitude": 5.283097768088724
       }
     },
     {
@@ -37191,12 +37557,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Kaigata 102",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.14613469083531,
+        "longitude": 5.268121312987876
       }
     },
     {
@@ -37475,12 +37843,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Litlabøvegen 181",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.78780993074883,
+        "longitude": 5.4644335766989425
       }
     },
     {
@@ -37546,12 +37916,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Falnesvegen 60",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.150203102352435,
+        "longitude": 5.291342332353921
       }
     },
     {
@@ -37609,12 +37981,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Nylundsbakken 22",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.15233523355562,
+        "longitude": 5.258525262346769
       }
     },
     {
@@ -37735,12 +38109,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Haukakvamsvegen 154",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.54804996105629,
+        "longitude": 5.8872198980580945
       }
     },
     {
@@ -37855,12 +38231,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Sørhauggata 145",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.413583749969526,
+        "longitude": 5.269744430483389
       }
     },
     {
@@ -37971,12 +38349,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Bjørnevegen 6",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.43877720244661,
+        "longitude": 5.280327932081447
       }
     },
     {
@@ -38065,12 +38445,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Sørhauggata 145",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.413583749969526,
+        "longitude": 5.269744430483389
       }
     },
     {
@@ -38479,12 +38861,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Slettavegen 130",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.28694624748853,
+        "longitude": 5.2456061887209335
       }
     },
     {
@@ -38627,12 +39011,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Stendervegen 41",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.37464330504285,
+        "longitude": 5.3163552444712066
       }
     },
     {
@@ -38780,12 +39166,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Myklandvegen 40",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.35313504739618,
+        "longitude": 5.326504466750956
       }
     },
     {
@@ -39327,12 +39715,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Sæbøhaugen 45",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.75594405855628,
+        "longitude": 5.466579615147569
       }
     },
     {
@@ -39707,12 +40097,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Stølevegen 14",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.47790777774903,
+        "longitude": 5.28540354687073
       }
     },
     {
@@ -39869,12 +40261,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Fjellvegen 50",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.42816333179596,
+        "longitude": 5.392094671732952
       }
     },
     {
@@ -39932,12 +40326,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Valevegen 36",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.78971654805278,
+        "longitude": 5.524093192690467
       }
     },
     {
@@ -40076,12 +40472,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Fjellvegen 62",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.40845277818562,
+        "longitude": 5.303264770865454
       }
     },
     {
@@ -40224,12 +40622,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Skeisvollsvegen 15",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.42701722780627,
+        "longitude": 5.267982291706519
       }
     },
     {
@@ -40446,12 +40846,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Risøens gate 72",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.40907862910616,
+        "longitude": 5.266237682273531
       }
     },
     {
@@ -40525,12 +40927,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Norrønagata 49",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.404005318941216,
+        "longitude": 5.285472581599221
       }
     },
     {
@@ -40706,12 +41110,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Norheimsmarka 3",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.38484674436697,
+        "longitude": 5.314986369566809
       }
     },
     {
@@ -41034,12 +41440,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Vidsteensvegen 11",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.78302607477931,
+        "longitude": 5.501274502724373
       }
     },
     {
@@ -41100,12 +41508,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Idrettsvegen 10",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.25595078149949,
+        "longitude": 5.192458552357219
       }
     },
     {
@@ -41219,12 +41629,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Fleslandvegen 16",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.281687751608615,
+        "longitude": 5.2775802351547805
       }
     },
     {
@@ -41282,12 +41694,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Rundehaugen 36",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.764160998204396,
+        "longitude": 5.460275974219202
       }
     },
     {
@@ -41449,12 +41863,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Homrabronvegen 21",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.299130009014945,
+        "longitude": 5.198563035990003
       }
     },
     {
@@ -41515,12 +41931,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Sandavegen 74",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.25040601433497,
+        "longitude": 5.197744746615996
       }
     },
     {
@@ -41581,12 +41999,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Grunnvikvegen 41",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.260138618419475,
+        "longitude": 5.185480675518411
       }
     },
     {
@@ -41882,12 +42302,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Valkyriegata 16",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.39985898462345,
+        "longitude": 5.297556258487899
       }
     },
     {
@@ -42184,12 +42606,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Tveitholmvegen 27",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.269358952578784,
+        "longitude": 5.194052823279737
       }
     },
     {
@@ -42248,12 +42672,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Eikjevegen 63",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.39905655627367,
+        "longitude": 5.345572934315376
       }
     },
     {
@@ -42456,12 +42882,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Diktervegen 15A",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.39487396004733,
+        "longitude": 5.29769527873413
       }
     },
     {
@@ -42555,12 +42983,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Hafrsfjordgata 2A",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.42371417287701,
+        "longitude": 5.270780359879744
       }
     },
     {
@@ -42885,12 +43315,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Sævikvegen 1",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.294428623653,
+        "longitude": 5.221713232316702
       }
     },
     {
@@ -43022,12 +43454,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Aukrusts gate 9",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.392259529866415,
+        "longitude": 5.305982093541577
       }
     },
     {
@@ -43168,12 +43602,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Spannavegen 148",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.3955115493376,
+        "longitude": 5.303658964158265
       }
     },
     {
@@ -43256,12 +43692,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Longhammarvegen 29",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.39294343624558,
+        "longitude": 5.3322682360350315
       }
     },
     {
@@ -43391,12 +43829,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Mannesvegen 215",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.280884765082504,
+        "longitude": 5.18984860039453
       }
     },
     {
@@ -43457,12 +43897,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Granvegen 72",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.27401575010656,
+        "longitude": 5.311983048020858
       }
     },
     {
@@ -43924,12 +44366,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Pilehagen 12",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.292442346730816,
+        "longitude": 5.2955530617034245
       }
     },
     {
@@ -44048,12 +44492,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Bøheivegen 6",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.365894817435525,
+        "longitude": 5.277542092867718
       }
     },
     {
@@ -44285,12 +44731,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Mannesvegen 242",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.28127529106456,
+        "longitude": 5.1920711350980575
       }
     },
     {
@@ -44347,12 +44795,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Kolstøvegen 40",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.32755136729163,
+        "longitude": 5.294756970547637
       }
     },
     {
@@ -44563,12 +45013,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Stongtunet 2",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.25293240047315,
+        "longitude": 5.184807254043947
       }
     },
     {
@@ -44797,12 +45249,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Grindafjordvegen 197",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.43291712368456,
+        "longitude": 5.463145444072326
       }
     },
     {
@@ -44904,12 +45358,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Maudvegen 13",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.42373530761122,
+        "longitude": 5.290006781877705
       }
     },
     {
@@ -44983,12 +45439,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Jarhaugvegen 9",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.41491217965167,
+        "longitude": 5.3225236331364
       }
     },
     {
@@ -45057,12 +45515,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Håvikvegen 67",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.31747541991513,
+        "longitude": 5.288859348186139
       }
     },
     {
@@ -45238,12 +45698,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Jektevikvegen 45",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.60666056217376,
+        "longitude": 5.764999659205695
       }
     },
     {
@@ -45416,12 +45878,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Risøens gate 72",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.40907862910616,
+        "longitude": 5.266237682273531
       }
     },
     {
@@ -45802,12 +46266,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Alvsvågvegen 52",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.76600628203065,
+        "longitude": 5.172812419208975
       }
     },
     {
@@ -46025,12 +46491,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Leitevegen 18",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.41354658616261,
+        "longitude": 5.285761478689533
       }
     },
     {
@@ -46138,12 +46606,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Sagvågsvegen 244",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.76745390243724,
+        "longitude": 5.422026449495552
       }
     },
     {
@@ -46252,12 +46722,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Ystadvegen 3",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.38470722325135,
+        "longitude": 5.302824273202711
       }
     },
     {
@@ -46331,12 +46803,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Tysværvågvegen 131",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.36031418160241,
+        "longitude": 5.472742694183294
       }
     },
     {
@@ -46389,12 +46863,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Børøyvegen 46",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.72899083829048,
+        "longitude": 5.245095692452442
       }
     },
     {
@@ -46455,12 +46931,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Futavegen 36",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.34747918004743,
+        "longitude": 5.285877465260247
       }
     },
     {
@@ -46763,12 +47241,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Sjonarvegen 1",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.31401684638391,
+        "longitude": 5.465184316144887
       }
     },
     {
@@ -46866,12 +47346,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Norrønagata 31",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.403527615204794,
+        "longitude": 5.285396238596807
       }
     },
     {
@@ -47043,12 +47525,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Strandgata 63",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.4090737766316,
+        "longitude": 5.273608877947294
       }
     },
     {
@@ -47170,12 +47654,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Vestevegen 45",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.42481244828809,
+        "longitude": 5.259739765165116
       }
     },
     {
@@ -47311,12 +47797,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Dalavikvegen 408",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.51761316591193,
+        "longitude": 5.513090573694909
       }
     },
     {
@@ -47407,12 +47895,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Valevegen 57A",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.78838898754989,
+        "longitude": 5.524158334592239
       }
     },
     {
@@ -47528,12 +48018,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Skjoldavegen 311A",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.40958160187792,
+        "longitude": 5.32529395115942
       }
     },
     {
@@ -47595,12 +48087,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Varanesvegen 166",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.32362588513809,
+        "longitude": 5.348359461236321
       }
     },
     {
@@ -47671,12 +48165,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Mykjåvegen 33",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.35853367194357,
+        "longitude": 5.369104742284759
       }
     },
     {
@@ -47987,12 +48483,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Raunesvegen 587, 5578 Nedre Vats",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.442093321191926,
+        "longitude": 5.743408513163734
       }
     },
     {
@@ -48725,12 +49223,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Havnegata 11",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.2839148271317,
+        "longitude": 5.3050222897944845
       }
     },
     {
@@ -48783,12 +49283,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Dovafjellsvegen 6",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.37887545028039,
+        "longitude": 5.312671812187312
       }
     },
     {
@@ -48908,12 +49410,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Gismarvikvegen 564",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.3046637224524,
+        "longitude": 5.401049063944668
       }
     },
     {
@@ -49116,12 +49620,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Høievegen 300",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.40458203321248,
+        "longitude": 5.396174265875808
       }
     },
     {
@@ -49487,12 +49993,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Liarvågvegen 789",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.28970428196688,
+        "longitude": 5.660547924495162
       }
     },
     {
@@ -49590,12 +50098,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Liarvågvegen 791",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.28992810674599,
+        "longitude": 5.660689356511642
       }
     },
     {
@@ -49903,12 +50413,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Liarvågvegen 168",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.32450114398688,
+        "longitude": 5.688198274912112
       }
     },
     {
@@ -50057,12 +50569,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Haraldsgata 141",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.41309221673865,
+        "longitude": 5.269216589037813
       }
     },
     {
@@ -50194,12 +50708,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Melstokkevegen 29",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.256283302748884,
+        "longitude": 5.325746632063979
       }
     },
     {
@@ -50396,12 +50912,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Snikvegen 105",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.348276078265116,
+        "longitude": 5.321522601992861
       }
     },
     {
@@ -50458,12 +50976,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Rundehaugen 41",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.76314543455773,
+        "longitude": 5.459979100769011
       }
     },
     {
@@ -50512,12 +51032,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Sørhauggata 183",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.415420764938055,
+        "longitude": 5.267720294628615
       }
     },
     {
@@ -50657,12 +51179,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Nesvegen 888",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.44204933209517,
+        "longitude": 5.612328448688159
       }
     },
     {
@@ -50776,12 +51300,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Ystadvegen 1",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.38500767328962,
+        "longitude": 5.302578316256856
       }
     },
     {
@@ -51186,12 +51712,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Havnegata 9",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.28391394025256,
+        "longitude": 5.304453185256391
       }
     },
     {
@@ -51352,12 +51880,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Ystadvegen 1",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.38500767328962,
+        "longitude": 5.302578316256856
       }
     },
     {
