@@ -1,6 +1,5 @@
 const state = {
   projects: [],
-  rawProjectCount: 0,
   filtered: [],
   selected: null,
   trade: "",
@@ -21,7 +20,6 @@ const state = {
   fullMapCloseToken: 0,
   mapGestureUntil: 0,
   mapGeocodeCache: new Map(),
-  refreshTimer: null,
   weeklyRefreshTimer: null,
   markedProjectIds: new Set(),
   expandedPreviewIds: new Set(),
@@ -283,7 +281,6 @@ async function loadProjects() {
   const contacts = new Map((contactData.projects || []).map((project) => [project.projectId, project]));
   const rawProjects = locationData.projects || [];
   const normalizedProjects = rawProjects.map((project, index) => normalizeProject(project, contacts.get(project.sourceDocumentId), index));
-  state.rawProjectCount = normalizedProjects.length;
   state.projects = deduplicateProjects(normalizedProjects);
   // Utvidet prosjektinformasjon er nå tilgjengelig på alle prosjekter.
   // Feltene filtreres i renderExpandedPreviewFields slik at tomme etiketter aldri vises.
