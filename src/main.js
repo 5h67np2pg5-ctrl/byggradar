@@ -2406,7 +2406,7 @@ function normalizePhone(value) {
 function projectMailtoHref(project) {
   const email = String(project.contact?.email || "").trim();
   if (!email) return "";
-  const subject = `Forespørsel om prosjektinformasjon - ${projectMailPlace(project)}`;
+  const subject = `Vedr. prosjektet i ${projectMailPlace(project)}`;
   const body = projectMailBody(project);
   return `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
@@ -2414,30 +2414,18 @@ function projectMailtoHref(project) {
 function projectMailBody(project) {
   const place = projectMailPlace(project);
   const municipality = project.municipality || project.marketArea || "";
-  const projectType = compactText(project.tradeRelevance || project.statusText || project.title || "prosjektet");
   const title = compactText(project.title || project.description || "prosjektet");
-  const status = compactText(project.statusText || project.status || "");
-  const matrikkel = compactText(project.matrikkel || "");
-  const date = formatNorwegianDate(project.date);
 
   const lines = [
     "Hei,",
     "",
-    `Jeg tar kontakt fordi vi har fått med oss prosjektet ${title} på ${place}${municipality ? ` i ${municipality}` : ""}, og dette ser ut som et prosjekt som kan være relevant for oss.`,
-    `Slik jeg forstår saken gjelder det ${projectType}${status ? `, med status ${status}` : ""}${date ? `, registrert ${date}` : ""}.`,
+    `Vi har fått med oss prosjektet ${title} på ${place}${municipality ? ` i ${municipality}` : ""}, og dette ser ut som et prosjekt som kan passe oss godt.`,
+    "",
+    "Vi har kapasitet fremover og ønsker derfor gjerne litt mer informasjon om prosjektet, slik at vi kan få tilby våre tjenester.",
+    "",
+    "Dersom det passer, tar jeg gjerne en befaring for å se nærmere på prosjektet.",
   ];
-
-  if (matrikkel) lines.push(`Matrikkel: ${matrikkel}.`);
-
-  lines.push(
-    "",
-    "Vi har kapasitet fremover og ønsker derfor gjerne litt mer informasjon om prosjektet, slik at vi kan vurdere om vi kan bidra på en god måte.",
-    "Dersom det passer, tar jeg gjerne en kort prat eller avtaler en befaring for å se nærmere på behovet.",
-    "",
-    "På forhånd takk for tilbakemelding.",
-    "",
-    "Vennlig hilsen"
-  );
+  lines.push("", "På forhånd takk for tilbakemelding.", "Vennlig hilsen");
 
   return lines.join("\n");
 }
