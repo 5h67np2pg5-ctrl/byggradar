@@ -32,6 +32,7 @@ const state = {
   statisticsData: null,
   statisticsFeeRates: null,
   statisticsMacroScope: "national",
+  statisticsGroup: "all",
   statisticsQuickMode: "all",
   statisticsRegion: "",
   statisticsMunicipality: "",
@@ -63,6 +64,19 @@ const markedProjectsKey = "byggradar.markedProjects.v1";
 const standardProjectLimit = 200;
 const loadMoreStep = 20;
 const weeklyDeliveryCount = 50;
+const statisticsPrivacyMinimum = 3;
+
+const statisticsGroups = [
+  { id: "all", label: "Alle søk", quickMode: "all", title: "Alle tilgjengelige søk", text: "Samlet oversikt over aktivitet, fase, tiltak, geografi, aktører, dokumenter, gebyr og utvikling." },
+  { id: "activity", label: "Aktivitet og omfang", quickMode: "all", title: "Aktivitet og omfang", text: "Antall registrerte og aktive byggesaker, utvikling i saksmengde og fordeling mellom kommuner og regioner." },
+  { id: "stage", label: "Fase og saksbehandling", quickMode: "stage", title: "Fase og saksbehandling", text: "Søknader, behandling, tillatelser, igangsetting, avslag og saksbehandlingstid." },
+  { id: "type", label: "Tiltak og bygg", quickMode: "type", title: "Tiltak og bygg", text: "Bolig, næring, nybygg, tilbygg, garasje, rehabilitering, riving, terreng og tekniske tiltak." },
+  { id: "geography", label: "Geografi", quickMode: "geography", title: "Geografi", text: "Regioner, kommuner og geografiske områder med byggeaktivitet og utvikling." },
+  { id: "actors", label: "Aktører", quickMode: "all", title: "Aktører og ansvar", text: "Tiltakshavere, ansvarlige søkere, foretak, arkitekter, entreprenører og rådgivere når datagrunnlaget tillater aggregert visning." },
+  { id: "documents", label: "Dokumenter og innsyn", quickMode: "all", title: "Dokumenter og innsyn", text: "Dokumenttyper, dokumentmengde, siste registrering og tilgjengelighet i kommunale innsynsløsninger." },
+  { id: "fees", label: "Gebyr og inntekt", quickMode: "all", title: "Gebyr og beregnet inntekt", text: "Totalt antall registrerte saker siste 12 måneder multiplisert med kommunens beregningsgrunnlag." },
+  { id: "trend", label: "Utvikling og sammenligning", quickMode: "period", title: "Utvikling og sammenligning", text: "Vekst, nedgang, sesongvariasjoner og sammenligning mellom regioner og kommuner." },
+];
 
 const locationRegions = [
   {
@@ -842,7 +856,17 @@ function formatNok(value) {
 
 function statisticsFeeTable(rows) {
   if (!rows.length) return `<p class="statistics-empty">Ingen registrerte byggesaker i perioden.</p>`;
-  return `<div class="statistics-fee-table-wrap"><table class="statistics-fee-table"><thead><tr><th>Kommune</th><th>Totalt antall saker<br>siste 12 måneder</th><th>Beregningsgrunnlag</th><th>Beregnet inntekt</th><th>Grunnlag</th></tr></thead><tbody>${rows.map((row) => `<tr><td>${escapeHtml(row.municipality)}</td><td>${row.count.toLocaleString("nb-NO")}</td><td>${formatNok(row.fee)}${row.tariffYear ? ` (${escapeHtml(String(row.tariffYear))})` : ""}</td><td>${formatNok(row.income)}</td><td>${escapeHtml(row.source)}</td></tr>`).join("")}</tbody></table></div>`;
+  const visibleRows = rows.filter((row) => row.count >= statisticsPrivacyMinimum);
+  const suppressedCount = rows.length - visibleRows.length;
+  const table = `<div class="statistics-fee-table-wrap"><table class="statistics-fee-table"><thead><tr><th>Kommune</th><th>Totalt antall saker<br>siste 12 måneder</th><th>Beregningsgrunnlag</th><th>Beregnet inntekt</th><th>Grunnlag</th></tr></thead><tbody>${visibleRows.map((row) => `<tr><td>${escapeHtml(row.municipality)}</td><td>${row.count.toLocaleString("nb-NO")}</td><td>${formatNok(row.fee)}${row.tariffYear ? ` (${escapeHtml(String(row.tariffYear))})` : ""}</td><td>${formatNok(row.income)}</td><td>${escapeHtml(row.source)}</td></tr>`).join("")}</tbody></table></div>`;
+  return `${table}${suppressedCount ? `<p class="statistics-privacy-note">${suppressedCount.toLocaleString("nb-NO")} små kommunegrupper er utelatt for å hindre identifisering av enkeltsaker. De inngår fortsatt i totalsummen.</p>` : ""}`;
+}
+
+function statisticsGroupPanel() {
+  const selected = state.statisticsGroup === "all"
+    ? statisticsGroups
+    : statisticsGroups.filter((group) => group.id === state.statisticsGroup);
+  return `<section class="statistics-question-panel"><div class="statistics-section-heading"><div><h2>${state.statisticsGroup === "all" ? "Tilgjengelige statistikkområder" : escapeHtml(selected[0]?.title || "Statistikkområde")}</h2><p>Velg hovedgruppe øverst for å snevre inn visningen.</p></div><span class="statistics-privacy-badge">Aggregert visning</span></div><div class="statistics-question-grid">${selected.map((group) => `<article class="statistics-question-group"><h3>${escapeHtml(group.title)}</h3><p>${escapeHtml(group.text)}</p><span>Ingen enkeltprosjekter vises</span></article>`).join("")}</div></section>`;
 }
 
 function renderStatistics() {
@@ -883,6 +907,7 @@ function renderStatistics() {
     </div>
     <div class="statistics-search-guide">
       <label class="statistics-macro-choice"><span>Makrovalg</span><select id="statisticsMacroScope"><option value="national" ${state.statisticsMacroScope === "national" ? "selected" : ""}>Hele Norge</option><option value="region" ${state.statisticsMacroScope === "region" ? "selected" : ""}>Regioner</option><option value="municipality" ${state.statisticsMacroScope === "municipality" ? "selected" : ""}>Kommuner</option><option value="type" ${state.statisticsMacroScope === "type" ? "selected" : ""}>Tiltakstyper</option></select></label>
+      <label class="statistics-group-choice"><span>Statistikkgruppe</span><select id="statisticsGroup">${statisticsGroups.map((group) => `<option value="${group.id}" ${state.statisticsGroup === group.id ? "selected" : ""}>${escapeHtml(group.label)}</option>`).join("")}</select></label>
       <label class="statistics-quick-mode"><span>Rask modus</span><select id="statisticsQuickMode"><option value="all" ${state.statisticsQuickMode === "all" ? "selected" : ""}>Alle tilgjengelige søk</option><option value="geography" ${state.statisticsQuickMode === "geography" ? "selected" : ""}>Område: region og kommune</option><option value="stage" ${state.statisticsQuickMode === "stage" ? "selected" : ""}>Fase og status</option><option value="type" ${state.statisticsQuickMode === "type" ? "selected" : ""}>Tiltakstype</option><option value="period" ${state.statisticsQuickMode === "period" ? "selected" : ""}>Periode</option></select></label>
     </div>
     <div class="statistics-filters" data-quick-mode="${state.statisticsQuickMode}" aria-label="Statistikkfiltre">
@@ -890,6 +915,7 @@ function renderStatistics() {
       <div class="statistics-filter-group statistics-details"><h2>Detaljer</h2><label><span>Fase/status</span><select id="statisticsStage"><option value="">Alle faser og statuser</option>${stages.map((stage) => `<option value="${escapeHtml(stage)}" ${state.statisticsStage === stage ? "selected" : ""}>${escapeHtml(stage)}</option>`).join("")}</select></label><label><span>Fag/tiltakstype</span><select id="statisticsType"><option value="">Alle tiltakstyper</option>${types.map((type) => `<option value="${escapeHtml(type)}" ${state.statisticsType === type ? "selected" : ""}>${escapeHtml(type)}</option>`).join("")}</select></label><label><span>Periode</span><select id="statisticsPeriod"><option value="all" ${state.statisticsPeriod === "all" ? "selected" : ""}>Alle registrerte</option><option value="30" ${state.statisticsPeriod === "30" ? "selected" : ""}>Siste 30 dager</option><option value="90" ${state.statisticsPeriod === "90" ? "selected" : ""}>Siste 90 dager</option><option value="365" ${state.statisticsPeriod === "365" ? "selected" : ""}>Siste 12 måneder</option></select></label></div>
     </div>
     <div class="statistics-summary-line">${escapeHtml(regionName)} · ${records.length.toLocaleString("nb-NO")} prosjekter i utvalget</div>
+    ${statisticsGroupPanel()}
     <div class="statistics-cards">
       <div class="statistics-card"><span>Prosjekter</span><strong>${records.length.toLocaleString("nb-NO")}</strong></div>
       <div class="statistics-card"><span>Kommuner</span><strong>${municipalitiesCount.toLocaleString("nb-NO")}</strong></div>
@@ -909,13 +935,16 @@ function renderStatistics() {
       ${statisticsFeeTable(feeRows)}
     </section>
   `;
-  ["statisticsMacroScope", "statisticsQuickMode", "statisticsRegion", "statisticsMunicipality", "statisticsStage", "statisticsType", "statisticsPeriod"].forEach((id) => {
+  ["statisticsMacroScope", "statisticsGroup", "statisticsQuickMode", "statisticsRegion", "statisticsMunicipality", "statisticsStage", "statisticsType", "statisticsPeriod"].forEach((id) => {
     document.querySelector(`#${id}`)?.addEventListener("change", (event) => {
       const key = id.replace(/^statistics/, "");
       const stateKey = `statistics${key}`;
       state[stateKey] = event.target.value;
       if (id === "statisticsMacroScope") {
         state.statisticsQuickMode = ["region", "municipality"].includes(state.statisticsMacroScope) ? "geography" : state.statisticsMacroScope === "type" ? "type" : "all";
+      }
+      if (id === "statisticsGroup") {
+        state.statisticsQuickMode = statisticsGroups.find((group) => group.id === state.statisticsGroup)?.quickMode || "all";
       }
       if (id === "statisticsRegion") state.statisticsMunicipality = "";
       renderStatistics();
@@ -930,9 +959,11 @@ function statisticsList(records, keyFn) {
     const key = keyFn(project) || "Ukjent";
     counts.set(key, (counts.get(key) || 0) + 1);
   });
-  const rows = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 12);
+  const allRows = [...counts.entries()].sort((a, b) => b[1] - a[1]);
+  const rows = allRows.filter(([, count]) => count >= statisticsPrivacyMinimum).slice(0, 12);
+  const suppressed = allRows.filter(([, count]) => count < statisticsPrivacyMinimum).length;
   if (!rows.length) return `<p class="statistics-empty">Ingen data i utvalget.</p>`;
-  return `<ul class="statistics-list">${rows.map(([label, count]) => `<li><span>${escapeHtml(label)}</span><strong>${count.toLocaleString("nb-NO")}</strong></li>`).join("")}</ul>`;
+  return `<ul class="statistics-list">${rows.map(([label, count]) => `<li><span>${escapeHtml(label)}</span><strong>${count.toLocaleString("nb-NO")}</strong></li>`).join("")}</ul>${suppressed ? `<p class="statistics-privacy-note">${suppressed} små grupper er skjult av personvernhensyn.</p>` : ""}`;
 }
 
 function bindInput(id, key) {

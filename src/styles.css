@@ -345,6 +345,29 @@ a {
   padding: 0 8px;
 }
 
+.statistics-group-choice {
+  display: grid;
+  gap: 4px;
+  min-height: 58px;
+  padding: 10px 12px;
+  border: 1px solid #b8d8e8;
+  border-radius: 8px;
+  background: #edf8fd;
+  color: #255b76;
+  font-size: 0.75rem;
+  font-weight: 750;
+}
+
+.statistics-group-choice select {
+  width: 100%;
+  min-height: 32px;
+  border: 1px solid #a9cfe0;
+  border-radius: 6px;
+  background: #fff;
+  color: #1c2f3e;
+  padding: 0 8px;
+}
+
 .statistics-search-step > span {
   display: grid;
   place-items: center;
@@ -426,6 +449,56 @@ a {
   color: #396b84;
   font-size: 0.9rem;
   font-weight: 650;
+}
+
+.statistics-question-panel {
+  margin: 12px 0 10px;
+  padding: 14px;
+  border: 1px solid #cbdfea;
+  border-radius: 8px;
+  background: #f8fcff;
+}
+
+.statistics-privacy-badge {
+  flex: 0 0 auto;
+  color: #397087;
+  font-size: 0.76rem;
+  font-weight: 750;
+}
+
+.statistics-question-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.statistics-question-group {
+  min-width: 0;
+  padding: 11px;
+  border: 1px solid #d4e5ee;
+  border-radius: 7px;
+  background: #fff;
+}
+
+.statistics-question-group h3 {
+  margin: 0 0 5px;
+  color: #255b76;
+  font-size: 0.84rem;
+}
+
+.statistics-question-group p {
+  margin: 0;
+  color: #60798d;
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+
+.statistics-question-group span,
+.statistics-privacy-note {
+  display: block;
+  margin-top: 8px;
+  color: #718898;
+  font-size: 0.72rem;
 }
 
 .statistics-fee-panel {
@@ -530,6 +603,7 @@ a {
   .statistics-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .statistics-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .statistics-columns { grid-template-columns: 1fr; }
+  .statistics-question-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 560px) {
@@ -543,6 +617,7 @@ a {
   .statistics-cards { grid-template-columns: 1fr; }
   .statistics-fee-summary { grid-template-columns: 1fr; }
   .statistics-section-heading { display: grid; }
+  .statistics-question-grid { grid-template-columns: 1fr; }
   .print-button { width: 100%; }
 }
 
