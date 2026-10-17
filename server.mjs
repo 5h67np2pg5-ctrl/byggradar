@@ -7,6 +7,11 @@ const root = path.dirname(fileURLToPath(import.meta.url));
 const port = Number(process.env.PORT || 4173);
 const host = process.env.HOST || "0.0.0.0";
 
+const residentialBuildingTypes = [
+  "111", "112", "113", "121", "122", "123", "124", "131", "133", "135", "136",
+  "141", "142", "143", "144", "145", "146", "151", "152", "159",
+];
+
 const mime = {
   ".html": "text/html; charset=utf-8",
   ".js": "text/javascript; charset=utf-8",
@@ -124,7 +129,7 @@ const server = http.createServer(async (request, response) => {
         ]),
         fetchSsbTable("05940", [
           { code: "Region", values: [municipalityNumber] },
-          { code: "Byggeareal", values: ["__ALL__"] },
+          { code: "Byggeareal", values: residentialBuildingTypes },
           { code: "ContentsCode", values: ["Igangsatte", "Fullforte", "BruksarealIgang", "BruksarealFullfort"] },
           { code: "Tid", values: housingYears },
         ]),
