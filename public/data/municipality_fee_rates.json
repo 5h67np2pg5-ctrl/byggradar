@@ -1,6 +1,54 @@
 {
-  "version": 1,
-  "description": "Kommunale gebyrsatser for beregnet gebyrinntekt. Satsene skal fylles fra gjeldende offisielle gebyrregulativ.",
-  "basis": "Referansesats per sak med tillatelse siste 12 måneder",
-  "rates": {}
+  "version": 2,
+  "description": "Referansesatser for beregnet byggesaksgebyr. Offisiell kommunal sats brukes der én sammenlignbar sats er dokumentert. For øvrige kommuner brukes et tydelig merket KS-basert sammenligningstall.",
+  "basis": "Referansesats per registrert sak med tillatelse siste 12 måneder",
+  "officialGuidance": {
+    "title": "Veileder for beregning av selvkost og gebyrforskrift i byggesaker",
+    "source": "Kommunal- og distriktsdepartementet",
+    "url": "https://www.regjeringen.no/no/dokumenter/veileder-for-beregning-av-selvkost-og-gebyrforskrift-i-byggesaker/id2869042/"
+  },
+  "benchmark": {
+    "source": "KS, Byggesaksgebyrene lavest i de minste kommunene",
+    "url": "https://www.ks.no/fagomrader/okonomi/kno/byggesaksgebyrene-lavest-i-de-minste-kommunene/",
+    "year": 2024,
+    "basis": "Median gebyr for oppføring av en enebolig",
+    "rates": { "Vestland": 16720, "Rogaland": 17713 }
+  },
+  "rates": {
+    "Bergen kommune": { "referenceFee": 15170, "year": 2026, "source": "Bergen kommune, gebyrforskrift 2026, ny bebyggelse 0–200 m²", "sourceType": "official", "sourceUrl": "https://www.bergen.kommune.no/api/rest/filer/V67144735" },
+    "Sandnes kommune": { "referenceFee": 24000, "year": 2026, "source": "Sandnes kommune, gebyrregulativ 2026, enebolig/fritidsbolig tiltaksklasse 1", "sourceType": "official", "sourceUrl": "https://www.sandnes.kommune.no/sti/bolig-og-byutvikling/byggesak/priser-for-byggesak/" },
+    "Alver kommune": { "referenceFee": 16720, "year": 2024, "source": "KS-benchmark Vestland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Askøy kommune": { "referenceFee": 16720, "year": 2024, "source": "KS-benchmark Vestland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Austevoll kommune": { "referenceFee": 16720, "year": 2024, "source": "KS-benchmark Vestland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Austrheim kommune": { "referenceFee": 16720, "year": 2024, "source": "KS-benchmark Vestland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Bjørnafjorden kommune": { "referenceFee": 16720, "year": 2024, "source": "KS-benchmark Vestland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Bømlo kommune": { "referenceFee": 16720, "year": 2024, "source": "KS-benchmark Vestland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Fedje kommune": { "referenceFee": 16720, "year": 2024, "source": "KS-benchmark Vestland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Gulen kommune": { "referenceFee": 16720, "year": 2024, "source": "KS-benchmark Vestland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Kvam herad": { "referenceFee": 16720, "year": 2024, "source": "KS-benchmark Vestland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Masfjorden kommune": { "referenceFee": 16720, "year": 2024, "source": "KS-benchmark Vestland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Modalen kommune": { "referenceFee": 16720, "year": 2024, "source": "KS-benchmark Vestland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Osterøy kommune": { "referenceFee": 16720, "year": 2024, "source": "KS-benchmark Vestland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Samnanger kommune": { "referenceFee": 16720, "year": 2024, "source": "KS-benchmark Vestland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Stord kommune": { "referenceFee": 16720, "year": 2024, "source": "KS-benchmark Vestland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Sveio kommune": { "referenceFee": 16720, "year": 2024, "source": "KS-benchmark Vestland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Tysnes kommune": { "referenceFee": 16720, "year": 2024, "source": "KS-benchmark Vestland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Vaksdal kommune": { "referenceFee": 16720, "year": 2024, "source": "KS-benchmark Vestland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Voss herad": { "referenceFee": 16720, "year": 2024, "source": "KS-benchmark Vestland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Øygarden kommune": { "referenceFee": 16720, "year": 2024, "source": "KS-benchmark Vestland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Eigersund kommune": { "referenceFee": 17713, "year": 2024, "source": "KS-benchmark Rogaland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Gjesdal kommune": { "referenceFee": 17713, "year": 2024, "source": "KS-benchmark Rogaland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Haugesund kommune": { "referenceFee": 17713, "year": 2024, "source": "KS-benchmark Rogaland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Hjelmeland kommune": { "referenceFee": 17713, "year": 2024, "source": "KS-benchmark Rogaland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Karmøy kommune": { "referenceFee": 17713, "year": 2024, "source": "KS-benchmark Rogaland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Klepp kommune": { "referenceFee": 17713, "year": 2024, "source": "KS-benchmark Rogaland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Kvitsøy kommune": { "referenceFee": 17713, "year": 2024, "source": "KS-benchmark Rogaland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Lund kommune": { "referenceFee": 17713, "year": 2024, "source": "KS-benchmark Rogaland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Randaberg kommune": { "referenceFee": 17713, "year": 2024, "source": "KS-benchmark Rogaland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Sirdal kommune": { "referenceFee": 17713, "year": 2024, "source": "KS-benchmark Rogaland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Sola kommune": { "referenceFee": 17713, "year": 2024, "source": "KS-benchmark Rogaland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Stavanger kommune": { "referenceFee": 17713, "year": 2024, "source": "KS-benchmark Rogaland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Tysvær kommune": { "referenceFee": 17713, "year": 2024, "source": "KS-benchmark Rogaland, median eneboliggebyr 2024", "sourceType": "benchmark" },
+    "Vindafjord kommune": { "referenceFee": 17713, "year": 2024, "source": "KS-benchmark Rogaland, median eneboliggebyr 2024", "sourceType": "benchmark" }
+  }
 }

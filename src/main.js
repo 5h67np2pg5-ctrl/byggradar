@@ -824,7 +824,11 @@ function statisticsFeeRows(records) {
     grouped.set(municipality, current);
   });
   return [...grouped.values()].map((row) => {
-    const tariff = state.statisticsFeeRates?.rates?.[normalizeMunicipalityName(row.municipality)] || null;
+    const feeRates = state.statisticsFeeRates?.rates || {};
+    const tariff = feeRates[row.municipality]
+      || feeRates[normalizeMunicipalityName(row.municipality)]
+      || Object.entries(feeRates).find(([name]) => normalizeMunicipalityName(name) === normalizeMunicipalityName(row.municipality))?.[1]
+      || null;
     const fee = Number(tariff?.referenceFee);
     return {
       ...row,
@@ -896,8 +900,8 @@ function renderStatistics() {
     </div>
     <section class="statistics-fee-panel">
       <div class="statistics-section-heading"><div><h2>Gebyr og beregnet inntekt</h2><p>Siste 12 måneder · saker med tillatelse</p></div><span class="statistics-basis">${feeRecords.length.toLocaleString("nb-NO")} saker</span></div>
-      <div class="statistics-fee-summary"><div><span>Beregnet gebyrinntekt</span><strong>${calculatedFeeRows.length ? formatNok(calculatedFeeIncome) : "Ikke beregnet"}</strong></div><div><span>Kommuner med registrert sats</span><strong>${calculatedFeeRows.length.toLocaleString("nb-NO")} av ${feeRows.length.toLocaleString("nb-NO")}</strong></div></div>
-      <p class="statistics-disclaimer">Beløpet er et estimat basert på en referansesats per sak. Gebyrer varierer etter tiltak, størrelse og dispensasjoner. Det er ikke kommunens regnskapsførte inntekt.</p>
+      <div class="statistics-fee-summary"><div><span>Beregnet gebyrinntekt</span><strong>${calculatedFeeRows.length ? formatNok(calculatedFeeIncome) : "Ikke beregnet"}</strong></div><div><span>Kommuner med beregningsgrunnlag</span><strong>${calculatedFeeRows.length.toLocaleString("nb-NO")} av ${feeRows.length.toLocaleString("nb-NO")}</strong></div></div>
+      <p class="statistics-disclaimer">Beløpet er et estimat basert på en referansesats per sak. Der kommunens egen sats ikke er entydig dokumentert, brukes et KS-basert sammenligningstall. Gebyrer varierer etter tiltak, størrelse og dispensasjoner. Dette er ikke kommunens regnskapsførte inntekt.</p>
       ${statisticsFeeTable(feeRows)}
     </section>
     <div class="statistics-columns">
