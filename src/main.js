@@ -1906,8 +1906,8 @@ function addBaseMap(map, options = {}) {
     detectRetina: false,
     className: "byggradar-map-tiles",
   };
-  // Bruk en ren OSM-flate uten API-nøkkel, høydekurver eller topografisk lag.
-  const layer = L.tileLayer("https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png", {
+  // Bruk det vanlige vei- og gatenettet som hovedkart. OSM beholdes som reserve.
+  const layer = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}", {
     ...tileOptions,
     attribution: '&copy; OpenStreetMap contributors, <a href="https://www.openstreetmap.org/copyright">ODbL</a>',
   });
@@ -1918,7 +1918,7 @@ function addBaseMap(map, options = {}) {
     event.tile.classList.add("tile-load-error");
     if (fallbackStarted) return;
     fallbackStarted = true;
-    const fallbackLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    const fallbackLayer = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       ...tileOptions,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     });
