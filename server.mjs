@@ -142,7 +142,16 @@ const server = http.createServer(async (request, response) => {
         "content-type": "application/json; charset=utf-8",
         "cache-control": "no-store",
       });
-      response.end(JSON.stringify({ source: "Statistisk sentralbyrå", year: 2025, previousYear: 2024, municipalityNumber, values, trends: {
+      const previousValues = {
+        regulationsAdopted: planSeries.KOSomfplanbehand0001?.previous,
+        privateDetailedPlans: planSeries.KOSomfplanbehand0000?.previous,
+        planProcessingDays: planSeries.KOSbehandlingsti0000?.previous,
+        housingStarted: housingSeries.Igangsatte?.previous,
+        housingCompleted: housingSeries.Fullforte?.previous,
+        housingStartedArea: housingSeries.BruksarealIgang?.previous,
+        housingCompletedArea: housingSeries.BruksarealFullfort?.previous,
+      };
+      response.end(JSON.stringify({ source: "Statistisk sentralbyrå", year: 2025, previousYear: 2024, municipalityNumber, values, previousValues, trends: {
         regulationsAdopted: planTrends.KOSomfplanbehand0001,
         privateDetailedPlans: planTrends.KOSomfplanbehand0000,
         planProcessingDays: planTrends.KOSbehandlingsti0000,

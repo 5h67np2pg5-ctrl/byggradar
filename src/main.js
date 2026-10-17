@@ -35,6 +35,7 @@ const state = {
   statisticsSsb: null,
   statisticsSsbLoading: false,
   statisticsSsbError: "",
+  statisticsSsbScope: "",
   statisticsSavedSearches: [],
   statisticsSelectedSearch: "",
 };
@@ -830,8 +831,8 @@ function saveStatisticsSavedSearches() {
 
 function statisticsSavedSearchLabel(search) {
   const preset = statisticsSearchCatalog.find((item) => item.id === search.presetId);
-  const municipality = search.municipality || "valgt kommune";
-  return `${preset?.title || "Statistikksøk"} · ${municipality}`;
+  const geography = search.municipality || locationRegions.find((region) => region.id === search.region)?.name || "valgt område";
+  return `${preset?.title || "Statistikksøk"} · ${geography}`;
 }
 
 function statisticsFormatSsbValue(value, metric) {
@@ -842,13 +843,53 @@ function statisticsFormatSsbValue(value, metric) {
 }
 
 function statisticsDetailPanel() {
-  if (!state.statisticsSelectedSearch || !state.statisticsMunicipality) return "";
+  if (!state.statisticsSelectedSearch || (!state.statisticsMunicipality && !state.statisticsRegion)) return "";
   const item = statisticsSearchCatalog.find((entry) => entry.id === state.statisticsSelectedSearch);
   if (!item) return "";
   const value = state.statisticsSsb?.values?.[item.metric];
   const trend = state.statisticsSsb?.trends?.[item.metric];
   const displayedValue = Number.isFinite(Number(value)) ? statisticsFormatSsbValue(value, item.metric) : state.statisticsSsbLoading ? "Laster ..." : "Ikke tilgjengelig";
   return `<aside class="statistics-detail" aria-live="polite"><div><p class="statistics-detail-label">Valgt statistikksøk</p><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.description)}</p></div><div class="statistics-detail-value"><strong>${displayedValue}</strong>${trend ? `<span class="statistics-search-trend ${trend.className}">${trend.arrow} ${escapeHtml(trend.label)}</span>` : ""}<small>${escapeHtml(item.source)}${state.statisticsSsb?.year ? ` · ${escapeHtml(String(state.statisticsSsb.year))}` : ""}</small></div></aside>`;
+}
+
+function statisticsSsbMunicipalities(regionId = state.statisticsRegion) {
+  const regionNames = new Set((locationRegions.find((region) => region.id === regionId)?.municipalities || []).map((name) => normalizeMunicipalityName(name)));
+  const projects = statisticsRecords().filter((project) => (!regionId || project.region === regionId) && project.municipalityNumber && (!regionId || regionNames.has(normalizeMunicipalityName(project.municipality))));
+  return [...new Map(projects.map((project) => [String(project.municipalityNumber), {
+    number: String(project.municipalityNumber),
+    name: project.municipality || "Ukjent kommune",
+  }])).values()];
+}
+
+async function fetchSsbMunicipality(municipalityNumber) {
+  const response = await fetch(`/api/ssb-statistics?kommunenummer=${encodeURIComponent(municipalityNumber)}`);
+  const payload = await response.json();
+  if (!response.ok) throw new Error(payload.error || `SSB-data kunne ikke hentes for ${municipalityNumber}.`);
+  return payload;
+}
+
+function aggregateSsbStatistics(payloads, scope, municipalityNumbers = []) {
+  const metrics = [...new Set(statisticsSearchCatalog.map((item) => item.metric).filter(Boolean))];
+  const values = {};
+  const previousValues = {};
+  metrics.forEach((metric) => {
+    const current = payloads.map((payload) => Number(payload.values?.[metric])).filter(Number.isFinite);
+    const previous = payloads.map((payload) => Number(payload.previousValues?.[metric])).filter(Number.isFinite);
+    if (current.length) values[metric] = metric === "planProcessingDays" ? current.reduce((sum, value) => sum + value, 0) / current.length : current.reduce((sum, value) => sum + value, 0);
+    if (previous.length) previousValues[metric] = metric === "planProcessingDays" ? previous.reduce((sum, value) => sum + value, 0) / previous.length : previous.reduce((sum, value) => sum + value, 0);
+  });
+  const trends = Object.fromEntries(metrics.map((metric) => [metric, statisticsSsbTrend(values[metric], previousValues[metric])]));
+  return {
+    source: "Statistisk sentralbyrå",
+    year: payloads[0]?.year || 2025,
+    previousYear: payloads[0]?.previousYear || 2024,
+    values,
+    previousValues,
+    trends,
+    scope,
+    municipalityCount: payloads.length,
+    municipalityNumbers,
+  };
 }
 
 function statisticsSearchPanel() {
@@ -860,12 +901,14 @@ function statisticsSearchPanel() {
   const groups = [...new Set(statisticsSearchCatalog.map((item) => item.group))];
   const groupsMarkup = groups.map((group) => `<section class="statistics-search-group"><h2>${escapeHtml(group)}</h2><div class="statistics-search-row">${statisticsSearchCatalog.filter((item) => item.group === group).map((item) => {
     const value = state.statisticsSsb?.values?.[item.metric];
-    const hasValue = municipalitySelected && Number.isFinite(Number(value));
+    const hasValue = (municipalitySelected || state.statisticsRegion) && Number.isFinite(Number(value));
     const trend = state.statisticsSsb?.trends?.[item.metric];
     const trendMarkup = trend ? `<span class="statistics-search-trend ${trend.className}">${trend.arrow} ${escapeHtml(trend.label)}</span>` : `<span class="statistics-search-trend neutral">→ Ikke beregnet</span>`;
-    const saveLabel = saved.some((search) => search.presetId === item.id && search.municipality === state.statisticsMunicipality) ? "Lagret" : "Husk søket";
+    const saveLabel = saved.some((search) => search.presetId === item.id && search.municipality === state.statisticsMunicipality && search.region === state.statisticsRegion) ? "Lagret" : "Husk søket";
     const isSaved = saveLabel === "Lagret";
-    return `<article class="statistics-search-field ${municipalitySelected ? "active" : "disabled"} ${state.statisticsSelectedSearch === item.id ? "selected" : ""}" data-open-statistics-search="${escapeHtml(item.id)}" ${municipalitySelected ? 'role="button" tabindex="0"' : ""}><div class="statistics-search-title"><h3>${escapeHtml(item.title)}</h3><button type="button" class="statistics-star ${isSaved ? "saved" : ""}" data-save-statistics-search="${escapeHtml(item.id)}" aria-label="${isSaved ? "Fjern fra huskede søk" : "Husk dette søket"}" title="${isSaved ? "Fjern fra huskede søk" : "Husk dette søket"}" ${municipalitySelected ? "" : "disabled"}>${isSaved ? "★" : "☆"}</button></div><p>${escapeHtml(item.description)}</p><strong>${hasValue ? statisticsFormatSsbValue(value, item.metric) : municipalitySelected ? (state.statisticsSsbLoading ? "Laster ..." : "Ikke tilgjengelig") : "Velg kommune"}</strong>${trendMarkup}<small>${escapeHtml(item.source)}${state.statisticsSsb?.year ? ` · ${escapeHtml(String(state.statisticsSsb.year))}` : ""}</small></article>`;
+    const scopeLabel = state.statisticsSsb?.scope === "region" ? ` · ${state.statisticsSsb.municipalityCount} kommuner` : "";
+    const hasGeography = municipalitySelected || Boolean(state.statisticsRegion);
+    return `<article class="statistics-search-field ${hasGeography ? "active" : "disabled"} ${state.statisticsSelectedSearch === item.id ? "selected" : ""}" data-open-statistics-search="${escapeHtml(item.id)}" ${hasGeography ? 'role="button" tabindex="0"' : ""}><div class="statistics-search-title"><h3>${escapeHtml(item.title)}</h3><button type="button" class="statistics-star ${isSaved ? "saved" : ""}" data-save-statistics-search="${escapeHtml(item.id)}" aria-label="${isSaved ? "Fjern fra huskede søk" : "Husk dette søket"}" title="${isSaved ? "Fjern fra huskede søk" : "Husk dette søket"}" ${hasGeography ? "" : "disabled"}>${isSaved ? "★" : "☆"}</button></div><p>${escapeHtml(item.description)}</p><strong>${hasValue ? statisticsFormatSsbValue(value, item.metric) : hasGeography ? (state.statisticsSsbLoading ? "Laster ..." : "Ikke tilgjengelig") : "Velg kommune"}</strong>${trendMarkup}<small>${escapeHtml(item.source)}${state.statisticsSsb?.year ? ` · ${escapeHtml(String(state.statisticsSsb.year))}` : ""}${scopeLabel}</small></article>`;
   }).join("")}</div></section>`).join("");
   return `<section class="statistics-search-panel"><div class="statistics-section-heading"><div><h2>Faste statistikksøk</h2><p>${municipalitySelected ? "Trykk på et statistikksøk for å se detaljene." : "Velg minst én kommune for å aktivere statistikksøkene."}</p></div><span class="statistics-privacy-badge">SSB-data</span></div>${savedMarkup}${groupsMarkup}${statisticsDetailPanel()}${state.statisticsSsbError ? `<p class="statistics-coverage-warning">${escapeHtml(state.statisticsSsbError)}</p>` : ""}</section>`;
 }
@@ -888,12 +931,38 @@ async function loadSsbStatistics(municipality) {
   }
   state.statisticsSsbLoading = true;
   state.statisticsSsbError = "";
+  state.statisticsSsbScope = "municipality";
   renderStatistics();
   try {
-    const response = await fetch(`/api/ssb-statistics?kommunenummer=${encodeURIComponent(project.municipalityNumber)}`);
-    const payload = await response.json();
-    if (!response.ok) throw new Error(payload.error || "SSB-data kunne ikke hentes.");
-    state.statisticsSsb = payload;
+    const payload = await fetchSsbMunicipality(project.municipalityNumber);
+    state.statisticsSsb = { ...payload, scope: "municipality", municipalityCount: 1, municipalityNumbers: [project.municipalityNumber] };
+  } catch (error) {
+    state.statisticsSsb = null;
+    state.statisticsSsbError = error.message || "SSB-data kunne ikke hentes.";
+  } finally {
+    state.statisticsSsbLoading = false;
+    renderStatistics();
+  }
+}
+
+async function loadSsbRegionStatistics(regionId) {
+  const municipalities = statisticsSsbMunicipalities(regionId);
+  if (!municipalities.length) {
+    state.statisticsSsb = null;
+    state.statisticsSsbError = "Ingen gyldige kommunenummer er tilgjengelige for regionen.";
+    renderStatistics();
+    return;
+  }
+  state.statisticsSsbLoading = true;
+  state.statisticsSsbError = "";
+  state.statisticsSsbScope = "region";
+  renderStatistics();
+  try {
+    const results = await Promise.allSettled(municipalities.map((municipality) => fetchSsbMunicipality(municipality.number)));
+    const payloads = results.filter((result) => result.status === "fulfilled").map((result) => result.value);
+    if (!payloads.length) throw new Error("SSB-data kunne ikke hentes for kommunene i regionen.");
+    state.statisticsSsb = aggregateSsbStatistics(payloads, "region", payloads.map((payload) => payload.municipalityNumber));
+    if (payloads.length < municipalities.length) state.statisticsSsbError = `${payloads.length} av ${municipalities.length} kommuner svarte fra SSB.`;
   } catch (error) {
     state.statisticsSsb = null;
     state.statisticsSsbError = error.message || "SSB-data kunne ikke hentes.";
@@ -967,26 +1036,29 @@ function renderStatistics() {
         state.statisticsMunicipality = "";
         state.statisticsSsb = null;
         state.statisticsSsbError = "";
+        state.statisticsSsbScope = "";
         state.statisticsSelectedSearch = "";
       } else if (!state.statisticsMunicipality) {
         state.statisticsSsb = null;
         state.statisticsSsbError = "";
+        state.statisticsSsbScope = "";
         state.statisticsSelectedSearch = "";
       } else {
         state.statisticsSelectedSearch = "";
       }
       renderStatistics();
+      if (id === "statisticsRegion" && state.statisticsRegion) loadSsbRegionStatistics(state.statisticsRegion);
       if (id === "statisticsMunicipality" && state.statisticsMunicipality) loadSsbStatistics(state.statisticsMunicipality);
     });
   });
   document.querySelectorAll("[data-save-statistics-search]").forEach((button) => {
     button.addEventListener("click", () => {
       const presetId = button.dataset.saveStatisticsSearch;
-      if (!state.statisticsMunicipality) return;
-      const existing = state.statisticsSavedSearches.findIndex((search) => search.presetId === presetId && search.municipality === state.statisticsMunicipality);
+      if (!state.statisticsMunicipality && !state.statisticsRegion) return;
+      const existing = state.statisticsSavedSearches.findIndex((search) => search.presetId === presetId && search.municipality === state.statisticsMunicipality && search.region === state.statisticsRegion);
       if (existing >= 0) state.statisticsSavedSearches.splice(existing, 1);
       else state.statisticsSavedSearches.unshift({
-        id: `${presetId}-${state.statisticsMunicipality}`,
+        id: `${presetId}-${state.statisticsMunicipality || state.statisticsRegion}`,
         presetId,
         municipality: state.statisticsMunicipality,
         region: state.statisticsRegion,
@@ -997,7 +1069,7 @@ function renderStatistics() {
   });
   document.querySelectorAll("[data-open-statistics-search]").forEach((card) => {
     const open = () => {
-      if (!state.statisticsMunicipality) return;
+      if (!state.statisticsMunicipality && !state.statisticsRegion) return;
       state.statisticsSelectedSearch = card.dataset.openStatisticsSearch;
       renderStatistics();
     };
