@@ -57,9 +57,6 @@ const illustrationRegions = ["Bergensregionen", "Stavangerregionen", "Haugalands
 
 const savedFiltersKey = "byggradar.filters.v1";
 const markedProjectsKey = "byggradar.markedProjects.v1";
-const authSessionKey = "byggradar.session.v1";
-const userModeKey = "byggradar.userMode.v1";
-const rememberedSessionValue = "active-v2";
 const standardProjectLimit = 200;
 const loadMoreStep = 20;
 const weeklyDeliveryCount = 50;
@@ -296,13 +293,7 @@ const forceLogin = new URLSearchParams(window.location.search).get("login") === 
 init();
 
 async function init() {
-  const rememberedMode = readSavedValue(userModeKey);
-  if (forceLogin || readSavedValue(authSessionKey) !== rememberedSessionValue || !["vendor", "statistics"].includes(rememberedMode)) {
-    renderLogin();
-    return;
-  }
-
-  await startUserMode(rememberedMode);
+  renderLogin();
 }
 
 async function startUserMode(mode) {
@@ -374,16 +365,10 @@ function renderLogin() {
             <span>Se samlet statistikk for regioner og kommuner.</span>
           </button>
         </fieldset>
-        <label class="remember-choice">
-          <input id="rememberSession" type="checkbox" autocomplete="off" />
-          <span>Husk meg i denne nettleseren</span>
-        </label>
         <button class="login-button" id="loginButton" type="button" disabled>Gå videre</button>
       </section>
     </main>
   `;
-
-  document.querySelector("#rememberSession").checked = false;
 
   let selectedMode = "";
   document.querySelectorAll(".role-option").forEach((button) => {
@@ -397,10 +382,6 @@ function renderLogin() {
 
   document.querySelector("#loginButton")?.addEventListener("click", () => {
     if (!selectedMode) return;
-    if (document.querySelector("#rememberSession")?.checked) {
-      writeSavedValue(authSessionKey, rememberedSessionValue);
-      writeSavedValue(userModeKey, selectedMode);
-    }
     if (forceLogin) window.history.replaceState({}, "", window.location.pathname);
     startUserMode(selectedMode);
   });
