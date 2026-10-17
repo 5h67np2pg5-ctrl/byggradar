@@ -30,6 +30,7 @@ const state = {
   aiSearchLoading: new Set(),
   userMode: null,
   statisticsData: null,
+  statisticsFeeRates: null,
   statisticsQuickMode: "all",
   statisticsRegion: "",
   statisticsMunicipality: "",
@@ -749,9 +750,15 @@ async function loadStatisticsData() {
     view.hidden = false;
     view.innerHTML = `<div class="statistics-loading">Laster statistikk ...</div>`;
   }
-  const response = await fetch(`/data/statistics_projects.json?t=${Date.now()}`);
-  if (!response.ok) throw new Error(`Kunne ikke hente statistikkgrunnlaget (${response.status})`);
-  state.statisticsData = await response.json();
+  const cacheBust = `t=${Date.now()}`;
+  const [statisticsResponse, feeResponse] = await Promise.all([
+    fetch(`/data/statistics_projects.json?${cacheBust}`),
+    fetch(`/data/municipality_fee_rates.json?${cacheBust}`),
+  ]);
+  if (!statisticsResponse.ok) throw new Error(`Kunne ikke hente statistikkgrunnlaget (${statisticsResponse.status})`);
+  if (!feeResponse.ok) throw new Error(`Kunne ikke hente gebyrgrunnlaget (${feeResponse.status})`);
+  state.statisticsData = await statisticsResponse.json();
+  state.statisticsFeeRates = await feeResponse.json();
 }
 
 function statisticsRecords() {
@@ -794,6 +801,49 @@ function statisticsTrend(records) {
   return { label: "Omtrent uendret", className: "neutral" };
 }
 
+const permitStagesForFeeEstimate = new Set([
+  "tillatelse gitt",
+  "igangsettingstillatelse gitt",
+]);
+
+function statisticsPermitRecordsLastYear(records) {
+  const cutoff = Date.now() - 365 * 86400000;
+  return records.filter((project) => {
+    const timestamp = Date.parse(project.date);
+    return permitStagesForFeeEstimate.has(String(project.stage || "").toLowerCase()) && Number.isFinite(timestamp) && timestamp >= cutoff;
+  });
+}
+
+function statisticsFeeRows(records) {
+  const grouped = new Map();
+  records.forEach((project) => {
+    const municipality = project.municipality || "Ukjent kommune";
+    const current = grouped.get(municipality) || { municipality, count: 0 };
+    current.count += 1;
+    grouped.set(municipality, current);
+  });
+  return [...grouped.values()].map((row) => {
+    const tariff = state.statisticsFeeRates?.rates?.[normalizeMunicipalityName(row.municipality)] || null;
+    const fee = Number(tariff?.referenceFee);
+    return {
+      ...row,
+      fee: Number.isFinite(fee) && fee > 0 ? fee : null,
+      income: Number.isFinite(fee) && fee > 0 ? row.count * fee : null,
+      source: tariff?.source || "Gebyrregulativ ikke registrert",
+      tariffYear: tariff?.year || "",
+    };
+  }).sort((a, b) => b.count - a.count);
+}
+
+function formatNok(value) {
+  return Number.isFinite(value) ? `${Math.round(value).toLocaleString("nb-NO")} kr` : "Ikke beregnet";
+}
+
+function statisticsFeeTable(rows) {
+  if (!rows.length) return `<p class="statistics-empty">Ingen saker med tillatelse i perioden.</p>`;
+  return `<div class="statistics-fee-table-wrap"><table class="statistics-fee-table"><thead><tr><th>Kommune</th><th>Saker</th><th>Referansesats</th><th>Beregnet inntekt</th><th>Grunnlag</th></tr></thead><tbody>${rows.map((row) => `<tr><td>${escapeHtml(row.municipality)}</td><td>${row.count.toLocaleString("nb-NO")}</td><td>${formatNok(row.fee)}${row.tariffYear ? ` (${escapeHtml(String(row.tariffYear))})` : ""}</td><td>${formatNok(row.income)}</td><td>${escapeHtml(row.source)}</td></tr>`).join("")}</tbody></table></div>`;
+}
+
 function renderStatistics() {
   const view = document.querySelector("#statisticsView");
   if (!view) return;
@@ -812,6 +862,10 @@ function renderStatistics() {
   const phaseTwo = records.filter((project) => project.phase === "Fase 2").length;
   const municipalitiesCount = new Set(records.map((project) => project.municipality)).size;
   const regionName = state.statisticsRegion ? illustrationRegions.find((name) => locationRegions.find((region) => region.id === state.statisticsRegion)?.name === name) || locationRegions.find((region) => region.id === state.statisticsRegion)?.name : "Alle regioner";
+  const feeRecords = statisticsPermitRecordsLastYear(state.statisticsRegion ? regionRecords : statisticsRecords());
+  const feeRows = statisticsFeeRows(feeRecords);
+  const calculatedFeeRows = feeRows.filter((row) => row.income !== null);
+  const calculatedFeeIncome = calculatedFeeRows.reduce((sum, row) => sum + row.income, 0);
 
   view.innerHTML = `
     <div class="statistics-header">
@@ -839,6 +893,12 @@ function renderStatistics() {
       <div class="statistics-card"><span>Fase 2</span><strong>${phaseTwo.toLocaleString("nb-NO")}</strong></div>
       <div class="statistics-card trend-card ${trend.className}"><span>Utvikling</span><strong>${trend.label}</strong></div>
     </div>
+    <section class="statistics-fee-panel">
+      <div class="statistics-section-heading"><div><h2>Gebyr og beregnet inntekt</h2><p>Siste 12 måneder · saker med tillatelse</p></div><span class="statistics-basis">${feeRecords.length.toLocaleString("nb-NO")} saker</span></div>
+      <div class="statistics-fee-summary"><div><span>Beregnet gebyrinntekt</span><strong>${calculatedFeeRows.length ? formatNok(calculatedFeeIncome) : "Ikke beregnet"}</strong></div><div><span>Kommuner med registrert sats</span><strong>${calculatedFeeRows.length.toLocaleString("nb-NO")} av ${feeRows.length.toLocaleString("nb-NO")}</strong></div></div>
+      <p class="statistics-disclaimer">Beløpet er et estimat basert på en referansesats per sak. Gebyrer varierer etter tiltak, størrelse og dispensasjoner. Det er ikke kommunens regnskapsførte inntekt.</p>
+      ${statisticsFeeTable(feeRows)}
+    </section>
     <div class="statistics-columns">
       <section><h2>Hovedgrupper: regioner</h2>${statisticsList(statisticsRecords(), (project) => project.region)}</section>
       <section><h2>Undergrupper: kommuner</h2>${statisticsList(records, (project) => project.municipality)}</section>

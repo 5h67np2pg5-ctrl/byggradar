@@ -1,0 +1,6 @@
+{
+  "version": 1,
+  "description": "Kommunale gebyrsatser for beregnet gebyrinntekt. Satsene skal fylles fra gjeldende offisielle gebyrregulativ.",
+  "basis": "Referansesats per sak med tillatelse siste 12 måneder",
+  "rates": {}
+}

@@ -405,6 +405,28 @@ a {
   font-weight: 650;
 }
 
+.statistics-fee-panel {
+  margin-top: 16px;
+  padding: 14px;
+  border: 1px solid #c8ddea;
+  border-radius: 8px;
+  background: #f7fbfe;
+}
+
+.statistics-section-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.statistics-section-heading h2 { margin: 0; color: #255b76; font-size: 1rem; }
+.statistics-section-heading p { margin: 4px 0 0; color: #6b8594; font-size: 0.78rem; }
+.statistics-basis { color: #396b84; font-size: 0.8rem; font-weight: 700; }
+.statistics-fee-summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 12px 0; }
+.statistics-fee-summary div { padding: 12px; border: 1px solid #d4e5ee; border-radius: 7px; background: #e9f5fc; }
+.statistics-fee-summary span { display: block; color: #54778c; font-size: 0.78rem; }
+.statistics-fee-summary strong { display: block; margin-top: 6px; color: #1d536f; font-size: 1.15rem; }
+.statistics-disclaimer { margin: 0 0 12px; color: #60798d; font-size: 0.78rem; line-height: 1.4; }
+.statistics-fee-table-wrap { overflow-x: auto; }
+.statistics-fee-table { width: 100%; min-width: 760px; border-collapse: collapse; color: #4c697a; font-size: 0.78rem; }
+.statistics-fee-table th, .statistics-fee-table td { padding: 8px; border-bottom: 1px solid #dceaf2; text-align: left; vertical-align: top; }
+.statistics-fee-table th { color: #255b76; font-weight: 750; background: #edf7fc; }
+
 .statistics-cards {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -496,6 +518,8 @@ a {
   .statistics-header { display: grid; }
   .statistics-filters,
   .statistics-cards { grid-template-columns: 1fr; }
+  .statistics-fee-summary { grid-template-columns: 1fr; }
+  .statistics-section-heading { display: grid; }
   .print-button { width: 100%; }
 }
 
