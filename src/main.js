@@ -395,7 +395,6 @@ function renderLogin() {
 
   document.querySelector("#loginButton")?.addEventListener("click", () => {
     if (!selectedMode) return;
-    if (forceLogin) window.history.replaceState({}, "", window.location.pathname);
     startUserMode(selectedMode);
   });
 }
