@@ -820,12 +820,26 @@ function statisticsTrend(records) {
 function statisticsBuildingRecordsLastYear(records) {
   const cutoff = Date.now() - 365 * 86400000;
   return records.filter((project) => {
-    const timestamp = Date.parse(project.date);
+    const timestamp = Date.parse(project.date || project.recordedDate);
     return Boolean(project?.municipality) && Boolean(project?.stage) && Number.isFinite(timestamp) && timestamp >= cutoff;
   });
 }
 
-function statisticsFeeRows(records) {
+function statisticsDateCoverage(records) {
+  const timestamps = records
+    .map((project) => Date.parse(project.date || project.recordedDate))
+    .filter(Number.isFinite);
+  if (!timestamps.length) return { days: 0, from: "", to: "" };
+  const earliest = Math.min(...timestamps);
+  const latest = Math.max(...timestamps);
+  return {
+    days: Math.floor((latest - earliest) / 86400000) + 1,
+    from: new Date(earliest).toLocaleDateString("nb-NO"),
+    to: new Date(latest).toLocaleDateString("nb-NO"),
+  };
+}
+
+function statisticsFeeRows(records, allowIncome = true) {
   const grouped = new Map();
   records.forEach((project) => {
     const municipality = project.municipality || "Ukjent kommune";
@@ -843,7 +857,7 @@ function statisticsFeeRows(records) {
     return {
       ...row,
       fee: Number.isFinite(fee) && fee > 0 ? fee : null,
-      income: Number.isFinite(fee) && fee > 0 ? row.count * fee : null,
+      income: allowIncome && Number.isFinite(fee) && fee > 0 ? row.count * fee : null,
       source: tariff?.source || "Gebyrregulativ ikke registrert",
       tariffYear: tariff?.year || "",
     };
@@ -892,7 +906,11 @@ function renderStatistics() {
     feeScopeRecords = feeScopeRecords.filter((project) => normalizeMunicipalityName(project.municipality) === state.statisticsMunicipality);
   }
   const feeRecords = statisticsBuildingRecordsLastYear(feeScopeRecords);
-  const feeRows = statisticsFeeRows(feeRecords);
+  const feeCoverage = statisticsDateCoverage(feeScopeRecords);
+  const coverageWarning = feeCoverage.days < 330
+    ? `<p class="statistics-coverage-warning">Datagrunnlaget dekker ${feeCoverage.days.toLocaleString("nb-NO")} dager, fra ${escapeHtml(feeCoverage.from)} til ${escapeHtml(feeCoverage.to)}. Det finnes derfor ikke et komplett 12-måneders grunnlag i de innlastede dataene. Tallet vises som tilgjengelige registreringer, ikke som et bekreftet årsvolum.</p>`
+    : "";
+  const feeRows = statisticsFeeRows(feeRecords, feeCoverage.days >= 330);
   const calculatedFeeRows = feeRows.filter((row) => row.income !== null);
   const calculatedFeeIncome = calculatedFeeRows.reduce((sum, row) => sum + row.income, 0);
 
@@ -929,9 +947,10 @@ function renderStatistics() {
       <section><h2>Undergrupper: tiltakstyper</h2>${statisticsList(records.flatMap((project) => (project.projectTypes || []).map((type) => ({ projectTypes: [type] }))), (project) => project.projectTypes[0])}</section>
     </div>
     <section class="statistics-fee-panel">
-      <div class="statistics-section-heading"><div><h2>Gebyr og beregnet inntekt</h2><p>Siste 12 måneder · alle registrerte byggesaker</p></div><span class="statistics-basis">${feeRecords.length.toLocaleString("nb-NO")} byggesaker</span></div>
+      <div class="statistics-section-heading"><div><h2>Gebyr og beregnet inntekt</h2><p>12-månedersvindu · alle registrerte byggesaker</p></div><span class="statistics-basis">${feeRecords.length.toLocaleString("nb-NO")} tilgjengelige saker</span></div>
       <div class="statistics-fee-summary"><div><span>Beregnet gebyrinntekt</span><strong>${calculatedFeeRows.length ? formatNok(calculatedFeeIncome) : "Ikke beregnet"}</strong></div><div><span>Kommuner med beregningsgrunnlag</span><strong>${calculatedFeeRows.length.toLocaleString("nb-NO")} av ${feeRows.length.toLocaleString("nb-NO")}</strong></div></div>
-      <p class="statistics-disclaimer">Inntektsgrunnlaget beregnes som totalt antall registrerte byggesaker siste 12 måneder multiplisert med kommunens beregningsgrunnlag per sak. Der kommunens egen sats ikke er entydig dokumentert, brukes et KS-basert sammenligningstall. Gebyrer varierer etter tiltak, størrelse og dispensasjoner, så beregningen er et estimat og ikke kommunens regnskapsførte inntekt.</p>
+      ${coverageWarning}
+      <p class="statistics-disclaimer">Når datagrunnlaget dekker hele perioden, beregnes inntektsgrunnlaget som totalt antall registrerte byggesaker siste 12 måneder multiplisert med kommunens beregningsgrunnlag per sak. Der kommunens egen sats ikke er entydig dokumentert, brukes et KS-basert sammenligningstall. Gebyrer varierer etter tiltak, størrelse og dispensasjoner, så beregningen er et estimat og ikke kommunens regnskapsførte inntekt.</p>
       ${statisticsFeeTable(feeRows)}
     </section>
   `;

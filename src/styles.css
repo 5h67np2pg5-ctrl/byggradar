@@ -518,6 +518,7 @@ a {
 .statistics-fee-summary span { display: block; color: #54778c; font-size: 0.78rem; }
 .statistics-fee-summary strong { display: block; margin-top: 6px; color: #1d536f; font-size: 1.15rem; }
 .statistics-disclaimer { margin: 0 0 12px; color: #60798d; font-size: 0.78rem; line-height: 1.4; }
+.statistics-coverage-warning { margin: 0 0 12px; padding: 10px 12px; border: 1px solid #e4c98d; border-radius: 7px; background: #fff9e9; color: #765b20; font-size: 0.78rem; line-height: 1.4; }
 .statistics-fee-table-wrap { overflow-x: auto; }
 .statistics-fee-table { width: 100%; min-width: 760px; border-collapse: collapse; color: #4c697a; font-size: 0.78rem; }
 .statistics-fee-table th, .statistics-fee-table td { padding: 8px; border-bottom: 1px solid #dceaf2; text-align: left; vertical-align: top; }
