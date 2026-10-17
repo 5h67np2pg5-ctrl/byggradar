@@ -30,6 +30,7 @@ const state = {
   aiSearchLoading: new Set(),
   userMode: null,
   statisticsData: null,
+  statisticsQuickMode: "all",
   statisticsRegion: "",
   statisticsMunicipality: "",
   statisticsStage: "",
@@ -817,15 +818,18 @@ function renderStatistics() {
       <div>
         <h1>Statistikk</h1>
         <p class="statistics-intro"><strong>Om Norsk ByggRadar</strong><br>Norsk ByggRadar samler og systematiserer åpne opplysninger om byggeprosjekter, tiltak og anskaffelser fra kommuner og andre offentlige kilder. Oversikten gir et samlet bilde av aktiviteten i ulike regioner og kommuner, og viser utviklingstrekk basert på tilgjengelige registreringer.<br><br>Norsk ByggRadar kan ikke garantere at alle prosjekter er fanget opp. Kildene kan være ufullstendige, forsinkede eller variere mellom kommunene. Tallene må derfor brukes som et informasjons- og analysegrunnlag, ikke som absolutte eller endelige sannheter. Mindre avvik kan forekomme.</p>
+        <p class="statistics-device-note">Statistikkvisningen er mest oversiktlig på desktop (PC/Mac).</p>
       </div>
       <button class="print-button" id="printStatistics" type="button">Skriv ut</button>
     </div>
-    <div class="statistics-filters" aria-label="Statistikkfiltre">
-      <label><span>Omfang</span><select id="statisticsRegion"><option value="">Alle regioner</option>${locationRegions.map((region) => `<option value="${region.id}" ${state.statisticsRegion === region.id ? "selected" : ""}>${escapeHtml(region.name)}</option>`).join("")}</select></label>
-      <label><span>Kommune</span><select id="statisticsMunicipality"><option value="">Alle kommuner</option>${municipalities.map((municipality) => `<option value="${escapeHtml(normalizeMunicipalityName(municipality))}" ${state.statisticsMunicipality === normalizeMunicipalityName(municipality) ? "selected" : ""}>${escapeHtml(municipality)}</option>`).join("")}</select></label>
-      <label><span>Fase/status</span><select id="statisticsStage"><option value="">Alle faser og statuser</option>${stages.map((stage) => `<option value="${escapeHtml(stage)}" ${state.statisticsStage === stage ? "selected" : ""}>${escapeHtml(stage)}</option>`).join("")}</select></label>
-      <label><span>Fag/tiltakstype</span><select id="statisticsType"><option value="">Alle tiltakstyper</option>${types.map((type) => `<option value="${escapeHtml(type)}" ${state.statisticsType === type ? "selected" : ""}>${escapeHtml(type)}</option>`).join("")}</select></label>
-      <label><span>Periode</span><select id="statisticsPeriod"><option value="all" ${state.statisticsPeriod === "all" ? "selected" : ""}>Alle registrerte</option><option value="30" ${state.statisticsPeriod === "30" ? "selected" : ""}>Siste 30 dager</option><option value="90" ${state.statisticsPeriod === "90" ? "selected" : ""}>Siste 90 dager</option><option value="365" ${state.statisticsPeriod === "365" ? "selected" : ""}>Siste 12 måneder</option></select></label>
+    <div class="statistics-search-guide">
+      <div class="statistics-search-step"><span>1</span><div><strong>Makro</strong><small>Hele Norge og region</small></div></div>
+      <div class="statistics-search-step"><span>2</span><div><strong>Mikro</strong><small>Kommune, fase og tiltakstype</small></div></div>
+      <label class="statistics-quick-mode"><span>Rask modus</span><select id="statisticsQuickMode"><option value="all" ${state.statisticsQuickMode === "all" ? "selected" : ""}>Alle tilgjengelige søk</option><option value="geography" ${state.statisticsQuickMode === "geography" ? "selected" : ""}>Område: region og kommune</option><option value="stage" ${state.statisticsQuickMode === "stage" ? "selected" : ""}>Fase og status</option><option value="type" ${state.statisticsQuickMode === "type" ? "selected" : ""}>Tiltakstype</option><option value="period" ${state.statisticsQuickMode === "period" ? "selected" : ""}>Periode</option></select></label>
+    </div>
+    <div class="statistics-filters" data-quick-mode="${state.statisticsQuickMode}" aria-label="Statistikkfiltre">
+      <div class="statistics-filter-group statistics-geography"><h2>Område</h2><label><span>Region</span><select id="statisticsRegion"><option value="">Alle regioner</option>${locationRegions.map((region) => `<option value="${region.id}" ${state.statisticsRegion === region.id ? "selected" : ""}>${escapeHtml(region.name)}</option>`).join("")}</select></label><label><span>Kommune</span><select id="statisticsMunicipality"><option value="">Alle kommuner</option>${municipalities.map((municipality) => `<option value="${escapeHtml(normalizeMunicipalityName(municipality))}" ${state.statisticsMunicipality === normalizeMunicipalityName(municipality) ? "selected" : ""}>${escapeHtml(municipality)}</option>`).join("")}</select></label></div>
+      <div class="statistics-filter-group statistics-details"><h2>Detaljer</h2><label><span>Fase/status</span><select id="statisticsStage"><option value="">Alle faser og statuser</option>${stages.map((stage) => `<option value="${escapeHtml(stage)}" ${state.statisticsStage === stage ? "selected" : ""}>${escapeHtml(stage)}</option>`).join("")}</select></label><label><span>Fag/tiltakstype</span><select id="statisticsType"><option value="">Alle tiltakstyper</option>${types.map((type) => `<option value="${escapeHtml(type)}" ${state.statisticsType === type ? "selected" : ""}>${escapeHtml(type)}</option>`).join("")}</select></label><label><span>Periode</span><select id="statisticsPeriod"><option value="all" ${state.statisticsPeriod === "all" ? "selected" : ""}>Alle registrerte</option><option value="30" ${state.statisticsPeriod === "30" ? "selected" : ""}>Siste 30 dager</option><option value="90" ${state.statisticsPeriod === "90" ? "selected" : ""}>Siste 90 dager</option><option value="365" ${state.statisticsPeriod === "365" ? "selected" : ""}>Siste 12 måneder</option></select></label></div>
     </div>
     <div class="statistics-summary-line">${escapeHtml(regionName)} · ${records.length.toLocaleString("nb-NO")} prosjekter i utvalget</div>
     <div class="statistics-cards">
@@ -836,12 +840,12 @@ function renderStatistics() {
       <div class="statistics-card trend-card ${trend.className}"><span>Utvikling</span><strong>${trend.label}</strong></div>
     </div>
     <div class="statistics-columns">
-      <section><h2>Prosjekter per region</h2>${statisticsList(statisticsRecords(), (project) => project.region)}</section>
-      <section><h2>Prosjekter per kommune</h2>${statisticsList(records, (project) => project.municipality)}</section>
-      <section><h2>Prosjekter per tiltakstype</h2>${statisticsList(records.flatMap((project) => (project.projectTypes || []).map((type) => ({ projectTypes: [type] }))), (project) => project.projectTypes[0])}</section>
+      <section><h2>Hovedgrupper: regioner</h2>${statisticsList(statisticsRecords(), (project) => project.region)}</section>
+      <section><h2>Undergrupper: kommuner</h2>${statisticsList(records, (project) => project.municipality)}</section>
+      <section><h2>Undergrupper: tiltakstyper</h2>${statisticsList(records.flatMap((project) => (project.projectTypes || []).map((type) => ({ projectTypes: [type] }))), (project) => project.projectTypes[0])}</section>
     </div>
   `;
-  ["statisticsRegion", "statisticsMunicipality", "statisticsStage", "statisticsType", "statisticsPeriod"].forEach((id) => {
+  ["statisticsQuickMode", "statisticsRegion", "statisticsMunicipality", "statisticsStage", "statisticsType", "statisticsPeriod"].forEach((id) => {
     document.querySelector(`#${id}`)?.addEventListener("change", (event) => {
       const key = id.replace(/^statistics/, "");
       const stateKey = `statistics${key}`;
