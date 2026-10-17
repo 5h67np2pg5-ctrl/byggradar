@@ -924,7 +924,7 @@ function renderStatistics() {
     <div class="statistics-header">
       <div>
         <h1>Statistikk</h1>
-        <p class="statistics-intro"><strong>Om Norsk ByggRadar</strong><br>Norsk ByggRadar samler og systematiserer åpne opplysninger om byggeprosjekter, tiltak og anskaffelser fra kommuner og andre offentlige kilder. Oversikten gir et samlet bilde av aktiviteten i ulike regioner og kommuner, og viser utviklingstrekk basert på tilgjengelige registreringer.<br><br>Norsk ByggRadar kan ikke garantere at alle prosjekter er fanget opp. Kildene kan være ufullstendige, forsinkede eller variere mellom kommunene. Tallene må derfor brukes som et informasjons- og analysegrunnlag, ikke som absolutte eller endelige sannheter. Mindre avvik kan forekomme.</p>
+        <p class="statistics-intro"><strong>Om Norsk ByggRadar</strong><br>Norsk ByggRadar samler og systematiserer åpne opplysninger om byggeprosjekter, tiltak og anskaffelser fra kommuner og andre offentlige kilder. Oversikten gir et samlet bilde av aktiviteten i ulike regioner og kommuner, og viser utviklingstrekk basert på tilgjengelige registreringer.<br><br>Datagrunnlaget er hentet fra norske kommuners PBE (plan- og bygningsetat) og Statistisk sentralbyrå (SSB).<br><br>Norsk ByggRadar kan ikke garantere at alle prosjekter er fanget opp. Kildene kan være ufullstendige, forsinkede eller variere mellom kommunene. Tallene må derfor brukes som et informasjons- og analysegrunnlag, ikke som absolutte eller endelige sannheter. Mindre avvik kan forekomme.</p>
         <p class="statistics-device-note">Statistikkvisningen er mest oversiktlig på desktop (PC/Mac).</p>
       </div>
       <button class="print-button" id="printStatistics" type="button">Skriv ut</button>
