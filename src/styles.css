@@ -509,6 +509,45 @@ a {
   background: #f7fbfe;
 }
 
+.statistics-search-panel {
+  margin-top: 16px;
+  padding: 14px;
+  border: 1px solid #c8ddea;
+  border-radius: 8px;
+  background: #f7fbfe;
+}
+
+.statistics-search-group + .statistics-search-group,
+.statistics-saved-searches + .statistics-search-divider + .statistics-search-group { margin-top: 16px; }
+.statistics-search-group h2,
+.statistics-saved-searches h2 { margin: 0 0 8px; color: #255b76; font-size: 0.95rem; }
+.statistics-search-row { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; scroll-snap-type: x proximity; }
+.statistics-search-field {
+  display: grid;
+  flex: 0 0 min(260px, 78vw);
+  min-height: 146px;
+  gap: 7px;
+  padding: 11px;
+  border: 1px solid #c8ddea;
+  border-radius: 8px;
+  background: #fff;
+  text-align: left;
+  scroll-snap-align: start;
+}
+.statistics-search-field.disabled { opacity: 0.62; background: #edf5f9; }
+.statistics-search-field.saved { min-height: 54px; align-content: center; cursor: pointer; }
+.statistics-search-field h3 { margin: 0; color: #255b76; font-size: 0.84rem; }
+.statistics-search-field p { margin: 3px 0 0; color: #60798d; font-size: 0.74rem; line-height: 1.35; }
+.statistics-search-field > strong { color: #1d536f; font-size: 1.05rem; }
+.statistics-search-field small { color: #718898; font-size: 0.68rem; }
+.statistics-search-trend { font-size: 0.74rem; font-weight: 700; }
+.statistics-search-trend.up { color: #167347; }
+.statistics-search-trend.down { color: #a9443e; }
+.statistics-search-trend.neutral { color: #6b8594; }
+.statistics-save-search { justify-self: start; padding: 5px 8px; border: 1px solid #b7d2e1; border-radius: 5px; background: #edf7fc; color: #255b76; font-size: 0.72rem; cursor: pointer; }
+.statistics-save-search:disabled { cursor: not-allowed; opacity: 0.55; }
+.statistics-search-divider { height: 4px; margin: 14px 0 16px; border-radius: 4px; background: #255b76; }
+
 .statistics-section-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
 .statistics-section-heading h2 { margin: 0; color: #255b76; font-size: 1rem; }
 .statistics-section-heading p { margin: 4px 0 0; color: #6b8594; font-size: 0.78rem; }

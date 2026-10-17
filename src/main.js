@@ -39,6 +39,10 @@ const state = {
   statisticsStage: "",
   statisticsType: "",
   statisticsPeriod: "all",
+  statisticsSsb: null,
+  statisticsSsbLoading: false,
+  statisticsSsbError: "",
+  statisticsSavedSearches: [],
 };
 
 const tradePresets = [
@@ -65,6 +69,17 @@ const standardProjectLimit = 200;
 const loadMoreStep = 20;
 const weeklyDeliveryCount = 50;
 const statisticsPrivacyMinimum = 3;
+const statisticsSavedSearchesKey = "byggradar.statistics.savedSearches.v1";
+
+const statisticsSearchCatalog = [
+  { id: "regulations-adopted", group: "Planarbeid", title: "Reguleringsplaner vedtatt", description: "Vedtatte reguleringsplaner i siste rapporterte år.", metric: "regulationsAdopted", source: "SSB 12690" },
+  { id: "private-plans", group: "Planarbeid", title: "Private detaljreguleringer", description: "Detaljreguleringer fremmet som private forslag.", metric: "privateDetailedPlans", source: "SSB 12690" },
+  { id: "plan-processing", group: "Saksbehandling", title: "Saksbehandlingstid plan", description: "Gjennomsnittlig behandlingstid for private reguleringsforslag.", metric: "planProcessingDays", source: "SSB 12690" },
+  { id: "housing-started", group: "Boligbygging", title: "Igangsatte boliger", description: "Boliger med registrert igangsettingstillatelse.", metric: "housingStarted", source: "SSB 05940" },
+  { id: "housing-completed", group: "Boligbygging", title: "Fullførte boliger", description: "Boliger registrert som fullført.", metric: "housingCompleted", source: "SSB 05940" },
+  { id: "housing-started-area", group: "Areal og næringsbygg", title: "Igangsatt boligareal", description: "Igangsatt bruksareal til boliger.", metric: "housingStartedArea", source: "SSB 05940" },
+  { id: "housing-completed-area", group: "Areal og næringsbygg", title: "Fullført boligareal", description: "Fullført bruksareal til boliger.", metric: "housingCompletedArea", source: "SSB 05940" },
+];
 
 const statisticsGroups = [
   { id: "all", label: "Alle søk", quickMode: "all", title: "Alle tilgjengelige søk", text: "Samlet oversikt over aktivitet, fase, tiltak, geografi, aktører, dokumenter, gebyr og utvikling." },
@@ -345,6 +360,7 @@ async function initVendorApplication() {
 async function initStatisticsApplication() {
   try {
     renderStatisticsShell();
+    loadStatisticsSavedSearches();
     await loadStatisticsData();
     renderStatistics();
   } catch (error) {
@@ -759,6 +775,83 @@ function renderStatisticsShell() {
   `;
 }
 
+function loadStatisticsSavedSearches() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(statisticsSavedSearchesKey) || "[]");
+    state.statisticsSavedSearches = Array.isArray(saved) ? saved : [];
+  } catch {
+    state.statisticsSavedSearches = [];
+  }
+}
+
+function saveStatisticsSavedSearches() {
+  localStorage.setItem(statisticsSavedSearchesKey, JSON.stringify(state.statisticsSavedSearches));
+}
+
+function statisticsSavedSearchLabel(search) {
+  const preset = statisticsSearchCatalog.find((item) => item.id === search.presetId);
+  const municipality = search.municipality || "valgt kommune";
+  return `${preset?.title || "Statistikksøk"} · ${municipality}`;
+}
+
+function statisticsFormatSsbValue(value, metric) {
+  if (!Number.isFinite(Number(value))) return "Ikke tilgjengelig";
+  const number = Number(value);
+  const options = { maximumFractionDigits: metric === "planProcessingDays" ? 0 : 1 };
+  return `${number.toLocaleString("nb-NO", options)}${metric === "planProcessingDays" ? " dager" : ""}`;
+}
+
+function statisticsSearchPanel() {
+  const municipalitySelected = Boolean(state.statisticsMunicipality);
+  const saved = state.statisticsSavedSearches || [];
+  const savedMarkup = saved.length
+    ? `<div class="statistics-saved-searches"><h2>Huskede søk</h2><div class="statistics-search-row">${saved.map((search) => `<button class="statistics-search-field saved" type="button" data-load-statistics-search="${escapeHtml(search.id)}"><span>${escapeHtml(statisticsSavedSearchLabel(search))}</span><strong>Åpne</strong></button>`).join("")}</div></div><div class="statistics-search-divider" aria-hidden="true"></div>`
+    : "";
+  const groups = [...new Set(statisticsSearchCatalog.map((item) => item.group))];
+  const groupsMarkup = groups.map((group) => `<section class="statistics-search-group"><h2>${escapeHtml(group)}</h2><div class="statistics-search-row">${statisticsSearchCatalog.filter((item) => item.group === group).map((item) => {
+    const value = state.statisticsSsb?.values?.[item.metric];
+    const hasValue = municipalitySelected && Number.isFinite(Number(value));
+    const trend = state.statisticsSsb?.trends?.[item.metric];
+    const trendMarkup = trend ? `<span class="statistics-search-trend ${trend.className}">${trend.arrow} ${escapeHtml(trend.label)}</span>` : `<span class="statistics-search-trend neutral">→ Ikke beregnet</span>`;
+    const saveLabel = saved.some((search) => search.presetId === item.id && search.municipality === state.statisticsMunicipality) ? "Lagret" : "Husk søket";
+    return `<article class="statistics-search-field ${municipalitySelected ? "active" : "disabled"}"><div><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.description)}</p></div><strong>${hasValue ? statisticsFormatSsbValue(value, item.metric) : municipalitySelected ? (state.statisticsSsbLoading ? "Laster ..." : "Ikke tilgjengelig") : "Velg kommune"}</strong>${trendMarkup}<small>${escapeHtml(item.source)}${state.statisticsSsb?.year ? ` · ${escapeHtml(String(state.statisticsSsb.year))}` : ""}</small><button type="button" class="statistics-save-search" data-save-statistics-search="${escapeHtml(item.id)}" ${municipalitySelected ? "" : "disabled"}>${saveLabel}</button></article>`;
+  }).join("")}</div></section>`).join("");
+  return `<section class="statistics-search-panel"><div class="statistics-section-heading"><div><h2>Faste statistikksøk</h2><p>${municipalitySelected ? "Velg et felt for å lese SSB-tall for valgt kommune." : "Velg minst én kommune for å aktivere statistikksøkene."}</p></div><span class="statistics-privacy-badge">SSB-data</span></div>${savedMarkup}${groupsMarkup}${state.statisticsSsbError ? `<p class="statistics-coverage-warning">${escapeHtml(state.statisticsSsbError)}</p>` : ""}</section>`;
+}
+
+function statisticsSsbTrend(current, previous) {
+  if (!Number.isFinite(Number(current)) || !Number.isFinite(Number(previous))) return null;
+  const change = Number(previous) === 0 ? (Number(current) > 0 ? 1 : 0) : (Number(current) - Number(previous)) / Math.abs(Number(previous));
+  if (change > 0.03) return { arrow: "↑", label: "Stigende", className: "up" };
+  if (change < -0.03) return { arrow: "↓", label: "Fallende", className: "down" };
+  return { arrow: "→", label: "Flat", className: "neutral" };
+}
+
+async function loadSsbStatistics(municipality) {
+  const project = statisticsRecords().find((item) => normalizeMunicipalityName(item.municipality) === municipality && item.municipalityNumber);
+  if (!project?.municipalityNumber) {
+    state.statisticsSsb = null;
+    state.statisticsSsbError = "SSB-data kan ikke hentes før kommunen har et gyldig kommunenummer.";
+    renderStatistics();
+    return;
+  }
+  state.statisticsSsbLoading = true;
+  state.statisticsSsbError = "";
+  renderStatistics();
+  try {
+    const response = await fetch(`/api/ssb-statistics?kommunenummer=${encodeURIComponent(project.municipalityNumber)}`);
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || "SSB-data kunne ikke hentes.");
+    state.statisticsSsb = payload;
+  } catch (error) {
+    state.statisticsSsb = null;
+    state.statisticsSsbError = error.message || "SSB-data kunne ikke hentes.";
+  } finally {
+    state.statisticsSsbLoading = false;
+    renderStatistics();
+  }
+}
+
 async function loadStatisticsData() {
   const view = document.querySelector("#statisticsView");
   if (view) {
@@ -939,6 +1032,7 @@ function renderStatistics() {
       <div class="statistics-filter-group statistics-details"><h2>Detaljer</h2><label><span>Fase/status</span><select id="statisticsStage"><option value="">Alle faser og statuser</option>${stages.map((stage) => `<option value="${escapeHtml(stage)}" ${state.statisticsStage === stage ? "selected" : ""}>${escapeHtml(stage)}</option>`).join("")}</select></label><label><span>Fag/tiltakstype</span><select id="statisticsType"><option value="">Alle tiltakstyper</option>${types.map((type) => `<option value="${escapeHtml(type)}" ${state.statisticsType === type ? "selected" : ""}>${escapeHtml(type)}</option>`).join("")}</select></label><label><span>Periode</span><select id="statisticsPeriod"><option value="all" ${state.statisticsPeriod === "all" ? "selected" : ""}>Alle registrerte</option><option value="30" ${state.statisticsPeriod === "30" ? "selected" : ""}>Siste 30 dager</option><option value="90" ${state.statisticsPeriod === "90" ? "selected" : ""}>Siste 90 dager</option><option value="365" ${state.statisticsPeriod === "365" ? "selected" : ""}>Siste 12 måneder</option></select></label></div>
     </div>
     <div class="statistics-summary-line">${escapeHtml(regionName)} · ${records.length.toLocaleString("nb-NO")} prosjekter i utvalget</div>
+    ${statisticsSearchPanel()}
     ${statisticsGroupPanel()}
     <div class="statistics-cards">
       <div class="statistics-card"><span>Prosjekter</span><strong>${records.length.toLocaleString("nb-NO")}</strong></div>
@@ -972,6 +1066,35 @@ function renderStatistics() {
       }
       if (id === "statisticsRegion") state.statisticsMunicipality = "";
       renderStatistics();
+      if (id === "statisticsMunicipality" && state.statisticsMunicipality) loadSsbStatistics(state.statisticsMunicipality);
+    });
+  });
+  document.querySelectorAll("[data-save-statistics-search]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const presetId = button.dataset.saveStatisticsSearch;
+      if (!state.statisticsMunicipality) return;
+      const existing = state.statisticsSavedSearches.findIndex((search) => search.presetId === presetId && search.municipality === state.statisticsMunicipality);
+      if (existing >= 0) state.statisticsSavedSearches.splice(existing, 1);
+      else state.statisticsSavedSearches.unshift({
+        id: `${presetId}-${state.statisticsMunicipality}`,
+        presetId,
+        municipality: state.statisticsMunicipality,
+        region: state.statisticsRegion,
+        period: state.statisticsPeriod,
+      });
+      saveStatisticsSavedSearches();
+      renderStatistics();
+    });
+  });
+  document.querySelectorAll("[data-load-statistics-search]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const search = state.statisticsSavedSearches.find((item) => item.id === button.dataset.loadStatisticsSearch);
+      if (!search) return;
+      state.statisticsRegion = search.region || "";
+      state.statisticsMunicipality = search.municipality || "";
+      state.statisticsPeriod = search.period || "all";
+      renderStatistics();
+      if (state.statisticsMunicipality) loadSsbStatistics(state.statisticsMunicipality);
     });
   });
   document.querySelector("#printStatistics")?.addEventListener("click", () => window.print());

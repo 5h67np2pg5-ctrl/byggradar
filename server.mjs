@@ -103,6 +103,57 @@ const server = http.createServer(async (request, response) => {
       return;
     }
 
+    if (url.pathname === "/api/ssb-statistics") {
+      const municipalityNumber = String(url.searchParams.get("kommunenummer") || "").replace(/\D/g, "").slice(0, 4);
+      if (!/^\d{4}$/.test(municipalityNumber)) {
+        response.writeHead(400, { "content-type": "application/json; charset=utf-8" });
+        response.end(JSON.stringify({ error: "Mangler gyldig kommunenummer" }));
+        return;
+      }
+      const [plan, housing] = await Promise.all([
+        fetchSsbTable("12690", [
+          { code: "KOKkommuneregion0000", values: [municipalityNumber] },
+          { code: "ContentsCode", values: ["KOSomfplanbehand0001", "KOSomfplanbehand0000", "KOSbehandlingsti0000"] },
+          { code: "Tid", values: ["2024", "2025"] },
+        ]),
+        fetchSsbTable("05940", [
+          { code: "Region", values: [municipalityNumber] },
+          { code: "Byggeareal", values: ["__ALL__"] },
+          { code: "ContentsCode", values: ["Igangsatte", "Fullforte", "BruksarealIgang", "BruksarealFullfort"] },
+          { code: "Tid", values: ["2024", "2025"] },
+        ]),
+      ]);
+      const planSeries = ssbMetricSeries(plan);
+      const housingSeries = ssbMetricSeries(housing, "Byggeareal");
+      const planValues = Object.fromEntries(Object.entries(planSeries).map(([key, series]) => [key, series.current]));
+      const housingValues = Object.fromEntries(Object.entries(housingSeries).map(([key, series]) => [key, series.current]));
+      const planTrends = Object.fromEntries(Object.entries(planSeries).map(([key, series]) => [key, ssbTrend(series.current, series.previous)]));
+      const housingTrends = Object.fromEntries(Object.entries(housingSeries).map(([key, series]) => [key, ssbTrend(series.current, series.previous)]));
+      const values = {
+        regulationsAdopted: planValues.KOSomfplanbehand0001,
+        privateDetailedPlans: planValues.KOSomfplanbehand0000,
+        planProcessingDays: planValues.KOSbehandlingsti0000,
+        housingStarted: housingValues.Igangsatte,
+        housingCompleted: housingValues.Fullforte,
+        housingStartedArea: housingValues.BruksarealIgang,
+        housingCompletedArea: housingValues.BruksarealFullfort,
+      };
+      response.writeHead(200, {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "no-store",
+      });
+      response.end(JSON.stringify({ source: "Statistisk sentralbyrå", year: 2025, previousYear: 2024, municipalityNumber, values, trends: {
+        regulationsAdopted: planTrends.KOSomfplanbehand0001,
+        privateDetailedPlans: planTrends.KOSomfplanbehand0000,
+        planProcessingDays: planTrends.KOSbehandlingsti0000,
+        housingStarted: housingTrends.Igangsatte,
+        housingCompleted: housingTrends.Fullforte,
+        housingStartedArea: housingTrends.BruksarealIgang,
+        housingCompletedArea: housingTrends.BruksarealFullfort,
+      } }));
+      return;
+    }
+
     const safePath = path.normalize(decodeURIComponent(url.pathname)).replace(/^(\.\.[/\\])+/, "");
     let requested = safePath === "/" ? "/index.html" : safePath;
     if (requested === "/app.js") requested = "/src/main.js";
@@ -178,3 +229,46 @@ function extractNorwegianPhones(value, subject = "") {
 server.listen(port, host, () => {
   console.log(`Norsk ByggRadar local UI: http://${host}:${port}/`);
 });
+
+async function fetchSsbTable(table, dimensions) {
+  const metadataResponse = await fetch(`https://data.ssb.no/api/v0/no/table/${table}`);
+  if (!metadataResponse.ok) throw new Error(`SSB-tabell ${table} er ikke tilgjengelig (${metadataResponse.status})`);
+  const metadata = await metadataResponse.json();
+  const query = dimensions.map((dimension) => ({
+    code: dimension.code,
+    selection: { filter: "item", values: dimension.values.includes("__ALL__") ? metadata.variables.find((variable) => variable.code === dimension.code)?.values || [] : dimension.values },
+  }));
+  const response = await fetch(`https://data.ssb.no/api/v0/no/table/${table}`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ query, response: { format: "json-stat2" } }),
+  });
+  if (!response.ok) throw new Error(`SSB-spørringen feilet for tabell ${table} (${response.status})`);
+  return { ...(await response.json()), metadata };
+}
+
+function ssbMetricSeries(dataset, aggregateDimension = "") {
+  const labels = dataset.dimension?.ContentsCode?.category?.index || {};
+  const values = Array.isArray(dataset.value) ? dataset.value : [];
+  const orderedMetrics = Object.entries(labels).sort((a, b) => a[1] - b[1]).map(([code]) => code);
+  const timeIndex = dataset.dimension?.Tid?.category?.index || {};
+  const orderedTimes = Object.entries(timeIndex).sort((a, b) => a[1] - b[1]).map(([code]) => code);
+  const timeSize = orderedTimes.length || 1;
+  if (!aggregateDimension) return Object.fromEntries(orderedMetrics.map((code, metricIndex) => {
+    const series = orderedTimes.map((_, timePosition) => values[metricIndex * timeSize + timePosition] ?? null);
+    return [code, { current: series.at(-1), previous: series.at(-2) }];
+  }));
+  const aggregateSize = dataset.dimension?.[aggregateDimension]?.category?.index ? Object.keys(dataset.dimension[aggregateDimension].category.index).length : 1;
+  return Object.fromEntries(orderedMetrics.map((code, metricIndex) => {
+    const series = orderedTimes.map((_, timePosition) => Array.from({ length: aggregateSize }, (_, groupIndex) => values[(groupIndex * orderedMetrics.length * timeSize) + (metricIndex * timeSize) + timePosition] ?? 0).reduce((total, value) => total + Number(value || 0), 0));
+    return [code, { current: series.at(-1), previous: series.at(-2) }];
+  }));
+}
+
+function ssbTrend(current, previous) {
+  if (!Number.isFinite(Number(current)) || !Number.isFinite(Number(previous))) return null;
+  const change = Number(previous) === 0 ? (Number(current) > 0 ? 1 : 0) : (Number(current) - Number(previous)) / Math.abs(Number(previous));
+  if (change > 0.03) return { arrow: "↑", label: "Stigende", className: "up" };
+  if (change < -0.03) return { arrow: "↓", label: "Fallende", className: "down" };
+  return { arrow: "→", label: "Flat", className: "neutral" };
+}
