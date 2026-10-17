@@ -1075,7 +1075,8 @@ function renderStatistics() {
   document.querySelectorAll("[data-open-statistics-search]").forEach((card) => {
     const open = () => {
       if (!state.statisticsMunicipality && !state.statisticsRegion) return;
-      state.statisticsSelectedSearch = card.dataset.openStatisticsSearch;
+      const searchId = card.dataset.openStatisticsSearch;
+      state.statisticsSelectedSearch = state.statisticsSelectedSearch === searchId ? "" : searchId;
       renderStatistics();
     };
     card.addEventListener("click", (event) => {
