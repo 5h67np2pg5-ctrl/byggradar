@@ -512,6 +512,7 @@ a {
 .statistics-section-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
 .statistics-section-heading h2 { margin: 0; color: #255b76; font-size: 1rem; }
 .statistics-section-heading p { margin: 4px 0 0; color: #6b8594; font-size: 0.78rem; }
+.statistics-section-heading .statistics-annual-volume { color: #315f76; line-height: 1.45; }
 .statistics-basis { color: #396b84; font-size: 0.8rem; font-weight: 700; }
 .statistics-disclaimer { margin: 0 0 12px; color: #60798d; font-size: 0.78rem; line-height: 1.4; }
 .statistics-coverage-warning { margin: 0 0 12px; padding: 10px 12px; border: 1px solid #e4c98d; border-radius: 7px; background: #fff9e9; color: #765b20; font-size: 0.78rem; line-height: 1.4; }

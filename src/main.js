@@ -914,6 +914,7 @@ function renderStatistics() {
   const feeRecords = statisticsBuildingRecordsLastYear(feeScopeRecords);
   const feeCoverage = statisticsDateCoverage(feeScopeRecords);
   const feeRows = statisticsFeeRows(feeRecords, true);
+  const annualVolume = feeRows.reduce((sum, row) => sum + (Number.isFinite(row.annualizedCount) ? row.annualizedCount : 0), 0);
   const incompleteFeeRows = feeRows.filter((row) => row.coverageDays < 330);
   const coverageWarning = incompleteFeeRows.length
     ? `<p class="statistics-coverage-warning">Datadekningen kontrolleres per kommune. ${incompleteFeeRows.length.toLocaleString("nb-NO")} kommune${incompleteFeeRows.length === 1 ? " har" : "r har"} mindre enn 330 dager med registrerte data${feeCoverage.days < 330 ? ` i dette utvalget samlet, fra ${escapeHtml(feeCoverage.from)} til ${escapeHtml(feeCoverage.to)}` : ""}. 12-månedersinntekten er derfor annualisert fra antall registrerte saker per dag, og må leses som et estimat.</p>`
@@ -952,7 +953,7 @@ function renderStatistics() {
       <section><h2>Undergrupper: tiltakstyper</h2>${statisticsList(records.flatMap((project) => (project.projectTypes || []).map((type) => ({ projectTypes: [type] }))), (project) => project.projectTypes[0])}</section>
     </div>
     <section class="statistics-fee-panel">
-      <div class="statistics-section-heading"><div><h2>Gebyr og beregnet inntekt</h2><p>12-månedersvindu · alle registrerte byggesaker</p></div><span class="statistics-basis">${feeRecords.length.toLocaleString("nb-NO")} tilgjengelige saker</span></div>
+      <div class="statistics-section-heading"><div><h2>Gebyr og beregnet inntekt</h2><p>12-månedersvindu · alle registrerte byggesaker</p><p class="statistics-annual-volume">Registrert i datagrunnlaget: <strong>${feeRecords.length.toLocaleString("nb-NO")} saker</strong> · beregnet årsvolum: <strong>${annualVolume.toLocaleString("nb-NO", { maximumFractionDigits: 1 })} saker</strong> · datadekning: <strong>${feeCoverage.days.toLocaleString("nb-NO")} dager</strong></p></div><span class="statistics-basis">${feeRecords.length.toLocaleString("nb-NO")} tilgjengelige saker</span></div>
       ${coverageWarning}
       <p class="statistics-disclaimer">Inntekten for 12 måneder beregnes ved å annualisere den registrerte saksmengden: antall saker i dataperioden deles på antall dager og skaleres til 365 dager, før tallet multipliseres med kommunens beregningsgrunnlag per sak. Der kommunens egen sats ikke er entydig dokumentert, brukes et KS-basert sammenligningstall. Gebyrer varierer etter tiltak, størrelse og dispensasjoner, så dette er et estimat og ikke kommunens regnskapsførte inntekt.</p>
       ${statisticsFeeTable(feeRows)}
