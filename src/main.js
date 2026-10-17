@@ -862,8 +862,9 @@ function statisticsFeeRows(records, allowIncome = true) {
     return {
       ...row,
       coverageDays,
+      annualizedCount: coverageDays ? row.count * 365 / coverageDays : null,
       fee: Number.isFinite(fee) && fee > 0 ? fee : null,
-      income: allowIncome && coverageDays >= 330 && Number.isFinite(fee) && fee > 0 ? row.count * fee : null,
+      income: allowIncome && coverageDays && Number.isFinite(fee) && fee > 0 ? (row.count * 365 / coverageDays) * fee : null,
       source: tariff?.source || "Gebyrregulativ ikke registrert",
       tariffYear: tariff?.year || "",
     };
@@ -878,7 +879,7 @@ function statisticsFeeTable(rows) {
   if (!rows.length) return `<p class="statistics-empty">Ingen registrerte byggesaker i perioden.</p>`;
   const visibleRows = rows.filter((row) => row.count >= statisticsPrivacyMinimum);
   const suppressedCount = rows.length - visibleRows.length;
-  const table = `<div class="statistics-fee-table-wrap"><table class="statistics-fee-table"><thead><tr><th>Kommune</th><th>Registrerte saker<br>i 12-månedersvinduet</th><th>Datadekning</th><th>Beregningsgrunnlag</th><th>Beregnet inntekt</th><th>Grunnlag</th></tr></thead><tbody>${visibleRows.map((row) => `<tr><td>${escapeHtml(row.municipality)}</td><td>${row.count.toLocaleString("nb-NO")}</td><td>${row.coverageDays.toLocaleString("nb-NO")} dager</td><td>${formatNok(row.fee)}${row.tariffYear ? ` (${escapeHtml(String(row.tariffYear))})` : ""}</td><td>${formatNok(row.income)}</td><td>${escapeHtml(row.source)}</td></tr>`).join("")}</tbody></table></div>`;
+  const table = `<div class="statistics-fee-table-wrap"><table class="statistics-fee-table"><thead><tr><th>Kommune</th><th>Registrerte saker<br>i dataperioden</th><th>Datadekning</th><th>Beregnet saker<br>12 måneder</th><th>Beregningsgrunnlag</th><th>Beregnet inntekt<br>12 måneder</th><th>Grunnlag</th></tr></thead><tbody>${visibleRows.map((row) => `<tr><td>${escapeHtml(row.municipality)}</td><td>${row.count.toLocaleString("nb-NO")}</td><td>${row.coverageDays.toLocaleString("nb-NO")} dager</td><td>${Number.isFinite(row.annualizedCount) ? row.annualizedCount.toLocaleString("nb-NO", { maximumFractionDigits: 1 }) : "Ikke beregnet"}</td><td>${formatNok(row.fee)}${row.tariffYear ? ` (${escapeHtml(String(row.tariffYear))})` : ""}</td><td>${formatNok(row.income)}</td><td>${escapeHtml(row.source)}</td></tr>`).join("")}</tbody></table></div>`;
   return `${table}${suppressedCount ? `<p class="statistics-privacy-note">${suppressedCount.toLocaleString("nb-NO")} små kommunegrupper er utelatt for å hindre identifisering av enkeltsaker. De inngår fortsatt i totalsummen.</p>` : ""}`;
 }
 
@@ -916,7 +917,7 @@ function renderStatistics() {
   const feeRows = statisticsFeeRows(feeRecords, true);
   const incompleteFeeRows = feeRows.filter((row) => row.coverageDays < 330);
   const coverageWarning = incompleteFeeRows.length
-    ? `<p class="statistics-coverage-warning">Datadekningen kontrolleres per kommune. ${incompleteFeeRows.length.toLocaleString("nb-NO")} kommune${incompleteFeeRows.length === 1 ? " har" : "r har"} mindre enn 330 dager med registrerte data${feeCoverage.days < 330 ? ` i dette utvalget samlet, fra ${escapeHtml(feeCoverage.from)} til ${escapeHtml(feeCoverage.to)}` : ""}. For disse kommunene vises antall tilgjengelige saker, men ikke beregnet årsinntekt.</p>`
+    ? `<p class="statistics-coverage-warning">Datadekningen kontrolleres per kommune. ${incompleteFeeRows.length.toLocaleString("nb-NO")} kommune${incompleteFeeRows.length === 1 ? " har" : "r har"} mindre enn 330 dager med registrerte data${feeCoverage.days < 330 ? ` i dette utvalget samlet, fra ${escapeHtml(feeCoverage.from)} til ${escapeHtml(feeCoverage.to)}` : ""}. 12-månedersinntekten er derfor annualisert fra antall registrerte saker per dag, og må leses som et estimat.</p>`
     : "";
   const calculatedFeeRows = feeRows.filter((row) => row.income !== null);
   const calculatedFeeIncome = calculatedFeeRows.reduce((sum, row) => sum + row.income, 0);
@@ -955,9 +956,9 @@ function renderStatistics() {
     </div>
     <section class="statistics-fee-panel">
       <div class="statistics-section-heading"><div><h2>Gebyr og beregnet inntekt</h2><p>12-månedersvindu · alle registrerte byggesaker</p></div><span class="statistics-basis">${feeRecords.length.toLocaleString("nb-NO")} tilgjengelige saker</span></div>
-      <div class="statistics-fee-summary"><div><span>Beregnet gebyrinntekt</span><strong>${calculatedFeeRows.length ? formatNok(calculatedFeeIncome) : "Ikke beregnet"}</strong></div><div><span>Kommuner med beregningsgrunnlag</span><strong>${calculatedFeeRows.length.toLocaleString("nb-NO")} av ${feeRows.length.toLocaleString("nb-NO")}</strong></div></div>
+      <div class="statistics-fee-summary"><div><span>Beregnet gebyrinntekt 12 måneder</span><strong>${calculatedFeeRows.length ? formatNok(calculatedFeeIncome) : "Ikke beregnet"}</strong></div><div><span>Kommuner med beregningsgrunnlag</span><strong>${calculatedFeeRows.length.toLocaleString("nb-NO")} av ${feeRows.length.toLocaleString("nb-NO")}</strong></div></div>
       ${coverageWarning}
-      <p class="statistics-disclaimer">Når datagrunnlaget dekker hele perioden, beregnes inntektsgrunnlaget som totalt antall registrerte byggesaker siste 12 måneder multiplisert med kommunens beregningsgrunnlag per sak. Der kommunens egen sats ikke er entydig dokumentert, brukes et KS-basert sammenligningstall. Gebyrer varierer etter tiltak, størrelse og dispensasjoner, så beregningen er et estimat og ikke kommunens regnskapsførte inntekt.</p>
+      <p class="statistics-disclaimer">Inntekten for 12 måneder beregnes ved å annualisere den registrerte saksmengden: antall saker i dataperioden deles på antall dager og skaleres til 365 dager, før tallet multipliseres med kommunens beregningsgrunnlag per sak. Der kommunens egen sats ikke er entydig dokumentert, brukes et KS-basert sammenligningstall. Gebyrer varierer etter tiltak, størrelse og dispensasjoner, så dette er et estimat og ikke kommunens regnskapsførte inntekt.</p>
       ${statisticsFeeTable(feeRows)}
     </section>
   `;
