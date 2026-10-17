@@ -65,13 +65,74 @@ const weeklyDeliveryCount = 50;
 const statisticsSavedSearchesKey = "byggradar.statistics.savedSearches.v1";
 
 const statisticsSearchCatalog = [
+  // Plan og areal
   { id: "regulations-adopted", group: "Planarbeid", title: "Reguleringsplaner vedtatt", description: "Vedtatte reguleringsplaner i siste rapporterte år.", metric: "regulationsAdopted", source: "SSB 12690" },
   { id: "private-plans", group: "Planarbeid", title: "Private detaljreguleringer", description: "Detaljreguleringer fremmet som private forslag.", metric: "privateDetailedPlans", source: "SSB 12690" },
+  { id: "plan-proposals", group: "Planarbeid", title: "Planforslag mottatt", description: "Mottatte planforslag i valgt kommune eller region.", source: "SSB" },
+  { id: "plans-under-review", group: "Planarbeid", title: "Planer under behandling", description: "Planer som fortsatt er under kommunal behandling.", source: "SSB" },
+  { id: "plans-with-objection", group: "Planarbeid", title: "Planer med innsigelse", description: "Planprosesser der det er registrert innsigelse.", source: "SSB" },
+  { id: "area-planned", group: "Planarbeid", title: "Areal omfattet av planer", description: "Planlagt areal fordelt på valgt geografi.", source: "SSB" },
+  { id: "plan-changes", group: "Planarbeid", title: "Endringer i vedtatte planer", description: "Planendringer registrert i perioden.", source: "SSB" },
+
+  // Saksbehandling og byggesak
   { id: "plan-processing", group: "Saksbehandling", title: "Saksbehandlingstid plan", description: "Gjennomsnittlig behandlingstid for private reguleringsforslag.", metric: "planProcessingDays", source: "SSB 12690" },
+  { id: "building-applications", group: "Saksbehandling", title: "Byggesøknader mottatt", description: "Mottatte byggesøknader i siste rapporterte periode.", source: "SSB" },
+  { id: "building-permits", group: "Saksbehandling", title: "Byggetillatelser gitt", description: "Byggesøknader med tillatelse i valgt geografi.", source: "SSB" },
+  { id: "framework-permits", group: "Saksbehandling", title: "Rammetillatelser gitt", description: "Rammetillatelser registrert i perioden.", source: "SSB" },
+  { id: "start-permits", group: "Saksbehandling", title: "Igangsettingstillatelser gitt", description: "Igangsettingstillatelser registrert i perioden.", source: "SSB" },
+  { id: "building-processing", group: "Saksbehandling", title: "Saksbehandlingstid byggesak", description: "Gjennomsnittlig behandlingstid for byggesaker.", source: "SSB" },
+  { id: "building-appeals", group: "Saksbehandling", title: "Klagebehandling byggesak", description: "Byggesaker med registrert klagebehandling.", source: "SSB" },
+
+  // Boligbygging
   { id: "housing-started", group: "Boligbygging", title: "Igangsatte boliger", description: "Boliger med registrert igangsettingstillatelse.", metric: "housingStarted", source: "SSB 05940" },
   { id: "housing-completed", group: "Boligbygging", title: "Fullførte boliger", description: "Boliger registrert som fullført.", metric: "housingCompleted", source: "SSB 05940" },
+  { id: "housing-permits", group: "Boligbygging", title: "Boliger med tillatelse", description: "Boliger omfattet av gitt byggetillatelse.", source: "SSB" },
+  { id: "housing-demolished", group: "Boligbygging", title: "Boliger revet", description: "Boliger registrert som revet.", source: "SSB" },
+  { id: "housing-net-growth", group: "Boligbygging", title: "Netto vekst i boligbestand", description: "Endring i boligbestanden etter bygging og avgang.", source: "SSB" },
+  { id: "housing-permit-rate", group: "Boligbygging", title: "Boligtillatelser per innbygger", description: "Boligtillatelser sett i forhold til folketallet.", source: "SSB" },
+  { id: "housing-completion-rate", group: "Boligbygging", title: "Fullførte boliger per innbygger", description: "Fullførte boliger sett i forhold til folketallet.", source: "SSB" },
+
+  // Areal og næringsbygg
   { id: "housing-started-area", group: "Areal og næringsbygg", title: "Igangsatt boligareal", description: "Igangsatt bruksareal til boliger.", metric: "housingStartedArea", source: "SSB 05940" },
   { id: "housing-completed-area", group: "Areal og næringsbygg", title: "Fullført boligareal", description: "Fullført bruksareal til boliger.", metric: "housingCompletedArea", source: "SSB 05940" },
+  { id: "commercial-started-area", group: "Areal og næringsbygg", title: "Igangsatt næringsareal", description: "Igangsatt bruksareal til næringsbygg.", source: "SSB" },
+  { id: "commercial-completed-area", group: "Areal og næringsbygg", title: "Fullført næringsareal", description: "Fullført bruksareal til næringsbygg.", source: "SSB" },
+  { id: "public-building-area", group: "Areal og næringsbygg", title: "Igangsatt offentlig byggeareal", description: "Igangsatt areal i offentlige bygg.", source: "SSB" },
+  { id: "holiday-home-area", group: "Areal og næringsbygg", title: "Igangsatt fritidsboligareal", description: "Igangsatt bruksareal til fritidsboliger.", source: "SSB" },
+  { id: "construction-area-total", group: "Areal og næringsbygg", title: "Samlet igangsatt byggeareal", description: "Samlet igangsatt bruksareal i valgt geografi.", source: "SSB" },
+  { id: "construction-area-permit", group: "Areal og næringsbygg", title: "Byggeareal med tillatelse", description: "Areal omfattet av gitte byggetillatelser.", source: "SSB" },
+
+  // Befolkning og boligbehov
+  { id: "population-total", group: "Befolkning og boligbehov", title: "Folkemengde", description: "Registrert folkemengde i valgt kommune eller region.", source: "SSB" },
+  { id: "population-growth", group: "Befolkning og boligbehov", title: "Befolkningsvekst", description: "Endring i folkemengde fra forrige rapporterte periode.", source: "SSB" },
+  { id: "households-total", group: "Befolkning og boligbehov", title: "Antall husholdninger", description: "Registrerte husholdninger i valgt geografi.", source: "SSB" },
+  { id: "household-size", group: "Befolkning og boligbehov", title: "Gjennomsnittlig husholdningsstørrelse", description: "Gjennomsnittlig antall personer per husholdning.", source: "SSB" },
+  { id: "population-age-working", group: "Befolkning og boligbehov", title: "Befolkning i arbeidsfør alder", description: "Personer i arbeidsfør alder i valgt geografi.", source: "SSB" },
+  { id: "population-projection", group: "Befolkning og boligbehov", title: "Befolkningsframskriving", description: "Siste tilgjengelige framskriving av folkemengden.", source: "SSB" },
+
+  // Arbeidsliv og næringsliv
+  { id: "employment-total", group: "Arbeidsliv og næringsliv", title: "Sysselsatte personer", description: "Antall sysselsatte med tilknytning til valgt geografi.", source: "SSB" },
+  { id: "employment-construction", group: "Arbeidsliv og næringsliv", title: "Sysselsatte i bygg og anlegg", description: "Sysselsatte innen bygg- og anleggsvirksomhet.", source: "SSB" },
+  { id: "establishments-construction", group: "Arbeidsliv og næringsliv", title: "Virksomheter i bygg og anlegg", description: "Registrerte virksomheter i bygg- og anleggsnæringen.", source: "SSB" },
+  { id: "establishments-total", group: "Arbeidsliv og næringsliv", title: "Alle registrerte virksomheter", description: "Registrerte virksomheter i valgt kommune eller region.", source: "SSB" },
+  { id: "turnover-construction", group: "Arbeidsliv og næringsliv", title: "Omsetning i bygg og anlegg", description: "Omsetning i bygg- og anleggsnæringen.", source: "SSB" },
+  { id: "new-establishments", group: "Arbeidsliv og næringsliv", title: "Nyetablerte virksomheter", description: "Virksomheter etablert i siste rapporterte periode.", source: "SSB" },
+
+  // Eiendom og infrastruktur
+  { id: "housing-stock", group: "Eiendom og infrastruktur", title: "Boligbestand", description: "Samlet antall boliger i valgt geografi.", source: "SSB" },
+  { id: "housing-density", group: "Eiendom og infrastruktur", title: "Boligtetthet", description: "Boliger sett i forhold til bebygd areal.", source: "SSB" },
+  { id: "vacant-housing", group: "Eiendom og infrastruktur", title: "Boliger uten fast bosetting", description: "Boliger uten registrert fast bosetting.", source: "SSB" },
+  { id: "building-stock-age", group: "Eiendom og infrastruktur", title: "Bygningsbestand etter byggeår", description: "Alderssammensetning i bygningsbestanden.", source: "SSB" },
+  { id: "roads-total", group: "Eiendom og infrastruktur", title: "Veinett", description: "Lengde og omfang av registrert veinett.", source: "SSB" },
+  { id: "public-transport", group: "Eiendom og infrastruktur", title: "Kollektivtilbud", description: "Registrert kollektivtilbud og tilgjengelighet.", source: "SSB" },
+
+  // Utvikling og sammenligning
+  { id: "projects-change", group: "Utvikling og sammenligning", title: "Endring i prosjektaktivitet", description: "Utvikling i registrert byggeaktivitet over tid.", source: "SSB" },
+  { id: "housing-change", group: "Utvikling og sammenligning", title: "Endring i boligbygging", description: "Utvikling i igangsatte og fullførte boliger.", source: "SSB" },
+  { id: "area-change", group: "Utvikling og sammenligning", title: "Endring i byggeareal", description: "Utvikling i igangsatt og fullført bruksareal.", source: "SSB" },
+  { id: "municipality-ranking", group: "Utvikling og sammenligning", title: "Sammenligning mellom kommuner", description: "Sammenlign valgt kommune med andre kommuner i regionen.", source: "SSB" },
+  { id: "region-ranking", group: "Utvikling og sammenligning", title: "Sammenligning mellom regioner", description: "Sammenlign utvikling mellom Norsk ByggRadars regioner.", source: "SSB" },
+  { id: "latest-available", group: "Utvikling og sammenligning", title: "Siste tilgjengelige tall", description: "Vis ferskeste rapporterte tall for valgt statistikkfelt.", source: "SSB" },
 ];
 
 const locationRegions = [
