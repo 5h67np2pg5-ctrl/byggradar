@@ -31,6 +31,7 @@ const state = {
   userMode: null,
   statisticsData: null,
   statisticsFeeRates: null,
+  statisticsMacroScope: "national",
   statisticsQuickMode: "all",
   statisticsRegion: "",
   statisticsMunicipality: "",
@@ -882,8 +883,7 @@ function renderStatistics() {
       <button class="print-button" id="printStatistics" type="button">Skriv ut</button>
     </div>
     <div class="statistics-search-guide">
-      <div class="statistics-search-step"><span>1</span><div><strong>Makro</strong><small>Hele Norge og region</small></div></div>
-      <div class="statistics-search-step"><span>2</span><div><strong>Mikro</strong><small>Kommune, fase og tiltakstype</small></div></div>
+      <label class="statistics-macro-choice"><span>Makrovalg</span><select id="statisticsMacroScope"><option value="national" ${state.statisticsMacroScope === "national" ? "selected" : ""}>Hele Norge</option><option value="region" ${state.statisticsMacroScope === "region" ? "selected" : ""}>Regioner</option><option value="municipality" ${state.statisticsMacroScope === "municipality" ? "selected" : ""}>Kommuner</option><option value="type" ${state.statisticsMacroScope === "type" ? "selected" : ""}>Tiltakstyper</option></select></label>
       <label class="statistics-quick-mode"><span>Rask modus</span><select id="statisticsQuickMode"><option value="all" ${state.statisticsQuickMode === "all" ? "selected" : ""}>Alle tilgjengelige søk</option><option value="geography" ${state.statisticsQuickMode === "geography" ? "selected" : ""}>Område: region og kommune</option><option value="stage" ${state.statisticsQuickMode === "stage" ? "selected" : ""}>Fase og status</option><option value="type" ${state.statisticsQuickMode === "type" ? "selected" : ""}>Tiltakstype</option><option value="period" ${state.statisticsQuickMode === "period" ? "selected" : ""}>Periode</option></select></label>
     </div>
     <div class="statistics-filters" data-quick-mode="${state.statisticsQuickMode}" aria-label="Statistikkfiltre">
@@ -910,11 +910,14 @@ function renderStatistics() {
       ${statisticsFeeTable(feeRows)}
     </section>
   `;
-  ["statisticsQuickMode", "statisticsRegion", "statisticsMunicipality", "statisticsStage", "statisticsType", "statisticsPeriod"].forEach((id) => {
+  ["statisticsMacroScope", "statisticsQuickMode", "statisticsRegion", "statisticsMunicipality", "statisticsStage", "statisticsType", "statisticsPeriod"].forEach((id) => {
     document.querySelector(`#${id}`)?.addEventListener("change", (event) => {
       const key = id.replace(/^statistics/, "");
       const stateKey = `statistics${key}`;
       state[stateKey] = event.target.value;
+      if (id === "statisticsMacroScope") {
+        state.statisticsQuickMode = ["region", "municipality"].includes(state.statisticsMacroScope) ? "geography" : state.statisticsMacroScope === "type" ? "type" : "all";
+      }
       if (id === "statisticsRegion") state.statisticsMunicipality = "";
       renderStatistics();
     });
