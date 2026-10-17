@@ -1906,10 +1906,10 @@ function addBaseMap(map, options = {}) {
     detectRetina: false,
     className: "byggradar-map-tiles",
   };
-  // Bruk et lyst vei- og gatenett uten høydekurver eller topografiske symboler.
-  const layer = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+  // Bruk en ren OSM-flate uten API-nøkkel, høydekurver eller topografisk lag.
+  const layer = L.tileLayer("https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png", {
     ...tileOptions,
-    attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    attribution: '&copy; OpenStreetMap contributors, <a href="https://www.openstreetmap.org/copyright">ODbL</a>',
   });
 
   let fallbackStarted = false;
