@@ -301,8 +301,6 @@ const phaseOneStatuses = new Set([
 ]);
 
 const app = document.querySelector("#app");
-const forceLogin = new URLSearchParams(window.location.search).get("login") === "1";
-
 init();
 
 async function init() {
