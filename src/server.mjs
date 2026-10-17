@@ -45,6 +45,23 @@ const server = http.createServer(async (request, response) => {
       return;
     }
 
+    if (url.pathname === "/api/property-geocode") {
+      const allowedKeys = ["kommunenummer", "gardsnummer", "bruksnummer", "festenummer", "seksjonsnummer", "utkoordsys"];
+      const query = new URLSearchParams();
+      allowedKeys.forEach((key) => {
+        const value = url.searchParams.get(key);
+        if (value) query.set(key, value);
+      });
+      const kartverket = await fetch(`https://api.kartverket.no/eiendom/v1/geokoding?${query}`);
+      const body = await kartverket.text();
+      response.writeHead(kartverket.status, {
+        "content-type": kartverket.headers.get("content-type") || "application/json; charset=utf-8",
+        "cache-control": "no-store",
+      });
+      response.end(body);
+      return;
+    }
+
     if (url.pathname === "/api/ai-phone-search") {
       const subject = String(url.searchParams.get("q") || "").trim().slice(0, 180);
       if (!subject) {
@@ -134,5 +151,5 @@ function extractNorwegianPhones(value) {
 }
 
 server.listen(port, host, () => {
-  console.log(`ByggRadar local UI: http://${host}:${port}/`);
+  console.log(`Norsk ByggRadar local UI: http://${host}:${port}/`);
 });

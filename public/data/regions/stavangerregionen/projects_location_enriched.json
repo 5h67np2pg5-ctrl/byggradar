@@ -10526,12 +10526,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.06127,
+        "longitude": 5.40309
       },
       "projectFolder": {
         "caseNumber": "2020/141",
@@ -57227,12 +57229,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 58.75814,
+        "longitude": 5.94715
       },
       "projectFolder": {
         "caseNumber": "2025/2281",
@@ -57612,12 +57616,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 58.75814,
+        "longitude": 5.94715
       },
       "projectFolder": {
         "caseNumber": "2025/2281",

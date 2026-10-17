@@ -28,6 +28,13 @@ const state = {
   expandedPreviewIds: new Set(),
   aiSearchResults: new Map(),
   aiSearchLoading: new Set(),
+  statisticsData: null,
+  statisticsOpen: false,
+  statisticsRegion: "",
+  statisticsMunicipality: "",
+  statisticsStage: "",
+  statisticsType: "",
+  statisticsPeriod: "all",
 };
 
 const tradePresets = [
@@ -309,7 +316,7 @@ async function initApplication() {
   } catch (error) {
     app.innerHTML = `
       <main class="fatal">
-        <h1>ByggRadar kunne ikke starte</h1>
+        <h1>Norsk ByggRadar kunne ikke starte</h1>
         <p>${escapeHtml(error.message || String(error))}</p>
       </main>
     `;
@@ -326,7 +333,7 @@ function renderLogin() {
         </div>
         <div class="login-copy">
           <p class="login-eyebrow">Få informasjon om prosjekter før andre</p>
-          <h1 id="loginTitle">Velkommen til ByggRadar</h1>
+          <h1 id="loginTitle">Velkommen til Norsk ByggRadar</h1>
           <p>Få relevante byggeprosjekter, tiltak og anskaffelser i områdene du arbeider i.</p>
         </div>
         <label class="remember-choice">
@@ -578,7 +585,7 @@ function renderShell() {
     <main class="app-shell">
       <header class="topbar">
         <div class="topbar-copy">
-          <div class="brand">ByggRadar</div>
+          <div class="brand">Norsk ByggRadar</div>
           <div class="national-project-count" id="nationalProjectCount">Laster registrerte og aktive byggprosjekter fra ${coveredMunicipalityCount} kommuner...</div>
           <div class="subtle" id="summaryText" tabindex="0">Laster prosjekter...</div>
           <div class="region-notice" id="regionNotice" aria-live="polite"></div>
@@ -593,7 +600,8 @@ function renderShell() {
               }).join("")}
             </select>
           </label>
-          <button class="help-pill" id="helpPill" type="button" aria-label="Råd om bruk av ByggRadar">Råd</button>
+          <button class="help-pill" id="helpPill" type="button" aria-label="Råd om bruk av Norsk ByggRadar">Råd</button>
+          <button class="stats-button" id="statisticsButton" type="button">Statistikk</button>
         </div>
       </header>
 
@@ -627,6 +635,8 @@ function renderShell() {
       <section class="workspace">
         <section class="project-list" id="projectList" aria-label="Prosjekter"></section>
       </section>
+
+      <section class="statistics-view" id="statisticsView" hidden aria-label="Statistikk"></section>
 
       <section class="map-dialog" id="mapDialog" hidden aria-label="Prosjektkart">
         <div class="map-dialog-panel">
@@ -674,6 +684,12 @@ function renderShell() {
     }
   });
 
+  document.querySelector("#statisticsButton")?.addEventListener("click", async () => {
+    state.statisticsOpen = !state.statisticsOpen;
+    if (state.statisticsOpen && !state.statisticsData) await loadStatisticsData();
+    renderStatistics();
+  });
+
   document.querySelector("#mapDialogClose").addEventListener("click", (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -689,6 +705,132 @@ function renderShell() {
     updateCustomerMunicipalityPrompt();
     render();
   });
+}
+
+async function loadStatisticsData() {
+  const view = document.querySelector("#statisticsView");
+  if (view) {
+    view.hidden = false;
+    view.innerHTML = `<div class="statistics-loading">Laster statistikk ...</div>`;
+  }
+  const response = await fetch(`/data/statistics_projects.json?t=${Date.now()}`);
+  if (!response.ok) throw new Error(`Kunne ikke hente statistikkgrunnlaget (${response.status})`);
+  state.statisticsData = await response.json();
+}
+
+function statisticsRecords() {
+  return state.statisticsData?.projects || [];
+}
+
+function statisticsRegionRecords() {
+  if (!state.statisticsRegion) return statisticsRecords();
+  return statisticsRecords().filter((project) => project.region === state.statisticsRegion);
+}
+
+function statisticsFilteredRecords() {
+  let records = statisticsRegionRecords();
+  if (state.statisticsMunicipality) records = records.filter((project) => normalizeMunicipalityName(project.municipality) === state.statisticsMunicipality);
+  if (state.statisticsStage) records = records.filter((project) => project.stage === state.statisticsStage);
+  if (state.statisticsType) records = records.filter((project) => project.projectTypes.includes(state.statisticsType));
+  if (state.statisticsPeriod !== "all") {
+    const days = Number(state.statisticsPeriod);
+    const cutoff = Date.now() - days * 86400000;
+    records = records.filter((project) => {
+      const timestamp = Date.parse(project.date);
+      return Number.isFinite(timestamp) && timestamp >= cutoff;
+    });
+  }
+  return records;
+}
+
+function statisticsTrend(records) {
+  const dated = records.map((project) => Date.parse(project.date)).filter(Number.isFinite);
+  if (!dated.length) return { label: "Ingen trend", className: "neutral" };
+  const latest = Math.max(...dated);
+  const windowDays = state.statisticsPeriod === "all" ? 90 : Number(state.statisticsPeriod);
+  const windowMs = windowDays * 86400000;
+  const current = dated.filter((date) => date >= latest - windowMs).length;
+  const previous = dated.filter((date) => date >= latest - windowMs * 2 && date < latest - windowMs).length;
+  if (!previous) return { label: current ? "Flere prosjekter" : "Uendret", className: current ? "up" : "neutral" };
+  const change = (current - previous) / previous;
+  if (change > 0.05) return { label: "Flere prosjekter", className: "up" };
+  if (change < -0.05) return { label: "Færre prosjekter", className: "down" };
+  return { label: "Omtrent uendret", className: "neutral" };
+}
+
+function renderStatistics() {
+  const view = document.querySelector("#statisticsView");
+  const workspace = document.querySelector(".workspace");
+  const filters = document.querySelector(".filters");
+  const button = document.querySelector("#statisticsButton");
+  if (!view || !workspace || !filters) return;
+  view.hidden = !state.statisticsOpen;
+  workspace.hidden = state.statisticsOpen;
+  filters.hidden = state.statisticsOpen;
+  button?.classList.toggle("is-active", state.statisticsOpen);
+  if (!state.statisticsOpen) return;
+
+  const records = statisticsFilteredRecords();
+  const regionRecords = statisticsRegionRecords();
+  const municipalities = [...new Set(regionRecords.map((project) => project.municipality).filter(Boolean))].sort((a, b) => a.localeCompare(b, "nb"));
+  const stages = [...new Set(regionRecords.map((project) => project.stage).filter(Boolean))].sort((a, b) => a.localeCompare(b, "nb"));
+  const types = [...new Set(regionRecords.flatMap((project) => project.projectTypes || []))].sort((a, b) => a.localeCompare(b, "nb"));
+  const trend = statisticsTrend(records);
+  const phaseOne = records.filter((project) => project.phase === "Fase 1").length;
+  const phaseTwo = records.filter((project) => project.phase === "Fase 2").length;
+  const municipalitiesCount = new Set(records.map((project) => project.municipality)).size;
+  const regionName = state.statisticsRegion ? illustrationRegions.find((name) => locationRegions.find((region) => region.id === state.statisticsRegion)?.name === name) || locationRegions.find((region) => region.id === state.statisticsRegion)?.name : "Alle regioner";
+
+  view.innerHTML = `
+    <div class="statistics-header">
+      <div>
+        <h1>Statistikk</h1>
+        <p class="statistics-intro"><strong>Om Norsk ByggRadar</strong><br>Norsk ByggRadar samler og systematiserer åpne opplysninger om byggeprosjekter, tiltak og anskaffelser fra kommuner og andre offentlige kilder. Oversikten gir et samlet bilde av aktiviteten i ulike regioner og kommuner, og viser utviklingstrekk basert på tilgjengelige registreringer.<br><br>Norsk ByggRadar kan ikke garantere at alle prosjekter er fanget opp. Kildene kan være ufullstendige, forsinkede eller variere mellom kommunene. Tallene må derfor brukes som et informasjons- og analysegrunnlag, ikke som absolutte eller endelige sannheter. Mindre avvik kan forekomme.</p>
+      </div>
+      <button class="print-button" id="printStatistics" type="button">Skriv ut</button>
+    </div>
+    <div class="statistics-filters" aria-label="Statistikkfiltre">
+      <label><span>Omfang</span><select id="statisticsRegion"><option value="">Alle regioner</option>${locationRegions.map((region) => `<option value="${region.id}" ${state.statisticsRegion === region.id ? "selected" : ""}>${escapeHtml(region.name)}</option>`).join("")}</select></label>
+      <label><span>Kommune</span><select id="statisticsMunicipality"><option value="">Alle kommuner</option>${municipalities.map((municipality) => `<option value="${escapeHtml(normalizeMunicipalityName(municipality))}" ${state.statisticsMunicipality === normalizeMunicipalityName(municipality) ? "selected" : ""}>${escapeHtml(municipality)}</option>`).join("")}</select></label>
+      <label><span>Fase/status</span><select id="statisticsStage"><option value="">Alle faser og statuser</option>${stages.map((stage) => `<option value="${escapeHtml(stage)}" ${state.statisticsStage === stage ? "selected" : ""}>${escapeHtml(stage)}</option>`).join("")}</select></label>
+      <label><span>Fag/tiltakstype</span><select id="statisticsType"><option value="">Alle tiltakstyper</option>${types.map((type) => `<option value="${escapeHtml(type)}" ${state.statisticsType === type ? "selected" : ""}>${escapeHtml(type)}</option>`).join("")}</select></label>
+      <label><span>Periode</span><select id="statisticsPeriod"><option value="all" ${state.statisticsPeriod === "all" ? "selected" : ""}>Alle registrerte</option><option value="30" ${state.statisticsPeriod === "30" ? "selected" : ""}>Siste 30 dager</option><option value="90" ${state.statisticsPeriod === "90" ? "selected" : ""}>Siste 90 dager</option><option value="365" ${state.statisticsPeriod === "365" ? "selected" : ""}>Siste 12 måneder</option></select></label>
+    </div>
+    <div class="statistics-summary-line">${escapeHtml(regionName)} · ${records.length.toLocaleString("nb-NO")} prosjekter i utvalget</div>
+    <div class="statistics-cards">
+      <div class="statistics-card"><span>Prosjekter</span><strong>${records.length.toLocaleString("nb-NO")}</strong></div>
+      <div class="statistics-card"><span>Kommuner</span><strong>${municipalitiesCount.toLocaleString("nb-NO")}</strong></div>
+      <div class="statistics-card"><span>Fase 1</span><strong>${phaseOne.toLocaleString("nb-NO")}</strong></div>
+      <div class="statistics-card"><span>Fase 2</span><strong>${phaseTwo.toLocaleString("nb-NO")}</strong></div>
+      <div class="statistics-card trend-card ${trend.className}"><span>Utvikling</span><strong>${trend.label}</strong></div>
+    </div>
+    <div class="statistics-columns">
+      <section><h2>Prosjekter per region</h2>${statisticsList(statisticsRecords(), (project) => project.region)}</section>
+      <section><h2>Prosjekter per kommune</h2>${statisticsList(records, (project) => project.municipality)}</section>
+      <section><h2>Prosjekter per tiltakstype</h2>${statisticsList(records.flatMap((project) => (project.projectTypes || []).map((type) => ({ projectTypes: [type] }))), (project) => project.projectTypes[0])}</section>
+    </div>
+  `;
+  ["statisticsRegion", "statisticsMunicipality", "statisticsStage", "statisticsType", "statisticsPeriod"].forEach((id) => {
+    document.querySelector(`#${id}`)?.addEventListener("change", (event) => {
+      const key = id.replace(/^statistics/, "");
+      const stateKey = `statistics${key}`;
+      state[stateKey] = event.target.value;
+      if (id === "statisticsRegion") state.statisticsMunicipality = "";
+      renderStatistics();
+    });
+  });
+  document.querySelector("#printStatistics")?.addEventListener("click", () => window.print());
+}
+
+function statisticsList(records, keyFn) {
+  const counts = new Map();
+  records.forEach((project) => {
+    const key = keyFn(project) || "Ukjent";
+    counts.set(key, (counts.get(key) || 0) + 1);
+  });
+  const rows = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 12);
+  if (!rows.length) return `<p class="statistics-empty">Ingen data i utvalget.</p>`;
+  return `<ul class="statistics-list">${rows.map(([label, count]) => `<li><span>${escapeHtml(label)}</span><strong>${count.toLocaleString("nb-NO")}</strong></li>`).join("")}</ul>`;
 }
 
 function bindInput(id, key) {
@@ -729,6 +871,7 @@ function render() {
   renderRegionNotice({ visibleCount: visibleProjects.length, totalCount: totalProjectCount, regionName });
 
   renderList();
+  if (state.statisticsOpen) renderStatistics();
 }
 
 function regionSummaryTotalCount() {
@@ -1618,22 +1761,25 @@ async function geocodeProject(project) {
     }
 
     try {
-      const url = `/api/geocode?${new URLSearchParams({
-        ...query,
-        treffPerSide: "1",
-        utkoordsys: "4258",
-        filtrer: "adresser.representasjonspunkt",
-      })}`;
+      const endpoint = query.kind === "property" ? "/api/property-geocode" : "/api/geocode";
+      const params = query.kind === "property"
+        ? { ...query, utkoordsys: "4258" }
+        : { ...query, treffPerSide: "1", utkoordsys: "4258", filtrer: "adresser.representasjonspunkt" };
+      delete params.kind;
+      const url = `${endpoint}?${new URLSearchParams(params)}`;
       const response = await fetch(url, { headers: { Accept: "application/json" } });
       if (!response.ok) throw new Error(`Kartverket ${response.status}`);
       const payload = await response.json();
       const address = payload.adresser?.[0];
-      const point = address?.representasjonspunkt;
+      const property = payload.features?.[0];
+      const point = query.kind === "property"
+        ? { lat: property?.geometry?.coordinates?.[1], lon: property?.geometry?.coordinates?.[0] }
+        : address?.representasjonspunkt;
       const result = point?.lat && point?.lon ? {
         lat: Number(point.lat),
         lon: Number(point.lon),
-        address: address.adressetekst || "",
-        label: "Kartverket Adresse-API",
+        address: address?.adressetekst || "",
+        label: query.kind === "property" ? "Kartverket Eiendom-API" : "Kartverket Adresse-API",
       } : null;
       state.mapGeocodeCache.set(cacheKey, result);
       if (result && applyGeocodeResult(project, result)) return true;
@@ -1651,20 +1797,32 @@ function mapLookupQueries(project) {
   const address = extractAddressFromProject(project);
   const queries = [];
   if (address) {
-    queries.push({
-      sok: `${address} ${municipalityName}`.trim(),
-      kommunenummer: municipalityNumber || "",
-    });
+    const variants = new Set([
+      address,
+      address.replace(/svegen\b/iu, "vegen"),
+      address.replace(/sveien\b/iu, "veien"),
+      address.replace(/vegen\b/iu, "veien"),
+      address.replace(/veien\b/iu, "vegen"),
+    ]);
+    for (const variant of variants) {
+      queries.push({
+        kind: "address",
+        sok: `${variant} ${municipalityName}`.trim(),
+        kommunenummer: municipalityNumber || "",
+      });
+    }
   }
   const matrikkel = parseMatrikkel(extractMatrikkelFromProject(project));
   if (matrikkel && municipalityNumber) {
-    queries.push({
+    const query = {
+      kind: "property",
       kommunenummer: municipalityNumber,
       gardsnummer: matrikkel.gnr,
       bruksnummer: matrikkel.bnr,
-      festenummer: matrikkel.fnr || "",
-      undernummer: matrikkel.unr || "",
-    });
+    };
+    if (matrikkel.fnr) query.festenummer = matrikkel.fnr;
+    if (matrikkel.unr) query.seksjonsnummer = matrikkel.unr;
+    queries.push(query);
   }
   return queries;
 }
@@ -1864,7 +2022,7 @@ function scrollSelectedProjectIntoView(projectId) {
 
 function mapTooltipText(project) {
   const typeText = shortTrade(project.projectTypeText || project.projectTypes?.join("; ") || project.tradeRelevance || project.status || "Ukjent tiltak");
-  const fallback = project.isMunicipalityFallbackPoint ? " | kommunepunkt" : "";
+  const fallback = project.isMunicipalityFallbackPoint ? " | Ikke bekreftet lokasjon" : "";
   return `${project.place || project.address || project.municipality || "Ukjent adresse"} | ${typeText}${fallback}`;
 }
 

@@ -176,5 +176,5 @@ function extractNorwegianPhones(value, subject = "") {
 }
 
 server.listen(port, host, () => {
-  console.log(`ByggRadar local UI: http://${host}:${port}/`);
+  console.log(`Norsk ByggRadar local UI: http://${host}:${port}/`);
 });

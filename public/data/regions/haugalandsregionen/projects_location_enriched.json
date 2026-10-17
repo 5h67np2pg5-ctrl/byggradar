@@ -806,12 +806,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "Flathauggata 49",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.4169,
+        "longitude": 5.2543
       }
     },
     {
@@ -1308,12 +1310,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Kjøtteinsvegen 225 m.fl",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.76409671364952,
+        "longitude": 5.501778064595491
       }
     },
     {
@@ -2224,12 +2228,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.54314,
+        "longitude": 5.8658
       }
     },
     {
@@ -3874,12 +3880,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.54314,
+        "longitude": 5.8658
       }
     },
     {
@@ -4183,12 +4191,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Hatlandsåsen 40 A,B",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.7558154292807,
+        "longitude": 5.443541720993119
       }
     },
     {
@@ -4838,12 +4848,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Sæverudsveien 297",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.819133416055635,
+        "longitude": 5.1318948863814295
       }
     },
     {
@@ -5111,12 +5123,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.61296,
+        "longitude": 5.81982
       }
     },
     {
@@ -5942,12 +5956,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Fedjedalen 21, 23, 25, 27",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.411377384957746,
+        "longitude": 5.335474904139175
       }
     },
     {
@@ -6134,12 +6150,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Fedjedalen 21, 23, 25, 27",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.411377384957746,
+        "longitude": 5.335474904139175
       }
     },
     {
@@ -6441,12 +6459,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Vestrevegen 40 Søknad om tillatelse til tiltak uten ansvarsrett",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.48225208422175,
+        "longitude": 5.542755935599086
       }
     },
     {
@@ -7922,12 +7942,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Garasje i Movegen 249,Vikedal (Gnr.)",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.513677089741435,
+        "longitude": 5.922469014066789
       }
     },
     {
@@ -9485,12 +9507,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.42263,
+        "longitude": 5.44553
       }
     },
     {
@@ -12992,12 +13016,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.42042,
+        "longitude": 5.29534
       }
     },
     {
@@ -13163,12 +13189,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.42042,
+        "longitude": 5.29534
       }
     },
     {
@@ -13945,12 +13973,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Røværsvegen 11 Søknad om igangsettingstillatelse",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.43871121748579,
+        "longitude": 5.090550688103628
       }
     },
     {
@@ -14745,12 +14775,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.60937,
+        "longitude": 5.82532
       }
     },
     {
@@ -14915,12 +14947,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Duelansvegen 12",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.600356704045936,
+        "longitude": 5.737241309602406
       }
     },
     {
@@ -15585,12 +15619,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Saudavegen 6221 Søknad om tillatelse til tiltak uten ansvarsrett",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.524773007704546,
+        "longitude": 5.818405249852891
       }
     },
     {
@@ -17893,12 +17929,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.30473,
+        "longitude": 5.22499
       }
     },
     {
@@ -18139,12 +18177,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Kvamsvegen 188 Søknad om tillatelse i ett trinn",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.61631170736969,
+        "longitude": 5.557990082744884
       }
     },
     {
@@ -18201,12 +18241,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.60341,
+        "longitude": 5.22114
       }
     },
     {
@@ -18748,12 +18790,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.53159,
+        "longitude": 5.68973
       }
     },
     {
@@ -20200,12 +20244,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.75582,
+        "longitude": 5.44295
       }
     },
     {
@@ -20754,12 +20800,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Vadvegen 41, 55, 55",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.815528912125636,
+        "longitude": 5.485211728937693
       }
     },
     {
@@ -21597,12 +21645,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.53159,
+        "longitude": 5.68973
       }
     },
     {
@@ -21677,12 +21727,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.53159,
+        "longitude": 5.68973
       }
     },
     {
@@ -22333,12 +22385,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.48707,
+        "longitude": 5.72732
       }
     },
     {
@@ -22395,12 +22449,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.27022,
+        "longitude": 5.1961
       }
     },
     {
@@ -23386,12 +23442,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Bjellandsvegen 27A",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.77257273345782,
+        "longitude": 5.484092404608077
       }
     },
     {
@@ -24263,12 +24321,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.3164,
+        "longitude": 5.27689
       }
     },
     {
@@ -25675,12 +25735,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.35142,
+        "longitude": 5.32346
       }
     },
     {
@@ -25873,12 +25935,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.34705,
+        "longitude": 5.79467
       }
     },
     {
@@ -26529,12 +26593,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.34357,
+        "longitude": 5.79876
       }
     },
     {
@@ -29067,12 +29133,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.57732,
+        "longitude": 5.56426
       }
     },
     {
@@ -29652,12 +29720,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.78542,
+        "longitude": 5.50576
       }
     },
     {
@@ -29726,12 +29796,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.28849,
+        "longitude": 5.22665
       }
     },
     {
@@ -30458,12 +30530,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Saudavegen 6973",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.49191116458007,
+        "longitude": 5.729023799097242
       }
     },
     {
@@ -30525,12 +30599,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.28115,
+        "longitude": 5.29516
       }
     },
     {
@@ -30687,12 +30763,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Saudavegen 6973",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.49191116458007,
+        "longitude": 5.729023799097242
       }
     },
     {
@@ -30829,12 +30907,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.28849,
+        "longitude": 5.22665
       }
     },
     {
@@ -30903,12 +30983,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.28849,
+        "longitude": 5.22665
       }
     },
     {
@@ -30977,12 +31059,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.28849,
+        "longitude": 5.22665
       }
     },
     {
@@ -31254,12 +31338,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.60119,
+        "longitude": 5.77956
       }
     },
     {
@@ -31919,12 +32005,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.76742,
+        "longitude": 5.40526
       }
     },
     {
@@ -32138,12 +32226,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.28849,
+        "longitude": 5.22665
       }
     },
     {
@@ -32204,12 +32294,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.28849,
+        "longitude": 5.22665
       }
     },
     {
@@ -32282,12 +32374,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.28849,
+        "longitude": 5.22665
       }
     },
     {
@@ -32348,12 +32442,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.28849,
+        "longitude": 5.22665
       }
     },
     {
@@ -32478,12 +32574,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.77744,
+        "longitude": 5.49258
       }
     },
     {
@@ -32564,12 +32662,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "- Oppdeling av tomt 47/55",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.58861,
+        "longitude": 5.18823
       }
     },
     {
@@ -33172,12 +33272,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Dommarsnesvegen 73",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.58483239512286,
+        "longitude": 5.568777771649158
       }
     },
     {
@@ -33294,12 +33396,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.44254,
+        "longitude": 5.26362
       }
     },
     {
@@ -33477,12 +33581,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.44254,
+        "longitude": 5.26362
       }
     },
     {
@@ -36381,12 +36487,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.26147,
+        "longitude": 5.17826
       }
     },
     {
@@ -37665,12 +37773,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "Vikaneset 5574 Skjold",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.50071,
+        "longitude": 5.59723
       }
     },
     {
@@ -37751,12 +37861,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.41172,
+        "longitude": 5.23182
       }
     },
     {
@@ -38949,12 +39061,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Skillebekkgata 8",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.423071507987316,
+        "longitude": 5.259843848422667
       }
     },
     {
@@ -39346,12 +39460,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.77381,
+        "longitude": 5.37357
       }
     },
     {
@@ -39416,12 +39532,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.57732,
+        "longitude": 5.56426
       }
     },
     {
@@ -39542,12 +39660,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.75577,
+        "longitude": 5.49064
       }
     },
     {
@@ -39966,12 +40086,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.42979,
+        "longitude": 5.25799
       }
     },
     {
@@ -40189,12 +40311,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "og 56/284",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.77579,
+        "longitude": 5.39334
       }
     },
     {
@@ -41237,12 +41361,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.33085,
+        "longitude": 5.61342
       }
     },
     {
@@ -42544,12 +42670,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.6231,
+        "longitude": 5.80087
       }
     },
     {
@@ -43242,12 +43370,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Otertongvegen 28 Søknad om tillatelse i ett trinn",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.48647881123339,
+        "longitude": 5.630261299182352
       }
     },
     {
@@ -44665,12 +44795,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Sandhålandvegen 9 og 5",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.19368290547836,
+        "longitude": 5.1856275601746
       }
     },
     {
@@ -44868,12 +45000,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.2974,
+        "longitude": 5.22732
       }
     },
     {
@@ -44946,12 +45080,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.77679,
+        "longitude": 5.51419
       }
     },
     {
@@ -45632,12 +45768,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Lyngneset 13A, 13B og 15",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.77496942189337,
+        "longitude": 5.3919172209901305
       }
     },
     {
@@ -46047,12 +46185,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.35293,
+        "longitude": 5.31825
       }
     },
     {
@@ -47402,12 +47542,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.43837,
+        "longitude": 5.24666
       }
     },
     {
@@ -47730,12 +47872,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.83788,
+        "longitude": 5.14773
       }
     },
     {
@@ -49550,12 +49694,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "ALVSVÅG TILTAKSHAVAR: XXXX-NAME-XXXX (2019/741",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.76355,
+        "longitude": 5.16482
       }
     },
     {
@@ -49747,12 +49893,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "- Arealoverføring til 39/786",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 59.777363999898625,
+        "longitude": 5.502634249315027
       }
     },
     {
@@ -50343,12 +50491,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.48992,
+        "longitude": 5.6322
       }
     },
     {
@@ -50794,12 +50944,14 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.79254,
+        "longitude": 5.1773
       }
     },
     {
@@ -51438,12 +51590,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.2989,
+        "longitude": 5.22231
       }
     },
     {

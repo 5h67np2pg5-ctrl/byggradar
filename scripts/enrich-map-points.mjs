@@ -37,23 +37,69 @@ function addressCandidate(project) {
 }
 
 function matrikkel(project) {
-  const value = project.matrikkel || [project.gnr, project.bnr, project.fnr, project.snr].filter(Boolean).join("/");
+  const sourceText = [project.caseTitle, project.shortFacts, project.documentTitle, project.title, project.description]
+    .filter(Boolean)
+    .join(" | ");
+  const named = sourceText.match(/\bgnr\.?\s*(\d+)\s*(?:,\s*|\s+)bnr\.?\s*(\d+)/i);
+  const slash = sourceText.match(/\b(?:gbnr\s*)?(\d+)\s*\/\s*(\d+)\b/i);
+  const value = named ? `${named[1]}/${named[2]}` : slash ? `${slash[1]}/${slash[2]}` : project.matrikkel || [project.gnr, project.bnr, project.fnr, project.snr].filter(Boolean).join("/");
   const match = String(value || "").match(/^(\d+)\s*\/\s*(\d+)(?:\s*\/\s*(\d+))?(?:\s*\/\s*(\d+))?/);
   return match ? { gnr: match[1], bnr: match[2], fnr: match[3] && match[3] !== "0" ? match[3] : "", unr: match[4] && match[4] !== "0" ? match[4] : "" } : null;
+}
+
+function matrikkelCandidates(project) {
+  const sourceText = [project.caseTitle, project.shortFacts, project.documentTitle, project.title, project.description]
+    .filter(Boolean)
+    .join(" | ");
+  const candidates = [];
+  const namedPattern = /\bgnr\.?\s*(\d+)\s*(?:,\s*|\s+)bnr\.?\s*(\d+)/gi;
+  for (const match of sourceText.matchAll(namedPattern)) candidates.push({ gnr: match[1], bnr: match[2], fnr: "", unr: "" });
+  const slashPattern = /\b(?:gbnr\s*)?(\d+)\s*\/\s*(\d+)\b/gi;
+  for (const match of sourceText.matchAll(slashPattern)) candidates.push({ gnr: match[1], bnr: match[2], fnr: "", unr: "" });
+  const stored = matrikkel(project);
+  if (stored) candidates.push(stored);
+  return candidates.filter((candidate, index, values) => values.findIndex((value) => value.gnr === candidate.gnr && value.bnr === candidate.bnr) === index);
 }
 
 function queries(project) {
   const kommunenummer = municipalityNumbers[municipalityName(project.municipality)] || "";
   const address = addressCandidate(project);
   const list = [];
-  if (address) list.push({ sok: `${address} ${municipalityName(project.municipality)}`.trim(), kommunenummer });
-  const property = matrikkel(project);
-  if (property && kommunenummer) list.push({ kommunenummer, gardsnummer: property.gnr, bruksnummer: property.bnr, festenummer: property.fnr, undernummer: property.unr });
+  if (address) {
+    const variants = new Set([
+      address,
+      address.replace(/svegen\b/iu, "vegen"),
+      address.replace(/sveien\b/iu, "veien"),
+      address.replace(/vegen\b/iu, "veien"),
+      address.replace(/veien\b/iu, "vegen"),
+    ]);
+    for (const variant of variants) {
+      list.push({ kind: "address", sok: `${variant} ${municipalityName(project.municipality)}`.trim(), kommunenummer });
+    }
+  }
+  if (kommunenummer) {
+    for (const property of matrikkelCandidates(project)) {
+      list.push({ kind: "property", kommunenummer, gardsnummer: property.gnr, bruksnummer: property.bnr });
+      if (property.fnr) list[list.length - 1].festenummer = property.fnr;
+      if (property.unr) list[list.length - 1].seksjonsnummer = property.unr;
+    }
+  }
   return list;
 }
 
 async function lookup(query) {
+  if (query.kind === "property") {
+    const params = new URLSearchParams({ ...query, utkoordsys: "4258" });
+    params.delete("kind");
+    const response = await fetch(`https://api.kartverket.no/eiendom/v1/geokoding?${params}`);
+    if (!response.ok) return null;
+    const payload = await response.json();
+    const coordinates = payload.features?.[0]?.geometry?.coordinates;
+    if (!Array.isArray(coordinates) || coordinates.length < 2) return null;
+    return { latitude: Number(coordinates[1]), longitude: Number(coordinates[0]), mapLabel: "Kartverket Eiendom-API", addressSource: "Kartverket Eiendom-API", coordinateSystem: "EPSG:4258", lookupStatus: "matrikkel slått opp i Kartverket" };
+  }
   const params = new URLSearchParams({ ...query, treffPerSide: "1", utkoordsys: "4258", filtrer: "adresser.representasjonspunkt" });
+  params.delete("kind");
   const response = await fetch(`https://api.kartverket.no/adresser/v1/sok?${params}`);
   if (!response.ok) return null;
   const payload = await response.json();
@@ -87,8 +133,8 @@ async function run() {
     const projects = data.projects || [];
     let attempted = 0;
     let enriched = 0;
-    for (let index = 0; index < projects.length; index += 12) {
-      const batch = projects.slice(index, index + 12).filter((project) => !(project.locationEnrichment?.hasMapPoint));
+    for (let index = 0; index < projects.length; index += 3) {
+      const batch = projects.slice(index, index + 3).filter((project) => !(project.locationEnrichment?.hasMapPoint));
       attempted += batch.length;
       const results = await Promise.all(batch.map(enrich));
       enriched += results.filter(Boolean).length;
