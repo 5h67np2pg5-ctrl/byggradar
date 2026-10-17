@@ -72,7 +72,6 @@ const statisticsGroups = [
   { id: "stage", label: "Fase og saksbehandling", quickMode: "stage", title: "Fase og saksbehandling", text: "Søknader, behandling, tillatelser, igangsetting, avslag og saksbehandlingstid." },
   { id: "type", label: "Tiltak og bygg", quickMode: "type", title: "Tiltak og bygg", text: "Bolig, næring, nybygg, tilbygg, garasje, rehabilitering, riving, terreng og tekniske tiltak." },
   { id: "geography", label: "Geografi", quickMode: "geography", title: "Geografi", text: "Regioner, kommuner og geografiske områder med byggeaktivitet og utvikling." },
-  { id: "actors", label: "Aktører", quickMode: "all", title: "Aktører og ansvar", text: "Tiltakshavere, ansvarlige søkere, foretak, arkitekter, entreprenører og rådgivere når datagrunnlaget tillater aggregert visning." },
   { id: "documents", label: "Dokumenter og innsyn", quickMode: "all", title: "Dokumenter og innsyn", text: "Dokumenttyper, dokumentmengde, siste registrering og tilgjengelighet i kommunale innsynsløsninger." },
   { id: "fees", label: "Gebyr og inntekt", quickMode: "all", title: "Gebyr og beregnet inntekt", text: "Totalt antall registrerte saker siste 12 måneder multiplisert med kommunens beregningsgrunnlag." },
   { id: "trend", label: "Utvikling og sammenligning", quickMode: "period", title: "Utvikling og sammenligning", text: "Vekst, nedgang, sesongvariasjoner og sammenligning mellom regioner og kommuner." },
@@ -919,8 +918,6 @@ function renderStatistics() {
   const coverageWarning = incompleteFeeRows.length
     ? `<p class="statistics-coverage-warning">Datadekningen kontrolleres per kommune. ${incompleteFeeRows.length.toLocaleString("nb-NO")} kommune${incompleteFeeRows.length === 1 ? " har" : "r har"} mindre enn 330 dager med registrerte data${feeCoverage.days < 330 ? ` i dette utvalget samlet, fra ${escapeHtml(feeCoverage.from)} til ${escapeHtml(feeCoverage.to)}` : ""}. 12-månedersinntekten er derfor annualisert fra antall registrerte saker per dag, og må leses som et estimat.</p>`
     : "";
-  const calculatedFeeRows = feeRows.filter((row) => row.income !== null);
-  const calculatedFeeIncome = calculatedFeeRows.reduce((sum, row) => sum + row.income, 0);
 
   view.innerHTML = `
     <div class="statistics-header">
@@ -956,7 +953,6 @@ function renderStatistics() {
     </div>
     <section class="statistics-fee-panel">
       <div class="statistics-section-heading"><div><h2>Gebyr og beregnet inntekt</h2><p>12-månedersvindu · alle registrerte byggesaker</p></div><span class="statistics-basis">${feeRecords.length.toLocaleString("nb-NO")} tilgjengelige saker</span></div>
-      <div class="statistics-fee-summary"><div><span>Beregnet gebyrinntekt 12 måneder</span><strong>${calculatedFeeRows.length ? formatNok(calculatedFeeIncome) : "Ikke beregnet"}</strong></div><div><span>Kommuner med beregningsgrunnlag</span><strong>${calculatedFeeRows.length.toLocaleString("nb-NO")} av ${feeRows.length.toLocaleString("nb-NO")}</strong></div></div>
       ${coverageWarning}
       <p class="statistics-disclaimer">Inntekten for 12 måneder beregnes ved å annualisere den registrerte saksmengden: antall saker i dataperioden deles på antall dager og skaleres til 365 dager, før tallet multipliseres med kommunens beregningsgrunnlag per sak. Der kommunens egen sats ikke er entydig dokumentert, brukes et KS-basert sammenligningstall. Gebyrer varierer etter tiltak, størrelse og dispensasjoner, så dette er et estimat og ikke kommunens regnskapsførte inntekt.</p>
       ${statisticsFeeTable(feeRows)}

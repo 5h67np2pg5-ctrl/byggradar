@@ -513,10 +513,6 @@ a {
 .statistics-section-heading h2 { margin: 0; color: #255b76; font-size: 1rem; }
 .statistics-section-heading p { margin: 4px 0 0; color: #6b8594; font-size: 0.78rem; }
 .statistics-basis { color: #396b84; font-size: 0.8rem; font-weight: 700; }
-.statistics-fee-summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 12px 0; }
-.statistics-fee-summary div { padding: 12px; border: 1px solid #d4e5ee; border-radius: 7px; background: #e9f5fc; }
-.statistics-fee-summary span { display: block; color: #54778c; font-size: 0.78rem; }
-.statistics-fee-summary strong { display: block; margin-top: 6px; color: #1d536f; font-size: 1.15rem; }
 .statistics-disclaimer { margin: 0 0 12px; color: #60798d; font-size: 0.78rem; line-height: 1.4; }
 .statistics-coverage-warning { margin: 0 0 12px; padding: 10px 12px; border: 1px solid #e4c98d; border-radius: 7px; background: #fff9e9; color: #765b20; font-size: 0.78rem; line-height: 1.4; }
 .statistics-fee-table-wrap { overflow-x: auto; }
@@ -616,7 +612,6 @@ a {
   .statistics-header { display: grid; }
   .statistics-filters,
   .statistics-cards { grid-template-columns: 1fr; }
-  .statistics-fee-summary { grid-template-columns: 1fr; }
   .statistics-section-heading { display: grid; }
   .statistics-question-grid { grid-template-columns: 1fr; }
   .print-button { width: 100%; }
