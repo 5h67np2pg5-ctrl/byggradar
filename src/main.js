@@ -1907,7 +1907,7 @@ function addBaseMap(map, options = {}) {
     className: "byggradar-map-tiles",
   };
   // Bruk et åpent vei- og gatenett uten høydekurver eller topografiske symboler.
-  const layer = L.tileLayer("https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", {
+  const layer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     ...tileOptions,
     attribution: '&copy; OpenStreetMap contributors, <a href="https://www.openstreetmap.org/copyright">ODbL</a>',
   });
