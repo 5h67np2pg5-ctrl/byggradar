@@ -898,17 +898,17 @@ function renderStatistics() {
       <div class="statistics-card"><span>Fase 2</span><strong>${phaseTwo.toLocaleString("nb-NO")}</strong></div>
       <div class="statistics-card trend-card ${trend.className}"><span>Utvikling</span><strong>${trend.label}</strong></div>
     </div>
+    <div class="statistics-columns">
+      <section><h2>Hovedgrupper: regioner</h2>${statisticsList(statisticsRecords(), (project) => project.region)}</section>
+      <section><h2>Undergrupper: kommuner</h2>${statisticsList(records, (project) => project.municipality)}</section>
+      <section><h2>Undergrupper: tiltakstyper</h2>${statisticsList(records.flatMap((project) => (project.projectTypes || []).map((type) => ({ projectTypes: [type] }))), (project) => project.projectTypes[0])}</section>
+    </div>
     <section class="statistics-fee-panel">
       <div class="statistics-section-heading"><div><h2>Gebyr og beregnet inntekt</h2><p>Siste 12 måneder · saker med tillatelse</p></div><span class="statistics-basis">${feeRecords.length.toLocaleString("nb-NO")} saker</span></div>
       <div class="statistics-fee-summary"><div><span>Beregnet gebyrinntekt</span><strong>${calculatedFeeRows.length ? formatNok(calculatedFeeIncome) : "Ikke beregnet"}</strong></div><div><span>Kommuner med beregningsgrunnlag</span><strong>${calculatedFeeRows.length.toLocaleString("nb-NO")} av ${feeRows.length.toLocaleString("nb-NO")}</strong></div></div>
       <p class="statistics-disclaimer">Beløpet er et estimat basert på en referansesats per sak. Der kommunens egen sats ikke er entydig dokumentert, brukes et KS-basert sammenligningstall. Gebyrer varierer etter tiltak, størrelse og dispensasjoner. Dette er ikke kommunens regnskapsførte inntekt.</p>
       ${statisticsFeeTable(feeRows)}
     </section>
-    <div class="statistics-columns">
-      <section><h2>Hovedgrupper: regioner</h2>${statisticsList(statisticsRecords(), (project) => project.region)}</section>
-      <section><h2>Undergrupper: kommuner</h2>${statisticsList(records, (project) => project.municipality)}</section>
-      <section><h2>Undergrupper: tiltakstyper</h2>${statisticsList(records.flatMap((project) => (project.projectTypes || []).map((type) => ({ projectTypes: [type] }))), (project) => project.projectTypes[0])}</section>
-    </div>
   `;
   ["statisticsQuickMode", "statisticsRegion", "statisticsMunicipality", "statisticsStage", "statisticsType", "statisticsPeriod"].forEach((id) => {
     document.querySelector(`#${id}`)?.addEventListener("change", (event) => {
