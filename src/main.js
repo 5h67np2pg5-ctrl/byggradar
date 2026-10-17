@@ -842,7 +842,7 @@ function formatNok(value) {
 
 function statisticsFeeTable(rows) {
   if (!rows.length) return `<p class="statistics-empty">Ingen registrerte byggesaker i perioden.</p>`;
-  return `<div class="statistics-fee-table-wrap"><table class="statistics-fee-table"><thead><tr><th>Kommune</th><th>Saker</th><th>Referansesats</th><th>Beregnet inntekt</th><th>Grunnlag</th></tr></thead><tbody>${rows.map((row) => `<tr><td>${escapeHtml(row.municipality)}</td><td>${row.count.toLocaleString("nb-NO")}</td><td>${formatNok(row.fee)}${row.tariffYear ? ` (${escapeHtml(String(row.tariffYear))})` : ""}</td><td>${formatNok(row.income)}</td><td>${escapeHtml(row.source)}</td></tr>`).join("")}</tbody></table></div>`;
+  return `<div class="statistics-fee-table-wrap"><table class="statistics-fee-table"><thead><tr><th>Kommune</th><th>Totalt antall saker<br>siste 12 måneder</th><th>Beregningsgrunnlag</th><th>Beregnet inntekt</th><th>Grunnlag</th></tr></thead><tbody>${rows.map((row) => `<tr><td>${escapeHtml(row.municipality)}</td><td>${row.count.toLocaleString("nb-NO")}</td><td>${formatNok(row.fee)}${row.tariffYear ? ` (${escapeHtml(String(row.tariffYear))})` : ""}</td><td>${formatNok(row.income)}</td><td>${escapeHtml(row.source)}</td></tr>`).join("")}</tbody></table></div>`;
 }
 
 function renderStatistics() {
@@ -905,7 +905,7 @@ function renderStatistics() {
     <section class="statistics-fee-panel">
       <div class="statistics-section-heading"><div><h2>Gebyr og beregnet inntekt</h2><p>Siste 12 måneder · alle registrerte byggesaker</p></div><span class="statistics-basis">${feeRecords.length.toLocaleString("nb-NO")} byggesaker</span></div>
       <div class="statistics-fee-summary"><div><span>Beregnet gebyrinntekt</span><strong>${calculatedFeeRows.length ? formatNok(calculatedFeeIncome) : "Ikke beregnet"}</strong></div><div><span>Kommuner med beregningsgrunnlag</span><strong>${calculatedFeeRows.length.toLocaleString("nb-NO")} av ${feeRows.length.toLocaleString("nb-NO")}</strong></div></div>
-      <p class="statistics-disclaimer">Beløpet er et estimat basert på en referansesats per sak. Der kommunens egen sats ikke er entydig dokumentert, brukes et KS-basert sammenligningstall. Gebyrer varierer etter tiltak, størrelse og dispensasjoner. Dette er ikke kommunens regnskapsførte inntekt.</p>
+      <p class="statistics-disclaimer">Inntektsgrunnlaget beregnes som totalt antall registrerte byggesaker siste 12 måneder multiplisert med kommunens beregningsgrunnlag per sak. Der kommunens egen sats ikke er entydig dokumentert, brukes et KS-basert sammenligningstall. Gebyrer varierer etter tiltak, størrelse og dispensasjoner, så beregningen er et estimat og ikke kommunens regnskapsførte inntekt.</p>
       ${statisticsFeeTable(feeRows)}
     </section>
   `;
