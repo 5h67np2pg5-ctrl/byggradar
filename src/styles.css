@@ -680,6 +680,15 @@ a {
   box-shadow: 0 0 0 3px rgba(90, 157, 204, 0.16);
 }
 
+.trade-guidance {
+  max-width: 520px;
+  margin: 0;
+  color: #5f7889;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
 .customer-municipality-prompt {
   margin-top: 5px;
   padding: 6px 9px;

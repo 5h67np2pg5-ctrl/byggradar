@@ -643,6 +643,7 @@ function renderShell() {
             <option value="">Alle fag og oppdragstyper</option>
             ${tradePresets.map((value) => `<option value="${escapeHtml(value)}">${escapeHtml(value[0].toUpperCase() + value.slice(1))}</option>`).join("")}
           </select>
+          <p class="trade-guidance">Prosjekter som ikke er merket med din faggruppe, kan likevel være relevante. En søknad om garasje kan for eksempel omfatte flere fag, som entreprenør, elektro og tømrer. Vær derfor varsom med å bruke fagvelgeren som et absolutt filter.</p>
         </label>
         <div class="area-control">
           <label class="search-field">
