@@ -843,8 +843,10 @@ function statisticsFeeRows(records, allowIncome = true) {
   const grouped = new Map();
   records.forEach((project) => {
     const municipality = project.municipality || "Ukjent kommune";
-    const current = grouped.get(municipality) || { municipality, count: 0 };
+    const timestamp = Date.parse(project.date || project.recordedDate);
+    const current = grouped.get(municipality) || { municipality, count: 0, timestamps: [] };
     current.count += 1;
+    if (Number.isFinite(timestamp)) current.timestamps.push(timestamp);
     grouped.set(municipality, current);
   });
   return [...grouped.values()].map((row) => {
@@ -854,10 +856,14 @@ function statisticsFeeRows(records, allowIncome = true) {
       || Object.entries(feeRates).find(([name]) => normalizeMunicipalityName(name) === normalizeMunicipalityName(row.municipality))?.[1]
       || null;
     const fee = Number(tariff?.referenceFee);
+    const earliest = Math.min(...row.timestamps);
+    const latest = Math.max(...row.timestamps);
+    const coverageDays = row.timestamps.length ? Math.floor((latest - earliest) / 86400000) + 1 : 0;
     return {
       ...row,
+      coverageDays,
       fee: Number.isFinite(fee) && fee > 0 ? fee : null,
-      income: allowIncome && Number.isFinite(fee) && fee > 0 ? row.count * fee : null,
+      income: allowIncome && coverageDays >= 330 && Number.isFinite(fee) && fee > 0 ? row.count * fee : null,
       source: tariff?.source || "Gebyrregulativ ikke registrert",
       tariffYear: tariff?.year || "",
     };
@@ -872,7 +878,7 @@ function statisticsFeeTable(rows) {
   if (!rows.length) return `<p class="statistics-empty">Ingen registrerte byggesaker i perioden.</p>`;
   const visibleRows = rows.filter((row) => row.count >= statisticsPrivacyMinimum);
   const suppressedCount = rows.length - visibleRows.length;
-  const table = `<div class="statistics-fee-table-wrap"><table class="statistics-fee-table"><thead><tr><th>Kommune</th><th>Totalt antall saker<br>siste 12 måneder</th><th>Beregningsgrunnlag</th><th>Beregnet inntekt</th><th>Grunnlag</th></tr></thead><tbody>${visibleRows.map((row) => `<tr><td>${escapeHtml(row.municipality)}</td><td>${row.count.toLocaleString("nb-NO")}</td><td>${formatNok(row.fee)}${row.tariffYear ? ` (${escapeHtml(String(row.tariffYear))})` : ""}</td><td>${formatNok(row.income)}</td><td>${escapeHtml(row.source)}</td></tr>`).join("")}</tbody></table></div>`;
+  const table = `<div class="statistics-fee-table-wrap"><table class="statistics-fee-table"><thead><tr><th>Kommune</th><th>Registrerte saker<br>i 12-månedersvinduet</th><th>Datadekning</th><th>Beregningsgrunnlag</th><th>Beregnet inntekt</th><th>Grunnlag</th></tr></thead><tbody>${visibleRows.map((row) => `<tr><td>${escapeHtml(row.municipality)}</td><td>${row.count.toLocaleString("nb-NO")}</td><td>${row.coverageDays.toLocaleString("nb-NO")} dager</td><td>${formatNok(row.fee)}${row.tariffYear ? ` (${escapeHtml(String(row.tariffYear))})` : ""}</td><td>${formatNok(row.income)}</td><td>${escapeHtml(row.source)}</td></tr>`).join("")}</tbody></table></div>`;
   return `${table}${suppressedCount ? `<p class="statistics-privacy-note">${suppressedCount.toLocaleString("nb-NO")} små kommunegrupper er utelatt for å hindre identifisering av enkeltsaker. De inngår fortsatt i totalsummen.</p>` : ""}`;
 }
 
@@ -907,10 +913,11 @@ function renderStatistics() {
   }
   const feeRecords = statisticsBuildingRecordsLastYear(feeScopeRecords);
   const feeCoverage = statisticsDateCoverage(feeScopeRecords);
-  const coverageWarning = feeCoverage.days < 330
-    ? `<p class="statistics-coverage-warning">Datagrunnlaget dekker ${feeCoverage.days.toLocaleString("nb-NO")} dager, fra ${escapeHtml(feeCoverage.from)} til ${escapeHtml(feeCoverage.to)}. Det finnes derfor ikke et komplett 12-måneders grunnlag i de innlastede dataene. Tallet vises som tilgjengelige registreringer, ikke som et bekreftet årsvolum.</p>`
+  const feeRows = statisticsFeeRows(feeRecords, true);
+  const incompleteFeeRows = feeRows.filter((row) => row.coverageDays < 330);
+  const coverageWarning = incompleteFeeRows.length
+    ? `<p class="statistics-coverage-warning">Datadekningen kontrolleres per kommune. ${incompleteFeeRows.length.toLocaleString("nb-NO")} kommune${incompleteFeeRows.length === 1 ? " har" : "r har"} mindre enn 330 dager med registrerte data${feeCoverage.days < 330 ? ` i dette utvalget samlet, fra ${escapeHtml(feeCoverage.from)} til ${escapeHtml(feeCoverage.to)}` : ""}. For disse kommunene vises antall tilgjengelige saker, men ikke beregnet årsinntekt.</p>`
     : "";
-  const feeRows = statisticsFeeRows(feeRecords, feeCoverage.days >= 330);
   const calculatedFeeRows = feeRows.filter((row) => row.income !== null);
   const calculatedFeeIncome = calculatedFeeRows.reduce((sum, row) => sum + row.income, 0);
 
