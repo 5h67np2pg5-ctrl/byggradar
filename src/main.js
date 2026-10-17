@@ -1906,11 +1906,10 @@ function addBaseMap(map, options = {}) {
     detectRetina: false,
     className: "byggradar-map-tiles",
   };
-  // Bruk OpenStreetMap som hovedkart. Det gir et nøytralt vei- og gatenett
-  // uten topografisk bakgrunn som forstyrrer prosjektpunktene.
-  const layer = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  // Bruk et rent vei- og gatenett uten høydekurver eller topografiske symboler.
+  const layer = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
     ...tileOptions,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   });
 
   let fallbackStarted = false;
@@ -1919,9 +1918,9 @@ function addBaseMap(map, options = {}) {
     event.tile.classList.add("tile-load-error");
     if (fallbackStarted) return;
     fallbackStarted = true;
-    const fallbackLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    const fallbackLayer = L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
       ...tileOptions,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     });
     layer.remove();
     fallbackLayer.addTo(map);
