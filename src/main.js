@@ -30,19 +30,13 @@ const state = {
   aiSearchLoading: new Set(),
   userMode: null,
   statisticsData: null,
-  statisticsFeeRates: null,
-  statisticsMacroScope: "national",
-  statisticsGroup: "all",
-  statisticsQuickMode: "all",
   statisticsRegion: "",
   statisticsMunicipality: "",
-  statisticsStage: "",
-  statisticsType: "",
-  statisticsPeriod: "all",
   statisticsSsb: null,
   statisticsSsbLoading: false,
   statisticsSsbError: "",
   statisticsSavedSearches: [],
+  statisticsSelectedSearch: "",
 };
 
 const tradePresets = [
@@ -68,7 +62,6 @@ const markedProjectsKey = "byggradar.markedProjects.v1";
 const standardProjectLimit = 200;
 const loadMoreStep = 20;
 const weeklyDeliveryCount = 50;
-const statisticsPrivacyMinimum = 3;
 const statisticsSavedSearchesKey = "byggradar.statistics.savedSearches.v1";
 
 const statisticsSearchCatalog = [
@@ -79,17 +72,6 @@ const statisticsSearchCatalog = [
   { id: "housing-completed", group: "Boligbygging", title: "Fullførte boliger", description: "Boliger registrert som fullført.", metric: "housingCompleted", source: "SSB 05940" },
   { id: "housing-started-area", group: "Areal og næringsbygg", title: "Igangsatt boligareal", description: "Igangsatt bruksareal til boliger.", metric: "housingStartedArea", source: "SSB 05940" },
   { id: "housing-completed-area", group: "Areal og næringsbygg", title: "Fullført boligareal", description: "Fullført bruksareal til boliger.", metric: "housingCompletedArea", source: "SSB 05940" },
-];
-
-const statisticsGroups = [
-  { id: "all", label: "Alle søk", quickMode: "all", title: "Alle tilgjengelige søk", text: "Samlet oversikt over aktivitet, fase, tiltak, geografi, aktører, dokumenter, gebyr og utvikling." },
-  { id: "activity", label: "Aktivitet og omfang", quickMode: "all", title: "Aktivitet og omfang", text: "Antall registrerte og aktive byggesaker, utvikling i saksmengde og fordeling mellom kommuner og regioner." },
-  { id: "stage", label: "Fase og saksbehandling", quickMode: "stage", title: "Fase og saksbehandling", text: "Søknader, behandling, tillatelser, igangsetting, avslag og saksbehandlingstid." },
-  { id: "type", label: "Tiltak og bygg", quickMode: "type", title: "Tiltak og bygg", text: "Bolig, næring, nybygg, tilbygg, garasje, rehabilitering, riving, terreng og tekniske tiltak." },
-  { id: "geography", label: "Geografi", quickMode: "geography", title: "Geografi", text: "Regioner, kommuner og geografiske områder med byggeaktivitet og utvikling." },
-  { id: "documents", label: "Dokumenter og innsyn", quickMode: "all", title: "Dokumenter og innsyn", text: "Dokumenttyper, dokumentmengde, siste registrering og tilgjengelighet i kommunale innsynsløsninger." },
-  { id: "fees", label: "Gebyr og inntekt", quickMode: "all", title: "Gebyr og beregnet inntekt", text: "Totalt antall registrerte saker siste 12 måneder multiplisert med kommunens beregningsgrunnlag." },
-  { id: "trend", label: "Utvikling og sammenligning", quickMode: "period", title: "Utvikling og sammenligning", text: "Vekst, nedgang, sesongvariasjoner og sammenligning mellom regioner og kommuner." },
 ];
 
 const locationRegions = [
@@ -801,6 +783,16 @@ function statisticsFormatSsbValue(value, metric) {
   return `${number.toLocaleString("nb-NO", options)}${metric === "planProcessingDays" ? " dager" : ""}`;
 }
 
+function statisticsDetailPanel() {
+  if (!state.statisticsSelectedSearch || !state.statisticsMunicipality) return "";
+  const item = statisticsSearchCatalog.find((entry) => entry.id === state.statisticsSelectedSearch);
+  if (!item) return "";
+  const value = state.statisticsSsb?.values?.[item.metric];
+  const trend = state.statisticsSsb?.trends?.[item.metric];
+  const displayedValue = Number.isFinite(Number(value)) ? statisticsFormatSsbValue(value, item.metric) : state.statisticsSsbLoading ? "Laster ..." : "Ikke tilgjengelig";
+  return `<aside class="statistics-detail" aria-live="polite"><div><p class="statistics-detail-label">Valgt statistikksøk</p><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.description)}</p></div><div class="statistics-detail-value"><strong>${displayedValue}</strong>${trend ? `<span class="statistics-search-trend ${trend.className}">${trend.arrow} ${escapeHtml(trend.label)}</span>` : ""}<small>${escapeHtml(item.source)}${state.statisticsSsb?.year ? ` · ${escapeHtml(String(state.statisticsSsb.year))}` : ""}</small></div></aside>`;
+}
+
 function statisticsSearchPanel() {
   const municipalitySelected = Boolean(state.statisticsMunicipality);
   const saved = state.statisticsSavedSearches || [];
@@ -814,9 +806,10 @@ function statisticsSearchPanel() {
     const trend = state.statisticsSsb?.trends?.[item.metric];
     const trendMarkup = trend ? `<span class="statistics-search-trend ${trend.className}">${trend.arrow} ${escapeHtml(trend.label)}</span>` : `<span class="statistics-search-trend neutral">→ Ikke beregnet</span>`;
     const saveLabel = saved.some((search) => search.presetId === item.id && search.municipality === state.statisticsMunicipality) ? "Lagret" : "Husk søket";
-    return `<article class="statistics-search-field ${municipalitySelected ? "active" : "disabled"}"><div><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.description)}</p></div><strong>${hasValue ? statisticsFormatSsbValue(value, item.metric) : municipalitySelected ? (state.statisticsSsbLoading ? "Laster ..." : "Ikke tilgjengelig") : "Velg kommune"}</strong>${trendMarkup}<small>${escapeHtml(item.source)}${state.statisticsSsb?.year ? ` · ${escapeHtml(String(state.statisticsSsb.year))}` : ""}</small><button type="button" class="statistics-save-search" data-save-statistics-search="${escapeHtml(item.id)}" ${municipalitySelected ? "" : "disabled"}>${saveLabel}</button></article>`;
+    const isSaved = saveLabel === "Lagret";
+    return `<article class="statistics-search-field ${municipalitySelected ? "active" : "disabled"} ${state.statisticsSelectedSearch === item.id ? "selected" : ""}" data-open-statistics-search="${escapeHtml(item.id)}" ${municipalitySelected ? 'role="button" tabindex="0"' : ""}><div class="statistics-search-title"><h3>${escapeHtml(item.title)}</h3><button type="button" class="statistics-star ${isSaved ? "saved" : ""}" data-save-statistics-search="${escapeHtml(item.id)}" aria-label="${isSaved ? "Fjern fra huskede søk" : "Husk dette søket"}" title="${isSaved ? "Fjern fra huskede søk" : "Husk dette søket"}" ${municipalitySelected ? "" : "disabled"}>${isSaved ? "★" : "☆"}</button></div><p>${escapeHtml(item.description)}</p><strong>${hasValue ? statisticsFormatSsbValue(value, item.metric) : municipalitySelected ? (state.statisticsSsbLoading ? "Laster ..." : "Ikke tilgjengelig") : "Velg kommune"}</strong>${trendMarkup}<small>${escapeHtml(item.source)}${state.statisticsSsb?.year ? ` · ${escapeHtml(String(state.statisticsSsb.year))}` : ""}</small></article>`;
   }).join("")}</div></section>`).join("");
-  return `<section class="statistics-search-panel"><div class="statistics-section-heading"><div><h2>Faste statistikksøk</h2><p>${municipalitySelected ? "Velg et felt for å lese SSB-tall for valgt kommune." : "Velg minst én kommune for å aktivere statistikksøkene."}</p></div><span class="statistics-privacy-badge">SSB-data</span></div>${savedMarkup}${groupsMarkup}${state.statisticsSsbError ? `<p class="statistics-coverage-warning">${escapeHtml(state.statisticsSsbError)}</p>` : ""}</section>`;
+  return `<section class="statistics-search-panel"><div class="statistics-section-heading"><div><h2>Faste statistikksøk</h2><p>${municipalitySelected ? "Trykk på et statistikksøk for å se detaljene." : "Velg minst én kommune for å aktivere statistikksøkene."}</p></div><span class="statistics-privacy-badge">SSB-data</span></div>${savedMarkup}${groupsMarkup}${statisticsDetailPanel()}${state.statisticsSsbError ? `<p class="statistics-coverage-warning">${escapeHtml(state.statisticsSsbError)}</p>` : ""}</section>`;
 }
 
 function statisticsSsbTrend(current, previous) {
@@ -859,14 +852,9 @@ async function loadStatisticsData() {
     view.innerHTML = `<div class="statistics-loading">Laster statistikk ...</div>`;
   }
   const cacheBust = `t=${Date.now()}`;
-  const [statisticsResponse, feeResponse] = await Promise.all([
-    fetch(`/data/statistics_projects.json?${cacheBust}`),
-    fetch(`/data/municipality_fee_rates.json?${cacheBust}`),
-  ]);
+  const statisticsResponse = await fetch(`/data/statistics_projects.json?${cacheBust}`);
   if (!statisticsResponse.ok) throw new Error(`Kunne ikke hente statistikkgrunnlaget (${statisticsResponse.status})`);
-  if (!feeResponse.ok) throw new Error(`Kunne ikke hente gebyrgrunnlaget (${feeResponse.status})`);
   state.statisticsData = await statisticsResponse.json();
-  state.statisticsFeeRates = await feeResponse.json();
 }
 
 function statisticsRecords() {
@@ -881,105 +869,7 @@ function statisticsRegionRecords() {
 function statisticsFilteredRecords() {
   let records = statisticsRegionRecords();
   if (state.statisticsMunicipality) records = records.filter((project) => normalizeMunicipalityName(project.municipality) === state.statisticsMunicipality);
-  if (state.statisticsStage) records = records.filter((project) => project.stage === state.statisticsStage);
-  if (state.statisticsType) records = records.filter((project) => project.projectTypes.includes(state.statisticsType));
-  if (state.statisticsPeriod !== "all") {
-    const days = Number(state.statisticsPeriod);
-    const cutoff = Date.now() - days * 86400000;
-    records = records.filter((project) => {
-      const timestamp = Date.parse(project.date);
-      return Number.isFinite(timestamp) && timestamp >= cutoff;
-    });
-  }
   return records;
-}
-
-function statisticsTrend(records) {
-  const dated = records.map((project) => Date.parse(project.date)).filter(Number.isFinite);
-  if (!dated.length) return { label: "Ingen trend", className: "neutral" };
-  const latest = Math.max(...dated);
-  const windowDays = state.statisticsPeriod === "all" ? 90 : Number(state.statisticsPeriod);
-  const windowMs = windowDays * 86400000;
-  const current = dated.filter((date) => date >= latest - windowMs).length;
-  const previous = dated.filter((date) => date >= latest - windowMs * 2 && date < latest - windowMs).length;
-  if (!previous) return { label: current ? "Flere prosjekter" : "Uendret", className: current ? "up" : "neutral" };
-  const change = (current - previous) / previous;
-  if (change > 0.05) return { label: "Flere prosjekter", className: "up" };
-  if (change < -0.05) return { label: "Færre prosjekter", className: "down" };
-  return { label: "Omtrent uendret", className: "neutral" };
-}
-
-function statisticsBuildingRecordsLastYear(records) {
-  const cutoff = Date.now() - 365 * 86400000;
-  return records.filter((project) => {
-    const timestamp = Date.parse(project.date || project.recordedDate);
-    return Boolean(project?.municipality) && Boolean(project?.stage) && Number.isFinite(timestamp) && timestamp >= cutoff;
-  });
-}
-
-function statisticsDateCoverage(records) {
-  const timestamps = records
-    .map((project) => Date.parse(project.date || project.recordedDate))
-    .filter(Number.isFinite);
-  if (!timestamps.length) return { days: 0, from: "", to: "" };
-  const earliest = Math.min(...timestamps);
-  const latest = Math.max(...timestamps);
-  return {
-    days: Math.floor((latest - earliest) / 86400000) + 1,
-    from: new Date(earliest).toLocaleDateString("nb-NO"),
-    to: new Date(latest).toLocaleDateString("nb-NO"),
-  };
-}
-
-function statisticsFeeRows(records, allowIncome = true) {
-  const grouped = new Map();
-  records.forEach((project) => {
-    const municipality = project.municipality || "Ukjent kommune";
-    const timestamp = Date.parse(project.date || project.recordedDate);
-    const current = grouped.get(municipality) || { municipality, count: 0, timestamps: [] };
-    current.count += 1;
-    if (Number.isFinite(timestamp)) current.timestamps.push(timestamp);
-    grouped.set(municipality, current);
-  });
-  return [...grouped.values()].map((row) => {
-    const feeRates = state.statisticsFeeRates?.rates || {};
-    const tariff = feeRates[row.municipality]
-      || feeRates[normalizeMunicipalityName(row.municipality)]
-      || Object.entries(feeRates).find(([name]) => normalizeMunicipalityName(name) === normalizeMunicipalityName(row.municipality))?.[1]
-      || null;
-    const fee = Number(tariff?.referenceFee);
-    const earliest = Math.min(...row.timestamps);
-    const latest = Math.max(...row.timestamps);
-    const coverageDays = row.timestamps.length ? Math.floor((latest - earliest) / 86400000) + 1 : 0;
-    return {
-      ...row,
-      coverageDays,
-      annualizedCount: coverageDays ? row.count * 365 / coverageDays : null,
-      fee: Number.isFinite(fee) && fee > 0 ? fee : null,
-      income: allowIncome && coverageDays && Number.isFinite(fee) && fee > 0 ? (row.count * 365 / coverageDays) * fee : null,
-      source: tariff?.source || "Gebyrregulativ ikke registrert",
-      tariffYear: tariff?.year || "",
-    };
-  }).sort((a, b) => b.count - a.count);
-}
-
-function formatNok(value) {
-  return Number.isFinite(value) ? `${Math.round(value).toLocaleString("nb-NO")} kr` : "Ikke beregnet";
-}
-
-function statisticsFeeTable(rows) {
-  if (!rows.length) return `<p class="statistics-empty">Ingen registrerte byggesaker i perioden.</p>`;
-  const visibleRows = rows.filter((row) => row.count >= statisticsPrivacyMinimum);
-  const suppressedCount = rows.length - visibleRows.length;
-  const table = `<div class="statistics-fee-table-wrap"><table class="statistics-fee-table"><thead><tr><th>Kommune</th><th>Registrerte saker<br>i dataperioden</th><th>Datadekning</th><th>Beregnet saker<br>12 måneder</th><th>Beregningsgrunnlag</th><th>Beregnet inntekt<br>12 måneder</th><th>Grunnlag</th></tr></thead><tbody>${visibleRows.map((row) => `<tr><td>${escapeHtml(row.municipality)}</td><td>${row.count.toLocaleString("nb-NO")}</td><td>${row.coverageDays.toLocaleString("nb-NO")} dager</td><td>${Number.isFinite(row.annualizedCount) ? row.annualizedCount.toLocaleString("nb-NO", { maximumFractionDigits: 1 }) : "Ikke beregnet"}</td><td>${formatNok(row.fee)}${row.tariffYear ? ` (${escapeHtml(String(row.tariffYear))})` : ""}</td><td>${formatNok(row.income)}</td><td>${escapeHtml(row.source)}</td></tr>`).join("")}</tbody></table></div>`;
-  return `${table}${suppressedCount ? `<p class="statistics-privacy-note">${suppressedCount.toLocaleString("nb-NO")} små kommunegrupper er utelatt for å hindre identifisering av enkeltsaker. De inngår fortsatt i totalsummen.</p>` : ""}`;
-}
-
-function statisticsGroupPanel() {
-  const selected = state.statisticsGroup === "all"
-    ? statisticsGroups
-    : statisticsGroups.filter((group) => group.id === state.statisticsGroup);
-  return `<section class="statistics-question-panel"><div class="statistics-section-heading"><div><h2>${state.statisticsGroup === "all" ? "Tilgjengelige statistikkområder" : escapeHtml(selected[0]?.title || "Statistikkområde")}</h2><p>Velg hovedgruppe øverst for å snevre inn visningen.</p></div><span class="statistics-privacy-badge">Aggregert visning</span></div><div class="statistics-question-grid">${selected.map((group) => `<article class="statistics-question-group"><h3>${escapeHtml(group.title)}</h3><p>${escapeHtml(group.text)}</p><span>Ingen enkeltprosjekter vises</span></article>`).join("")}</div></section>`;
 }
 
 function renderStatistics() {
@@ -993,25 +883,7 @@ function renderStatistics() {
   const records = statisticsFilteredRecords();
   const regionRecords = statisticsRegionRecords();
   const municipalities = [...new Set(regionRecords.map((project) => project.municipality).filter(Boolean))].sort((a, b) => a.localeCompare(b, "nb"));
-  const stages = [...new Set(regionRecords.map((project) => project.stage).filter(Boolean))].sort((a, b) => a.localeCompare(b, "nb"));
-  const types = [...new Set(regionRecords.flatMap((project) => project.projectTypes || []))].sort((a, b) => a.localeCompare(b, "nb"));
-  const trend = statisticsTrend(records);
-  const phaseOne = records.filter((project) => project.phase === "Fase 1").length;
-  const phaseTwo = records.filter((project) => project.phase === "Fase 2").length;
-  const municipalitiesCount = new Set(records.map((project) => project.municipality)).size;
   const regionName = state.statisticsRegion ? illustrationRegions.find((name) => locationRegions.find((region) => region.id === state.statisticsRegion)?.name === name) || locationRegions.find((region) => region.id === state.statisticsRegion)?.name : "Alle regioner";
-  let feeScopeRecords = regionRecords;
-  if (state.statisticsMunicipality) {
-    feeScopeRecords = feeScopeRecords.filter((project) => normalizeMunicipalityName(project.municipality) === state.statisticsMunicipality);
-  }
-  const feeRecords = statisticsBuildingRecordsLastYear(feeScopeRecords);
-  const feeCoverage = statisticsDateCoverage(feeScopeRecords);
-  const feeRows = statisticsFeeRows(feeRecords, true);
-  const annualVolume = feeRows.reduce((sum, row) => sum + (Number.isFinite(row.annualizedCount) ? row.annualizedCount : 0), 0);
-  const incompleteFeeRows = feeRows.filter((row) => row.coverageDays < 330);
-  const coverageWarning = incompleteFeeRows.length
-    ? `<p class="statistics-coverage-warning">Datadekningen kontrolleres per kommune. ${incompleteFeeRows.length.toLocaleString("nb-NO")} kommune${incompleteFeeRows.length === 1 ? " har" : "r har"} mindre enn 330 dager med registrerte data${feeCoverage.days < 330 ? ` i dette utvalget samlet, fra ${escapeHtml(feeCoverage.from)} til ${escapeHtml(feeCoverage.to)}` : ""}. 12-månedersinntekten er derfor annualisert fra antall registrerte saker per dag, og må leses som et estimat.</p>`
-    : "";
 
   view.innerHTML = `
     <div class="statistics-header">
@@ -1022,49 +894,29 @@ function renderStatistics() {
       </div>
       <button class="print-button" id="printStatistics" type="button">Skriv ut</button>
     </div>
-    <div class="statistics-search-guide">
-      <label class="statistics-macro-choice"><span>Makrovalg</span><select id="statisticsMacroScope"><option value="national" ${state.statisticsMacroScope === "national" ? "selected" : ""}>Hele Norge</option><option value="region" ${state.statisticsMacroScope === "region" ? "selected" : ""}>Regioner</option><option value="municipality" ${state.statisticsMacroScope === "municipality" ? "selected" : ""}>Kommuner</option><option value="type" ${state.statisticsMacroScope === "type" ? "selected" : ""}>Tiltakstyper</option></select></label>
-      <label class="statistics-group-choice"><span>Statistikkgruppe</span><select id="statisticsGroup">${statisticsGroups.map((group) => `<option value="${group.id}" ${state.statisticsGroup === group.id ? "selected" : ""}>${escapeHtml(group.label)}</option>`).join("")}</select></label>
-      <label class="statistics-quick-mode"><span>Rask modus</span><select id="statisticsQuickMode"><option value="all" ${state.statisticsQuickMode === "all" ? "selected" : ""}>Alle tilgjengelige søk</option><option value="geography" ${state.statisticsQuickMode === "geography" ? "selected" : ""}>Område: region og kommune</option><option value="stage" ${state.statisticsQuickMode === "stage" ? "selected" : ""}>Fase og status</option><option value="type" ${state.statisticsQuickMode === "type" ? "selected" : ""}>Tiltakstype</option><option value="period" ${state.statisticsQuickMode === "period" ? "selected" : ""}>Periode</option></select></label>
-    </div>
-    <div class="statistics-filters" data-quick-mode="${state.statisticsQuickMode}" aria-label="Statistikkfiltre">
-      <div class="statistics-filter-group statistics-geography"><h2>Område</h2><label><span>Region</span><select id="statisticsRegion"><option value="">Alle regioner</option>${locationRegions.map((region) => `<option value="${region.id}" ${state.statisticsRegion === region.id ? "selected" : ""}>${escapeHtml(region.name)}</option>`).join("")}</select></label><label><span>Kommune</span><select id="statisticsMunicipality"><option value="">Alle kommuner</option>${municipalities.map((municipality) => `<option value="${escapeHtml(normalizeMunicipalityName(municipality))}" ${state.statisticsMunicipality === normalizeMunicipalityName(municipality) ? "selected" : ""}>${escapeHtml(municipality)}</option>`).join("")}</select></label></div>
-      <div class="statistics-filter-group statistics-details"><h2>Detaljer</h2><label><span>Fase/status</span><select id="statisticsStage"><option value="">Alle faser og statuser</option>${stages.map((stage) => `<option value="${escapeHtml(stage)}" ${state.statisticsStage === stage ? "selected" : ""}>${escapeHtml(stage)}</option>`).join("")}</select></label><label><span>Fag/tiltakstype</span><select id="statisticsType"><option value="">Alle tiltakstyper</option>${types.map((type) => `<option value="${escapeHtml(type)}" ${state.statisticsType === type ? "selected" : ""}>${escapeHtml(type)}</option>`).join("")}</select></label><label><span>Periode</span><select id="statisticsPeriod"><option value="all" ${state.statisticsPeriod === "all" ? "selected" : ""}>Alle registrerte</option><option value="30" ${state.statisticsPeriod === "30" ? "selected" : ""}>Siste 30 dager</option><option value="90" ${state.statisticsPeriod === "90" ? "selected" : ""}>Siste 90 dager</option><option value="365" ${state.statisticsPeriod === "365" ? "selected" : ""}>Siste 12 måneder</option></select></label></div>
+    <div class="statistics-filters" aria-label="Statistikkfiltre">
+      <div class="statistics-filter-group statistics-geography"><h2>Område</h2><label><span>Region</span><select id="statisticsRegion"><option value="">Velg region</option>${locationRegions.map((region) => `<option value="${region.id}" ${state.statisticsRegion === region.id ? "selected" : ""}>${escapeHtml(region.name)}</option>`).join("")}</select></label><label><span>Kommune</span><select id="statisticsMunicipality"><option value="">Velg kommune</option>${municipalities.map((municipality) => `<option value="${escapeHtml(normalizeMunicipalityName(municipality))}" ${state.statisticsMunicipality === normalizeMunicipalityName(municipality) ? "selected" : ""}>${escapeHtml(municipality)}</option>`).join("")}</select></label></div>
     </div>
     <div class="statistics-summary-line">${escapeHtml(regionName)} · ${records.length.toLocaleString("nb-NO")} prosjekter i utvalget</div>
     ${statisticsSearchPanel()}
-    ${statisticsGroupPanel()}
-    <div class="statistics-cards">
-      <div class="statistics-card"><span>Prosjekter</span><strong>${records.length.toLocaleString("nb-NO")}</strong></div>
-      <div class="statistics-card"><span>Kommuner</span><strong>${municipalitiesCount.toLocaleString("nb-NO")}</strong></div>
-      <div class="statistics-card"><span>Fase 1</span><strong>${phaseOne.toLocaleString("nb-NO")}</strong></div>
-      <div class="statistics-card"><span>Fase 2</span><strong>${phaseTwo.toLocaleString("nb-NO")}</strong></div>
-      <div class="statistics-card trend-card ${trend.className}"><span>Utvikling</span><strong>${trend.label}</strong></div>
-    </div>
-    <div class="statistics-columns">
-      <section><h2>Hovedgrupper: regioner</h2>${statisticsList(statisticsRecords(), (project) => project.region)}</section>
-      <section><h2>Undergrupper: kommuner</h2>${statisticsList(records, (project) => project.municipality)}</section>
-      <section><h2>Undergrupper: tiltakstyper</h2>${statisticsList(records.flatMap((project) => (project.projectTypes || []).map((type) => ({ projectTypes: [type] }))), (project) => project.projectTypes[0])}</section>
-    </div>
-    <section class="statistics-fee-panel">
-      <div class="statistics-section-heading"><div><h2>Gebyr og beregnet inntekt</h2><p>12-månedersvindu · alle registrerte byggesaker</p><p class="statistics-annual-volume">Registrert i datagrunnlaget: <strong>${feeRecords.length.toLocaleString("nb-NO")} saker</strong> · beregnet årsvolum: <strong>${annualVolume.toLocaleString("nb-NO", { maximumFractionDigits: 1 })} saker</strong> · datadekning: <strong>${feeCoverage.days.toLocaleString("nb-NO")} dager</strong></p></div><span class="statistics-basis">${feeRecords.length.toLocaleString("nb-NO")} tilgjengelige saker</span></div>
-      ${coverageWarning}
-      <p class="statistics-disclaimer">Inntekten for 12 måneder beregnes ved å annualisere den registrerte saksmengden: antall saker i dataperioden deles på antall dager og skaleres til 365 dager, før tallet multipliseres med kommunens beregningsgrunnlag per sak. Der kommunens egen sats ikke er entydig dokumentert, brukes et KS-basert sammenligningstall. Gebyrer varierer etter tiltak, størrelse og dispensasjoner, så dette er et estimat og ikke kommunens regnskapsførte inntekt.</p>
-      ${statisticsFeeTable(feeRows)}
-    </section>
   `;
-  ["statisticsMacroScope", "statisticsGroup", "statisticsQuickMode", "statisticsRegion", "statisticsMunicipality", "statisticsStage", "statisticsType", "statisticsPeriod"].forEach((id) => {
+  ["statisticsRegion", "statisticsMunicipality"].forEach((id) => {
     document.querySelector(`#${id}`)?.addEventListener("change", (event) => {
       const key = id.replace(/^statistics/, "");
       const stateKey = `statistics${key}`;
       state[stateKey] = event.target.value;
-      if (id === "statisticsMacroScope") {
-        state.statisticsQuickMode = ["region", "municipality"].includes(state.statisticsMacroScope) ? "geography" : state.statisticsMacroScope === "type" ? "type" : "all";
+      if (id === "statisticsRegion") {
+        state.statisticsMunicipality = "";
+        state.statisticsSsb = null;
+        state.statisticsSsbError = "";
+        state.statisticsSelectedSearch = "";
+      } else if (!state.statisticsMunicipality) {
+        state.statisticsSsb = null;
+        state.statisticsSsbError = "";
+        state.statisticsSelectedSearch = "";
+      } else {
+        state.statisticsSelectedSearch = "";
       }
-      if (id === "statisticsGroup") {
-        state.statisticsQuickMode = statisticsGroups.find((group) => group.id === state.statisticsGroup)?.quickMode || "all";
-      }
-      if (id === "statisticsRegion") state.statisticsMunicipality = "";
       renderStatistics();
       if (id === "statisticsMunicipality" && state.statisticsMunicipality) loadSsbStatistics(state.statisticsMunicipality);
     });
@@ -1080,10 +932,27 @@ function renderStatistics() {
         presetId,
         municipality: state.statisticsMunicipality,
         region: state.statisticsRegion,
-        period: state.statisticsPeriod,
       });
       saveStatisticsSavedSearches();
       renderStatistics();
+    });
+  });
+  document.querySelectorAll("[data-open-statistics-search]").forEach((card) => {
+    const open = () => {
+      if (!state.statisticsMunicipality) return;
+      state.statisticsSelectedSearch = card.dataset.openStatisticsSearch;
+      renderStatistics();
+    };
+    card.addEventListener("click", (event) => {
+      if (event.target.closest("[data-save-statistics-search]")) return;
+      open();
+    });
+    card.addEventListener("keydown", (event) => {
+      if (event.target.closest("[data-save-statistics-search]")) return;
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        open();
+      }
     });
   });
   document.querySelectorAll("[data-load-statistics-search]").forEach((button) => {
@@ -1092,25 +961,11 @@ function renderStatistics() {
       if (!search) return;
       state.statisticsRegion = search.region || "";
       state.statisticsMunicipality = search.municipality || "";
-      state.statisticsPeriod = search.period || "all";
       renderStatistics();
       if (state.statisticsMunicipality) loadSsbStatistics(state.statisticsMunicipality);
     });
   });
   document.querySelector("#printStatistics")?.addEventListener("click", () => window.print());
-}
-
-function statisticsList(records, keyFn) {
-  const counts = new Map();
-  records.forEach((project) => {
-    const key = keyFn(project) || "Ukjent";
-    counts.set(key, (counts.get(key) || 0) + 1);
-  });
-  const allRows = [...counts.entries()].sort((a, b) => b[1] - a[1]);
-  const rows = allRows.filter(([, count]) => count >= statisticsPrivacyMinimum).slice(0, 12);
-  const suppressed = allRows.filter(([, count]) => count < statisticsPrivacyMinimum).length;
-  if (!rows.length) return `<p class="statistics-empty">Ingen data i utvalget.</p>`;
-  return `<ul class="statistics-list">${rows.map(([label, count]) => `<li><span>${escapeHtml(label)}</span><strong>${count.toLocaleString("nb-NO")}</strong></li>`).join("")}</ul>${suppressed ? `<p class="statistics-privacy-note">${suppressed} små grupper er skjult av personvernhensyn.</p>` : ""}`;
 }
 
 function bindInput(id, key) {
