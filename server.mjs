@@ -110,17 +110,23 @@ const server = http.createServer(async (request, response) => {
         response.end(JSON.stringify({ error: "Mangler gyldig kommunenummer" }));
         return;
       }
+      const requestedYear = Number(url.searchParams.get("år") || new Date().getFullYear());
+      const currentYear = Number.isInteger(requestedYear) && requestedYear >= 2020 && requestedYear <= new Date().getFullYear() ? requestedYear : new Date().getFullYear();
+      const [planYears, housingYears] = await Promise.all([
+        latestSsbYears("12690", currentYear),
+        latestSsbYears("05940", currentYear),
+      ]);
       const [plan, housing] = await Promise.all([
         fetchSsbTable("12690", [
           { code: "KOKkommuneregion0000", values: [municipalityNumber] },
           { code: "ContentsCode", values: ["KOSomfplanbehand0001", "KOSomfplanbehand0000", "KOSbehandlingsti0000"] },
-          { code: "Tid", values: ["2024", "2025"] },
+          { code: "Tid", values: planYears },
         ]),
         fetchSsbTable("05940", [
           { code: "Region", values: [municipalityNumber] },
           { code: "Byggeareal", values: ["__ALL__"] },
           { code: "ContentsCode", values: ["Igangsatte", "Fullforte", "BruksarealIgang", "BruksarealFullfort"] },
-          { code: "Tid", values: ["2024", "2025"] },
+          { code: "Tid", values: housingYears },
         ]),
       ]);
       const planSeries = ssbMetricSeries(plan);
@@ -151,7 +157,9 @@ const server = http.createServer(async (request, response) => {
         housingStartedArea: housingSeries.BruksarealIgang?.previous,
         housingCompletedArea: housingSeries.BruksarealFullfort?.previous,
       };
-      response.end(JSON.stringify({ source: "Statistisk sentralbyrå", year: 2025, previousYear: 2024, municipalityNumber, values, previousValues, trends: {
+      const year = Math.min(Number(planYears.at(-1)), Number(housingYears.at(-1)));
+      const previousYear = year - 1;
+      response.end(JSON.stringify({ source: "Statistisk sentralbyrå", year, previousYear, municipalityNumber, values, previousValues, trends: {
         regulationsAdopted: planTrends.KOSomfplanbehand0001,
         privateDetailedPlans: planTrends.KOSomfplanbehand0000,
         planProcessingDays: planTrends.KOSbehandlingsti0000,
@@ -254,6 +262,18 @@ async function fetchSsbTable(table, dimensions) {
   });
   if (!response.ok) throw new Error(`SSB-spørringen feilet for tabell ${table} (${response.status})`);
   return { ...(await response.json()), metadata };
+}
+
+async function latestSsbYears(table, requestedYear) {
+  const response = await fetch(`https://data.ssb.no/api/v0/no/table/${table}`);
+  if (!response.ok) throw new Error(`SSB-tabell ${table} er ikke tilgjengelig (${response.status})`);
+  const metadata = await response.json();
+  const timeVariable = metadata.variables?.find((variable) => variable.code === "Tid");
+  const available = (timeVariable?.values || []).map(Number).filter((year) => Number.isInteger(year) && year <= requestedYear).sort((a, b) => a - b);
+  const latest = available.at(-1);
+  if (!latest) throw new Error(`SSB-tabell ${table} har ingen tilgjengelige årstall`);
+  const previous = available.filter((year) => year < latest).at(-1) || latest - 1;
+  return [String(previous), String(latest)];
 }
 
 function ssbMetricSeries(dataset, aggregateDimension = "") {

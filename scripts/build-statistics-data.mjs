@@ -38,9 +38,56 @@ function projectRecord(project, region) {
     toName: project.toName || "",
     fromOrg: project.fromOrg || "",
     toOrg: project.toOrg || "",
+    documentCount: project.documentCount || 1,
+    documentTypes: project.documentTypes || [project.documentType].filter(Boolean),
+    sourceDocumentIds: project.sourceDocumentIds || [project.sourceDocumentId].filter(Boolean),
     hasMapPoint: Boolean(location.hasMapPoint && coordinates),
     coordinates,
   };
+}
+
+function kvamIsBuildingCase(project) {
+  const text = [project.caseTitle, project.documentTitle, project.shortFacts, project.title, project.description]
+    .filter(Boolean)
+    .join(" ")
+    .toLocaleLowerCase("nb-NO");
+  return !/(?:søknad om løyve til sal av alkohol|akvakultur|diverse rutinar|rutinar og informasjon for plan- og byggesak|førespurnader vedk\.? eigedomar)/i.test(text);
+}
+
+function recordCompleteness(record) {
+  return [
+    record.address,
+    record.matrikkel,
+    record.locationEnrichment?.hasMapPoint,
+    record.fromName,
+    record.fromOrg,
+    record.documentTitle,
+  ].filter(Boolean).length;
+}
+
+function consolidateKvam(records) {
+  const grouped = new Map();
+  for (const record of records.filter(kvamIsBuildingCase)) {
+    const key = record.caseNumber || record.sourceDocumentId;
+    const bucket = grouped.get(key) || [];
+    bucket.push(record);
+    grouped.set(key, bucket);
+  }
+  return [...grouped.values()].map((documents) => {
+    const ordered = [...documents].sort((a, b) => {
+      const completeness = recordCompleteness(b) - recordCompleteness(a);
+      if (completeness) return completeness;
+      return String(b.documentDate || b.recordedDate || "").localeCompare(String(a.documentDate || a.recordedDate || ""));
+    });
+    const record = ordered[0];
+    return {
+      ...record,
+      sourceDocumentId: record.sourceDocumentId,
+      documentCount: documents.length,
+      documentTypes: [...new Set(documents.map((item) => item.documentType).filter(Boolean))],
+      sourceDocumentIds: documents.map((item) => item.sourceDocumentId).filter(Boolean),
+    };
+  });
 }
 
 function countBy(records, keyFn) {
@@ -57,7 +104,14 @@ async function run() {
   for (const region of regions) {
     const file = `public/data/regions/${region}/projects_location_enriched.json`;
     const data = JSON.parse(await fs.readFile(file, "utf8"));
-    projects.push(...(data.projects || []).map((project) => projectRecord(project, region)));
+    const sourceProjects = data.projects || [];
+    const cleanedProjects = region === "bergensregionen"
+      ? consolidateKvam(sourceProjects.filter((project) => String(project.municipalityNumber) === "4622"))
+      : sourceProjects;
+    const regularProjects = region === "bergensregionen"
+      ? sourceProjects.filter((project) => String(project.municipalityNumber) !== "4622")
+      : [];
+    projects.push(...[...regularProjects, ...cleanedProjects].map((project) => projectRecord(project, region)));
   }
 
   const output = {
