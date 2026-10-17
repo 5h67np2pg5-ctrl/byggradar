@@ -803,21 +803,11 @@ function statisticsTrend(records) {
   return { label: "Omtrent uendret", className: "neutral" };
 }
 
-const permitStagesForFeeEstimate = new Set([
-  "tillatelse gitt",
-  "igangsettingstillatelse gitt",
-]);
-
-function isFeeEligibleProject(project) {
-  return project?.phase === "Fase 2"
-    && permitStagesForFeeEstimate.has(String(project.stage || "").trim().toLowerCase());
-}
-
-function statisticsPermitRecordsLastYear(records) {
+function statisticsBuildingRecordsLastYear(records) {
   const cutoff = Date.now() - 365 * 86400000;
   return records.filter((project) => {
     const timestamp = Date.parse(project.date);
-    return isFeeEligibleProject(project) && Number.isFinite(timestamp) && timestamp >= cutoff;
+    return Boolean(project?.municipality) && Boolean(project?.stage) && Number.isFinite(timestamp) && timestamp >= cutoff;
   });
 }
 
@@ -851,7 +841,7 @@ function formatNok(value) {
 }
 
 function statisticsFeeTable(rows) {
-  if (!rows.length) return `<p class="statistics-empty">Ingen saker med tillatelse i perioden.</p>`;
+  if (!rows.length) return `<p class="statistics-empty">Ingen registrerte byggesaker i perioden.</p>`;
   return `<div class="statistics-fee-table-wrap"><table class="statistics-fee-table"><thead><tr><th>Kommune</th><th>Saker</th><th>Referansesats</th><th>Beregnet inntekt</th><th>Grunnlag</th></tr></thead><tbody>${rows.map((row) => `<tr><td>${escapeHtml(row.municipality)}</td><td>${row.count.toLocaleString("nb-NO")}</td><td>${formatNok(row.fee)}${row.tariffYear ? ` (${escapeHtml(String(row.tariffYear))})` : ""}</td><td>${formatNok(row.income)}</td><td>${escapeHtml(row.source)}</td></tr>`).join("")}</tbody></table></div>`;
 }
 
@@ -873,7 +863,11 @@ function renderStatistics() {
   const phaseTwo = records.filter((project) => project.phase === "Fase 2").length;
   const municipalitiesCount = new Set(records.map((project) => project.municipality)).size;
   const regionName = state.statisticsRegion ? illustrationRegions.find((name) => locationRegions.find((region) => region.id === state.statisticsRegion)?.name === name) || locationRegions.find((region) => region.id === state.statisticsRegion)?.name : "Alle regioner";
-  const feeRecords = statisticsPermitRecordsLastYear(state.statisticsRegion ? regionRecords : statisticsRecords());
+  let feeScopeRecords = regionRecords;
+  if (state.statisticsMunicipality) {
+    feeScopeRecords = feeScopeRecords.filter((project) => normalizeMunicipalityName(project.municipality) === state.statisticsMunicipality);
+  }
+  const feeRecords = statisticsBuildingRecordsLastYear(feeScopeRecords);
   const feeRows = statisticsFeeRows(feeRecords);
   const calculatedFeeRows = feeRows.filter((row) => row.income !== null);
   const calculatedFeeIncome = calculatedFeeRows.reduce((sum, row) => sum + row.income, 0);
@@ -909,7 +903,7 @@ function renderStatistics() {
       <section><h2>Undergrupper: tiltakstyper</h2>${statisticsList(records.flatMap((project) => (project.projectTypes || []).map((type) => ({ projectTypes: [type] }))), (project) => project.projectTypes[0])}</section>
     </div>
     <section class="statistics-fee-panel">
-      <div class="statistics-section-heading"><div><h2>Gebyr og beregnet inntekt</h2><p>Siste 12 måneder · fase 2-saker med tillatelse</p></div><span class="statistics-basis">${feeRecords.length.toLocaleString("nb-NO")} fase 2-saker</span></div>
+      <div class="statistics-section-heading"><div><h2>Gebyr og beregnet inntekt</h2><p>Siste 12 måneder · alle registrerte byggesaker</p></div><span class="statistics-basis">${feeRecords.length.toLocaleString("nb-NO")} byggesaker</span></div>
       <div class="statistics-fee-summary"><div><span>Beregnet gebyrinntekt</span><strong>${calculatedFeeRows.length ? formatNok(calculatedFeeIncome) : "Ikke beregnet"}</strong></div><div><span>Kommuner med beregningsgrunnlag</span><strong>${calculatedFeeRows.length.toLocaleString("nb-NO")} av ${feeRows.length.toLocaleString("nb-NO")}</strong></div></div>
       <p class="statistics-disclaimer">Beløpet er et estimat basert på en referansesats per sak. Der kommunens egen sats ikke er entydig dokumentert, brukes et KS-basert sammenligningstall. Gebyrer varierer etter tiltak, størrelse og dispensasjoner. Dette er ikke kommunens regnskapsførte inntekt.</p>
       ${statisticsFeeTable(feeRows)}
