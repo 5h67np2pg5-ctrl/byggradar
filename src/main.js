@@ -1906,11 +1906,11 @@ function addBaseMap(map, options = {}) {
     detectRetina: false,
     className: "byggradar-map-tiles",
   };
-  // Bruk et vanlig vei- og gatenett som hovedkart. Topografisk kart er lite
-  // egnet når brukeren skal finne prosjekter og eiendommer raskt.
-  const layer = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}", {
+  // Bruk OpenStreetMap som hovedkart. Det gir et nøytralt vei- og gatenett
+  // uten topografisk bakgrunn som forstyrrer prosjektpunktene.
+  const layer = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     ...tileOptions,
-    attribution: '&copy; Esri, HERE, Garmin, Intermap, USGS, METI/NASA',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   });
 
   let fallbackStarted = false;
@@ -1919,7 +1919,7 @@ function addBaseMap(map, options = {}) {
     event.tile.classList.add("tile-load-error");
     if (fallbackStarted) return;
     fallbackStarted = true;
-    const fallbackLayer = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    const fallbackLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       ...tileOptions,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     });
