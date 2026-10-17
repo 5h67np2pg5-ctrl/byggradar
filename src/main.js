@@ -28,8 +28,8 @@ const state = {
   expandedPreviewIds: new Set(),
   aiSearchResults: new Map(),
   aiSearchLoading: new Set(),
+  userMode: null,
   statisticsData: null,
-  statisticsOpen: false,
   statisticsRegion: "",
   statisticsMunicipality: "",
   statisticsStage: "",
@@ -58,6 +58,7 @@ const illustrationRegions = ["Bergensregionen", "Stavangerregionen", "Haugalands
 const savedFiltersKey = "byggradar.filters.v1";
 const markedProjectsKey = "byggradar.markedProjects.v1";
 const authSessionKey = "byggradar.session.v1";
+const userModeKey = "byggradar.userMode.v1";
 const rememberedSessionValue = "active-v2";
 const standardProjectLimit = 200;
 const loadMoreStep = 20;
@@ -295,15 +296,25 @@ const forceLogin = new URLSearchParams(window.location.search).get("login") === 
 init();
 
 async function init() {
-  if (forceLogin || readSavedValue(authSessionKey) !== rememberedSessionValue) {
+  const rememberedMode = readSavedValue(userModeKey);
+  if (forceLogin || readSavedValue(authSessionKey) !== rememberedSessionValue || !["vendor", "statistics"].includes(rememberedMode)) {
     renderLogin();
     return;
   }
 
-  await initApplication();
+  await startUserMode(rememberedMode);
 }
 
-async function initApplication() {
+async function startUserMode(mode) {
+  state.userMode = mode;
+  if (mode === "statistics") {
+    await initStatisticsApplication();
+    return;
+  }
+  await initVendorApplication();
+}
+
+async function initVendorApplication() {
   try {
     renderShell();
     restoreSavedFilters();
@@ -313,6 +324,22 @@ async function initApplication() {
     state.selected = null;
     scheduleRefreshes();
     render();
+  } catch (error) {
+    app.innerHTML = `
+      <main class="fatal">
+        <h1>Norsk ByggRadar kunne ikke starte</h1>
+        <p>${escapeHtml(error.message || String(error))}</p>
+      </main>
+    `;
+    console.error(error);
+  }
+}
+
+async function initStatisticsApplication() {
+  try {
+    renderStatisticsShell();
+    await loadStatisticsData();
+    renderStatistics();
   } catch (error) {
     app.innerHTML = `
       <main class="fatal">
@@ -336,23 +363,46 @@ function renderLogin() {
           <h1 id="loginTitle">Velkommen til Norsk ByggRadar</h1>
           <p>Få relevante byggeprosjekter, tiltak og anskaffelser i områdene du arbeider i.</p>
         </div>
+        <fieldset class="role-choice">
+          <legend>Velg visning</legend>
+          <button class="role-option" type="button" data-mode="vendor">
+            <strong>Leverandør</strong>
+            <span>Finn relevante prosjekter, tiltak og oppdrag.</span>
+          </button>
+          <button class="role-option" type="button" data-mode="statistics">
+            <strong>Statistikkbruker</strong>
+            <span>Se samlet statistikk for regioner og kommuner.</span>
+          </button>
+        </fieldset>
         <label class="remember-choice">
           <input id="rememberSession" type="checkbox" autocomplete="off" />
           <span>Husk meg i denne nettleseren</span>
         </label>
-        <button class="login-button" id="loginButton" type="button">Logg inn</button>
+        <button class="login-button" id="loginButton" type="button" disabled>Gå videre</button>
       </section>
     </main>
   `;
 
   document.querySelector("#rememberSession").checked = false;
 
+  let selectedMode = "";
+  document.querySelectorAll(".role-option").forEach((button) => {
+    button.addEventListener("click", () => {
+      selectedMode = button.dataset.mode || "";
+      document.querySelectorAll(".role-option").forEach((option) => option.classList.toggle("is-selected", option === button));
+      const loginButton = document.querySelector("#loginButton");
+      if (loginButton) loginButton.disabled = !selectedMode;
+    });
+  });
+
   document.querySelector("#loginButton")?.addEventListener("click", () => {
+    if (!selectedMode) return;
     if (document.querySelector("#rememberSession")?.checked) {
       writeSavedValue(authSessionKey, rememberedSessionValue);
+      writeSavedValue(userModeKey, selectedMode);
     }
     if (forceLogin) window.history.replaceState({}, "", window.location.pathname);
-    initApplication();
+    startUserMode(selectedMode);
   });
 }
 
@@ -601,7 +651,6 @@ function renderShell() {
             </select>
           </label>
           <button class="help-pill" id="helpPill" type="button" aria-label="Råd om bruk av Norsk ByggRadar">Råd</button>
-          <button class="stats-button" id="statisticsButton" type="button">Statistikk</button>
         </div>
       </header>
 
@@ -635,8 +684,6 @@ function renderShell() {
       <section class="workspace">
         <section class="project-list" id="projectList" aria-label="Prosjekter"></section>
       </section>
-
-      <section class="statistics-view" id="statisticsView" hidden aria-label="Statistikk"></section>
 
       <section class="map-dialog" id="mapDialog" hidden aria-label="Prosjektkart">
         <div class="map-dialog-panel">
@@ -684,12 +731,6 @@ function renderShell() {
     }
   });
 
-  document.querySelector("#statisticsButton")?.addEventListener("click", async () => {
-    state.statisticsOpen = !state.statisticsOpen;
-    if (state.statisticsOpen && !state.statisticsData) await loadStatisticsData();
-    renderStatistics();
-  });
-
   document.querySelector("#mapDialogClose").addEventListener("click", (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -705,6 +746,20 @@ function renderShell() {
     updateCustomerMunicipalityPrompt();
     render();
   });
+}
+
+function renderStatisticsShell() {
+  app.innerHTML = `
+    <main class="app-shell statistics-mode">
+      <header class="topbar statistics-topbar">
+        <div class="topbar-copy">
+          <div class="brand">Norsk ByggRadar</div>
+          <div class="subtle">Statistikk for registrerte og aktive byggprosjekter</div>
+        </div>
+      </header>
+      <section class="statistics-view" id="statisticsView" aria-label="Statistikk"></section>
+    </main>
+  `;
 }
 
 async function loadStatisticsData() {
@@ -760,15 +815,11 @@ function statisticsTrend(records) {
 
 function renderStatistics() {
   const view = document.querySelector("#statisticsView");
-  const workspace = document.querySelector(".workspace");
-  const filters = document.querySelector(".filters");
-  const button = document.querySelector("#statisticsButton");
-  if (!view || !workspace || !filters) return;
-  view.hidden = !state.statisticsOpen;
-  workspace.hidden = state.statisticsOpen;
-  filters.hidden = state.statisticsOpen;
-  button?.classList.toggle("is-active", state.statisticsOpen);
-  if (!state.statisticsOpen) return;
+  if (!view) return;
+  if (!state.statisticsData) {
+    view.innerHTML = `<div class="statistics-loading">Laster statistikk ...</div>`;
+    return;
+  }
 
   const records = statisticsFilteredRecords();
   const regionRecords = statisticsRegionRecords();
@@ -871,7 +922,6 @@ function render() {
   renderRegionNotice({ visibleCount: visibleProjects.length, totalCount: totalProjectCount, regionName });
 
   renderList();
-  if (state.statisticsOpen) renderStatistics();
 }
 
 function regionSummaryTotalCount() {

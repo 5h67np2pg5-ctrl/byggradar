@@ -112,6 +112,63 @@ body {
   cursor: pointer;
 }
 
+.role-choice {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.role-choice legend {
+  width: 100%;
+  margin-bottom: 2px;
+  color: #b8d3df;
+  font-size: 0.82rem;
+}
+
+.role-option {
+  display: grid;
+  gap: 6px;
+  min-height: 82px;
+  padding: 13px 12px;
+  border: 1px solid rgba(137, 208, 220, 0.42);
+  border-radius: 8px;
+  background: rgba(8, 39, 59, 0.64);
+  color: #d9f4f5;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.role-option strong {
+  color: #f4fffc;
+  font-size: 0.94rem;
+}
+
+.role-option span {
+  color: #a9cbd5;
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
+.role-option:hover,
+.role-option.is-selected {
+  border-color: #54e0c2;
+  background: rgba(22, 92, 101, 0.78);
+  transform: translateY(-1px);
+}
+
+.login-button:disabled {
+  border-color: rgba(137, 208, 220, 0.28);
+  background: rgba(83, 134, 147, 0.48);
+  color: #a8c0c8;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .remember-choice input {
   width: 17px;
   height: 17px;
@@ -370,6 +427,7 @@ a {
 }
 
 @media (max-width: 560px) {
+  .role-choice { grid-template-columns: 1fr; }
   .statistics-view { padding: 14px 12px 28px; }
   .statistics-header { display: grid; }
   .statistics-filters,
