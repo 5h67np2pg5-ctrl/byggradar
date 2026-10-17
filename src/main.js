@@ -808,11 +808,16 @@ const permitStagesForFeeEstimate = new Set([
   "igangsettingstillatelse gitt",
 ]);
 
+function isFeeEligibleProject(project) {
+  return project?.phase === "Fase 2"
+    && permitStagesForFeeEstimate.has(String(project.stage || "").trim().toLowerCase());
+}
+
 function statisticsPermitRecordsLastYear(records) {
   const cutoff = Date.now() - 365 * 86400000;
   return records.filter((project) => {
     const timestamp = Date.parse(project.date);
-    return permitStagesForFeeEstimate.has(String(project.stage || "").toLowerCase()) && Number.isFinite(timestamp) && timestamp >= cutoff;
+    return isFeeEligibleProject(project) && Number.isFinite(timestamp) && timestamp >= cutoff;
   });
 }
 
@@ -904,7 +909,7 @@ function renderStatistics() {
       <section><h2>Undergrupper: tiltakstyper</h2>${statisticsList(records.flatMap((project) => (project.projectTypes || []).map((type) => ({ projectTypes: [type] }))), (project) => project.projectTypes[0])}</section>
     </div>
     <section class="statistics-fee-panel">
-      <div class="statistics-section-heading"><div><h2>Gebyr og beregnet inntekt</h2><p>Siste 12 måneder · saker med tillatelse</p></div><span class="statistics-basis">${feeRecords.length.toLocaleString("nb-NO")} saker</span></div>
+      <div class="statistics-section-heading"><div><h2>Gebyr og beregnet inntekt</h2><p>Siste 12 måneder · fase 2-saker med tillatelse</p></div><span class="statistics-basis">${feeRecords.length.toLocaleString("nb-NO")} fase 2-saker</span></div>
       <div class="statistics-fee-summary"><div><span>Beregnet gebyrinntekt</span><strong>${calculatedFeeRows.length ? formatNok(calculatedFeeIncome) : "Ikke beregnet"}</strong></div><div><span>Kommuner med beregningsgrunnlag</span><strong>${calculatedFeeRows.length.toLocaleString("nb-NO")} av ${feeRows.length.toLocaleString("nb-NO")}</strong></div></div>
       <p class="statistics-disclaimer">Beløpet er et estimat basert på en referansesats per sak. Der kommunens egen sats ikke er entydig dokumentert, brukes et KS-basert sammenligningstall. Gebyrer varierer etter tiltak, størrelse og dispensasjoner. Dette er ikke kommunens regnskapsførte inntekt.</p>
       ${statisticsFeeTable(feeRows)}
