@@ -1909,7 +1909,7 @@ function addBaseMap(map, options = {}) {
   // Bruk det vanlige vei- og gatenettet som hovedkart. OSM beholdes som reserve.
   const layer = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}", {
     ...tileOptions,
-    attribution: '&copy; OpenStreetMap contributors, <a href="https://www.openstreetmap.org/copyright">ODbL</a>',
+    attribution: '&copy; Esri, HERE, Garmin, Intermap, USGS, METI/NASA',
   });
 
   let fallbackStarted = false;
