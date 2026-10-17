@@ -350,9 +350,8 @@ function renderLogin() {
           <img src="/assets/byggradar-radar.png" alt="" class="login-logo" />
         </div>
         <div class="login-copy">
-          <p class="login-eyebrow">Få informasjon om prosjekter før andre</p>
           <h1 id="loginTitle">Velkommen til Norsk ByggRadar</h1>
-          <p>Få relevante byggeprosjekter, tiltak og anskaffelser i områdene du arbeider i.</p>
+          <p>Få relevant informasjon om byggeprosjekter, tiltak og anskaffelser i Norge.</p>
         </div>
         <fieldset class="role-choice">
           <legend>Velg visning</legend>
