@@ -867,10 +867,19 @@ function statisticsSsbMunicipalities(regionId = state.statisticsRegion) {
 }
 
 async function fetchSsbMunicipality(municipalityNumber) {
-  const response = await fetch(`/api/ssb-statistics?kommunenummer=${encodeURIComponent(municipalityNumber)}`);
-  const payload = await response.json();
-  if (!response.ok) throw new Error(payload.error || `SSB-data kunne ikke hentes for ${municipalityNumber}.`);
-  return payload;
+  let lastError;
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    try {
+      const response = await fetch(`/api/ssb-statistics?kommunenummer=${encodeURIComponent(municipalityNumber)}`);
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.error || `SSB-data kunne ikke hentes for ${municipalityNumber}.`);
+      return payload;
+    } catch (error) {
+      lastError = error;
+      if (attempt === 0) await new Promise((resolve) => setTimeout(resolve, 350));
+    }
+  }
+  throw lastError || new Error(`SSB-data kunne ikke hentes for ${municipalityNumber}.`);
 }
 
 function aggregateSsbStatistics(payloads, scope, municipalityNumbers = []) {
@@ -963,8 +972,12 @@ async function loadSsbRegionStatistics(regionId) {
   state.statisticsSsbScope = "region";
   renderStatistics();
   try {
-    const results = await Promise.allSettled(municipalities.map((municipality) => fetchSsbMunicipality(municipality.number)));
-    const payloads = results.filter((result) => result.status === "fulfilled").map((result) => result.value);
+    const payloads = [];
+    for (let index = 0; index < municipalities.length; index += 3) {
+      const batch = municipalities.slice(index, index + 3);
+      const results = await Promise.allSettled(batch.map((municipality) => fetchSsbMunicipality(municipality.number)));
+      payloads.push(...results.filter((result) => result.status === "fulfilled").map((result) => result.value));
+    }
     if (!payloads.length) throw new Error("SSB-data kunne ikke hentes for kommunene i regionen.");
     state.statisticsSsb = aggregateSsbStatistics(payloads, "region", payloads.map((payload) => payload.municipalityNumber));
     if (payloads.length < municipalities.length) state.statisticsSsbError = `${payloads.length} av ${municipalities.length} kommuner svarte fra SSB.`;
