@@ -41,6 +41,11 @@ const state = {
   partnerTrade: "",
   partnerFinderOpen: false,
   partnerMap: null,
+  partnerMapOrigin: null,
+  partnerSearchKey: "",
+  partnerSearchLoading: false,
+  partnerSearchError: "",
+  partnerSuppliers: [],
 };
 
 const tradePresets = [
@@ -59,85 +64,42 @@ const tradePresets = [
 ];
 
 const partnerTrades = [
-  "entreprenør",
-  "elektro",
-  "rørlegger",
-  "tømrer",
-  "murer",
-  "maler",
-  "ventilasjon",
-  "tak",
+  "byggevarehus",
+  "elektrogrossist",
+  "vvs-grossist",
+  "verktøy-maskinutleie",
+  "betong-pukk-grus",
+  "transport-kran-container",
+  "arbeidstoy-verneutstyr",
 ];
 const partnerRoleLabels = {
-  entreprenør: "Entreprenør",
-  elektro: "Elektro",
-  rørlegger: "Rørlegger",
-  tømrer: "Tømrer",
-  murer: "Murer",
-  maler: "Maler",
-  ventilasjon: "Ventilasjon",
-  tak: "Tak",
+  byggevarehus: "Byggevarehus",
+  elektrogrossist: "Elektrogrossist",
+  "vvs-grossist": "VVS-grossist",
+  "verktøy-maskinutleie": "Verktøy og maskinutleie",
+  "betong-pukk-grus": "Betong, pukk og grus",
+  "transport-kran-container": "Transport, kran og container",
+  "arbeidstoy-verneutstyr": "Arbeidstøy og verneutstyr",
 };
 
-const partnerDirectorySeeds = {
-  bergensregionen: ["Fjordglimt", "Vestkyst", "Nordlys", "Byfjorden", "Havstein"],
-  stavangerregionen: ["Jær", "Rogaland", "Sørvest", "Lyng", "Storhaug"],
-  haugalandsregionen: ["Haugaland", "Sjøbris", "Karmsund", "Sunnhordland", "Vestavind"],
-  grenlandsregionen: ["Grenland", "Telemark", "Skienselva", "Frier", "Kystlinje"],
-  sorlandsregionen: ["Sørlys", "Agder", "Skagerrak", "Palme", "Kystbyen"],
-};
-
-const partnerRegionAnchors = {
-  bergensregionen: { lat: 60.39299, lon: 5.32415 },
-  stavangerregionen: { lat: 58.97, lon: 5.7331 },
-  haugalandsregionen: { lat: 59.505, lon: 5.7 },
-  grenlandsregionen: { lat: 59.14, lon: 9.61 },
-  sorlandsregionen: { lat: 58.1467, lon: 7.9956 },
-};
-
-function createPartnerDirectory() {
-  return Object.entries(partnerDirectorySeeds).flatMap(([regionId, seeds]) => {
-    const region = partnerRegionAnchors[regionId];
-    return partnerTrades.flatMap((trade, tradeIndex) => seeds.map((seed, companyIndex) => {
-      const angle = ((tradeIndex * 5 + companyIndex) / 50) * Math.PI * 2;
-      const radius = 0.01 + ((tradeIndex + companyIndex) % 4) * 0.006;
-      const namePart = seed.toLowerCase().replace(/å/g, "a").replace(/ø/g, "o").replace(/æ/g, "ae");
-      return {
-        id: `${regionId}-${trade}-${companyIndex}`,
-        regionId,
-        isSubscriber: true,
-        tradeAffiliations: [trade],
-        trade,
-        company: `${seed} ${partnerRoleLabels[trade]} AS`,
-        phone: `900 ${String(10 + tradeIndex).padStart(2, "0")} ${String(10 + companyIndex).padStart(2, "0")}`,
-        contact: ["Ida Nilsen", "Marius Berg", "Silje Hauge", "Jonas Vik", "Nora Strand"][companyIndex],
-        website: `https://www.${namePart}-${trade}.example`,
-        email: `kontakt@${namePart}-${trade}.example`,
-        lat: (region?.lat || 60) + Math.sin(angle) * radius,
-        lon: (region?.lon || 6) + Math.cos(angle) * radius,
-      };
-    }));
-  });
+function partnerSearchOrigin(region) {
+  if (state.partnerMapOrigin?.lat && state.partnerMapOrigin?.lon) return state.partnerMapOrigin;
+  if (state.userLocation?.lat && state.userLocation?.lon) return state.userLocation;
+  const municipalityAnchor = municipalityMapAnchors[normalizeMunicipalityName(state.customerMunicipality)];
+  return municipalityAnchor || region.anchor;
 }
 
-const partnerDirectory = createPartnerDirectory();
-
-// Alle abonnenter skal være synlige i sin egen region. Det finnes ingen
-// maksimumsgrense her; en fremtidig abonnentkilde kan derfor legges til uten
-// at visningen må endres. Regionfilteret er alltid obligatorisk.
-function regionalSubscribers(regionId, trade) {
-  return partnerDirectory.filter((partner) => (
-    partner.isSubscriber
-    && partner.regionId === regionId
-    && subscriberHasValidTrades(partner)
-    && (!trade || partner.tradeAffiliations.includes(trade))
-  ));
-}
-
-function subscriberHasValidTrades(partner) {
-  return Array.isArray(partner.tradeAffiliations)
-    && partner.tradeAffiliations.length > 0
-    && partner.tradeAffiliations.every((value) => partnerTrades.includes(value))
+function requestPartnerLocation() {
+  if (state.partnerMapOrigin || state.userLocation || !navigator.geolocation) return;
+  navigator.geolocation.getCurrentPosition((position) => {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
+    const region = nearestLocationRegion(lat, lon);
+    state.userLocation = { lat, lon, regionId: region.id };
+    renderPartnerFinder();
+  }, () => {
+    // Valgt kommune eller region brukes dersom posisjon ikke gis.
+  }, { enableHighAccuracy: false, maximumAge: 300000, timeout: 6000 });
 }
 
 // Midlertidig visning av regionvalg. Valget kobles til kundens faste region senere.
@@ -867,6 +829,7 @@ function renderShell() {
               <option value="">Velg kommune</option>
             </select>
           </label>
+          <button class="partner-top-button" id="partnerOpen" type="button">Finn leverandør med rabatt</button>
         </div>
       </header>
 
@@ -897,10 +860,9 @@ function renderShell() {
       <section class="partner-finder" aria-labelledby="partnerFinderTitle">
         <div class="partner-finder-heading">
           <div>
-            <h2 id="partnerFinderTitle">Finn samarbeidspartner</h2>
+            <h2 id="partnerFinderTitle">Finn nærmeste leverandør</h2>
           </div>
-          <span class="partner-test-note">Finn samarbeidspartnere som bruker Norsk ByggRadar</span>
-          <button class="partner-open" id="partnerOpen" type="button" hidden>Åpne</button>
+          <span class="partner-test-note">Nærmeste leverandører · rabatt i parentes</span>
         </div>
         <div id="partnerContent" class="partner-content">
           <label class="partner-trade-field">
@@ -980,10 +942,16 @@ function renderShell() {
     state.partnerTrade = event.target.value;
     state.partnerFinderOpen = true;
     renderPartnerFinder();
+    requestPartnerLocation();
   });
   document.querySelector("#partnerClose")?.addEventListener("click", () => {
     state.partnerFinderOpen = false;
     state.partnerTrade = "";
+    state.partnerMapOrigin = null;
+    state.partnerSearchKey = "";
+    state.partnerSearchLoading = false;
+    state.partnerSearchError = "";
+    state.partnerSuppliers = [];
     renderPartnerFinder();
   });
   document.querySelector("#partnerOpen")?.addEventListener("click", () => {
@@ -1438,6 +1406,38 @@ function activePartnerRegion() {
   return state.activeRegion || locationRegions.find((region) => region.id === state.regionKey) || locationRegions[0];
 }
 
+function partnerSearchKey(region, trade, origin) {
+  return `${region.id}|${trade}|${origin.lat.toFixed(5)}|${origin.lon.toFixed(5)}`;
+}
+
+async function loadNearbySuppliers(region, trade, origin, key) {
+  try {
+    const query = new URLSearchParams({
+      lat: String(origin.lat),
+      lon: String(origin.lon),
+      category: trade,
+    });
+    const response = await fetch(`/api/nearby-suppliers?${query}`);
+    const responseText = await response.text();
+    let payload;
+    try {
+      payload = responseText ? JSON.parse(responseText) : {};
+    } catch {
+      throw new Error("Leverandørsøket er ikke tilgjengelig i denne serverversjonen ennå.");
+    }
+    if (state.partnerSearchKey !== key || !state.partnerFinderOpen) return;
+    if (!response.ok) throw new Error(payload.error || "Leverandørsøket kunne ikke hentes.");
+    state.partnerSuppliers = Array.isArray(payload.suppliers) ? payload.suppliers : [];
+    state.partnerSearchLoading = false;
+    renderPartnerFinder();
+  } catch (error) {
+    if (state.partnerSearchKey !== key || !state.partnerFinderOpen) return;
+    state.partnerSearchLoading = false;
+    state.partnerSearchError = error.message || "Leverandørsøket kunne ikke hentes.";
+    renderPartnerFinder();
+  }
+}
+
 function renderPartnerFinder() {
   const content = document.querySelector("#partnerContent");
   const results = document.querySelector("#partnerResults");
@@ -1455,30 +1455,68 @@ function renderPartnerFinder() {
   if (!state.partnerFinderOpen) return;
   select.value = state.partnerTrade;
   const region = activePartnerRegion();
-  const partners = regionalSubscribers(region.id, state.partnerTrade);
   if (!state.partnerTrade) {
     results.innerHTML = `<div class="partner-empty">Velg et fagområde for å se samarbeidspartnere i ${escapeHtml(region.name)}.</div>`;
     return;
   }
-  if (!partners.length) {
-    results.innerHTML = `<div class="partner-empty">Ingen samarbeidspartnere er registrert for dette fagområdet i ${escapeHtml(region.name)}.</div>`;
+  const origin = partnerSearchOrigin(region);
+  const key = partnerSearchKey(region, state.partnerTrade, origin);
+  if (state.partnerSearchKey !== key) {
+    state.partnerSearchKey = key;
+    state.partnerSearchLoading = true;
+    state.partnerSearchError = "";
+    state.partnerSuppliers = [];
+    results.innerHTML = `<div class="partner-empty">Søker etter nærmeste leverandører...</div>`;
+    loadNearbySuppliers(region, state.partnerTrade, origin, key);
     return;
   }
-  results.innerHTML = partners.map((partner) => `
+  if (state.partnerSearchLoading) {
+    results.innerHTML = `<div class="partner-empty">Søker etter nærmeste leverandører...</div>`;
+    return;
+  }
+  if (state.partnerSearchError) {
+    results.innerHTML = `<div class="partner-empty">${escapeHtml(state.partnerSearchError)}</div>`;
+    return;
+  }
+  const partners = state.partnerSuppliers;
+  if (!partners.length) {
+    results.innerHTML = `<div class="partner-empty">Ingen leverandører ble funnet i nærheten av valgt punkt.</div>`;
+    return;
+  }
+  const originLabel = origin === state.partnerMapOrigin
+    ? "valgt punkt i kartet"
+    : origin === state.userLocation
+      ? "din faktiske posisjon"
+      : "valgt område";
+  const websiteLink = (website) => {
+    const value = String(website || "").trim();
+    if (!value) return "";
+    try {
+      const url = new URL(/^https?:\/\//i.test(value) ? value : `https://${value}`);
+      if (!['http:', 'https:'].includes(url.protocol)) return "";
+      return `<a href="${escapeHtml(url.href)}" target="_blank" rel="noopener noreferrer">Nettsted</a>`;
+    } catch {
+      return "";
+    }
+  };
+  results.innerHTML = `
+    <div class="partner-location-note">Nærmeste leverandører fra ${escapeHtml(originLabel)}. Rabatt vises i parentes. Rabattprosentene er foreløpige testverdier.</div>
+    ${partners.map((partner) => `
     <article class="partner-row">
       <div class="partner-company">
-        <strong>${escapeHtml(partner.company)}</strong>
-        <span>${escapeHtml(partnerRoleLabels[partner.trade])} · ${escapeHtml(region.name)}</span>
+        <strong>${escapeHtml(partner.company)} (${partner.discountPercent} %)</strong>
+        <span>${escapeHtml(partnerRoleLabels[partner.category] || partnerRoleLabels[state.partnerTrade])} · ${escapeHtml(region.name)}</span>
       </div>
-      <div class="partner-contact"><span>${escapeHtml(partner.contact)}</span><a href="tel:${escapeHtml(partner.phone.replaceAll(" ", ""))}">${escapeHtml(partner.phone)}</a></div>
-      <div class="partner-contact"><a href="mailto:${escapeHtml(partner.email)}">${escapeHtml(partner.email)}</a><a href="${escapeHtml(partner.website)}" target="_blank" rel="noopener noreferrer">Nettsted</a></div>
+      <div class="partner-contact"><span>${partner.distanceKm.toLocaleString("nb-NO", { maximumFractionDigits: 1 })} km unna</span>${websiteLink(partner.website)}</div>
+      <div class="partner-contact"><a href="https://www.google.com/maps/dir/?api=1&destination=${partner.lat},${partner.lon}" target="_blank" rel="noopener noreferrer">Veibeskrivelse</a></div>
     </article>
-  `).join("");
+  `).join("")}
+  `;
   if (mapBlock) mapBlock.hidden = false;
-  renderPartnerMap(partners, region);
+  renderPartnerMap(partners, region, origin);
 }
 
-function renderPartnerMap(partners, region) {
+function renderPartnerMap(partners, region, origin) {
   const canvas = document.querySelector("#partnerMapCanvas");
   if (!canvas || !window.L || !partners.length) return;
   state.partnerMap = L.map(canvas, {
@@ -1488,9 +1526,23 @@ function renderPartnerMap(partners, region) {
     doubleClickZoom: true,
     dragging: true,
     touchZoom: true,
-  }).setView([region.anchor.lat, region.anchor.lon], 10);
+  }).setView([origin.lat, origin.lon], 10);
   addBaseMap(state.partnerMap);
+  state.partnerMap.on("click", (event) => {
+    state.partnerMapOrigin = { lat: event.latlng.lat, lon: event.latlng.lng };
+    renderPartnerFinder();
+  });
+  const originMarker = L.circleMarker([origin.lat, origin.lon], {
+    radius: 7,
+    color: "#1b5d83",
+    weight: 2,
+    fillColor: "#4f9bc5",
+    fillOpacity: 0.95,
+  });
+  originMarker.bindTooltip(origin === state.partnerMapOrigin ? "Valgt punkt i kartet" : origin === state.userLocation ? "Din posisjon" : "Valgt område", { direction: "top" });
+  originMarker.addTo(state.partnerMap);
   const bounds = L.latLngBounds([]);
+  bounds.extend([origin.lat, origin.lon]);
   partners.forEach((partner) => {
     const marker = L.circleMarker([partner.lat, partner.lon], {
       radius: 8,
@@ -1499,7 +1551,7 @@ function renderPartnerMap(partners, region) {
       fillColor: "#e7a24e",
       fillOpacity: 0.92,
     });
-    marker.bindTooltip(`${partner.company} · ${partnerRoleLabels[partner.trade]}`, {
+    marker.bindTooltip(`${partner.company} · ${partnerRoleLabels[partner.category] || partnerRoleLabels[state.partnerTrade]}`, {
       direction: "top",
       sticky: true,
     });

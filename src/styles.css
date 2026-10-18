@@ -722,6 +722,12 @@ a {
   min-width: 0;
 }
 
+.partner-location-note {
+  color: #376751;
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
 .partner-map-block {
   grid-column: 1 / -1;
   display: grid;
@@ -935,9 +941,9 @@ a {
   max-width: 520px;
   margin: 0;
   color: #5f7889;
-  font-size: 0.75rem;
-  font-weight: 500;
-  line-height: 1.4;
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.45;
 }
 
 .customer-municipality-prompt {
@@ -2266,7 +2272,9 @@ body.has-map-dialog .mini-map-card {
 
 .topbar:not(.statistics-topbar) .topbar-controls {
   order: 2;
-  width: min(520px, 100%);
+  display: grid;
+  grid-template-columns: minmax(140px, 1fr) minmax(150px, 1fr) minmax(190px, auto);
+  width: min(760px, 100%);
   margin: 0 auto;
   gap: calc(10px + 3mm);
   justify-content: center;
@@ -2278,6 +2286,25 @@ body.has-map-dialog .mini-map-card {
 
 .topbar:not(.statistics-topbar) .topbar-customer {
   flex: 1 1 230px;
+}
+
+.partner-top-button {
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid #709c7f;
+  border-radius: 8px;
+  background: #2f7655;
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 720;
+  white-space: nowrap;
+}
+
+.partner-top-button:hover,
+.partner-top-button:focus-visible {
+  background: #245d43;
 }
 
 @media (min-width: 820px) {
@@ -2307,5 +2334,10 @@ body.has-map-dialog .mini-map-card {
     width: 100%;
     margin: 0;
     gap: calc(10px + 3mm);
+  }
+
+  .partner-top-button {
+    grid-column: 1 / -1;
+    width: 100%;
   }
 }
