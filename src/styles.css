@@ -830,6 +830,13 @@ a {
     gap: 5px;
   }
 
+  .partner-test-note {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.35;
+  }
+
   .partner-content {
     grid-template-columns: 1fr;
   }

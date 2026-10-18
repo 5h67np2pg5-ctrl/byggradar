@@ -853,7 +853,7 @@ function renderShell() {
         </label>
         <div class="area-control">
           <label class="search-field">
-            <span>Søk etter hva du vil i alle prosjekter...</span>
+            <span>Skriv inn søkeord...</span>
             <input id="areaInput" list="areaSuggestions" type="search" placeholder="Skriv inn søkeord..." autocomplete="off" />
           </label>
           <datalist id="areaSuggestions">
@@ -871,8 +871,8 @@ function renderShell() {
           <div>
             <h2 id="partnerFinderTitle">Finn samarbeidspartner</h2>
           </div>
-          <button class="partner-open" id="partnerOpen" type="button" hidden>Åpne</button>
           <span class="partner-test-note">Finn samarbeidspartnere som bruker Norsk ByggRadar</span>
+          <button class="partner-open" id="partnerOpen" type="button" hidden>Åpne</button>
         </div>
         <div id="partnerContent" class="partner-content">
           <label class="partner-trade-field">
