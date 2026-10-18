@@ -854,7 +854,7 @@ function renderShell() {
         <div class="area-control">
           <label class="search-field">
             <span>Søk etter hva du vil i alle prosjekter...</span>
-            <input id="areaInput" list="areaSuggestions" type="search" placeholder="kommune, adresse, region eller tekst" autocomplete="off" />
+            <input id="areaInput" list="areaSuggestions" type="search" placeholder="Skriv inn søkeord..." autocomplete="off" />
           </label>
           <datalist id="areaSuggestions">
             ${locationRegions.flatMap((region) => [region.name, ...region.municipalities]).map((value) => `<option value="${escapeHtml(value)}"></option>`).join("")}
