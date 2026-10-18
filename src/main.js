@@ -105,6 +105,8 @@ function createPartnerDirectory() {
       return {
         id: `${regionId}-${trade}-${companyIndex}`,
         regionId,
+        isSubscriber: true,
+        tradeAffiliations: [trade],
         trade,
         company: `${seed} ${partnerRoleLabels[trade]} AS`,
         phone: `900 ${String(10 + tradeIndex).padStart(2, "0")} ${String(10 + companyIndex).padStart(2, "0")}`,
@@ -119,6 +121,24 @@ function createPartnerDirectory() {
 }
 
 const partnerDirectory = createPartnerDirectory();
+
+// Alle abonnenter skal være synlige i sin egen region. Det finnes ingen
+// maksimumsgrense her; en fremtidig abonnentkilde kan derfor legges til uten
+// at visningen må endres. Regionfilteret er alltid obligatorisk.
+function regionalSubscribers(regionId, trade) {
+  return partnerDirectory.filter((partner) => (
+    partner.isSubscriber
+    && partner.regionId === regionId
+    && subscriberHasValidTrades(partner)
+    && (!trade || partner.tradeAffiliations.includes(trade))
+  ));
+}
+
+function subscriberHasValidTrades(partner) {
+  return Array.isArray(partner.tradeAffiliations)
+    && partner.tradeAffiliations.length > 0
+    && partner.tradeAffiliations.every((value) => partnerTrades.includes(value))
+}
 
 // Midlertidig visning av regionvalg. Valget kobles til kundens faste region senere.
 const illustrationRegions = ["Bergensregionen", "Stavangerregionen", "Haugalandsregionen", "Grenlandsregionen", "Sørlandsregionen"];
@@ -1427,7 +1447,7 @@ function renderPartnerFinder() {
   if (!state.partnerFinderOpen) return;
   select.value = state.partnerTrade;
   const region = activePartnerRegion();
-  const partners = partnerDirectory.filter((partner) => partner.regionId === region.id && partner.trade === state.partnerTrade);
+  const partners = regionalSubscribers(region.id, state.partnerTrade);
   if (!state.partnerTrade) {
     results.innerHTML = `<div class="partner-empty">Velg et fagområde for å se samarbeidspartnere i ${escapeHtml(region.name)}.</div>`;
     return;
