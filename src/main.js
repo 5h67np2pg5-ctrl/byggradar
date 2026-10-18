@@ -491,13 +491,13 @@ function renderLogin() {
           <p>Informasjon om byggeprosjekter, tiltak og anskaffelser i Norge.</p>
         </div>
         <fieldset class="role-choice">
-          <legend>Velg visning</legend>
+          <legend>Velg plattform</legend>
           <button class="role-option" type="button" data-mode="vendor">
-            <strong>Finn relevante oppdrag og tiltak</strong>
+            <strong>Leverandørplattform</strong>
             <span>Finn relevante prosjekter, tiltak og oppdrag.</span>
           </button>
           <button class="role-option" type="button" data-mode="statistics">
-            <strong>Statistikkbruker</strong>
+            <strong>Statestikkplattform</strong>
             <span>Se samlet statistikk for regioner og kommuner.</span>
           </button>
         </fieldset>
