@@ -126,13 +126,9 @@ body {
 
 .role-choice legend {
   width: 100%;
-  margin-bottom: 2px;
+  margin-bottom: 16px;
   color: #b8d3df;
   font-size: 0.82rem;
-}
-
-.role-choice-spacer {
-  height: 34px;
 }
 
 .role-option {
