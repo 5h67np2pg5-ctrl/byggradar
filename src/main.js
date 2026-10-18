@@ -38,6 +38,9 @@ const state = {
   statisticsSsbScope: "",
   statisticsSavedSearches: [],
   statisticsSelectedSearch: "",
+  partnerTrade: "",
+  partnerFinderOpen: false,
+  partnerMap: null,
 };
 
 const tradePresets = [
@@ -54,6 +57,68 @@ const tradePresets = [
   "næring",
   "bolig",
 ];
+
+const partnerTrades = [
+  "entreprenør",
+  "elektro",
+  "rørlegger",
+  "tømrer",
+  "murer",
+  "maler",
+  "ventilasjon",
+  "tak",
+];
+const partnerRoleLabels = {
+  entreprenør: "Entreprenør",
+  elektro: "Elektro",
+  rørlegger: "Rørlegger",
+  tømrer: "Tømrer",
+  murer: "Murer",
+  maler: "Maler",
+  ventilasjon: "Ventilasjon",
+  tak: "Tak",
+};
+
+const partnerDirectorySeeds = {
+  bergensregionen: ["Fjordglimt", "Vestkyst", "Nordlys", "Byfjorden", "Havstein"],
+  stavangerregionen: ["Jær", "Rogaland", "Sørvest", "Lyng", "Storhaug"],
+  haugalandsregionen: ["Haugaland", "Sjøbris", "Karmsund", "Sunnhordland", "Vestavind"],
+  grenlandsregionen: ["Grenland", "Telemark", "Skienselva", "Frier", "Kystlinje"],
+  sorlandsregionen: ["Sørlys", "Agder", "Skagerrak", "Palme", "Kystbyen"],
+};
+
+const partnerRegionAnchors = {
+  bergensregionen: { lat: 60.39299, lon: 5.32415 },
+  stavangerregionen: { lat: 58.97, lon: 5.7331 },
+  haugalandsregionen: { lat: 59.505, lon: 5.7 },
+  grenlandsregionen: { lat: 59.14, lon: 9.61 },
+  sorlandsregionen: { lat: 58.1467, lon: 7.9956 },
+};
+
+function createPartnerDirectory() {
+  return Object.entries(partnerDirectorySeeds).flatMap(([regionId, seeds]) => {
+    const region = partnerRegionAnchors[regionId];
+    return partnerTrades.flatMap((trade, tradeIndex) => seeds.map((seed, companyIndex) => {
+      const angle = ((tradeIndex * 5 + companyIndex) / 50) * Math.PI * 2;
+      const radius = 0.01 + ((tradeIndex + companyIndex) % 4) * 0.006;
+      const namePart = seed.toLowerCase().replace(/å/g, "a").replace(/ø/g, "o").replace(/æ/g, "ae");
+      return {
+        id: `${regionId}-${trade}-${companyIndex}`,
+        regionId,
+        trade,
+        company: `${seed} ${partnerRoleLabels[trade]} AS`,
+        phone: `900 ${String(10 + tradeIndex).padStart(2, "0")} ${String(10 + companyIndex).padStart(2, "0")}`,
+        contact: ["Ida Nilsen", "Marius Berg", "Silje Hauge", "Jonas Vik", "Nora Strand"][companyIndex],
+        website: `https://www.${namePart}-${trade}.example`,
+        email: `kontakt@${namePart}-${trade}.example`,
+        lat: (region?.lat || 60) + Math.sin(angle) * radius,
+        lon: (region?.lon || 6) + Math.cos(angle) * radius,
+      };
+    }));
+  });
+}
+
+const partnerDirectory = createPartnerDirectory();
 
 // Midlertidig visning av regionvalg. Valget kobles til kundens faste region senere.
 const illustrationRegions = ["Bergensregionen", "Stavangerregionen", "Haugalandsregionen", "Grenlandsregionen", "Sørlandsregionen"];
@@ -801,6 +866,31 @@ function renderShell() {
         </div>
       </section>
 
+      <section class="partner-finder" aria-labelledby="partnerFinderTitle">
+        <div class="partner-finder-heading">
+          <div>
+            <h2 id="partnerFinderTitle">Finn samarbeidspartner</h2>
+          </div>
+          <button class="partner-open" id="partnerOpen" type="button" hidden>Åpne</button>
+          <span class="partner-test-note">Finn samarbeidspartnere som bruker Norsk ByggRadar</span>
+        </div>
+        <div id="partnerContent" class="partner-content">
+          <label class="partner-trade-field">
+            <span>Fagområde</span>
+            <select id="partnerTradeInput" class="filter-select" aria-label="Velg fagområde for samarbeidspartner">
+              <option value="">Velg fagområde</option>
+              ${partnerTrades.map((trade) => `<option value="${escapeHtml(trade)}">${escapeHtml(partnerRoleLabels[trade])}</option>`).join("")}
+            </select>
+          </label>
+          <div id="partnerResults" class="partner-results" aria-live="polite"></div>
+          <div class="partner-map-block">
+            <div class="partner-map-heading">Samarbeidspartnere i kartet</div>
+            <div id="partnerMapCanvas" class="partner-map-canvas" aria-label="Kart over samarbeidspartnere"></div>
+          </div>
+          <button class="partner-close" id="partnerClose" type="button">Lukk</button>
+        </div>
+      </section>
+
       <section class="workspace">
         <section class="project-list" id="projectList" aria-label="Prosjekter"></section>
       </section>
@@ -858,6 +948,20 @@ function renderShell() {
   });
   bindInput("tradeInput", "trade");
   bindInput("areaInput", "area");
+  document.querySelector("#partnerTradeInput")?.addEventListener("change", (event) => {
+    state.partnerTrade = event.target.value;
+    state.partnerFinderOpen = true;
+    renderPartnerFinder();
+  });
+  document.querySelector("#partnerClose")?.addEventListener("click", () => {
+    state.partnerFinderOpen = false;
+    state.partnerTrade = "";
+    renderPartnerFinder();
+  });
+  document.querySelector("#partnerOpen")?.addEventListener("click", () => {
+    state.partnerFinderOpen = true;
+    renderPartnerFinder();
+  });
   document.querySelector("#locationButton").addEventListener("click", openAreaMap);
   document.querySelector("#customerMunicipality")?.addEventListener("change", (event) => {
     state.customerMunicipality = event.target.value;
@@ -1297,8 +1401,85 @@ function render() {
   }
   document.body.dataset.map = "closed";
   renderRegionNotice({ visibleCount: visibleProjects.length, totalCount: totalProjectCount, regionName });
+  renderPartnerFinder();
 
   renderList();
+}
+
+function activePartnerRegion() {
+  return state.activeRegion || locationRegions.find((region) => region.id === state.regionKey) || locationRegions[0];
+}
+
+function renderPartnerFinder() {
+  const content = document.querySelector("#partnerContent");
+  const results = document.querySelector("#partnerResults");
+  const select = document.querySelector("#partnerTradeInput");
+  const openButton = document.querySelector("#partnerOpen");
+  const mapBlock = document.querySelector(".partner-map-block");
+  if (!content || !results || !select) return;
+  if (state.partnerMap) {
+    state.partnerMap.remove();
+    state.partnerMap = null;
+  }
+  content.hidden = !state.partnerFinderOpen;
+  if (openButton) openButton.hidden = state.partnerFinderOpen;
+  if (mapBlock) mapBlock.hidden = true;
+  if (!state.partnerFinderOpen) return;
+  select.value = state.partnerTrade;
+  const region = activePartnerRegion();
+  const partners = partnerDirectory.filter((partner) => partner.regionId === region.id && partner.trade === state.partnerTrade);
+  if (!state.partnerTrade) {
+    results.innerHTML = `<div class="partner-empty">Velg et fagområde for å se samarbeidspartnere i ${escapeHtml(region.name)}.</div>`;
+    return;
+  }
+  if (!partners.length) {
+    results.innerHTML = `<div class="partner-empty">Ingen samarbeidspartnere er registrert for dette fagområdet i ${escapeHtml(region.name)}.</div>`;
+    return;
+  }
+  results.innerHTML = partners.map((partner) => `
+    <article class="partner-row">
+      <div class="partner-company">
+        <strong>${escapeHtml(partner.company)}</strong>
+        <span>${escapeHtml(partnerRoleLabels[partner.trade])} · ${escapeHtml(region.name)}</span>
+      </div>
+      <div class="partner-contact"><span>${escapeHtml(partner.contact)}</span><a href="tel:${escapeHtml(partner.phone.replaceAll(" ", ""))}">${escapeHtml(partner.phone)}</a></div>
+      <div class="partner-contact"><a href="mailto:${escapeHtml(partner.email)}">${escapeHtml(partner.email)}</a><a href="${escapeHtml(partner.website)}" target="_blank" rel="noopener noreferrer">Nettsted</a></div>
+    </article>
+  `).join("");
+  if (mapBlock) mapBlock.hidden = false;
+  renderPartnerMap(partners, region);
+}
+
+function renderPartnerMap(partners, region) {
+  const canvas = document.querySelector("#partnerMapCanvas");
+  if (!canvas || !window.L || !partners.length) return;
+  state.partnerMap = L.map(canvas, {
+    zoomControl: true,
+    attributionControl: true,
+    scrollWheelZoom: true,
+    doubleClickZoom: true,
+    dragging: true,
+    touchZoom: true,
+  }).setView([region.anchor.lat, region.anchor.lon], 10);
+  addBaseMap(state.partnerMap);
+  const bounds = L.latLngBounds([]);
+  partners.forEach((partner) => {
+    const marker = L.circleMarker([partner.lat, partner.lon], {
+      radius: 8,
+      color: "#8c5b27",
+      weight: 2,
+      fillColor: "#e7a24e",
+      fillOpacity: 0.92,
+    });
+    marker.bindTooltip(`${partner.company} · ${partnerRoleLabels[partner.trade]}`, {
+      direction: "top",
+      sticky: true,
+    });
+    marker.addTo(state.partnerMap);
+    bounds.extend([partner.lat, partner.lon]);
+  });
+  if (bounds.isValid()) state.partnerMap.fitBounds(bounds.pad(0.22), { maxZoom: 12 });
+  refreshMapSize(state.partnerMap);
 }
 
 function regionSummaryTotalCount() {
@@ -2648,12 +2829,12 @@ function searchTextMatches(searchText, query) {
 
 function standardDeliveryProjects() {
   const ranked = state.filtered.slice();
-  if (ranked.length <= standardProjectLimit) return ranked;
+  if (ranked.length <= standardProjectLimit) return phaseBalancedSelection(ranked, ranked.length);
 
   // Når kunden har valgt kommune, skal de 200 nærmeste prosjektene være
   // standardleveransen. Kommunebalanseringen brukes ellers for å sikre bred
   // regional dekning når kunden ikke har valgt et lokalt origo.
-  if (state.customerMunicipality) return ranked.slice(0, standardProjectLimit);
+  if (state.customerMunicipality) return phaseBalancedSelection(ranked, standardProjectLimit);
 
   // Fordel kartgrunnlaget mellom kommunene. Prosjektene står fortsatt i
   // aktualitetsrekkefølge internt i hver kommune, men én stor kommune skal
@@ -2680,12 +2861,36 @@ function standardDeliveryProjects() {
     }
     offset += 1;
   }
-  return balanced;
+  return phaseBalancedSelection(balanced, standardProjectLimit);
+}
+
+function phaseBalancedSelection(projects, limit) {
+  const phaseOne = [];
+  const phaseTwo = [];
+  const other = [];
+  projects.forEach((project) => {
+    const phase = projectPhaseRank(project);
+    if (phase === 0) phaseTwo.push(project);
+    else if (phase === 1) phaseOne.push(project);
+    else other.push(project);
+  });
+
+  const targetPerPhase = Math.floor(limit / 2);
+  const selected = [
+    ...phaseTwo.slice(0, targetPerPhase),
+    ...phaseOne.slice(0, targetPerPhase),
+  ];
+  const remaining = [
+    ...phaseTwo.slice(targetPerPhase),
+    ...phaseOne.slice(targetPerPhase),
+    ...other,
+  ];
+  return [...selected, ...remaining].slice(0, limit);
 }
 
 function visibleDeliveryProjects() {
   const limit = Math.min(state.visibleCount, state.filtered.length);
-  const visible = state.filtered.slice(0, limit);
+  const visible = phaseBalancedSelection(state.filtered, limit);
   const selected = state.selected && state.filtered.find((project) => project.id === state.selected.id);
 
   // Kartet viser alle filtrerte prosjekter. Hvis et valgt prosjekt ligger
@@ -2707,6 +2912,11 @@ function retiringDeliveryBatch() {
 }
 
 function deliverySort(a, b) {
+  // Fase 2 prioriteres alltid foran fase 1. Innenfor hver fase rangeres
+  // prosjektene videre etter kundens geografiske og kommersielle behov.
+  const phaseDelta = projectPhaseRank(a) - projectPhaseRank(b);
+  if (phaseDelta !== 0) return phaseDelta;
+
   // Rangeringen skal vise prosjektene som er nærmest faktisk oppstart først.
   // Dokumentdato brukes bare som siste tie-breaker, slik at en ny postliste-
   // linje ikke automatisk skyver et mer aktuelt prosjekt nedover.
@@ -2720,6 +2930,13 @@ function deliverySort(a, b) {
     b.score - a.score ||
     Number(b.hasMapPoint) - Number(a.hasMapPoint) ||
     String(b.date).localeCompare(String(a.date));
+}
+
+function projectPhaseRank(project) {
+  const phase = normalize(project?.phaseLabel || project?.phase || "");
+  if (phase === "fase 2") return 0;
+  if (phase === "fase 1") return 1;
+  return 2;
 }
 
 function customerProjectDistance(project) {
