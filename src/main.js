@@ -898,11 +898,8 @@ function renderShell() {
         <div class="area-control">
           <label class="search-field">
             <span>Skriv inn søkeord...</span>
-            <input id="areaInput" list="areaSuggestions" type="search" placeholder="Skriv inn søkeord..." autocomplete="off" />
+            <input id="areaInput" type="search" placeholder="Skriv inn søkeord..." autocomplete="off" />
           </label>
-          <datalist id="areaSuggestions">
-            ${locationRegions.flatMap((region) => [region.name, ...region.municipalities]).map((value) => `<option value="${escapeHtml(value)}"></option>`).join("")}
-          </datalist>
           <div class="area-actions">
             <button class="location-button" id="locationButton" type="button">Områdekart</button>
             <button class="help-pill" id="helpPill" type="button" aria-label="Veiledning om bruk av Norsk ByggRadar">Veiledning</button>
@@ -1459,11 +1456,6 @@ function bindInput(id, key) {
     state[key] = input.value;
     if (key === "area") {
       state.userLocation = null;
-      // Et vanlig søkeord skal filtrere den allerede innlastede listen.
-      // Regionankeret skal bare endres når teksten faktisk er en kjent region
-      // eller kommune; ellers blir prosjektene feilaktig skjult.
-      const matchedRegion = findRegionByText(input.value);
-      if (matchedRegion) state.activeRegion = matchedRegion;
       resetPartnerSearch();
     }
     state.visibleCount = currentModelLimit();
@@ -3170,7 +3162,7 @@ function filterProjects() {
   const area = normalize(state.area);
   // A typed search term must filter the projects even when a region is already selected.
   // The active region is only the fallback when the area field is empty.
-  const textRegion = (area && findRegionByText(state.area)) || (!area ? state.activeRegion : null);
+  const textRegion = !area ? state.activeRegion : null;
 
   return state.projects
     .filter((project) => !trade || tradeMatches(project, trade))
