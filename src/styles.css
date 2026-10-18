@@ -663,9 +663,9 @@ a {
 }
 
 .partner-finder-heading {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  justify-content: space-between;
   gap: 12px;
   min-width: 0;
 }
@@ -683,11 +683,13 @@ a {
 }
 
 .partner-test-note {
-  flex: 0 0 auto;
+  min-width: 0;
+  justify-self: start;
   color: #557b68;
   font-size: 0.7rem;
   font-weight: 700;
-  white-space: nowrap;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
 }
 
 .partner-open {
@@ -825,8 +827,8 @@ a {
   }
 
   .partner-finder-heading {
-    align-items: flex-start;
-    flex-direction: column;
+    grid-template-columns: 1fr;
+    align-items: start;
     gap: 5px;
   }
 
