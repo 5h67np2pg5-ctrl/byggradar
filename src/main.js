@@ -842,12 +842,6 @@ function renderShell() {
           <div class="region-notice" id="regionNotice" aria-live="polite"></div>
         </div>
         <div class="topbar-controls">
-          <label class="topbar-picker topbar-customer customer-location-field">
-            <span class="visually-hidden">Kundens kommune</span>
-            <select id="customerMunicipality" class="filter-select" aria-label="Velg kundens kommune">
-              <option value="">Velg kommune</option>
-            </select>
-          </label>
           <div class="top-actions">
             <label class="region-picker">
               <span class="visually-hidden">Region</span>
@@ -859,6 +853,12 @@ function renderShell() {
               </select>
             </label>
           </div>
+          <label class="topbar-picker topbar-customer customer-location-field">
+            <span class="visually-hidden">Kundens kommune</span>
+            <select id="customerMunicipality" class="filter-select" aria-label="Velg kundens kommune">
+              <option value="">Velg kommune</option>
+            </select>
+          </label>
         </div>
       </header>
 
