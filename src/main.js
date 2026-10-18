@@ -493,7 +493,7 @@ function renderLogin() {
         <fieldset class="role-choice">
           <legend>Velg visning</legend>
           <button class="role-option" type="button" data-mode="vendor">
-            <strong>Leverandør</strong>
+            <strong>Finn relevante oppdrag og tiltak</strong>
             <span>Finn relevante prosjekter, tiltak og oppdrag.</span>
           </button>
           <button class="role-option" type="button" data-mode="statistics">
