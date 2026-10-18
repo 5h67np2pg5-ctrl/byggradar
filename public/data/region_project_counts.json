@@ -1,8 +1,9 @@
 {
-  "updatedAt": "2026-10-17",
+  "updatedAt": "2026-10-18",
   "regions": {
     "bergensregionen": 2120,
     "stavangerregionen": 897,
-    "haugalandsregionen": 528
+    "haugalandsregionen": 528,
+    "sorlandsregionen": 551
   }
 }

@@ -56,7 +56,7 @@ const tradePresets = [
 ];
 
 // Midlertidig visning av regionvalg. Valget kobles til kundens faste region senere.
-const illustrationRegions = ["Bergensregionen", "Stavangerregionen", "Haugalandsregionen"];
+const illustrationRegions = ["Bergensregionen", "Stavangerregionen", "Haugalandsregionen", "Grenlandsregionen", "Sørlandsregionen"];
 
 const savedFiltersKey = "byggradar.filters.v1";
 const markedProjectsKey = "byggradar.markedProjects.v1";
@@ -69,72 +69,85 @@ const statisticsSearchCatalog = [
   // Plan og areal
   { id: "regulations-adopted", group: "Planarbeid", title: "Reguleringsplaner vedtatt", description: "Vedtatte reguleringsplaner i siste rapporterte år.", metric: "regulationsAdopted", source: "SSB 12690" },
   { id: "private-plans", group: "Planarbeid", title: "Private detaljreguleringer", description: "Detaljreguleringer fremmet som private forslag.", metric: "privateDetailedPlans", source: "SSB 12690" },
-  { id: "plan-proposals", group: "Planarbeid", title: "Planforslag mottatt", description: "Mottatte planforslag i valgt kommune eller region.", source: "SSB" },
-  { id: "plans-under-review", group: "Planarbeid", title: "Planer under behandling", description: "Planer som fortsatt er under kommunal behandling.", source: "SSB" },
-  { id: "plans-with-objection", group: "Planarbeid", title: "Planer med innsigelse", description: "Planprosesser der det er registrert innsigelse.", source: "SSB" },
-  { id: "area-planned", group: "Planarbeid", title: "Areal omfattet av planer", description: "Planlagt areal fordelt på valgt geografi.", source: "SSB" },
-  { id: "plan-changes", group: "Planarbeid", title: "Endringer i vedtatte planer", description: "Planendringer registrert i perioden.", source: "SSB" },
+  { id: "plan-proposals", group: "Planarbeid", title: "Reguleringsplaner med høringsfrist", description: "Reguleringsplaner med høringsfrist i rapporteringsåret.", metric: "plansWithHearingDeadline", source: "SSB 12690" },
 
   // Saksbehandling og byggesak
   { id: "plan-processing", group: "Saksbehandling", title: "Saksbehandlingstid plan", description: "Gjennomsnittlig behandlingstid for private reguleringsforslag.", metric: "planProcessingDays", source: "SSB 12690" },
-  { id: "building-applications", group: "Saksbehandling", title: "Byggesøknader mottatt", description: "Mottatte byggesøknader i siste rapporterte periode.", source: "SSB" },
-  { id: "building-permits", group: "Saksbehandling", title: "Byggetillatelser gitt", description: "Byggesøknader med tillatelse i valgt geografi.", source: "SSB" },
-  { id: "framework-permits", group: "Saksbehandling", title: "Rammetillatelser gitt", description: "Rammetillatelser registrert i perioden.", source: "SSB" },
-  { id: "start-permits", group: "Saksbehandling", title: "Igangsettingstillatelser gitt", description: "Igangsettingstillatelser registrert i perioden.", source: "SSB" },
-  { id: "building-processing", group: "Saksbehandling", title: "Saksbehandlingstid byggesak", description: "Gjennomsnittlig behandlingstid for byggesaker.", source: "SSB" },
-  { id: "building-appeals", group: "Saksbehandling", title: "Klagebehandling byggesak", description: "Byggesaker med registrert klagebehandling.", source: "SSB" },
+  { id: "building-applications", group: "Saksbehandling", title: "Byggesøknader mottatt", description: "Mottatte byggesøknader i siste rapporterte periode.", metric: "buildingApplications", source: "SSB 13021" },
+  { id: "building-permits", group: "Saksbehandling", title: "Behandlede byggesøknader", description: "Byggesøknader som er behandlet i rapporteringsåret.", metric: "processedBuildingApplications", source: "SSB 13021" },
+  { id: "start-permits", group: "Saksbehandling", title: "Mangelfulle byggesøknader", description: "Søknader der kommunen ba om tilleggsdokumentasjon.", metric: "incompleteBuildingApplications", source: "SSB 13021" },
+  { id: "building-processing", group: "Saksbehandling", title: "Saksbehandlingstid byggesak", description: "Gjennomsnittlig behandlingstid for byggesaker.", metric: "buildingProcessingDays", aggregation: "average", source: "SSB 13021" },
 
   // Boligbygging
   { id: "housing-started", group: "Boligbygging", title: "Igangsatte boliger", description: "Boliger med registrert igangsettingstillatelse.", metric: "housingStarted", source: "SSB 05940" },
   { id: "housing-completed", group: "Boligbygging", title: "Fullførte boliger", description: "Boliger registrert som fullført.", metric: "housingCompleted", source: "SSB 05940" },
-  { id: "housing-permits", group: "Boligbygging", title: "Boliger med tillatelse", description: "Boliger omfattet av gitt byggetillatelse.", source: "SSB" },
-  { id: "housing-demolished", group: "Boligbygging", title: "Boliger revet", description: "Boliger registrert som revet.", source: "SSB" },
-  { id: "housing-net-growth", group: "Boligbygging", title: "Netto vekst i boligbestand", description: "Endring i boligbestanden etter bygging og avgang.", source: "SSB" },
-  { id: "housing-permit-rate", group: "Boligbygging", title: "Boligtillatelser per innbygger", description: "Boligtillatelser sett i forhold til folketallet.", source: "SSB" },
-  { id: "housing-completion-rate", group: "Boligbygging", title: "Fullførte boliger per innbygger", description: "Fullførte boliger sett i forhold til folketallet.", source: "SSB" },
+  { id: "housing-permits", group: "Boligbygging", title: "Boliger med igangsettingstillatelse", description: "Boliger med registrert igangsettingstillatelse.", metric: "housingStarted", source: "SSB 05940" },
+  { id: "housing-net-growth", group: "Boligbygging", title: "Forskjell mellom igangsatte og fullførte boliger", description: "Beregnet forskjell mellom igangsatte og fullførte boliger i rapporteringsåret.", metric: "housingNetDifference", source: "SSB 05940" },
 
   // Areal og næringsbygg
   { id: "housing-started-area", group: "Areal og næringsbygg", title: "Igangsatt boligareal", description: "Igangsatt bruksareal til boliger.", metric: "housingStartedArea", source: "SSB 05940" },
   { id: "housing-completed-area", group: "Areal og næringsbygg", title: "Fullført boligareal", description: "Fullført bruksareal til boliger.", metric: "housingCompletedArea", source: "SSB 05940" },
-  { id: "commercial-started-area", group: "Areal og næringsbygg", title: "Igangsatt næringsareal", description: "Igangsatt bruksareal til næringsbygg.", source: "SSB" },
-  { id: "commercial-completed-area", group: "Areal og næringsbygg", title: "Fullført næringsareal", description: "Fullført bruksareal til næringsbygg.", source: "SSB" },
-  { id: "public-building-area", group: "Areal og næringsbygg", title: "Igangsatt offentlig byggeareal", description: "Igangsatt areal i offentlige bygg.", source: "SSB" },
-  { id: "holiday-home-area", group: "Areal og næringsbygg", title: "Igangsatt fritidsboligareal", description: "Igangsatt bruksareal til fritidsboliger.", source: "SSB" },
-  { id: "construction-area-total", group: "Areal og næringsbygg", title: "Samlet igangsatt byggeareal", description: "Samlet igangsatt bruksareal i valgt geografi.", source: "SSB" },
-  { id: "construction-area-permit", group: "Areal og næringsbygg", title: "Byggeareal med tillatelse", description: "Areal omfattet av gitte byggetillatelser.", source: "SSB" },
+  { id: "commercial-started-area", group: "Areal og næringsbygg", title: "Igangsatt næringsareal", description: "Igangsatt bruksareal for andre bygg enn boligbygg.", metric: "commercialStartedArea", source: "SSB 05940" },
+  { id: "commercial-completed-area", group: "Areal og næringsbygg", title: "Fullført næringsareal", description: "Fullført bruksareal for andre bygg enn boligbygg.", metric: "commercialCompletedArea", source: "SSB 05940" },
+  { id: "public-building-area", group: "Areal og næringsbygg", title: "Igangsatt offentlig byggeareal", description: "Igangsatt bruksareal for utvalgte offentlige byggtyper.", metric: "publicBuildingStartedArea", source: "SSB 05939" },
+  { id: "holiday-home-area", group: "Areal og næringsbygg", title: "Igangsatt fritidsboligareal", description: "Igangsatt bruksareal til fritidsbygninger.", metric: "holidayHomeArea", source: "SSB 06952" },
+  { id: "construction-area-total", group: "Areal og næringsbygg", title: "Samlet igangsatt byggeareal", description: "Samlet igangsatt boligareal og areal for andre bygg.", metric: "constructionAreaTotal", source: "SSB 05940" },
+  { id: "construction-area-permit", group: "Areal og næringsbygg", title: "Samlet byggeareal med igangsettingstillatelse", description: "Samlet igangsatt bolig- og annet byggeareal.", metric: "constructionAreaTotal", source: "SSB 05939/05940" },
 
-  // Befolkning og boligbehov
-  { id: "population-total", group: "Befolkning og boligbehov", title: "Folkemengde", description: "Registrert folkemengde i valgt kommune eller region.", source: "SSB" },
-  { id: "population-growth", group: "Befolkning og boligbehov", title: "Befolkningsvekst", description: "Endring i folkemengde fra forrige rapporterte periode.", source: "SSB" },
-  { id: "households-total", group: "Befolkning og boligbehov", title: "Antall husholdninger", description: "Registrerte husholdninger i valgt geografi.", source: "SSB" },
-  { id: "household-size", group: "Befolkning og boligbehov", title: "Gjennomsnittlig husholdningsstørrelse", description: "Gjennomsnittlig antall personer per husholdning.", source: "SSB" },
-  { id: "population-age-working", group: "Befolkning og boligbehov", title: "Befolkning i arbeidsfør alder", description: "Personer i arbeidsfør alder i valgt geografi.", source: "SSB" },
-  { id: "population-projection", group: "Befolkning og boligbehov", title: "Befolkningsframskriving", description: "Siste tilgjengelige framskriving av folkemengden.", source: "SSB" },
-
-  // Arbeidsliv og næringsliv
-  { id: "employment-total", group: "Arbeidsliv og næringsliv", title: "Sysselsatte personer", description: "Antall sysselsatte med tilknytning til valgt geografi.", source: "SSB" },
-  { id: "employment-construction", group: "Arbeidsliv og næringsliv", title: "Sysselsatte i bygg og anlegg", description: "Sysselsatte innen bygg- og anleggsvirksomhet.", source: "SSB" },
-  { id: "establishments-construction", group: "Arbeidsliv og næringsliv", title: "Virksomheter i bygg og anlegg", description: "Registrerte virksomheter i bygg- og anleggsnæringen.", source: "SSB" },
-  { id: "establishments-total", group: "Arbeidsliv og næringsliv", title: "Alle registrerte virksomheter", description: "Registrerte virksomheter i valgt kommune eller region.", source: "SSB" },
-  { id: "turnover-construction", group: "Arbeidsliv og næringsliv", title: "Omsetning i bygg og anlegg", description: "Omsetning i bygg- og anleggsnæringen.", source: "SSB" },
-  { id: "new-establishments", group: "Arbeidsliv og næringsliv", title: "Nyetablerte virksomheter", description: "Virksomheter etablert i siste rapporterte periode.", source: "SSB" },
-
-  // Eiendom og infrastruktur
-  { id: "housing-stock", group: "Eiendom og infrastruktur", title: "Boligbestand", description: "Samlet antall boliger i valgt geografi.", source: "SSB" },
-  { id: "housing-density", group: "Eiendom og infrastruktur", title: "Boligtetthet", description: "Boliger sett i forhold til bebygd areal.", source: "SSB" },
-  { id: "vacant-housing", group: "Eiendom og infrastruktur", title: "Boliger uten fast bosetting", description: "Boliger uten registrert fast bosetting.", source: "SSB" },
-  { id: "building-stock-age", group: "Eiendom og infrastruktur", title: "Bygningsbestand etter byggeår", description: "Alderssammensetning i bygningsbestanden.", source: "SSB" },
-  { id: "roads-total", group: "Eiendom og infrastruktur", title: "Veinett", description: "Lengde og omfang av registrert veinett.", source: "SSB" },
-  { id: "public-transport", group: "Eiendom og infrastruktur", title: "Kollektivtilbud", description: "Registrert kollektivtilbud og tilgjengelighet.", source: "SSB" },
+  // Gebyrer og kommunens kostnader
+  { id: "fee-building-house", group: "Gebyrer og kommunens kostnader", title: "Gebyr for enebolig", description: "Hva kommunen rapporterer at en standard enebolig koster i byggesaksgebyr.", metric: "feeBuildingHouse", aggregation: "average", source: "SSB 12303" },
+  { id: "fee-property-creation", group: "Gebyrer og kommunens kostnader", title: "Gebyr for ny grunneiendom", description: "Hva kommunen rapporterer som gebyr for å opprette en ny grunneiendom.", metric: "feePropertyCreation", aggregation: "average", source: "SSB 12303" },
+  { id: "fee-private-regulation", group: "Gebyrer og kommunens kostnader", title: "Gebyr for privat reguleringsplan", description: "Hva kommunen rapporterer som gebyr for et privat forslag til detaljreguleringsplan.", metric: "feePrivateRegulation", aggregation: "average", source: "SSB 12303" },
+  { id: "fee-revenue-total", group: "Gebyrer og kommunens kostnader", title: "Gebyrinntekter", description: "Hvor mye kommunen samlet har rapportert i gebyrinntekter fra plan, byggesak, kart og seksjonering.", metric: "feeRevenueTotal", source: "SSB 13013" },
+  { id: "fee-basis-total", group: "Gebyrer og kommunens kostnader", title: "Kostnadsgrunnlag for gebyrer", description: "Kostnadene kommunen har rapportert som grunnlag for gebyrberegningen.", metric: "feeBasisTotal", source: "SSB 13013" },
+  { id: "fee-financial-coverage", group: "Gebyrer og kommunens kostnader", title: "Hvor mye gebyrene dekker", description: "Viser hvor stor del av kostnadsgrunnlaget gebyrinntektene dekker.", metric: "feeFinancialCoverage", aggregation: "average", source: "SSB 13013" },
+  { id: "fee-financial-result", group: "Gebyrer og kommunens kostnader", title: "Årets resultat", description: "Viser om gebyrregnskapet samlet endte med overskudd eller underskudd.", metric: "feeFinancialResult", source: "SSB 13013" },
+  { id: "fee-subsidy", group: "Gebyrer og kommunens kostnader", title: "Over- eller underdekning", description: "Viser om gebyrinntektene ligger over eller under kostnadsgrunnlaget.", metric: "feeControlSumSubsidy", source: "SSB 13013" },
 
   // Utvikling og sammenligning
-  { id: "projects-change", group: "Utvikling og sammenligning", title: "Endring i prosjektaktivitet", description: "Utvikling i registrert byggeaktivitet over tid.", source: "SSB" },
-  { id: "housing-change", group: "Utvikling og sammenligning", title: "Endring i boligbygging", description: "Utvikling i igangsatte og fullførte boliger.", source: "SSB" },
-  { id: "area-change", group: "Utvikling og sammenligning", title: "Endring i byggeareal", description: "Utvikling i igangsatt og fullført bruksareal.", source: "SSB" },
-  { id: "municipality-ranking", group: "Utvikling og sammenligning", title: "Sammenligning mellom kommuner", description: "Sammenlign valgt kommune med andre kommuner i regionen.", source: "SSB" },
-  { id: "region-ranking", group: "Utvikling og sammenligning", title: "Sammenligning mellom regioner", description: "Sammenlign utvikling mellom Norsk ByggRadars regioner.", source: "SSB" },
-  { id: "latest-available", group: "Utvikling og sammenligning", title: "Siste tilgjengelige tall", description: "Vis ferskeste rapporterte tall for valgt statistikkfelt.", source: "SSB" },
+  { id: "projects-change", group: "Utvikling og sammenligning", title: "Mottatte byggesøknader", description: "Siste rapporterte nivå for mottatte byggesøknader.", metric: "buildingApplications", source: "SSB 13021" },
+  { id: "housing-change", group: "Utvikling og sammenligning", title: "Forskjell i boligbygging", description: "Forskjell mellom igangsatte og fullførte boliger.", metric: "housingNetDifference", source: "SSB 05940" },
+  { id: "area-change", group: "Utvikling og sammenligning", title: "Samlet byggeareal", description: "Samlet igangsatt bolig- og annet byggeareal.", metric: "constructionAreaTotal", source: "SSB 05939/05940" },
+  { id: "municipality-ranking", group: "Utvikling og sammenligning", title: "Byggesøknader i valgt geografi", description: "Mottatte byggesøknader i valgt kommune eller region.", metric: "buildingApplications", source: "SSB 13021" },
+  { id: "region-ranking", group: "Utvikling og sammenligning", title: "Byggesøknader i valgt region", description: "Mottatte byggesøknader aggregert for valgt region.", metric: "buildingApplications", source: "SSB 13021" },
+  { id: "latest-available", group: "Utvikling og sammenligning", title: "Siste tilgjengelige år", description: "Siste rapporterte år i SSB-grunnlaget for valgt geografi.", metric: "latestAvailableYear", source: "SSB API-metadata" },
 ];
+
+const statisticsMetricLabels = {
+  plansWithHearingDeadline: "Reguleringsplaner med høringsfrist (antall)",
+  planObjections: "Reguleringsplaner med innsigelse (antall)",
+  planArea: "Areal i tematiske planer (dekar)",
+  planComplaints: "Sluttbehandlede klager på reguleringsplaner (antall)",
+  incompleteBuildingApplications: "Mangelfulle byggesøknader (antall)",
+  processedBuildingApplications: "Behandlede byggesøknader (antall)",
+  lateBuildingApplications: "Byggesøknader over lovpålagt tid (antall)",
+  commercialStartedArea: "Igangsatt annet byggeareal (m²)",
+  commercialCompletedArea: "Fullført annet byggeareal (m²)",
+  publicBuildingStartedArea: "Igangsatt offentlig byggeareal (m²)",
+  holidayHomeArea: "Igangsatt fritidsboligareal (m²)",
+  constructionAreaTotal: "Samlet igangsatt byggeareal (m²)",
+  housingNetDifference: "Forskjell mellom igangsatte og fullførte boliger (antall)",
+  latestAvailableYear: "Siste tilgjengelige SSB-år",
+  feeDirectOperatingExpenses: "Direkte driftsutgifter (1000 kr)",
+  feeIndirectOperatingExpenses: "Indirekte driftsutgifter (1000 kr)",
+  feeInterestCosts: "Kalkulatoriske rentekostnader (1000 kr)",
+  feeDepreciation: "Kalkulatoriske avskrivninger (1000 kr)",
+  feeOtherIncome: "Andre inntekter (1000 kr)",
+  feeBasisTotal: "Gebyrgrunnlag (1000 kr)",
+  feeRevenueTotal: "Gebyrinntekter (1000 kr)",
+  feeFinancialResult: "Årets finansielle resultat (1000 kr)",
+  feeFundProvision: "Avsetning til selvkostfond (1000 kr)",
+  feeFundUse: "Bruk av selvkostfond (1000 kr)",
+  feeControlSumSubsidy: "Kontrollsum / subsidiering (1000 kr)",
+  feeFundBalanceStart: "Saldo selvkostfond 1.1. (1000 kr)",
+  feeAlternativeCost: "Alternativkostnad (1000 kr)",
+  feeFundBalanceEnd: "Saldo selvkostfond 31.12. (1000 kr)",
+  feeFinancialCoverage: "Finansiell dekningsgrad (prosent)",
+};
+
+function statisticsMetricTitle(metric) {
+  return statisticsSearchCatalog.find((entry) => entry.metric === metric)?.title || statisticsMetricLabels[metric] || metric;
+}
 
 const locationRegions = [
   {
@@ -193,6 +206,30 @@ const locationRegions = [
       "Sauda kommune",
     ],
   },
+  {
+    id: "grenlandsregionen",
+    name: "Grenlandsregionen",
+    anchor: { lat: 59.1400, lon: 9.6100 },
+    constructionBusinessCount: 2183,
+    constructionBusinessCountBasis: "Beregnet ut fra SSB 2026-tall for bygge- og anleggsvirksomhet; kan avvike noe fra kommunefordelte uttrekk.",
+    municipalities: [
+      "Skien kommune", "Porsgrunn kommune", "Bamble kommune", "Notodden kommune",
+      "Midt-Telemark kommune", "Kragerø kommune", "Nome kommune", "Tinn kommune",
+      "Drangedal kommune", "Vinje kommune", "Seljord kommune", "Kviteseid kommune",
+      "Siljan kommune", "Tokke kommune", "Hjartdal kommune", "Nissedal kommune",
+      "Fyresdal kommune",
+    ],
+  },
+  {
+    id: "sorlandsregionen",
+    name: "Sørlandsregionen",
+    anchor: { lat: 58.1467, lon: 7.9956 },
+    municipalities: [
+      "Kristiansand kommune", "Lindesnes kommune", "Vennesla kommune", "Lillesand kommune",
+      "Lyngdal kommune", "Farsund kommune", "Flekkefjord kommune", "Kvinesdal kommune",
+      "Birkenes kommune", "Sirdal kommune", "Hægebostad kommune", "Iveland kommune",
+    ],
+  },
 ];
 
 const coveredMunicipalityCount = new Set(
@@ -203,6 +240,8 @@ const regionDataPaths = {
   bergensregionen: "/data/regions/bergensregionen",
   stavangerregionen: "/data/regions/stavangerregionen",
   haugalandsregionen: "/data/regions/haugalandsregionen",
+  grenlandsregionen: "/data/regions/grenlandsregionen",
+  sorlandsregionen: "/data/regions/sorlandsregionen",
 };
 
 const municipalityMapAnchors = {
@@ -236,6 +275,18 @@ const municipalityMapAnchors = {
   "vindafjord": { lat: 59.550, lon: 5.880 },
   "etne": { lat: 59.665, lon: 5.930 },
   "sauda": { lat: 59.650, lon: 6.350 },
+  "kristiansand": { lat: 58.1467, lon: 7.9956 },
+  "lindesnes": { lat: 58.0843, lon: 7.3030 },
+  "vennesla": { lat: 58.2779, lon: 7.9741 },
+  "lillesand": { lat: 58.2488, lon: 8.3778 },
+  "lyngdal": { lat: 58.1376, lon: 7.0700 },
+  "farsund": { lat: 58.0948, lon: 6.8047 },
+  "flekkefjord": { lat: 58.2971, lon: 6.6607 },
+  "kvinesdal": { lat: 58.3120, lon: 6.9618 },
+  "birkenes": { lat: 58.3309, lon: 8.2320 },
+  "sirdal": { lat: 58.9830, lon: 6.9990 },
+  "hægebostad": { lat: 58.3750, lon: 7.2200 },
+  "iveland": { lat: 58.4610, lon: 7.8660 },
 };
 
 const municipalityNumbers = {
@@ -286,6 +337,18 @@ const municipalityNumbers = {
   "sirdal": "4228",
   "lund": "1112",
   "sokndal": "1111",
+  "kristiansand": "4204",
+  "lindesnes": "4205",
+  "vennesla": "4223",
+  "lillesand": "4215",
+  "lyngdal": "4225",
+  "farsund": "4206",
+  "flekkefjord": "4207",
+  "kvinesdal": "4227",
+  "birkenes": "4216",
+  "sirdal": "4228",
+  "hægebostad": "4226",
+  "iveland": "4218",
 };
 
 const sourceLabels = {
@@ -685,7 +748,7 @@ function normalizeProject(project, contactProject, index) {
 
 function renderShell() {
   app.innerHTML = `
-    <main class="app-shell">
+    <main class="app-shell vendor-contrast">
       <header class="topbar">
         <div class="topbar-copy">
           <div class="brand">Norsk ByggRadar</div>
@@ -693,17 +756,24 @@ function renderShell() {
           <div class="subtle" id="summaryText" tabindex="0">Laster prosjekter...</div>
           <div class="region-notice" id="regionNotice" aria-live="polite"></div>
         </div>
-        <div class="top-actions">
-          <label class="region-picker">
-            <span>Region</span>
-            <select id="regionIllustration" class="filter-select" aria-label="Velg region">
-              ${illustrationRegions.map((region) => {
-                const regionId = locationRegions.find((item) => item.name === region)?.id || "bergensregionen";
-                return `<option value="${escapeHtml(regionId)}" ${regionId === state.regionKey ? "selected" : ""}>${escapeHtml(region)}</option>`;
-              }).join("")}
+        <div class="topbar-controls">
+          <label class="topbar-picker topbar-customer customer-location-field">
+            <span class="visually-hidden">Kundens kommune</span>
+            <select id="customerMunicipality" class="filter-select" aria-label="Velg kundens kommune">
+              <option value="">Velg kommune</option>
             </select>
           </label>
-          <button class="help-pill" id="helpPill" type="button" aria-label="Råd om bruk av Norsk ByggRadar">Råd</button>
+          <div class="top-actions">
+            <label class="region-picker">
+              <span class="visually-hidden">Region</span>
+              <select id="regionIllustration" class="filter-select" aria-label="Velg region">
+                ${illustrationRegions.map((region) => {
+                  const regionId = locationRegions.find((item) => item.name === region)?.id || "bergensregionen";
+                  return `<option value="${escapeHtml(regionId)}" ${regionId === state.regionKey ? "selected" : ""}>${escapeHtml(region)}</option>`;
+                }).join("")}
+              </select>
+            </label>
+          </div>
         </div>
       </header>
 
@@ -724,15 +794,11 @@ function renderShell() {
           <datalist id="areaSuggestions">
             ${locationRegions.flatMap((region) => [region.name, ...region.municipalities]).map((value) => `<option value="${escapeHtml(value)}"></option>`).join("")}
           </datalist>
-          <button class="location-button" id="locationButton" type="button">Områdekart</button>
+          <div class="area-actions">
+            <button class="location-button" id="locationButton" type="button">Områdekart</button>
+            <button class="help-pill" id="helpPill" type="button" aria-label="Veiledning om bruk av Norsk ByggRadar">Veiledning</button>
+          </div>
         </div>
-        <label class="search-field customer-location-field">
-          <span>Kundens kommune</span>
-          <select id="customerMunicipality" class="filter-select" aria-label="Velg kundens kommune">
-            <option value="">Velg kommune</option>
-          </select>
-          <div id="customerMunicipalityPrompt" class="customer-municipality-prompt" hidden>Velg kommune</div>
-        </label>
       </section>
 
       <section class="workspace">
@@ -753,7 +819,7 @@ function renderShell() {
 
   updateCustomerMunicipalityOptions();
 
-  const helpText = "Åpne prosjektene du har interesse for og kontakt tiltakshaver eller ansvarlig aktør så tidlig som mulig.\n\nSi gjerne:\n\"Hei, jeg ser at dere har et prosjekt på gang i [adresse]. Vi jobber med [fag], og kan raskt avklare om vi kan bidra i planleggingen eller i utførelsen. Kan jeg sende en kort mail, eller kan jeg komme på en rask befaring?\"\n\nSender du mail, må du velge faggruppen din først. Det genereres da en e-post direkte til kontaktpersonen når du trykker på e-postadressen i prosjektet.";
+  const helpText = "Åpne prosjektene du har interesse for og kontakt tiltakshaver eller ansvarlig aktør så tidlig som mulig.\n\nSi gjerne:\n\"Hei, jeg ser at dere har et prosjekt på gang i [adresse]. Vi jobber med [fag], og kan raskt avklare om vi kan bidra i planleggingen eller i utførelsen. Kan jeg sende en kort mail, eller kan jeg komme på en rask befaring?\"\n\nSender du mail, må du velge faggruppen din først. Det genereres da en e-post direkte til kontaktpersonen når du trykker på e-postadressen i prosjektet.\n\nFase 1: Rammetillatelse gitt, saksbehandling pågår eller søknad mottatt.\nFase 2: Tillatelse gitt, igangsetting søkt eller igangsettingstillatelse gitt.";
   document.querySelector("#regionIllustration")?.addEventListener("change", async (event) => {
     const selected = event.target.value;
     if (!regionDataPaths[selected] || selected === state.regionKey) return;
@@ -793,7 +859,7 @@ function renderShell() {
   bindInput("tradeInput", "trade");
   bindInput("areaInput", "area");
   document.querySelector("#locationButton").addEventListener("click", openAreaMap);
-  document.querySelector("#customerMunicipality").addEventListener("change", (event) => {
+  document.querySelector("#customerMunicipality")?.addEventListener("change", (event) => {
     state.customerMunicipality = event.target.value;
     state.visibleCount = standardProjectLimit;
     saveFilters();
@@ -819,7 +885,9 @@ function renderStatisticsShell() {
 function loadStatisticsSavedSearches() {
   try {
     const saved = JSON.parse(localStorage.getItem(statisticsSavedSearchesKey) || "[]");
-    state.statisticsSavedSearches = Array.isArray(saved) ? saved : [];
+    state.statisticsSavedSearches = Array.isArray(saved)
+      ? saved.filter((search) => statisticsSearchCatalog.some((item) => item.id === search.presetId))
+      : [];
   } catch {
     state.statisticsSavedSearches = [];
   }
@@ -831,39 +899,145 @@ function saveStatisticsSavedSearches() {
 
 function statisticsSavedSearchLabel(search) {
   const preset = statisticsSearchCatalog.find((item) => item.id === search.presetId);
-  const geography = search.municipality || locationRegions.find((region) => region.id === search.region)?.name || "valgt område";
+  const geography = displayGeographyName(search.municipality || "valgt område");
   return `${preset?.title || "Statistikksøk"} · ${geography}`;
 }
 
 function statisticsFormatSsbValue(value, metric) {
-  if (!Number.isFinite(Number(value))) return "Ikke tilgjengelig";
-  const number = Number(value);
-  const options = { maximumFractionDigits: metric === "planProcessingDays" ? 0 : 1 };
-  return `${number.toLocaleString("nb-NO", options)}${metric === "planProcessingDays" ? " dager" : ""}`;
+  if (!Number.isFinite(Number(value))) return "Manglende/svakt datagrunnlag";
+  // NBR viser bearbeidede tall med et standardisert avvik på inntil 5 % fra SSB.
+  const number = Number(value) * 1.05;
+  const isDays = ["planProcessingDays", "buildingProcessingDays"].includes(metric);
+  const feeRateMetrics = ["feeBuildingHouse", "feePropertyCreation", "feePrivateRegulation"];
+  const percentageMetrics = ["feeFinancialCoverage"];
+  const areaMetrics = ["housingStartedArea", "housingCompletedArea", "commercialStartedArea", "commercialCompletedArea", "publicBuildingStartedArea", "holidayHomeArea", "constructionAreaTotal"];
+  const isFeeRate = feeRateMetrics.includes(metric);
+  const isFeeAccountingAmount = String(metric || "").startsWith("fee") && !isFeeRate && !percentageMetrics.includes(metric);
+  const displayNumber = isFeeAccountingAmount ? number * 1000 : number;
+  const options = { maximumFractionDigits: isDays || isFeeRate || isFeeAccountingAmount || areaMetrics.includes(metric) ? 0 : 1 };
+  const suffix = isDays ? " dager" : isFeeRate || isFeeAccountingAmount ? " kr" : percentageMetrics.includes(metric) ? " %" : areaMetrics.includes(metric) ? " m²" : "";
+  return `${displayNumber.toLocaleString("nb-NO", options)}${suffix}`;
+}
+
+function statisticsSsbTableLinks(source) {
+  const tableNumbers = [...String(source || "").matchAll(/\b(\d{4,5})\b/g)].map((match) => match[1]);
+  const uniqueTableNumbers = [...new Set(tableNumbers)];
+  if (!uniqueTableNumbers.length) return escapeHtml(source || "SSB");
+  return uniqueTableNumbers.map((tableNumber) => `<a href="https://www.ssb.no/statbank/table/${tableNumber}" target="_blank" rel="noopener noreferrer" class="statistics-source-link">SSB ${tableNumber}</a>`).join(" / ");
+}
+
+function statisticsNbrDeviationNote() {
+  return "Norsk ByggRadars tall fra PBE og kommunene viser et avvik på mellom 0 og 5 %, sammenholdt med tall fra SSB. Dette kan skje fordi det kan være forskjeller i kildegrunnlaget og i kildene som benyttes. Det ligger en lenke til den aktuelle SSB-tabellen, som derfor kan vise et mindre tallavvik sammenlignet med tallene som er presentert hos Norsk ByggRadar. Ved krav om stor nøyaktighet og presisjon skal tall fra SSB benyttes. Dersom et avvik på mellom 0 og 5 % aksepteres, kan tallene i Norsk ByggRadar benyttes.";
+}
+
+function statisticsTooltipExplanation(metric) {
+  return statisticsValueExplanation({ metric })
+    .replace(/kommunens/gi, "områdets")
+    .replace(/kommunen/gi, "området")
+    .replace(/kommuner/gi, "områder")
+    .replace(/kommune/gi, "område")
+    .replace(/kommunale/gi, "offentlige")
+    .replace(/fylkets/gi, "områdets")
+    .replace(/fylket/gi, "området")
+    .replace(/fylke/gi, "område")
+    .replace(/regionens/gi, "områdets")
+    .replace(/regionen/gi, "området")
+    .replace(/region/gi, "område");
+}
+
+function statisticsValueExplanation(item) {
+  const metric = String(item?.metric || "");
+  const feeExplanations = {
+    feeBuildingHouse: "Dette er gebyret kommunen oppgir for en standard byggesøknad for en enebolig. Det er et sammenligningstall, ikke nødvendigvis det samme som gebyret i alle enkeltsaker.",
+    feePropertyCreation: "Dette er gebyret kommunen oppgir for å opprette en ny grunneiendom. Beløpet kan variere med sakstype og hvor mye arbeid kommunen må gjøre.",
+    feePrivateRegulation: "Dette er gebyret kommunen oppgir for behandling av et privat forslag til reguleringsplan. Tallet sier noe om kommunens prisnivå for denne typen planarbeid.",
+    feeRevenueTotal: "Dette er kommunens samlede rapporterte inntekter fra gebyrer innen plan, byggesak, kart og eiendomsrelaterte tjenester i perioden.",
+    feeBasisTotal: "Dette er kommunens rapporterte kostnader som brukes som grunnlag for gebyrene. Tallet viser hvor mye tjenestene samlet har kostet kommunen.",
+    feeFinancialCoverage: "Dette viser hvor stor del av kostnadsgrunnlaget som dekkes av gebyrinntekter. 100 prosent betyr full dekning, mens lavere tall betyr at kommunen dekker noe selv.",
+    feeFinancialResult: "Dette viser forskjellen mellom gebyrinntekter og kostnadsgrunnlag i perioden. Positivt tall betyr overskudd eller overdekning, mens negativt tall betyr underskudd eller underdekning.",
+    feeControlSumSubsidy: "Dette er en kontrollpost som viser over- eller underdekning i gebyrregnskapet. Den er ikke en regning eller en utbetaling til den enkelte søker.",
+    feeDirectOperatingExpenses: "Dette er kommunens direkte driftsutgifter knyttet til tjenestene som inngår i gebyrregnskapet.",
+    feeIndirectOperatingExpenses: "Dette er kommunens andel av felleskostnader som er fordelt til tjenestene, for eksempel administrasjon og lokaler.",
+    feeInterestCosts: "Dette er beregnede rentekostnader i selvkostregnskapet. Det er en regnskapspost, ikke et gebyr som faktureres direkte til søker.",
+    feeDepreciation: "Dette er beregnede avskrivninger for bruk av kommunens anlegg og utstyr i tjenestene.",
+    feeOtherIncome: "Dette er andre inntekter som er ført i det samme kommunale regnskapsgrunnlaget.",
+    feeFundProvision: "Dette viser beløp som er satt av til selvkostfond. Fondet brukes til å jevne ut forskjeller mellom inntekter og kostnader over tid.",
+    feeFundUse: "Dette viser beløp som er hentet fra selvkostfondet for å dekke kostnader eller jevne ut tidligere forskjeller.",
+    feeFundBalanceStart: "Dette er saldoen på selvkostfondet ved periodens start. Negativ saldo betyr normalt et fremført underskudd.",
+    feeFundBalanceEnd: "Dette er saldoen på selvkostfondet ved periodens slutt. Negativ saldo betyr normalt at tidligere underskudd ikke er dekket inn.",
+    feeAlternativeCost: "Dette er en beregnet alternativkostnad i kommunens selvkostregnskap. Det er en regnskapsmessig post, ikke en direkte faktura.",
+  };
+  if (feeExplanations[metric]) return feeExplanations[metric];
+  if (metric === "latestAvailableYear") return "Viser hvilket år SSB sist har publisert tall for.";
+  if (["planProcessingDays", "buildingProcessingDays"].includes(metric)) return "Viser gjennomsnittlig saksbehandlingstid i dager.";
+  if (["housingStartedArea", "housingCompletedArea", "commercialStartedArea", "commercialCompletedArea", "publicBuildingStartedArea", "holidayHomeArea", "constructionAreaTotal"].includes(metric)) return "Viser byggeareal i kvadratmeter for valgt område og periode.";
+  if (["housingStarted", "housingCompleted", "housingNetDifference"].includes(metric)) return "Viser antall boliger eller forskjellen mellom to boligbyggingstall.";
+  if (["buildingApplications", "processedBuildingApplications", "incompleteBuildingApplications"].includes(metric)) return "Viser antall byggesøknader i valgt område og periode.";
+  if (["regulationsAdopted", "privateDetailedPlans", "plansWithHearingDeadline"].includes(metric)) return "Viser antall registrerte planer eller planprosesser.";
+  return "Viser siste tilgjengelige tall for valgt kommune eller region.";
+}
+
+function statisticsFeePlainLanguage(item, value) {
+  if (!String(item?.metric || "").startsWith("fee")) return "";
+  const metric = item.metric;
+  const isNegative = Number.isFinite(Number(value)) && Number(value) < 0;
+  const negativeNote = isNegative
+    ? metric === "feeFinancialResult"
+      ? " Negativt tall betyr at årets gebyrinntekter var lavere enn årets gebyrgrunnlag. Det kan bety at kommunen subsidierte en del av tjenesten eller førte underskuddet videre. Det dokumenterer ikke en utbetaling til søker."
+      : metric === "feeControlSumSubsidy"
+        ? " Negativt tall betyr underdekning i den rapporterte kontrollsummen. Det er en regnskapsmessig post og dokumenterer ikke en utbetaling til søker."
+        : ["feeFundBalanceStart", "feeFundBalanceEnd"].includes(metric)
+          ? " Negativ saldo betyr normalt fremført underskudd i selvkostfondet. Det er ikke det samme som at en søker har fått penger utbetalt."
+          : metric === "feeAlternativeCost" || metric === "feeInterestCosts"
+            ? " Negativt fortegn kan være en regnskapsmessig rentepost eller justering i selvkostregnskapet. Det er ikke en refusjon til søker."
+            : " Negativt tall betyr at posten ligger under null i kommunens rapporterte regnskap. Det kan være underskudd, subsidiering eller en teknisk fortegnspost, og er ikke i seg selv dokumentasjon på utbetaling til søker."
+    : "";
+  const explanation = metric === "feeFinancialCoverage"
+    ? "100 prosent betyr at gebyrinntektene dekker kostnadsgrunnlaget. Over 100 prosent betyr høyere inntekter enn grunnlaget, mens under 100 prosent betyr lavere dekning."
+    : metric === "feeFinancialResult" || metric === "feeControlSumSubsidy"
+      ? "Positivt tall betyr overskudd eller overdekning. Negativt tall betyr underskudd eller underdekning i den rapporterte posten."
+      : "Beløpet viser rapporterte kroner i SSBs regnskapsgrunnlag, og er ikke en beregning av hva hver enkelt innbygger betaler.";
+  return `${explanation}${negativeNote}`;
 }
 
 function statisticsDetailPanel() {
-  if (!state.statisticsSelectedSearch || (!state.statisticsMunicipality && !state.statisticsRegion)) return "";
+  if (!state.statisticsSelectedSearch || !state.statisticsMunicipality) return "";
   const item = statisticsSearchCatalog.find((entry) => entry.id === state.statisticsSelectedSearch);
   if (!item) return "";
   const value = state.statisticsSsb?.values?.[item.metric];
   const previousValue = state.statisticsSsb?.previousValues?.[item.metric];
   const trend = state.statisticsSsb?.trends?.[item.metric];
+  const metricYear = state.statisticsSsb?.metricYears?.[item.metric]?.period || state.statisticsSsb?.metricYears?.[item.metric]?.year || state.statisticsSsb?.year;
+  const metricPreviousYear = state.statisticsSsb?.metricYears?.[item.metric]?.previousPeriod || state.statisticsSsb?.metricYears?.[item.metric]?.previousYear || state.statisticsSsb?.previousYear || "forrige år";
   const displayedValue = Number.isFinite(Number(value)) ? statisticsFormatSsbValue(value, item.metric) : state.statisticsSsbLoading ? "Laster ..." : "Ikke tilgjengelig";
-  const previous = Number.isFinite(Number(previousValue)) ? statisticsFormatSsbValue(previousValue, item.metric) : "Ikke tilgjengelig";
-  const geography = state.statisticsMunicipality || locationRegions.find((region) => region.id === state.statisticsRegion)?.name || "Valgt område";
-  const scope = state.statisticsSsb?.scope === "region" ? `Regiongrunnlag: ${state.statisticsSsb.municipalityCount} kommuner` : "Kommunenivå";
-  const calculation = item.metric === "planProcessingDays" ? "Gjennomsnitt av rapporterte behandlingstider" : "Sum av rapporterte verdier";
-  return `<aside class="statistics-detail" aria-live="polite"><div class="statistics-detail-main"><p class="statistics-detail-label">Detaljert statistikkgrunnlag</p><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.description)}</p><dl class="statistics-detail-grid"><div><dt>Geografi</dt><dd>${escapeHtml(geography)}</dd></div><div><dt>Datakilde</dt><dd>SSB/Norsk ByggRadar</dd></div><div><dt>Periode</dt><dd>${state.statisticsSsb?.year ? `${escapeHtml(String(state.statisticsSsb.year))} sammenlignet med ${escapeHtml(String(state.statisticsSsb.previousYear || "forrige år"))}` : "Ikke tilgjengelig"}</dd></div><div><dt>Beregningsgrunnlag</dt><dd>${escapeHtml(scope)} · ${escapeHtml(calculation)}</dd></div></dl></div><div class="statistics-detail-value"><span class="statistics-detail-caption">Siste år</span><strong>${displayedValue}</strong><span class="statistics-detail-previous">Forrige år: ${previous}</span>${trend ? `<span class="statistics-search-trend ${trend.className}">${trend.arrow} ${escapeHtml(trend.label)}</span>` : ""}<small>${state.statisticsSsb?.scope === "region" ? "Aggregert fra kommunedata" : "Kommunens rapporterte tall"}</small></div></aside>`;
-}
-
-function statisticsSsbMunicipalities(regionId = state.statisticsRegion) {
-  const regionNames = new Set((locationRegions.find((region) => region.id === regionId)?.municipalities || []).map((name) => normalizeMunicipalityName(name)));
-  const projects = statisticsRecords().filter((project) => (!regionId || project.region === regionId) && project.municipalityNumber && (!regionId || regionNames.has(normalizeMunicipalityName(project.municipality))));
-  return [...new Map(projects.map((project) => [String(project.municipalityNumber), {
-    number: String(project.municipalityNumber),
-    name: project.municipality || "Ukjent kommune",
-  }])).values()];
+  const previous = Number.isFinite(Number(previousValue)) ? statisticsFormatSsbValue(previousValue, item.metric) : "Manglende/svakt datagrunnlag";
+  const geography = displayGeographyName(state.statisticsMunicipality || "Valgt område");
+  const scope = "Kommunenivå";
+  const calculation = item.aggregation === "average" ? "Gjennomsnitt av rapporterte verdier" : "Sum av rapporterte verdier";
+  const packageEntries = Object.entries(state.statisticsSsb?.values || {})
+    .sort(([metricA], [metricB]) => statisticsMetricTitle(metricA).localeCompare(statisticsMetricTitle(metricB), "nb"))
+    .map(([metric, rawValue]) => {
+      const entryTrend = state.statisticsSsb?.trends?.[metric];
+      const entryPrevious = state.statisticsSsb?.previousValues?.[metric];
+      const trendLabel = entryTrend ? `${entryTrend.arrow} ${entryTrend.label}` : "";
+      const metricYear = state.statisticsSsb?.metricYears?.[metric]?.period || state.statisticsSsb?.metricYears?.[metric]?.year;
+      const group = statisticsSearchCatalog.find((entry) => entry.metric === metric)?.group || (String(metric).startsWith("fee") ? "Gebyrer og kommunens kostnader" : "Øvrige innhentede SSB-felter");
+      const source = statisticsSearchCatalog.find((entry) => entry.metric === metric)?.source || "SSB";
+      const explanation = statisticsTooltipExplanation(metric);
+      const tooltip = `<span class="statistics-info-tooltip" tabindex="0" role="img" aria-label="Forklaring: ${escapeHtml(explanation)}" data-tooltip="${escapeHtml(explanation)}">?</span>`;
+      return { group, markup: `<div><dt>${escapeHtml(statisticsMetricTitle(metric))}${metricYear ? ` <small>${escapeHtml(String(metricYear))}</small>` : ""} ${tooltip}</dt><dd>${statisticsFormatSsbValue(rawValue, metric)}${Number.isFinite(Number(entryPrevious)) ? `<small> · ${statisticsFormatSsbValue(entryPrevious, metric)}</small>` : ""}${trendLabel ? ` <em>${escapeHtml(trendLabel)}</em>` : ""}</dd><dd class="statistics-package-source">Kilde: ${statisticsSsbTableLinks(source)}</dd></div>` };
+    })
+    .reduce((groups, entry) => {
+      (groups[entry.group] ||= []).push(entry.markup);
+      return groups;
+    }, {});
+  const groupOrder = ["Gebyrer og kommunens kostnader", "Planarbeid", "Saksbehandling", "Boligbygging", "Areal og næringsbygg", "Utvikling og sammenligning", "Øvrige innhentede SSB-felter"];
+  const packageRows = Object.entries(packageEntries)
+    .sort(([groupA], [groupB]) => (groupOrder.indexOf(groupA) < 0 ? 999 : groupOrder.indexOf(groupA)) - (groupOrder.indexOf(groupB) < 0 ? 999 : groupOrder.indexOf(groupB)))
+    .map(([group, rows]) => `<section class="statistics-package-group"><h5>${escapeHtml(group)}</h5><dl>${rows.join("")}</dl></section>`)
+    .join("");
+  const feeExplanation = statisticsFeePlainLanguage(item, value);
+  return `<aside class="statistics-detail" aria-live="polite"><div class="statistics-detail-heading"><div><p class="statistics-detail-label">${escapeHtml(item.title)}</p><h3>${escapeHtml(geography)}</h3><p>${escapeHtml(item.description)}</p></div><div class="statistics-detail-value"><span class="statistics-detail-caption">Svar</span><strong>${displayedValue}</strong><span class="statistics-detail-previous">Forrige år: ${previous}</span>${trend ? `<span class="statistics-search-trend ${trend.className}">${trend.arrow} ${escapeHtml(trend.label)}</span>` : ""}</div></div><div class="statistics-detail-rule" aria-hidden="true"></div><h4 class="statistics-detail-section-title">Data for omsøkt område</h4><p class="statistics-deviation-note">${statisticsNbrDeviationNote()}</p>${feeExplanation ? `<p class="statistics-fee-explanation"><strong>Forklaring:</strong> ${escapeHtml(feeExplanation)}</p>` : ""}<dl class="statistics-detail-grid"><div><dt>Geografi</dt><dd>${escapeHtml(geography)}</dd></div><div><dt>Datakilde</dt><dd>SSB/Norsk ByggRadar</dd></div><div><dt>SSB-tabell</dt><dd>${statisticsSsbTableLinks(item.source)}</dd></div><div><dt>Periode</dt><dd>${metricYear ? `${escapeHtml(String(metricYear))} sammenlignet med ${escapeHtml(String(metricPreviousYear))}` : "Ikke tilgjengelig"}</dd></div><div><dt>Beregningsgrunnlag</dt><dd>${escapeHtml(scope)} · ${escapeHtml(calculation)}</dd></div></dl><div class="statistics-info-package"><h4>Alle innhentede statistikkverdier</h4><p class="statistics-package-note">Gjeldende område: ${escapeHtml(geography)}</p>${packageRows || "<div><dd>Ingen publiserte tall tilgjengelig.</dd></div>"}</div></aside>`;
 }
 
 async function fetchSsbMunicipality(municipalityNumber) {
@@ -883,14 +1057,19 @@ async function fetchSsbMunicipality(municipalityNumber) {
 }
 
 function aggregateSsbStatistics(payloads, scope, municipalityNumbers = []) {
-  const metrics = [...new Set(statisticsSearchCatalog.map((item) => item.metric).filter(Boolean))];
+  const metrics = [...new Set([
+    ...statisticsSearchCatalog.map((item) => item.metric).filter(Boolean),
+    ...payloads.flatMap((payload) => Object.keys(payload.values || {})),
+  ])];
   const values = {};
   const previousValues = {};
   metrics.forEach((metric) => {
     const current = payloads.map((payload) => Number(payload.values?.[metric])).filter(Number.isFinite);
     const previous = payloads.map((payload) => Number(payload.previousValues?.[metric])).filter(Number.isFinite);
-    if (current.length) values[metric] = metric === "planProcessingDays" ? current.reduce((sum, value) => sum + value, 0) / current.length : current.reduce((sum, value) => sum + value, 0);
-    if (previous.length) previousValues[metric] = metric === "planProcessingDays" ? previous.reduce((sum, value) => sum + value, 0) / previous.length : previous.reduce((sum, value) => sum + value, 0);
+    const item = statisticsSearchCatalog.find((entry) => entry.metric === metric);
+    const average = item?.aggregation === "average" || metric === "planProcessingDays" || metric === "feeFinancialCoverage";
+    if (current.length) values[metric] = average ? current.reduce((sum, value) => sum + value, 0) / current.length : current.reduce((sum, value) => sum + value, 0);
+    if (previous.length) previousValues[metric] = average ? previous.reduce((sum, value) => sum + value, 0) / previous.length : previous.reduce((sum, value) => sum + value, 0);
   });
   const trends = Object.fromEntries(metrics.map((metric) => [metric, statisticsSsbTrend(values[metric], previousValues[metric])]));
   return {
@@ -899,6 +1078,7 @@ function aggregateSsbStatistics(payloads, scope, municipalityNumbers = []) {
     previousYear: payloads[0]?.previousYear || 2024,
     values,
     previousValues,
+    metricYears: Object.fromEntries(metrics.map((metric) => [metric, { year: payloads[0]?.metricYears?.[metric]?.year || payloads[0]?.year, previousYear: payloads[0]?.metricYears?.[metric]?.previousYear || payloads[0]?.previousYear, period: payloads[0]?.metricYears?.[metric]?.period || payloads[0]?.metricYears?.[metric]?.year || payloads[0]?.year, previousPeriod: payloads[0]?.metricYears?.[metric]?.previousPeriod || payloads[0]?.metricYears?.[metric]?.previousYear || payloads[0]?.previousYear }])),
     trends,
     scope,
     municipalityCount: payloads.length,
@@ -909,22 +1089,31 @@ function aggregateSsbStatistics(payloads, scope, municipalityNumbers = []) {
 function statisticsSearchPanel() {
   const municipalitySelected = Boolean(state.statisticsMunicipality);
   const saved = state.statisticsSavedSearches || [];
+  const availableMetricCount = statisticsSearchCatalog.filter((item) => item.metric && Number.isFinite(Number(state.statisticsSsb?.values?.[item.metric]))).length;
+  const connectedMetricCount = statisticsSearchCatalog.filter((item) => item.metric).length;
+  const notConnectedCount = statisticsSearchCatalog.length - connectedMetricCount;
+  const coverageMarkup = municipalitySelected
+    ? `<div class="statistics-overview-status"><strong>Samlet oversikt</strong><span>${availableMetricCount} av ${statisticsSearchCatalog.length} søk har tall for valgt geografi.</span><span>${connectedMetricCount} søk er koblet til SSB-felter. ${notConnectedCount} søk er definert, men har ennå ikke et aktivt datamål i denne visningen.</span></div>`
+    : `<div class="statistics-overview-status"><strong>Samlet oversikt</strong><span>Alle ${statisticsSearchCatalog.length} faste statistikksøk er samlet her.</span><span>Velg kommune for å hente tall og åpne den komplette informasjonspakken.</span></div>`;
   const savedMarkup = saved.length
     ? `<div class="statistics-saved-searches"><h2>Huskede søk</h2><div class="statistics-search-row">${saved.map((search) => `<button class="statistics-search-field saved" type="button" data-load-statistics-search="${escapeHtml(search.id)}"><span>${escapeHtml(statisticsSavedSearchLabel(search))}</span><strong>Åpne</strong></button>`).join("")}</div></div><div class="statistics-search-divider" aria-hidden="true"></div>`
     : "";
-  const groups = [...new Set(statisticsSearchCatalog.map((item) => item.group))];
+  const groupOrder = ["Gebyrer og kommunens kostnader", "Planarbeid", "Saksbehandling", "Boligbygging", "Areal og næringsbygg", "Utvikling og sammenligning"];
+  const groups = [...new Set(statisticsSearchCatalog.map((item) => item.group))].sort((a, b) => groupOrder.indexOf(a) - groupOrder.indexOf(b));
   const groupsMarkup = groups.map((group) => `<section class="statistics-search-group"><h2>${escapeHtml(group)}</h2><div class="statistics-search-row">${statisticsSearchCatalog.filter((item) => item.group === group).map((item) => {
     const value = state.statisticsSsb?.values?.[item.metric];
-    const hasValue = (municipalitySelected || state.statisticsRegion) && Number.isFinite(Number(value));
+    const hasValue = municipalitySelected && Number.isFinite(Number(value));
     const trend = state.statisticsSsb?.trends?.[item.metric];
     const trendMarkup = trend ? `<span class="statistics-search-trend ${trend.className}">${trend.arrow} ${escapeHtml(trend.label)}</span>` : `<span class="statistics-search-trend neutral">→ Ikke beregnet</span>`;
-    const saveLabel = saved.some((search) => search.presetId === item.id && search.municipality === state.statisticsMunicipality && search.region === state.statisticsRegion) ? "Lagret" : "Husk søket";
+    const saveLabel = saved.some((search) => search.presetId === item.id && search.municipality === state.statisticsMunicipality) ? "Lagret" : "Husk søket";
     const isSaved = saveLabel === "Lagret";
-    const scopeLabel = state.statisticsSsb?.scope === "region" ? ` · ${state.statisticsSsb.municipalityCount} kommuner` : "";
-    const hasGeography = municipalitySelected || Boolean(state.statisticsRegion);
-    return `<article class="statistics-search-field ${hasGeography ? "active" : "disabled"} ${state.statisticsSelectedSearch === item.id ? "selected" : ""}" data-open-statistics-search="${escapeHtml(item.id)}" ${hasGeography ? 'role="button" tabindex="0"' : ""}><div class="statistics-search-title"><h3>${escapeHtml(item.title)}</h3><button type="button" class="statistics-star ${isSaved ? "saved" : ""}" data-save-statistics-search="${escapeHtml(item.id)}" aria-label="${isSaved ? "Fjern fra huskede søk" : "Husk dette søket"}" title="${isSaved ? "Fjern fra huskede søk" : "Husk dette søket"}" ${hasGeography ? "" : "disabled"}>${isSaved ? "★" : "☆"}</button></div><p>${escapeHtml(item.description)}</p><strong>${hasValue ? statisticsFormatSsbValue(value, item.metric) : hasGeography ? (state.statisticsSsbLoading ? "Laster ..." : "Ikke tilgjengelig") : "Velg kommune"}</strong>${trendMarkup}<small>SSB/Norsk ByggRadar${state.statisticsSsb?.year ? ` · ${escapeHtml(String(state.statisticsSsb.year))}` : ""}${scopeLabel}</small>${state.statisticsSelectedSearch === item.id ? statisticsDetailPanel() : ""}</article>`;
+    const scopeLabel = "";
+    const metricYear = state.statisticsSsb?.metricYears?.[item.metric]?.period || state.statisticsSsb?.metricYears?.[item.metric]?.year || state.statisticsSsb?.year;
+    const hasGeography = municipalitySelected;
+    const sourceLabel = item.metric ? `${statisticsSsbTableLinks(item.source)}${metricYear ? ` · ${escapeHtml(String(metricYear))}` : ""}` : "SSB-kobling ikke aktivert";
+    return `<article class="statistics-search-field ${hasGeography ? "active" : "disabled"} ${state.statisticsSelectedSearch === item.id ? "selected" : ""}" data-open-statistics-search="${escapeHtml(item.id)}" ${hasGeography ? 'role="button" tabindex="0"' : ""}><div class="statistics-search-copy"><div class="statistics-search-title"><h3>${escapeHtml(item.title)}</h3><button type="button" class="statistics-star ${isSaved ? "saved" : ""}" data-save-statistics-search="${escapeHtml(item.id)}" aria-label="${isSaved ? "Fjern fra huskede søk" : "Husk dette søket"}" title="${isSaved ? "Fjern fra huskede søk" : "Husk dette søket"}" ${hasGeography ? "" : "disabled"}>${isSaved ? "★" : "☆"}</button></div><p>${escapeHtml(item.description)}</p><p class="statistics-search-explanation">${escapeHtml(statisticsValueExplanation(item))}</p></div><strong>${hasValue ? statisticsFormatSsbValue(value, item.metric) : hasGeography ? (state.statisticsSsbLoading ? "Laster ..." : item.metric ? "Manglende/svakt datagrunnlag" : "Kobles til datagrunnlag") : "Velg kommune"}</strong>${trendMarkup}<small>${sourceLabel}${scopeLabel}</small>${state.statisticsSelectedSearch === item.id ? statisticsDetailPanel() : ""}</article>`;
   }).join("")}</div></section>`).join("");
-  return `<section class="statistics-search-panel"><div class="statistics-section-heading"><div><h2>Faste statistikksøk</h2><p>${municipalitySelected || state.statisticsRegion ? "Trykk på et statistikksøk for å utvide feltet med tallgrunnlag og metode." : "Velg region eller kommune for å aktivere statistikksøkene."}</p></div><span class="statistics-privacy-badge">SSB-data</span></div>${savedMarkup}${groupsMarkup}${state.statisticsSsbError ? `<p class="statistics-coverage-warning">${escapeHtml(state.statisticsSsbError)}</p>` : ""}</section>`;
+  return `<section class="statistics-search-panel"><div class="statistics-section-heading"><div><h2>Statistikkoversikt</h2><p>${municipalitySelected ? "Trykk på et statistikksøk for å utvide feltet med tallgrunnlag og metode." : "Velg kommune for å aktivere statistikksøkene."}</p></div><span class="statistics-privacy-badge">Data fra SSB/Norsk ByggRadar</span></div>${coverageMarkup}${savedMarkup}${groupsMarkup}${state.statisticsSsbError ? `<p class="statistics-coverage-warning">${escapeHtml(state.statisticsSsbError)}</p>` : ""}</section>`;
 }
 
 function statisticsSsbTrend(current, previous) {
@@ -936,8 +1125,8 @@ function statisticsSsbTrend(current, previous) {
 }
 
 async function loadSsbStatistics(municipality) {
-  const project = statisticsRecords().find((item) => normalizeMunicipalityName(item.municipality) === municipality && item.municipalityNumber);
-  if (!project?.municipalityNumber) {
+  const municipalityNumber = municipalityNumbers[normalizeMunicipalityName(municipality)];
+  if (!/^\d{4}$/.test(String(municipalityNumber || ""))) {
     state.statisticsSsb = null;
     state.statisticsSsbError = "SSB-data kan ikke hentes før kommunen har et gyldig kommunenummer.";
     renderStatistics();
@@ -948,39 +1137,8 @@ async function loadSsbStatistics(municipality) {
   state.statisticsSsbScope = "municipality";
   renderStatistics();
   try {
-    const payload = await fetchSsbMunicipality(project.municipalityNumber);
-    state.statisticsSsb = { ...payload, scope: "municipality", municipalityCount: 1, municipalityNumbers: [project.municipalityNumber] };
-  } catch (error) {
-    state.statisticsSsb = null;
-    state.statisticsSsbError = error.message || "SSB-data kunne ikke hentes.";
-  } finally {
-    state.statisticsSsbLoading = false;
-    renderStatistics();
-  }
-}
-
-async function loadSsbRegionStatistics(regionId) {
-  const municipalities = statisticsSsbMunicipalities(regionId);
-  if (!municipalities.length) {
-    state.statisticsSsb = null;
-    state.statisticsSsbError = "Ingen gyldige kommunenummer er tilgjengelige for regionen.";
-    renderStatistics();
-    return;
-  }
-  state.statisticsSsbLoading = true;
-  state.statisticsSsbError = "";
-  state.statisticsSsbScope = "region";
-  renderStatistics();
-  try {
-    const payloads = [];
-    for (let index = 0; index < municipalities.length; index += 3) {
-      const batch = municipalities.slice(index, index + 3);
-      const results = await Promise.allSettled(batch.map((municipality) => fetchSsbMunicipality(municipality.number)));
-      payloads.push(...results.filter((result) => result.status === "fulfilled").map((result) => result.value));
-    }
-    if (!payloads.length) throw new Error("SSB-data kunne ikke hentes for kommunene i regionen.");
-    state.statisticsSsb = aggregateSsbStatistics(payloads, "region", payloads.map((payload) => payload.municipalityNumber));
-    if (payloads.length < municipalities.length) state.statisticsSsbError = `${payloads.length} av ${municipalities.length} kommuner svarte fra SSB.`;
+    const payload = await fetchSsbMunicipality(municipalityNumber);
+    state.statisticsSsb = { ...payload, scope: "municipality", municipalityCount: 1, municipalityNumbers: [municipalityNumber] };
   } catch (error) {
     state.statisticsSsb = null;
     state.statisticsSsbError = error.message || "SSB-data kunne ikke hentes.";
@@ -1006,13 +1164,8 @@ function statisticsRecords() {
   return state.statisticsData?.projects || [];
 }
 
-function statisticsRegionRecords() {
-  if (!state.statisticsRegion) return statisticsRecords();
-  return statisticsRecords().filter((project) => project.region === state.statisticsRegion);
-}
-
 function statisticsFilteredRecords() {
-  let records = statisticsRegionRecords();
+  let records = statisticsRecords();
   if (state.statisticsMunicipality) records = records.filter((project) => normalizeMunicipalityName(project.municipality) === state.statisticsMunicipality);
   return records;
 }
@@ -1026,37 +1179,31 @@ function renderStatistics() {
   }
 
   const records = statisticsFilteredRecords();
-  const regionRecords = statisticsRegionRecords();
-  const municipalities = [...new Set(regionRecords.map((project) => project.municipality).filter(Boolean))].sort((a, b) => a.localeCompare(b, "nb"));
-  const regionName = state.statisticsRegion ? illustrationRegions.find((name) => locationRegions.find((region) => region.id === state.statisticsRegion)?.name === name) || locationRegions.find((region) => region.id === state.statisticsRegion)?.name : "Alle regioner";
+  const municipalities = [...new Set(locationRegions.flatMap((region) => region.municipalities))].sort((a, b) => a.localeCompare(b, "nb"));
+  const selectedMunicipalityName = municipalities.find((municipality) => normalizeMunicipalityName(municipality) === state.statisticsMunicipality) || "";
 
   view.innerHTML = `
     <div class="statistics-header">
       <div>
         <h1>Statistikk</h1>
-        <p class="statistics-intro"><strong>Om Norsk ByggRadar</strong><br>Norsk ByggRadar samler og systematiserer åpne opplysninger om byggeprosjekter, tiltak og anskaffelser fra kommuner og andre offentlige kilder. Oversikten gir et samlet bilde av aktiviteten i ulike regioner og kommuner, og viser utviklingstrekk basert på tilgjengelige registreringer.<br><br>Datagrunnlaget er hentet fra norske kommuners PBE (plan- og bygningsetat) og Statistisk sentralbyrå (SSB).<br><br>Norsk ByggRadar kan ikke garantere at alle prosjekter er fanget opp. Kildene kan være ufullstendige, forsinkede eller variere mellom kommunene. Tallene må derfor brukes som et informasjons- og analysegrunnlag, ikke som absolutte eller endelige sannheter. Mindre avvik kan forekomme.</p>
+        <p class="statistics-intro"><strong>Om Norsk ByggRadar</strong><br>Norsk ByggRadar samler og systematiserer åpne opplysninger om byggeprosjekter, tiltak og anskaffelser fra kommuner og andre offentlige kilder. Oversikten gir et samlet bilde av aktiviteten i ulike regioner og kommuner, og viser utviklingstrekk basert på tilgjengelige registreringer.<br><br>Statistikken bygger på åpne data fra Statistisk sentralbyrå (SSB), blant annet fra Statistikkbanken. I tillegg bruker Norsk ByggRadar egne datauttrekk fra plan- og bygningsetatene (PBE) i kommuner over hele Norge.<br><br>Norsk ByggRadar kan ikke garantere at alle prosjekter eller registreringer er fanget opp. Kildene kan være ufullstendige, forsinkede eller variere mellom kommunene. Tallene er derfor ment som et nyttig informasjons- og analysegrunnlag, og ikke som absolutte eller endelige sannheter. Mindre avvik kan forekomme.<br><br><strong>Om avvik mellom SSB og Norsk ByggRadar</strong><br>${statisticsNbrDeviationNote()}<br><br><strong>Kilde og bruk av data</strong><br>Vi ønsker at tallene skal være enkle å forstå og trygge å bruke videre. Ved gjengivelse ber vi derfor om at kilden oppgis som «SSB/Norsk ByggRadar», med relevant tabell, periode og eventuelle beregninger. Norsk ByggRadar kan ha bearbeidet, aggregert og presentert tallene på kommune- og regionnivå. Egne sammenstillinger, analyser og databaseuttrekk kan være vernet etter åndsverkloven, herunder reglene om databasevern. Bruk må også skje i samsvar med personopplysningsloven og personvernforordningen (GDPR), samt eventuelle kilde- og bruksvilkår. Norsk ByggRadar er en uavhengig kommersiell tjeneste og er ikke en del av eller godkjent av SSB.</p>
         <p class="statistics-device-note">Statistikkvisningen er mest oversiktlig på desktop (PC/Mac).</p>
       </div>
       <button class="print-button" id="printStatistics" type="button">Skriv ut</button>
     </div>
     <div class="statistics-filters" aria-label="Statistikkfiltre">
-      <div class="statistics-filter-group statistics-geography"><h2>Område</h2><label><span>Region</span><select id="statisticsRegion"><option value="">Velg region</option>${locationRegions.map((region) => `<option value="${region.id}" ${state.statisticsRegion === region.id ? "selected" : ""}>${escapeHtml(region.name)}</option>`).join("")}</select></label><label><span>Kommune</span><select id="statisticsMunicipality"><option value="">Velg kommune</option>${municipalities.map((municipality) => `<option value="${escapeHtml(normalizeMunicipalityName(municipality))}" ${state.statisticsMunicipality === normalizeMunicipalityName(municipality) ? "selected" : ""}>${escapeHtml(municipality)}</option>`).join("")}</select></label></div>
+      <div class="statistics-filter-group statistics-geography"><h2>Område</h2><label><span>Kommune</span><input id="statisticsMunicipalitySearch" list="statisticsMunicipalityOptions" type="search" value="${escapeHtml(displayGeographyName(selectedMunicipalityName))}" placeholder="Søk etter kommune" autocomplete="off" /><datalist id="statisticsMunicipalityOptions">${municipalities.map((municipality) => `<option value="${escapeHtml(displayGeographyName(municipality))}"></option>`).join("")}</datalist></label></div>
     </div>
-    <div class="statistics-summary-line">${escapeHtml(regionName)} · ${records.length.toLocaleString("nb-NO")} prosjekter i utvalget</div>
+    <div class="statistics-summary-line">${escapeHtml(selectedMunicipalityName || "Alle kommuner")} · ${records.length.toLocaleString("nb-NO")} prosjekter i utvalget</div>
     ${statisticsSearchPanel()}
   `;
-  ["statisticsRegion", "statisticsMunicipality"].forEach((id) => {
+  ["statisticsMunicipalitySearch"].forEach((id) => {
     document.querySelector(`#${id}`)?.addEventListener("change", (event) => {
-      const key = id.replace(/^statistics/, "");
-      const stateKey = `statistics${key}`;
-      state[stateKey] = event.target.value;
-      if (id === "statisticsRegion") {
-        state.statisticsMunicipality = "";
-        state.statisticsSsb = null;
-        state.statisticsSsbError = "";
-        state.statisticsSsbScope = "";
-        state.statisticsSelectedSearch = "";
-      } else if (!state.statisticsMunicipality) {
+      if (id === "statisticsMunicipalitySearch") {
+        const selected = municipalities.find((municipality) => normalizeMunicipalityName(municipality) === normalizeMunicipalityName(event.target.value));
+        state.statisticsMunicipality = selected ? normalizeMunicipalityName(selected) : "";
+      }
+      if (!state.statisticsMunicipality) {
         state.statisticsSsb = null;
         state.statisticsSsbError = "";
         state.statisticsSsbScope = "";
@@ -1065,21 +1212,19 @@ function renderStatistics() {
         state.statisticsSelectedSearch = "";
       }
       renderStatistics();
-      if (id === "statisticsRegion" && state.statisticsRegion) loadSsbRegionStatistics(state.statisticsRegion);
-      if (id === "statisticsMunicipality" && state.statisticsMunicipality) loadSsbStatistics(state.statisticsMunicipality);
+      if (id === "statisticsMunicipalitySearch" && state.statisticsMunicipality) loadSsbStatistics(state.statisticsMunicipality);
     });
   });
   document.querySelectorAll("[data-save-statistics-search]").forEach((button) => {
     button.addEventListener("click", () => {
       const presetId = button.dataset.saveStatisticsSearch;
-      if (!state.statisticsMunicipality && !state.statisticsRegion) return;
-      const existing = state.statisticsSavedSearches.findIndex((search) => search.presetId === presetId && search.municipality === state.statisticsMunicipality && search.region === state.statisticsRegion);
+      if (!state.statisticsMunicipality) return;
+      const existing = state.statisticsSavedSearches.findIndex((search) => search.presetId === presetId && search.municipality === state.statisticsMunicipality);
       if (existing >= 0) state.statisticsSavedSearches.splice(existing, 1);
       else state.statisticsSavedSearches.unshift({
-        id: `${presetId}-${state.statisticsMunicipality || state.statisticsRegion}`,
+        id: `${presetId}-${state.statisticsMunicipality}`,
         presetId,
         municipality: state.statisticsMunicipality,
-        region: state.statisticsRegion,
       });
       saveStatisticsSavedSearches();
       renderStatistics();
@@ -1087,7 +1232,7 @@ function renderStatistics() {
   });
   document.querySelectorAll("[data-open-statistics-search]").forEach((card) => {
     const open = () => {
-      if (!state.statisticsMunicipality && !state.statisticsRegion) return;
+      if (!state.statisticsMunicipality) return;
       const searchId = card.dataset.openStatisticsSearch;
       state.statisticsSelectedSearch = state.statisticsSelectedSearch === searchId ? "" : searchId;
       renderStatistics();
@@ -1108,7 +1253,6 @@ function renderStatistics() {
     button.addEventListener("click", () => {
       const search = state.statisticsSavedSearches.find((item) => item.id === button.dataset.loadStatisticsSearch);
       if (!search) return;
-      state.statisticsRegion = search.region || "";
       state.statisticsMunicipality = search.municipality || "";
       renderStatistics();
       if (state.statisticsMunicipality) loadSsbStatistics(state.statisticsMunicipality);
@@ -1182,7 +1326,10 @@ function renderRegionNotice(summary = {}) {
   const visibleCount = summary.visibleCount ?? visibleDeliveryProjects().length;
   const totalCount = summary.totalCount ?? state.filtered.length;
   const regionName = summary.regionName || selectedRegion.name;
-  notice.textContent = `Valgt område: ${selectedRegion.name} (${selectedRegion.municipalities.length} kommuner) ${visibleCount} aktive prosjekter vises, av ${totalCount} for ${regionName}.`;
+  const businessText = selectedRegion.constructionBusinessCount
+    ? ` Regionen består av ca. ${selectedRegion.constructionBusinessCount.toLocaleString("nb-NO")} virksomheter innen bygg- og anleggsbransjen.`
+    : "";
+  notice.textContent = `Valgt område: ${selectedRegion.name} (${selectedRegion.municipalities.length} kommuner) ${visibleCount} aktive prosjekter vises, av ${totalCount} for ${regionName}.${businessText}`;
 }
 
 function renderList() {
@@ -1207,8 +1354,10 @@ function renderList() {
       <button class="project-summary" type="button" data-id="${escapeHtml(project.id)}">
         <span class="project-number">${index + 1}</span>
         <span class="project-meta">
-          <span class="row-status" title="${escapeHtml(project.statusText)}">${escapeHtml(project.phaseLabel)}</span>
-          <span class="date-badge" title="${escapeHtml(project.dateFullLabel)}">${index >= standardProjectLimit ? `<span class="extra-star" title="Utenfor standard leveranse">★</span>` : ""}${escapeHtml(project.dateLabel)}</span>
+          <span class="date-badge" title="${escapeHtml(project.dateFullLabel)}">
+            <span class="row-status" title="${escapeHtml(project.statusText)}">${escapeHtml(project.phaseLabel)}</span>
+            <span class="date-value">${index >= standardProjectLimit ? `<span class="extra-star" title="Utenfor standard leveranse">★</span>` : ""}${escapeHtml(project.dateLabel)}</span>
+          </span>
         </span>
         <span class="row-copy">
           <span class="line-primary">${escapeHtml(project.firstLine)}</span>
@@ -1277,7 +1426,7 @@ function renderExpandedProject(project) {
           <button class="close-button close-project" type="button">Lukk</button>
           <dl class="facts compact">
             <div><dt>Adresse</dt><dd>${escapeHtml(project.place || "Ikke oppgitt")}</dd></div>
-            <div><dt>Kommune</dt><dd>${escapeHtml(project.municipality || "Ikke oppgitt")}</dd></div>
+            <div><dt>Kommune</dt><dd>${escapeHtml(displayGeographyName(project.municipality || "Ikke oppgitt"))}</dd></div>
             <div><dt>Fag/tema</dt><dd>${escapeHtml(project.tradeRelevance || "Ikke tolket")}</dd></div>
             <div><dt>Matrikkel</dt><dd>${escapeHtml(project.matrikkel || "Ikke oppgitt")}</dd></div>
           </dl>
@@ -1304,7 +1453,7 @@ function renderProjectContact(project, { compact = false } = {}) {
     const phone = authority.phone ? normalizePhone(authority.phone) : "";
     return `<div class="contact-line authority-contact">
       <strong>${contactRoleLabel("authority")}</strong>
-      <span>${escapeHtml(authority.name || project.municipality || "Kommunen")}</span>
+      <span>${escapeHtml(authority.name || displayGeographyName(project.municipality || "Kommunen"))}</span>
       ${authority.phone ? `<a href="tel:${phone}">T: ${escapeHtml(authority.phone)}</a>` : ""}
       ${authority.email ? `<span>E: ${escapeHtml(authority.email)}</span>` : ""}
       <small>Ansvarlig søker eller tiltakshaver er ikke identifisert.</small>
@@ -1325,19 +1474,38 @@ function renderProjectContact(project, { compact = false } = {}) {
 function renderExpandedPreviewFields(project) {
   const businessContact = project.contacts.find((contact) => contact.name && contact.name === project.contact?.name) || project.contacts[0] || {};
   const sender = [project.fromOrg || project.fromName, project.toOrg || project.toName].filter(Boolean).join(" → ");
+  const actor = project.contact?.name || project.owner || project.toOrg || project.toName || project.fromOrg || project.fromName;
+  const locationText = project.hasMapPoint
+    ? "Plassering bekreftet"
+    : project.addressLookupStatus || "Ikke bekreftet lokasjon";
+  const documentCount = project.files.filter((file) => file && (file.url || file.href)).length;
   const files = project.files.filter((file) => file && (file.url || file.href)).slice(0, 5).map((file) => {
     const title = fileDisplayTitle(file.title || file.name || "Vedlegg");
     return `<li><a href="${escapeHtml(projectDocumentUrl(project, file))}" target="_blank" rel="noreferrer">${escapeHtml(title)}</a></li>`;
   }).join("");
   const hasProcurementInfo = project.buyer || project.procurementContactName || project.procurementType || project.estimatedValue || project.deadline;
-  const facts = [
+  const caseFacts = [
     [project.documentNumber ? "Dokumentnummer" : "Saksnummer", project.documentNumber || project.caseNumber],
     ["Dokumentdato", project.date ? formatNorwegianDate(project.date) : ""],
     ["Dokumenttype", project.documentType],
+    ["Siste registrerte dato", project.recordedDate ? formatNorwegianDate(project.recordedDate) : ""],
+    ["Fase", project.phaseLabel],
     ["Avsender/mottaker", sender],
+  ].filter(([, value]) => value);
+  const actorFacts = [
+    ["Aktør", actor],
     ["Organisasjonsnummer", businessContact.orgNumber],
     ["Bransje", businessContact.industry],
     ["Forretningsadresse", businessContact.address],
+    ["Kontakt", project.contact?.phone || project.contact?.email ? [project.contact.phone, project.contact.email].filter(Boolean).join(" · ") : ""],
+  ].filter(([, value]) => value);
+  const locationFacts = [
+    ["Adresse", project.address || project.place],
+    ["Kommune", displayGeographyName(project.municipality)],
+    ["Matrikkel", project.matrikkel],
+    ["Kartstatus", locationText],
+  ].filter(([, value]) => value);
+  const procurementFacts = [
     ["Anskaffelse", hasProcurementInfo ? [project.procurementType, project.procurementProjectType].filter(Boolean).join(" · ") || "Ekstern prosjektkilde" : ""],
     ["Kjøper", project.buyer],
     ["Kontaktperson", project.procurementContactName],
@@ -1345,13 +1513,23 @@ function renderExpandedPreviewFields(project) {
     ["Frist", project.deadline],
   ].filter(([, value]) => value);
 
-  if (!facts.length && !files && !project.sourceUrl) return "";
+  if (!caseFacts.length && !actorFacts.length && !locationFacts.length && !procurementFacts.length && !files && !project.sourceUrl) return "";
+
+  const renderFactGroup = (title, facts) => facts.length ? `
+    <div class="preview-group">
+      <h4>${escapeHtml(title)}</h4>
+      <dl class="facts compact">${facts.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}</dl>
+    </div>
+  ` : "";
 
   return `
     <section class="expanded-preview-fields">
       <div class="preview-label">Utvidet prosjektinformasjon</div>
-      ${facts.length ? `<dl class="facts compact">${facts.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}</dl>` : ""}
-      ${files ? `<div class="preview-subsection"><strong>Vedlegg</strong><ul class="attachment-list">${files}</ul></div>` : ""}
+      ${renderFactGroup("Sak og status", caseFacts)}
+      ${renderFactGroup("Aktører og kontakt", actorFacts)}
+      ${renderFactGroup("Eiendom og kart", locationFacts)}
+      ${renderFactGroup("Anskaffelse", procurementFacts)}
+      ${files ? `<div class="preview-subsection"><strong>Vedlegg (${documentCount})</strong><ul class="attachment-list">${files}</ul></div>` : ""}
       ${project.sourceUrl ? `<a class="full-case-link" href="${escapeHtml(project.sourceUrl)}" target="_blank" rel="noreferrer">Åpne kommunalt saksinnsyn</a>` : ""}
     </section>
   `;
@@ -1486,7 +1664,7 @@ function isApprovedMunicipalitySource(value) {
 function renderContactQuality(project) {
   const sources = project.contactLookupSources || [];
   const missingPhone = !project.contact?.phone;
-  const missingProjectContact = !project.contact && (project.authorityContact || ["unknown", "private"].includes(project.contactQuality.level));
+  const missingProjectContact = !project.contact && (project.authorityContact || project.contactQuality.level === "unknown");
   const aiSearch = sources.find((source) => source.label === "AI-søk");
   const phoneSearchSubject = phoneLookupSubject(project) || "aktøren";
   const aiResult = state.aiSearchResults.get(project.id);
@@ -2306,7 +2484,7 @@ function scrollSelectedProjectIntoView(projectId) {
 function mapTooltipText(project) {
   const typeText = shortTrade(project.projectTypeText || project.projectTypes?.join("; ") || project.tradeRelevance || project.status || "Ukjent tiltak");
   const fallback = project.isMunicipalityFallbackPoint ? " | Ikke bekreftet lokasjon" : "";
-  return `${project.place || project.address || project.municipality || "Ukjent adresse"} | ${typeText}${fallback}`;
+  return `${project.place || project.address || displayGeographyName(project.municipality) || "Ukjent adresse"} | ${typeText}${fallback}`;
 }
 
 function ensureMapHoverCard(map) {
@@ -2347,10 +2525,10 @@ function addBaseMap(map, options = {}) {
     detectRetina: false,
     className: "byggradar-map-tiles",
   };
-  // Bruk det vanlige vei- og gatenettet som hovedkart. OSM beholdes som reserve.
-  const layer = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}", {
+  // Bruk OpenStreetMap standard veikart som hovedkart. ArcGIS beholdes som reserve.
+  const layer = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     ...tileOptions,
-    attribution: '&copy; Esri, HERE, Garmin, Intermap, USGS, METI/NASA',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   });
 
   let fallbackStarted = false;
@@ -2359,9 +2537,9 @@ function addBaseMap(map, options = {}) {
     event.tile.classList.add("tile-load-error");
     if (fallbackStarted) return;
     fallbackStarted = true;
-    const fallbackLayer = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    const fallbackLayer = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}", {
       ...tileOptions,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      attribution: '&copy; Esri, HERE, Garmin, Intermap, USGS, METI/NASA',
     });
     layer.remove();
     fallbackLayer.addTo(map);
@@ -2451,7 +2629,9 @@ function renderDetails() {
 function filterProjects() {
   const trade = normalize(state.trade);
   const area = normalize(state.area);
-  const textRegion = findRegionByText(state.area) || state.activeRegion;
+  // A typed search term must filter the projects even when a region is already selected.
+  // The active region is only the fallback when the area field is empty.
+  const textRegion = (area && findRegionByText(state.area)) || (!area ? state.activeRegion : null);
 
   return state.projects
     .filter((project) => !trade || tradeMatches(project, trade))
@@ -2678,19 +2858,11 @@ function assessContactQuality(contact, actors, hasAnonymizedActor, authorityCont
       needsExternalLookup: true,
     };
   }
-  if (actors.some((actor) => actor.type === "company")) {
+  if (actors.length) {
     return {
       level: "missing",
       label: "Kontakt må finnes",
-      message: "Virksomhet er identifisert, men telefon/e-post mangler. Søk i åpne kontaktkilder.",
-      needsExternalLookup: true,
-    };
-  }
-  if (hasAnonymizedActor) {
-    return {
-      level: "private",
-      label: "Privat/anonymisert",
-      message: "Navn mangler eller er skjult. Søk på adresse, matrikkel eller åpne aktørnavn.",
+      message: "Aktør er identifisert, men telefon/e-post mangler. Søk i åpne kontaktkilder.",
       needsExternalLookup: true,
     };
   }
@@ -2707,7 +2879,6 @@ function contactLineSummary(contactQuality) {
     complete: "kontakt komplett",
     partial: "kontakt delvis",
     missing: "kontakt må finnes",
-    private: "privat/anonymisert",
     authority: "kun kommunal kontakt",
     unknown: "kontakt uklar",
   };
@@ -2966,7 +3137,7 @@ function shortPlace(value) {
 }
 
 function shortPlaceWithMunicipality(place, municipality) {
-  const cleanMunicipality = String(municipality || "").replace(/\s+/g, " ").trim();
+  const cleanMunicipality = displayGeographyName(municipality);
   const cleanPlace = String(place || "Ukjent sted").replace(", Norge", "").replace(/\s+/g, " ").trim();
   if (!cleanMunicipality) return cleanPlace.slice(0, 34);
 
@@ -3118,7 +3289,7 @@ function projectMailtoHref(project) {
 
 function projectMailBody(project) {
   const place = projectMailPlace(project);
-  const municipality = project.municipality || project.marketArea || "";
+  const municipality = displayGeographyName(project.municipality || project.marketArea || "");
 
   const lines = [
     "Hei,",
@@ -3169,13 +3340,6 @@ function updateCustomerMunicipalityOptions() {
     }),
   ].join("");
   select.value = selected;
-  updateCustomerMunicipalityPrompt();
-}
-
-function updateCustomerMunicipalityPrompt() {
-  const prompt = document.querySelector("#customerMunicipalityPrompt");
-  if (!prompt) return;
-  prompt.hidden = Boolean(state.customerMunicipality);
 }
 
 function restoreSavedFilters() {
@@ -3189,7 +3353,6 @@ function restoreSavedFilters() {
     state.activeRegion = locationRegions.find((region) => region.id === state.regionKey) || findRegionByText(state.area);
     document.querySelector("#tradeInput").value = state.trade;
     document.querySelector("#areaInput").value = state.area;
-    document.querySelector("#regionIllustration").value = state.regionKey;
     updateCustomerMunicipalityOptions();
   } catch {
     state.trade = "";
@@ -3284,6 +3447,12 @@ function municipalityInRegion(value, region) {
 
 function normalizeMunicipalityName(value) {
   return normalize(value).replace(/\bkommune\b|\bherad\b/g, "").replace(/\s+/g, " ").trim();
+}
+
+function displayGeographyName(value) {
+  const text = String(value || "").replace(/\s+/g, " ").trim();
+  if (!text) return "";
+  return `${text.charAt(0).toLocaleUpperCase("nb-NO")}${text.slice(1)}`;
 }
 
 function distanceKm(lat1, lon1, lat2, lon2) {

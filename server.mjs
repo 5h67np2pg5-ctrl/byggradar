@@ -11,6 +11,9 @@ const residentialBuildingTypes = [
   "111", "112", "113", "121", "122", "123", "124", "131", "133", "135", "136",
   "141", "142", "143", "144", "145", "146", "151", "152", "159",
 ];
+const ssbMetadataCache = new Map();
+const ssbYearCache = new Map();
+const ssbTableCache = new Map();
 
 const mime = {
   ".html": "text/html; charset=utf-8",
@@ -109,69 +112,268 @@ const server = http.createServer(async (request, response) => {
     }
 
     if (url.pathname === "/api/ssb-statistics") {
-      const municipalityNumber = String(url.searchParams.get("kommunenummer") || "").replace(/\D/g, "").slice(0, 4);
-      if (!/^\d{4}$/.test(municipalityNumber)) {
+      const requestedMunicipalities = url.searchParams.get("kommunenumre") || url.searchParams.get("kommunenummer") || "";
+      const municipalityNumbers = [...new Set(requestedMunicipalities.split(",").map((value) => value.replace(/\D/g, "").slice(0, 4)).filter((value) => /^\d{4}$/.test(value)))];
+      const municipalityNumber = municipalityNumbers[0] || "";
+      if (!municipalityNumbers.length) {
         response.writeHead(400, { "content-type": "application/json; charset=utf-8" });
         response.end(JSON.stringify({ error: "Mangler gyldig kommunenummer" }));
         return;
       }
       const requestedYear = Number(url.searchParams.get("år") || new Date().getFullYear());
       const currentYear = Number.isInteger(requestedYear) && requestedYear >= 2020 && requestedYear <= new Date().getFullYear() ? requestedYear : new Date().getFullYear();
-      const [planYears, housingYears] = await Promise.all([
+      const [planYears, housingYears, feeAccountingYears, buildingAreaYears, holidayYears] = await Promise.all([
         latestSsbYears("12690", currentYear),
         latestSsbYears("05940", currentYear),
+        latestSsbYears("13013", currentYear),
+        latestSsbYears("05939", currentYear),
+        latestSsbYears("06952", currentYear),
       ]);
-      const [plan, housing] = await Promise.all([
+      const [feeYears, buildingYears] = await Promise.all([
+        latestSsbYears("12303", currentYear),
+        latestSsbYears("13021", currentYear),
+      ]);
+      const [plan, housing, commercial, publicBuilding, holiday, fees, building, buildingProcessing, feeAccounting] = await Promise.all([
         fetchSsbTable("12690", [
-          { code: "KOKkommuneregion0000", values: [municipalityNumber] },
-          { code: "ContentsCode", values: ["KOSomfplanbehand0001", "KOSomfplanbehand0000", "KOSbehandlingsti0000"] },
+          { code: "KOKkommuneregion0000", values: municipalityNumbers },
+          { code: "ContentsCode", values: ["KOSantreghoring0000", "KOSinskomplanall0000", "KOStemaareal0000", "KOShoringsfrist0000", "KOSinnsigelseral0000", "KOSomfplanbehand0001", "KOSomfplanbehand0000", "KOSbehandlingsti0000", "KOSklagesakerved0000"] },
           { code: "Tid", values: planYears },
         ]),
         fetchSsbTable("05940", [
-          { code: "Region", values: [municipalityNumber] },
+          { code: "Region", values: municipalityNumbers },
           { code: "Byggeareal", values: residentialBuildingTypes },
           { code: "ContentsCode", values: ["Igangsatte", "Fullforte", "BruksarealIgang", "BruksarealFullfort"] },
           { code: "Tid", values: housingYears },
         ]),
+        fetchSsbTable("05939", [
+          { code: "Region", values: municipalityNumbers },
+          { code: "Byggeareal", values: ["611", "612", "613", "614", "615", "616", "619", "621", "623", "629", "641", "642", "643", "649", "651", "652", "653", "654", "655", "659", "661", "662", "663", "669", "671", "672", "673", "674", "675", "679", "719", "721", "722", "723", "729", "731", "732", "739"] },
+          { code: "ContentsCode", values: ["Igangsatt", "Fullfort"] },
+          { code: "Tid", values: buildingAreaYears },
+        ]),
+        fetchSsbTable("06952", [
+          { code: "Region", values: municipalityNumbers },
+          { code: "ContentsCode", values: ["IgangFrid2", "FullFritid2"] },
+          { code: "Tid", values: holidayYears },
+        ]),
+        fetchSsbTable("05939", [
+          { code: "Region", values: municipalityNumbers },
+          { code: "Byggeareal", values: ["__ALL__"] },
+          { code: "ContentsCode", values: ["Igangsatt", "Fullfort"] },
+          { code: "Tid", values: buildingAreaYears },
+        ]),
+        fetchSsbTable("12303", [
+          { code: "KOKkommuneregion0000", values: municipalityNumbers },
+          { code: "ContentsCode", values: ["KOSgebrebebolig0000", "KOSgebrgrunneie0000", "KOSgebrprivrgpln0000"] },
+          { code: "Tid", values: feeYears },
+        ]),
+        fetchSsbTable("13021", [
+          { code: "KOKkommuneregion0000", values: municipalityNumbers },
+          { code: "KOKckategori0000", values: ["aalle"] },
+          { code: "KOKctype0000", values: ["abygsokialt"] },
+          { code: "ContentsCode", values: ["KOSmottattesokna0000", "KOSmangelfulleso0000", "KOSbehandletsokn0000", "KOSoverlovpalagt0000", "KOSgjennomsnitts0000"] },
+          { code: "Tid", values: buildingYears },
+        ]),
+        fetchSsbTable("13021", [
+          { code: "KOKkommuneregion0000", values: municipalityNumbers },
+          { code: "KOKckategori0000", values: ["__ALL__"] },
+          { code: "KOKctype0000", values: ["__ALL__"] },
+          { code: "ContentsCode", values: ["KOSgjennomsnitts0000"] },
+          { code: "Tid", values: buildingYears },
+        ]),
+        fetchSsbTable("13013", [
+          { code: "KOKkommuneregion0000", values: municipalityNumbers },
+          { code: "KOKkommunalsekto0000", values: ["4_p", "5_b", "6_k", "7_e"] },
+          { code: "ContentsCode", values: [
+            "KOSbelopdirdrift0000", "KOSbelopindirdri0000", "KOSbelopkalkrent0000", "KOSbelopkalkavsk0000",
+            "KOSbelopandreinn0000", "KOSbelopgebyrgrl0000", "KOSbelopgebyrinn0000", "KOSbelopaaretsfi0000",
+            "KOSbelopavsetnfo0000", "KOSbelopbrukfond0000", "KOSbelopkontrsum0000", "KOSbelopsaldo110000",
+            "KOSbelopaltkostn0000", "KOSbelopsaldo3110000", "KOSbelopfindekng0000", "KOSbelopselvkost0000",
+          ] },
+          { code: "Tid", values: feeAccountingYears },
+        ]),
       ]);
       const planSeries = ssbMetricSeries(plan);
       const housingSeries = ssbMetricSeries(housing, "Byggeareal");
+      const commercialSeries = ssbMetricSeries(commercial, "Byggeareal");
+      const publicBuildingSeries = ssbMetricSeries(publicBuilding, "Byggeareal");
+      const holidaySeries = ssbMetricSeries(holiday);
+      const feeSeries = ssbMetricSeries(fees);
+      const buildingSeries = ssbMetricSeries(building);
+      const buildingProcessingSeries = ssbMetricSeries(buildingProcessing, ["KOKckategori0000", "KOKctype0000"], "average");
+      const feeAccountingSeries = ssbMetricSeries(feeAccounting, "KOKkommunalsekto0000");
       const planValues = Object.fromEntries(Object.entries(planSeries).map(([key, series]) => [key, series.current]));
       const housingValues = Object.fromEntries(Object.entries(housingSeries).map(([key, series]) => [key, series.current]));
+      const feeValues = Object.fromEntries(Object.entries(feeSeries).map(([key, series]) => [key, series.current]));
+      const buildingValues = Object.fromEntries(Object.entries(buildingSeries).map(([key, series]) => [key, series.current]));
+      const feeAccountingValues = Object.fromEntries(Object.entries(feeAccountingSeries).map(([key, series]) => [key, series.current]));
       const planTrends = Object.fromEntries(Object.entries(planSeries).map(([key, series]) => [key, ssbTrend(series.current, series.previous)]));
       const housingTrends = Object.fromEntries(Object.entries(housingSeries).map(([key, series]) => [key, ssbTrend(series.current, series.previous)]));
+      const commercialTrends = Object.fromEntries(Object.entries(commercialSeries).map(([key, series]) => [key, ssbTrend(series.current, series.previous)]));
+      const publicBuildingTrends = Object.fromEntries(Object.entries(publicBuildingSeries).map(([key, series]) => [key, ssbTrend(series.current, series.previous)]));
+      const holidayTrends = Object.fromEntries(Object.entries(holidaySeries).map(([key, series]) => [key, ssbTrend(series.current, series.previous)]));
+      const feeTrends = Object.fromEntries(Object.entries(feeSeries).map(([key, series]) => [key, ssbTrend(series.current, series.previous)]));
+      const buildingTrends = Object.fromEntries(Object.entries(buildingSeries).map(([key, series]) => [key, ssbTrend(series.current, series.previous)]));
+      const feeAccountingTrends = Object.fromEntries(Object.entries(feeAccountingSeries).map(([key, series]) => [key, ssbTrend(series.current, series.previous)]));
       const values = {
+        latestAvailableYear: Math.max(...[planYears, housingYears, feeYears, buildingYears, buildingAreaYears, holidayYears].map((years) => Number(years.at(-1)))),
+        plansWithHearingDeadline: planValues.KOShoringsfrist0000,
+        planObjections: planValues.KOSinnsigelseral0000,
+        planArea: planValues.KOStemaareal0000,
         regulationsAdopted: planValues.KOSomfplanbehand0001,
         privateDetailedPlans: planValues.KOSomfplanbehand0000,
         planProcessingDays: planValues.KOSbehandlingsti0000,
+        planComplaints: planValues.KOSklagesakerved0000,
         housingStarted: housingValues.Igangsatte,
         housingCompleted: housingValues.Fullforte,
+        housingNetDifference: Number(housingValues.Igangsatte || 0) - Number(housingValues.Fullforte || 0),
         housingStartedArea: housingValues.BruksarealIgang,
         housingCompletedArea: housingValues.BruksarealFullfort,
+        commercialStartedArea: commercialSeries.BruksarealIgang?.current,
+        commercialCompletedArea: commercialSeries.BruksarealFullfort?.current,
+        constructionAreaTotal: Number(housingValues.BruksarealIgang || 0) + Number(commercialSeries.BruksarealIgang?.current || 0),
+        publicBuildingStartedArea: publicBuildingSeries.Igangsatt?.current,
+        holidayHomeArea: holidaySeries.IgangFrid2?.current,
+        feeBuildingHouse: feeValues.KOSgebrebebolig0000,
+        feePropertyCreation: feeValues.KOSgebrgrunneie0000,
+        feePrivateRegulation: feeValues.KOSgebrprivrgpln0000,
+        buildingApplications: buildingValues.KOSmottattesokna0000,
+        incompleteBuildingApplications: buildingValues.KOSmangelfulleso0000,
+        processedBuildingApplications: buildingValues.KOSbehandletsokn0000,
+        lateBuildingApplications: buildingValues.KOSoverlovpalagt0000,
+        buildingProcessingDays: buildingProcessingSeries.KOSgjennomsnitts0000?.current,
+        feeDirectOperatingExpenses: feeAccountingValues.KOSbelopdirdrift0000,
+        feeIndirectOperatingExpenses: feeAccountingValues.KOSbelopindirdri0000,
+        feeInterestCosts: feeAccountingValues.KOSbelopkalkrent0000,
+        feeDepreciation: feeAccountingValues.KOSbelopkalkavsk0000,
+        feeOtherIncome: feeAccountingValues.KOSbelopandreinn0000,
+        feeBasisTotal: feeAccountingValues.KOSbelopgebyrgrl0000,
+        feeRevenueTotal: feeAccountingValues.KOSbelopgebyrinn0000,
+        feeFinancialResult: feeAccountingValues.KOSbelopaaretsfi0000,
+        feeFundProvision: feeAccountingValues.KOSbelopavsetnfo0000,
+        feeFundUse: feeAccountingValues.KOSbelopbrukfond0000,
+        feeControlSumSubsidy: feeAccountingValues.KOSbelopkontrsum0000,
+        feeFundBalanceStart: feeAccountingValues.KOSbelopsaldo110000,
+        feeAlternativeCost: feeAccountingValues.KOSbelopaltkostn0000,
+        feeFundBalanceEnd: feeAccountingValues.KOSbelopsaldo3110000,
+        feeFinancialCoverage: feeAccountingValues.KOSbelopfindekng0000,
       };
+      applyFeeCoverageCalculations(values);
       response.writeHead(200, {
         "content-type": "application/json; charset=utf-8",
         "cache-control": "no-store",
       });
       const previousValues = {
+        plansWithHearingDeadline: planSeries.KOShoringsfrist0000?.previous,
+        planObjections: planSeries.KOSinnsigelseral0000?.previous,
+        planArea: planSeries.KOStemaareal0000?.previous,
         regulationsAdopted: planSeries.KOSomfplanbehand0001?.previous,
         privateDetailedPlans: planSeries.KOSomfplanbehand0000?.previous,
         planProcessingDays: planSeries.KOSbehandlingsti0000?.previous,
+        planComplaints: planSeries.KOSklagesakerved0000?.previous,
         housingStarted: housingSeries.Igangsatte?.previous,
         housingCompleted: housingSeries.Fullforte?.previous,
+        housingNetDifference: Number(housingSeries.Igangsatte?.previous || 0) - Number(housingSeries.Fullforte?.previous || 0),
         housingStartedArea: housingSeries.BruksarealIgang?.previous,
         housingCompletedArea: housingSeries.BruksarealFullfort?.previous,
+        commercialStartedArea: commercialSeries.BruksarealIgang?.previous,
+        commercialCompletedArea: commercialSeries.BruksarealFullfort?.previous,
+        constructionAreaTotal: Number(housingSeries.BruksarealIgang?.previous || 0) + Number(commercialSeries.BruksarealIgang?.previous || 0),
+        publicBuildingStartedArea: publicBuildingSeries.Igangsatt?.previous,
+        holidayHomeArea: holidaySeries.IgangFrid2?.previous,
+        feeBuildingHouse: feeSeries.KOSgebrebebolig0000?.previous,
+        feePropertyCreation: feeSeries.KOSgebrgrunneie0000?.previous,
+        feePrivateRegulation: feeSeries.KOSgebrprivrgpln0000?.previous,
+        buildingApplications: buildingSeries.KOSmottattesokna0000?.previous,
+        incompleteBuildingApplications: buildingSeries.KOSmangelfulleso0000?.previous,
+        processedBuildingApplications: buildingSeries.KOSbehandletsokn0000?.previous,
+        lateBuildingApplications: buildingSeries.KOSoverlovpalagt0000?.previous,
+        buildingProcessingDays: buildingProcessingSeries.KOSgjennomsnitts0000?.previous,
+        feeDirectOperatingExpenses: feeAccountingSeries.KOSbelopdirdrift0000?.previous,
+        feeIndirectOperatingExpenses: feeAccountingSeries.KOSbelopindirdri0000?.previous,
+        feeInterestCosts: feeAccountingSeries.KOSbelopkalkrent0000?.previous,
+        feeDepreciation: feeAccountingSeries.KOSbelopkalkavsk0000?.previous,
+        feeOtherIncome: feeAccountingSeries.KOSbelopandreinn0000?.previous,
+        feeBasisTotal: feeAccountingSeries.KOSbelopgebyrgrl0000?.previous,
+        feeRevenueTotal: feeAccountingSeries.KOSbelopgebyrinn0000?.previous,
+        feeFinancialResult: feeAccountingSeries.KOSbelopaaretsfi0000?.previous,
+        feeFundProvision: feeAccountingSeries.KOSbelopavsetnfo0000?.previous,
+        feeFundUse: feeAccountingSeries.KOSbelopbrukfond0000?.previous,
+        feeControlSumSubsidy: feeAccountingSeries.KOSbelopkontrsum0000?.previous,
+        feeFundBalanceStart: feeAccountingSeries.KOSbelopsaldo110000?.previous,
+        feeAlternativeCost: feeAccountingSeries.KOSbelopaltkostn0000?.previous,
+        feeFundBalanceEnd: feeAccountingSeries.KOSbelopsaldo3110000?.previous,
+        feeFinancialCoverage: feeAccountingSeries.KOSbelopfindekng0000?.previous,
       };
-      const year = Math.min(Number(planYears.at(-1)), Number(housingYears.at(-1)));
+      applyFeeCoverageCalculations(previousValues);
+      const outputMetricKeys = [
+        "latestAvailableYear", "plansWithHearingDeadline", "planObjections", "planArea", "regulationsAdopted", "privateDetailedPlans", "planProcessingDays", "planComplaints",
+        "housingStarted", "housingCompleted", "housingNetDifference", "housingStartedArea", "housingCompletedArea", "commercialStartedArea", "commercialCompletedArea", "constructionAreaTotal", "publicBuildingStartedArea", "holidayHomeArea",
+        "feeBuildingHouse", "feePropertyCreation", "feePrivateRegulation", "buildingApplications", "incompleteBuildingApplications", "processedBuildingApplications", "lateBuildingApplications", "buildingProcessingDays",
+        "feeDirectOperatingExpenses", "feeIndirectOperatingExpenses", "feeInterestCosts", "feeDepreciation", "feeOtherIncome", "feeBasisTotal", "feeRevenueTotal", "feeFinancialResult", "feeFundProvision", "feeFundUse", "feeControlSumSubsidy", "feeFundBalanceStart", "feeAlternativeCost", "feeFundBalanceEnd", "feeFinancialCoverage",
+      ];
+      outputMetricKeys.forEach((metric) => {
+        if (values[metric] === undefined) values[metric] = null;
+        if (previousValues[metric] === undefined) previousValues[metric] = null;
+      });
+      const metricYears = {
+        plansWithHearingDeadline: ssbMetricYears(planYears), planObjections: ssbMetricYears(planYears), planArea: ssbMetricYears(planYears), planComplaints: ssbMetricYears(planYears),
+        latestAvailableYear: ssbMetricYears(planYears), regulationsAdopted: ssbMetricYears(planYears), privateDetailedPlans: ssbMetricYears(planYears), planProcessingDays: ssbMetricYears(planYears),
+        housingStarted: ssbMetricYears(housingYears), housingCompleted: ssbMetricYears(housingYears), housingNetDifference: ssbMetricYears(housingYears), housingStartedArea: ssbMetricYears(housingYears), housingCompletedArea: ssbMetricYears(housingYears),
+        commercialStartedArea: ssbMetricYears(housingYears), commercialCompletedArea: ssbMetricYears(housingYears), constructionAreaTotal: ssbMetricYears(housingYears),
+        publicBuildingStartedArea: ssbMetricYears(buildingAreaYears), holidayHomeArea: ssbMetricYears(holidayYears),
+        feeBuildingHouse: ssbMetricYears(feeYears), feePropertyCreation: ssbMetricYears(feeYears), feePrivateRegulation: ssbMetricYears(feeYears),
+        buildingApplications: ssbMetricYears(buildingYears), incompleteBuildingApplications: ssbMetricYears(buildingYears), processedBuildingApplications: ssbMetricYears(buildingYears), lateBuildingApplications: ssbMetricYears(buildingYears), buildingProcessingDays: ssbMetricYears(buildingYears),
+        feeDirectOperatingExpenses: ssbMetricYears(feeAccountingYears), feeIndirectOperatingExpenses: ssbMetricYears(feeAccountingYears),
+        feeInterestCosts: ssbMetricYears(feeAccountingYears), feeDepreciation: ssbMetricYears(feeAccountingYears), feeOtherIncome: ssbMetricYears(feeAccountingYears),
+        feeBasisTotal: ssbMetricYears(feeAccountingYears), feeRevenueTotal: ssbMetricYears(feeAccountingYears), feeFinancialResult: ssbMetricYears(feeAccountingYears),
+        feeFundProvision: ssbMetricYears(feeAccountingYears), feeFundUse: ssbMetricYears(feeAccountingYears), feeControlSumSubsidy: ssbMetricYears(feeAccountingYears),
+        feeFundBalanceStart: ssbMetricYears(feeAccountingYears), feeAlternativeCost: ssbMetricYears(feeAccountingYears), feeFundBalanceEnd: ssbMetricYears(feeAccountingYears),
+        feeFinancialCoverage: ssbMetricYears(feeAccountingYears),
+      };
+      const year = Math.max(...Object.values(metricYears).map((item) => Number(item.year)));
       const previousYear = year - 1;
-      response.end(JSON.stringify({ source: "Statistisk sentralbyrå", year, previousYear, municipalityNumber, values, previousValues, trends: {
+      response.end(JSON.stringify({ source: "Statistisk sentralbyrå", year, previousYear, metricYears, municipalityNumber, municipalityNumbers, municipalityCount: municipalityNumbers.length, scope: municipalityNumbers.length > 1 ? "region" : "municipality", values, previousValues, trends: {
+        plansWithHearingDeadline: planTrends.KOShoringsfrist0000,
+        planObjections: planTrends.KOSinnsigelseral0000,
+        planArea: planTrends.KOStemaareal0000,
         regulationsAdopted: planTrends.KOSomfplanbehand0001,
         privateDetailedPlans: planTrends.KOSomfplanbehand0000,
         planProcessingDays: planTrends.KOSbehandlingsti0000,
+        planComplaints: planTrends.KOSklagesakerved0000,
         housingStarted: housingTrends.Igangsatte,
         housingCompleted: housingTrends.Fullforte,
+        housingNetDifference: ssbTrend(values.housingNetDifference, previousValues.housingNetDifference),
         housingStartedArea: housingTrends.BruksarealIgang,
         housingCompletedArea: housingTrends.BruksarealFullfort,
+        commercialStartedArea: commercialTrends.BruksarealIgang,
+        commercialCompletedArea: commercialTrends.BruksarealFullfort,
+        publicBuildingStartedArea: publicBuildingTrends.Igangsatt,
+        holidayHomeArea: holidayTrends.IgangFrid2,
+        constructionAreaTotal: ssbTrend(values.constructionAreaTotal, previousValues.constructionAreaTotal),
+        feeBuildingHouse: feeTrends.KOSgebrebebolig0000,
+        feePropertyCreation: feeTrends.KOSgebrgrunneie0000,
+        feePrivateRegulation: feeTrends.KOSgebrprivrgpln0000,
+        buildingApplications: buildingTrends.KOSmottattesokna0000,
+        incompleteBuildingApplications: buildingTrends.KOSmangelfulleso0000,
+        processedBuildingApplications: buildingTrends.KOSbehandletsokn0000,
+        lateBuildingApplications: buildingTrends.KOSoverlovpalagt0000,
+        buildingProcessingDays: ssbTrend(values.buildingProcessingDays, previousValues.buildingProcessingDays),
+        feeDirectOperatingExpenses: feeAccountingTrends.KOSbelopdirdrift0000,
+        feeIndirectOperatingExpenses: feeAccountingTrends.KOSbelopindirdri0000,
+        feeInterestCosts: feeAccountingTrends.KOSbelopkalkrent0000,
+        feeDepreciation: feeAccountingTrends.KOSbelopkalkavsk0000,
+        feeOtherIncome: feeAccountingTrends.KOSbelopandreinn0000,
+        feeBasisTotal: feeAccountingTrends.KOSbelopgebyrgrl0000,
+        feeRevenueTotal: feeAccountingTrends.KOSbelopgebyrinn0000,
+        feeFinancialResult: feeAccountingTrends.KOSbelopaaretsfi0000,
+        feeFundProvision: feeAccountingTrends.KOSbelopavsetnfo0000,
+        feeFundUse: feeAccountingTrends.KOSbelopbrukfond0000,
+        feeControlSumSubsidy: feeAccountingTrends.KOSbelopkontrsum0000,
+        feeFundBalanceStart: feeAccountingTrends.KOSbelopsaldo110000,
+        feeAlternativeCost: feeAccountingTrends.KOSbelopaltkostn0000,
+        feeFundBalanceEnd: feeAccountingTrends.KOSbelopsaldo3110000,
+        feeFinancialCoverage: feeAccountingTrends.KOSbelopfindekng0000,
       } }));
       return;
     }
@@ -197,9 +399,10 @@ const server = http.createServer(async (request, response) => {
       expires: "0",
     });
     response.end(body);
-  } catch {
-    response.writeHead(404, { "content-type": "text/plain; charset=utf-8" });
-    response.end("Not found");
+  } catch (error) {
+    const isApiRequest = (request.url || "").startsWith("/api/");
+    response.writeHead(isApiRequest ? 502 : 404, { "content-type": isApiRequest ? "application/json; charset=utf-8" : "text/plain; charset=utf-8" });
+    response.end(isApiRequest ? JSON.stringify({ error: error?.message || "Tjenesten kunne ikke hente data akkurat nå." }) : "Not found");
   }
 });
 
@@ -253,50 +456,116 @@ server.listen(port, host, () => {
 });
 
 async function fetchSsbTable(table, dimensions) {
-  const metadataResponse = await fetch(`https://data.ssb.no/api/v0/no/table/${table}`);
-  if (!metadataResponse.ok) throw new Error(`SSB-tabell ${table} er ikke tilgjengelig (${metadataResponse.status})`);
-  const metadata = await metadataResponse.json();
+  const metadata = await fetchSsbMetadata(table);
   const query = dimensions.map((dimension) => ({
     code: dimension.code,
     selection: { filter: "item", values: dimension.values.includes("__ALL__") ? metadata.variables.find((variable) => variable.code === dimension.code)?.values || [] : dimension.values },
   }));
-  const response = await fetch(`https://data.ssb.no/api/v0/no/table/${table}`, {
+  const cacheKey = `${table}:${JSON.stringify(query)}`;
+  if (ssbTableCache.has(cacheKey)) return ssbTableCache.get(cacheKey);
+  const payload = await fetchSsbJson(`https://data.ssb.no/api/v0/no/table/${table}`, {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ query, response: { format: "json-stat2" } }),
-  });
-  if (!response.ok) throw new Error(`SSB-spørringen feilet for tabell ${table} (${response.status})`);
-  return { ...(await response.json()), metadata };
+  }, `SSB-spørringen feilet for tabell ${table}`);
+  const result = { ...payload, metadata };
+  ssbTableCache.set(cacheKey, result);
+  return result;
 }
 
 async function latestSsbYears(table, requestedYear) {
-  const response = await fetch(`https://data.ssb.no/api/v0/no/table/${table}`);
-  if (!response.ok) throw new Error(`SSB-tabell ${table} er ikke tilgjengelig (${response.status})`);
-  const metadata = await response.json();
+  const cacheKey = `${table}:${requestedYear}`;
+  if (ssbYearCache.has(cacheKey)) return ssbYearCache.get(cacheKey);
+  const metadata = await fetchSsbMetadata(table);
   const timeVariable = metadata.variables?.find((variable) => variable.code === "Tid");
-  const available = (timeVariable?.values || []).map(Number).filter((year) => Number.isInteger(year) && year <= requestedYear).sort((a, b) => a - b);
+  const available = (timeVariable?.values || [])
+    .map(String)
+    .filter((period) => ssbPeriodSortValue(period) <= ssbPeriodSortValue(String(requestedYear)))
+    .sort((a, b) => ssbPeriodSortValue(a) - ssbPeriodSortValue(b));
   const latest = available.at(-1);
   if (!latest) throw new Error(`SSB-tabell ${table} har ingen tilgjengelige årstall`);
-  const previous = available.filter((year) => year < latest).at(-1) || latest - 1;
-  return [String(previous), String(latest)];
+  const previous = available.filter((period) => ssbPeriodSortValue(period) < ssbPeriodSortValue(latest)).at(-1) || latest;
+  const years = [String(previous), String(latest)];
+  ssbYearCache.set(cacheKey, years);
+  return years;
 }
 
-function ssbMetricSeries(dataset, aggregateDimension = "") {
-  const labels = dataset.dimension?.ContentsCode?.category?.index || {};
+function ssbPeriodSortValue(period) {
+  const value = String(period);
+  const match = value.match(/^(\d{4})(?:M(\d{2})|K(\d))?$/i);
+  if (!match) return Number.NEGATIVE_INFINITY;
+  const year = Number(match[1]);
+  if (match[2]) return year * 100 + Number(match[2]);
+  if (match[3]) return year * 100 + Number(match[3]) * 3;
+  return year * 100;
+}
+
+async function fetchSsbMetadata(table) {
+  if (ssbMetadataCache.has(table)) return ssbMetadataCache.get(table);
+  const metadata = await fetchSsbJson(`https://data.ssb.no/api/v0/no/table/${table}`, {}, `SSB-tabell ${table} er ikke tilgjengelig`);
+  ssbMetadataCache.set(table, metadata);
+  return metadata;
+}
+
+async function fetchSsbJson(url, options, errorPrefix) {
+  let lastStatus = 0;
+  for (let attempt = 0; attempt < 4; attempt += 1) {
+    const response = await fetch(url, options);
+    lastStatus = response.status;
+    if (response.ok) return response.json();
+    if (response.status !== 429 || attempt === 3) break;
+    const retryAfter = Number(response.headers.get("retry-after")) || 2;
+    await new Promise((resolve) => setTimeout(resolve, Math.min(retryAfter, 5) * 1000));
+  }
+  throw new Error(`${errorPrefix} (${lastStatus})`);
+}
+
+function ssbMetricYears(years) {
+  const current = String(years.at(-1));
+  const previous = String(years.at(-2));
+  return { year: Number(current.slice(0, 4)), previousYear: Number(previous.slice(0, 4)), period: current, previousPeriod: previous };
+}
+
+function ssbMetricSeries(dataset, aggregateDimension = "", aggregation = "sum") {
   const values = Array.isArray(dataset.value) ? dataset.value : [];
-  const orderedMetrics = Object.entries(labels).sort((a, b) => a[1] - b[1]).map(([code]) => code);
-  const timeIndex = dataset.dimension?.Tid?.category?.index || {};
-  const orderedTimes = Object.entries(timeIndex).sort((a, b) => a[1] - b[1]).map(([code]) => code);
-  const timeSize = orderedTimes.length || 1;
-  if (!aggregateDimension) return Object.fromEntries(orderedMetrics.map((code, metricIndex) => {
-    const series = orderedTimes.map((_, timePosition) => values[metricIndex * timeSize + timePosition] ?? null);
-    return [code, { current: series.at(-1), previous: series.at(-2) }];
+  const dimensions = dataset.id || Object.keys(dataset.dimension || {});
+  const orderedValues = Object.fromEntries(dimensions.map((dimension) => [dimension, Object.entries(dataset.dimension?.[dimension]?.category?.index || {}).sort((a, b) => a[1] - b[1]).map(([code]) => code)]));
+  const metrics = orderedValues.ContentsCode || [];
+  const times = orderedValues.Tid || [];
+  const aggregateDimensions = aggregateDimension ? (Array.isArray(aggregateDimension) ? aggregateDimension : [aggregateDimension]) : [];
+  const varyingDimensions = dimensions.filter((dimension) => !["ContentsCode", "Tid"].includes(dimension));
+  const combinations = [[]];
+  varyingDimensions.forEach((dimension) => {
+    const next = [];
+    for (const combination of combinations) for (const code of orderedValues[dimension] || []) next.push([...combination, [dimension, code]]);
+    combinations.splice(0, combinations.length, ...next);
+  });
+  const dimensionSizes = Object.fromEntries(dimensions.map((dimension) => [dimension, orderedValues[dimension]?.length || 1]));
+  const flatIndex = (coordinates) => dimensions.reduce((index, dimension) => index * dimensionSizes[dimension] + (dataset.dimension?.[dimension]?.category?.index?.[coordinates[dimension]] ?? 0), 0);
+  return Object.fromEntries(metrics.map((metric) => {
+    const series = times.map((time) => {
+      const selected = combinations.filter((combination) => aggregateDimensions.length === 0 || combination.some(([dimension]) => aggregateDimensions.includes(dimension)));
+      const numbers = selected.map((combination) => {
+        const coordinates = Object.fromEntries([...combination, ["ContentsCode", metric], ["Tid", time]]);
+        const value = values[flatIndex(coordinates)];
+        return Number.isFinite(Number(value)) ? Number(value) : null;
+      }).filter((value) => value !== null);
+      if (!numbers.length) return null;
+      return aggregation === "average" ? numbers.reduce((sum, value) => sum + value, 0) / numbers.length : numbers.reduce((sum, value) => sum + value, 0);
+    });
+    return [metric, { current: series.at(-1), previous: series.at(-2) }];
   }));
-  const aggregateSize = dataset.dimension?.[aggregateDimension]?.category?.index ? Object.keys(dataset.dimension[aggregateDimension].category.index).length : 1;
-  return Object.fromEntries(orderedMetrics.map((code, metricIndex) => {
-    const series = orderedTimes.map((_, timePosition) => Array.from({ length: aggregateSize }, (_, groupIndex) => values[(groupIndex * orderedMetrics.length * timeSize) + (metricIndex * timeSize) + timePosition] ?? 0).reduce((total, value) => total + Number(value || 0), 0));
-    return [code, { current: series.at(-1), previous: series.at(-2) }];
-  }));
+}
+
+function applyFeeCoverageCalculations(values) {
+  const basis = Number(values.feeBasisTotal);
+  const revenue = Number(values.feeRevenueTotal);
+  if (!Number.isFinite(basis) || basis === 0 || !Number.isFinite(revenue)) {
+    values.feeFinancialCoverage = null;
+    return values;
+  }
+  values.feeFinancialCoverage = (revenue / basis) * 100;
+  return values;
 }
 
 function ssbTrend(current, previous) {

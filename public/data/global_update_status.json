@@ -1,0 +1,32 @@
+{
+  "updatedAt": "2026-10-18T10:39:33.059Z",
+  "dateFrom": "2026-07-20",
+  "dateTo": "2026-10-18",
+  "days": 90,
+  "regions": [
+    {
+      "region": "bergensregionen",
+      "status": "feilet",
+      "exitCode": 1
+    },
+    {
+      "region": "stavangerregionen",
+      "status": "feilet",
+      "exitCode": 1
+    },
+    {
+      "region": "haugalandsregionen",
+      "status": "oppdatert"
+    },
+    {
+      "region": "sorlandsregionen",
+      "status": "feilet",
+      "exitCode": 1
+    },
+    {
+      "region": "grenlandsregionen",
+      "status": "feilet",
+      "exitCode": 1
+    }
+  ]
+}

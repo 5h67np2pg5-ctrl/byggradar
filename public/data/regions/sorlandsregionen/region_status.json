@@ -1,0 +1,14 @@
+{
+  "region": "Sørlandsregionen",
+  "status": "første uttrekk fullført",
+  "municipalities": 12,
+  "projects": 551,
+  "uniqueDocuments": 2481,
+  "projectsWithMapPoint": 508,
+  "projectsWithAddress": 528,
+  "dateFrom": "2026-07-20",
+  "dateTo": "2026-10-18",
+  "municipalitiesWithProjects": 8,
+  "municipalitiesRequiringDirectSource": ["Lillesand kommune", "Lyngdal kommune", "Birkenes kommune", "Sirdal kommune"],
+  "note": "Første uttrekk er hentet i prioritert rekkefølge etter innbyggertall. Null fra felles postliste tolkes som kildekontroll, ikke som fravær av byggeaktivitet."
+}
