@@ -857,9 +857,9 @@ function renderShell() {
       <header class="topbar">
         <fieldset class="product-model-picker" aria-label="Velg modell">
           <legend>Modell</legend>
-          <label><input type="radio" name="productModel" value="model75" ${state.productModel === "model75" ? "checked" : ""} /><span>Modell 75 <span class="model-price">(2 490.- + mva pr mnd.)</span><small>Etableringskostnad 1 950.-</small></span></label>
-          <label><input type="radio" name="productModel" value="model150" ${state.productModel === "model150" ? "checked" : ""} /><span>Modell 150 <span class="model-price">(3 990.- + mva pr mnd.)</span><small>Etableringskostnad 1 950.-</small></span></label>
-          <label><input type="radio" name="productModel" value="pro" ${state.productModel === "pro" ? "checked" : ""} /><span>Modell Pro 200 <span class="model-price">(6 990.- + mva pr mnd.)</span><small>Inklusiv etablering</small></span></label>
+          <label><input type="radio" name="productModel" value="model75" ${state.productModel === "model75" ? "checked" : ""} /><span>Mini <span class="model-price">(2 490.- + mva pr mnd.)</span><small>Etableringskostnad 1 950.-</small></span></label>
+          <label><input type="radio" name="productModel" value="model150" ${state.productModel === "model150" ? "checked" : ""} /><span>Standard <span class="model-price">(3 990.- + mva pr mnd.)</span><small>Etableringskostnad 1 950.-</small></span></label>
+          <label><input type="radio" name="productModel" value="pro" ${state.productModel === "pro" ? "checked" : ""} /><span>Pro <span class="model-price">(6 990.- + mva pr mnd.)</span><small>Inklusiv etablering</small></span></label>
         </fieldset>
         <div class="topbar-copy">
           <div class="brand">Norsk ByggRadar</div>
