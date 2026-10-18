@@ -649,7 +649,7 @@ a {
 
 .collaboration-finder {
   margin: 12px;
-  padding: 14px 16px;
+  padding: 10px 11px;
   border: 1px solid #a8c1d0;
   border-radius: 8px;
   background: #dff1e4;
@@ -665,20 +665,20 @@ a {
 .collaboration-heading h2 {
   margin: 0;
   color: #174936;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 .collaboration-heading span {
   display: block;
-  margin-top: 4px;
+  margin-top: 2px;
   color: #557b68;
-  font-size: 0.76rem;
+  font-size: 0.7rem;
   line-height: 1.35;
 }
 
 .collaboration-open,
 .collaboration-close {
-  min-height: 34px;
+  min-height: 32px;
   padding: 0 12px;
   border: 1px solid #b8d0c1;
   border-radius: 7px;
@@ -976,7 +976,7 @@ a {
 @media (max-width: 700px) {
   .collaboration-finder {
     margin: 10px;
-    padding: 12px;
+    padding: 10px;
   }
 
   .collaboration-heading {
