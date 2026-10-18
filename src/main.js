@@ -1459,7 +1459,11 @@ function bindInput(id, key) {
     state[key] = input.value;
     if (key === "area") {
       state.userLocation = null;
-      state.activeRegion = findRegionByText(input.value);
+      // Et vanlig søkeord skal filtrere den allerede innlastede listen.
+      // Regionankeret skal bare endres når teksten faktisk er en kjent region
+      // eller kommune; ellers blir prosjektene feilaktig skjult.
+      const matchedRegion = findRegionByText(input.value);
+      if (matchedRegion) state.activeRegion = matchedRegion;
       resetPartnerSearch();
     }
     state.visibleCount = currentModelLimit();
@@ -3171,8 +3175,29 @@ function filterProjects() {
   return state.projects
     .filter((project) => !trade || tradeMatches(project, trade))
     .filter((project) => !textRegion || projectMatchesRegion(project, textRegion))
-    .filter((project) => textRegion || !area || searchTextMatches(project.searchText, area))
+    .filter((project) => textRegion || !area || searchTextMatches(projectSearchText(project), area))
     .sort(deliverySort);
+}
+
+function projectSearchText(project) {
+  return [
+    project.searchText,
+    project.title,
+    project.rawTitle,
+    project.description,
+    project.address,
+    project.place,
+    project.municipality,
+    project.matrikkel,
+    project.caseNumber,
+    project.documentNumber,
+    project.status,
+    project.statusText,
+    project.phaseLabel,
+    project.projectTypeText,
+    project.tradeRelevance,
+    ...(project.sourceQueries || []),
+  ].filter(Boolean).join(" ");
 }
 
 function searchTextMatches(searchText, query) {
