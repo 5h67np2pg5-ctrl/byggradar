@@ -7,11 +7,13 @@ const state = {
   trade: "",
   area: "",
   customerMunicipality: "",
+  productModel: "pro",
   showMap: false,
   visibleCount: 200,
   userLocation: null,
   activeRegion: null,
   regionKey: "bergensregionen",
+  regionSelectionCleared: true,
   map: null,
   mapMarkers: [],
   mapViewKey: "",
@@ -38,10 +40,12 @@ const state = {
   statisticsSsbScope: "",
   statisticsSavedSearches: [],
   statisticsSelectedSearch: "",
+  collaborationTrade: "",
+  collaborationOpen: false,
+  collaborationMap: null,
   partnerTrade: "",
   partnerFinderOpen: false,
   partnerMap: null,
-  partnerMapOrigin: null,
   partnerSearchKey: "",
   partnerSearchLoading: false,
   partnerSearchError: "",
@@ -82,24 +86,20 @@ const partnerRoleLabels = {
   "arbeidstoy-verneutstyr": "Arbeidstøy og verneutstyr",
 };
 
-function partnerSearchOrigin(region) {
-  if (state.partnerMapOrigin?.lat && state.partnerMapOrigin?.lon) return state.partnerMapOrigin;
-  if (state.userLocation?.lat && state.userLocation?.lon) return state.userLocation;
-  const municipalityAnchor = municipalityMapAnchors[normalizeMunicipalityName(state.customerMunicipality)];
-  return municipalityAnchor || region.anchor;
+const collaborationModule = window.NBRCollaboration;
+const collaborationTrades = collaborationModule.trades;
+const collaborationRoleLabels = collaborationModule.roleLabels;
+const collaborationDirectory = collaborationModule.directory;
+
+function resetPartnerSearch() {
+  state.partnerSearchKey = "";
+  state.partnerSearchLoading = false;
+  state.partnerSearchError = "";
+  state.partnerSuppliers = [];
 }
 
-function requestPartnerLocation() {
-  if (state.partnerMapOrigin || state.userLocation || !navigator.geolocation) return;
-  navigator.geolocation.getCurrentPosition((position) => {
-    const lat = position.coords.latitude;
-    const lon = position.coords.longitude;
-    const region = nearestLocationRegion(lat, lon);
-    state.userLocation = { lat, lon, regionId: region.id };
-    renderPartnerFinder();
-  }, () => {
-    // Valgt kommune eller region brukes dersom posisjon ikke gis.
-  }, { enableHighAccuracy: false, maximumAge: 300000, timeout: 6000 });
+function partnerSearchOrigin() {
+  return state.selected ? projectMapPoint(state.selected) : null;
 }
 
 // Midlertidig visning av regionvalg. Valget kobles til kundens faste region senere.
@@ -108,9 +108,14 @@ const illustrationRegions = ["Bergensregionen", "Stavangerregionen", "Haugalands
 const savedFiltersKey = "byggradar.filters.v1";
 const markedProjectsKey = "byggradar.markedProjects.v1";
 const standardProjectLimit = 200;
+const productModelLimits = { model75: 75, model150: 150, pro: standardProjectLimit };
 const loadMoreStep = 20;
 const weeklyDeliveryCount = 50;
 const statisticsSavedSearchesKey = "byggradar.statistics.savedSearches.v1";
+
+function currentModelLimit() {
+  return productModelLimits[state.productModel] || standardProjectLimit;
+}
 
 const statisticsSearchCatalog = [
   // Plan og areal
@@ -301,6 +306,8 @@ const regionDataPaths = {
 
 const municipalityMapAnchors = {
   "bergen": { lat: 60.39299, lon: 5.32415 },
+  "stavanger": { lat: 58.9700, lon: 5.7331 },
+  "sandnes": { lat: 58.8524, lon: 5.7352 },
   "askøy": { lat: 60.40962, lon: 5.22504 },
   "øygarden": { lat: 60.35712, lon: 5.12415 },
   "bjørnafjorden": { lat: 60.18385, lon: 5.46380 },
@@ -325,6 +332,20 @@ const municipalityMapAnchors = {
   "haugesund": { lat: 59.413, lon: 5.267 },
   "karmøy": { lat: 59.280, lon: 5.300 },
   "tysvær": { lat: 59.420, lon: 5.440 },
+  "sola": { lat: 58.888, lon: 5.647 },
+  "randaberg": { lat: 58.998, lon: 5.618 },
+  "klepp": { lat: 58.776, lon: 5.631 },
+  "time": { lat: 58.735, lon: 5.652 },
+  "hå": { lat: 58.616, lon: 5.645 },
+  "gjesdal": { lat: 58.765, lon: 6.017 },
+  "strand": { lat: 59.022, lon: 6.039 },
+  "kvitsøy": { lat: 59.064, lon: 5.406 },
+  "hjelmeland": { lat: 59.236, lon: 6.185 },
+  "bjerkreim": { lat: 58.583, lon: 6.087 },
+  "eigersund": { lat: 58.452, lon: 6.002 },
+  "suldal": { lat: 59.486, lon: 6.252 },
+  "lund": { lat: 58.458, lon: 6.550 },
+  "sokndal": { lat: 58.340, lon: 6.292 },
   "bokn": { lat: 59.230, lon: 5.430 },
   "utsira": { lat: 59.310, lon: 4.890 },
   "vindafjord": { lat: 59.550, lon: 5.880 },
@@ -340,6 +361,23 @@ const municipalityMapAnchors = {
   "kvinesdal": { lat: 58.3120, lon: 6.9618 },
   "birkenes": { lat: 58.3309, lon: 8.2320 },
   "sirdal": { lat: 58.9830, lon: 6.9990 },
+  "skien": { lat: 59.2096, lon: 9.6090 },
+  "porsgrunn": { lat: 59.1405, lon: 9.6561 },
+  "bamble": { lat: 58.9995, lon: 9.7484 },
+  "notodden": { lat: 59.5590, lon: 9.2580 },
+  "midt-telemark": { lat: 59.3960, lon: 9.1820 },
+  "kragerø": { lat: 58.8690, lon: 9.4100 },
+  "nome": { lat: 59.2820, lon: 9.1450 },
+  "tinn": { lat: 59.7480, lon: 8.9470 },
+  "drangedal": { lat: 59.0960, lon: 9.0620 },
+  "vinje": { lat: 59.5700, lon: 7.9900 },
+  "seljord": { lat: 59.4890, lon: 8.6280 },
+  "kviteseid": { lat: 59.4020, lon: 8.4930 },
+  "siljan": { lat: 59.2920, lon: 9.7260 },
+  "tokke": { lat: 59.4550, lon: 8.0150 },
+  "hjartdal": { lat: 59.6130, lon: 8.6250 },
+  "nissedal": { lat: 59.1730, lon: 8.5230 },
+  "fyresdal": { lat: 59.1860, lon: 8.0890 },
   "hægebostad": { lat: 58.3750, lon: 7.2200 },
   "iveland": { lat: 58.4610, lon: 7.8660 },
 };
@@ -500,9 +538,18 @@ async function initVendorApplication() {
   try {
     renderShell();
     restoreSavedFilters();
+    state.area = "";
+    state.customerMunicipality = "";
+    state.regionKey = "bergensregionen";
+    state.activeRegion = null;
+    state.regionSelectionCleared = true;
+    document.querySelector("#areaInput").value = "";
+    updateCustomerMunicipalityOptions();
+    document.querySelector("#regionIllustration").value = "";
     restoreMarkedProjects();
-    await loadProjects();
-    state.filtered = filterProjects();
+    state.projects = [];
+    state.filtered = [];
+    state.rawProjectCount = 0;
     state.selected = null;
     scheduleRefreshes();
     render();
@@ -805,6 +852,12 @@ function renderShell() {
   app.innerHTML = `
     <main class="app-shell vendor-contrast">
       <header class="topbar">
+        <fieldset class="product-model-picker" aria-label="Velg modell">
+          <legend>Modell</legend>
+          <label><input type="radio" name="productModel" value="model75" ${state.productModel === "model75" ? "checked" : ""} /><span>Modell 75 <span class="model-price">(2 490.- + mva pr mnd.)</span><small>Etableringskostnad 1 950.-</small></span></label>
+          <label><input type="radio" name="productModel" value="model150" ${state.productModel === "model150" ? "checked" : ""} /><span>Modell 150 <span class="model-price">(3 990.- + mva pr mnd.)</span><small>Etableringskostnad 1 950.-</small></span></label>
+          <label><input type="radio" name="productModel" value="pro" ${state.productModel === "pro" ? "checked" : ""} /><span>Modell Pro 200 <span class="model-price">(6 990.- + mva pr mnd.)</span><small>Inklusiv etablering</small></span></label>
+        </fieldset>
         <div class="topbar-copy">
           <div class="brand">Norsk ByggRadar</div>
           <div class="national-project-count" id="nationalProjectCount">Laster registrerte og aktive byggprosjekter fra ${coveredMunicipalityCount} kommuner...</div>
@@ -816,9 +869,10 @@ function renderShell() {
             <label class="region-picker">
               <span class="visually-hidden">Region</span>
               <select id="regionIllustration" class="filter-select" aria-label="Velg region">
+                <option value="" ${state.regionSelectionCleared ? "selected" : ""}>Velg region</option>
                 ${illustrationRegions.map((region) => {
                   const regionId = locationRegions.find((item) => item.name === region)?.id || "bergensregionen";
-                  return `<option value="${escapeHtml(regionId)}" ${regionId === state.regionKey ? "selected" : ""}>${escapeHtml(region)}</option>`;
+                  return `<option value="${escapeHtml(regionId)}" ${!state.regionSelectionCleared && regionId === state.regionKey ? "selected" : ""}>${escapeHtml(region)}</option>`;
                 }).join("")}
               </select>
             </label>
@@ -829,7 +883,6 @@ function renderShell() {
               <option value="">Velg kommune</option>
             </select>
           </label>
-          <button class="partner-top-button" id="partnerOpen" type="button">Finn leverandør med rabatt</button>
         </div>
       </header>
 
@@ -857,27 +910,28 @@ function renderShell() {
         </div>
       </section>
 
-      <section class="partner-finder" aria-labelledby="partnerFinderTitle">
-        <div class="partner-finder-heading">
+      <section class="collaboration-finder" aria-labelledby="collaborationFinderTitle">
+        <div class="collaboration-heading">
           <div>
-            <h2 id="partnerFinderTitle">Finn nærmeste leverandør</h2>
+            <h2 id="collaborationFinderTitle">Finn samarbeidspartner</h2>
+            <span>Finn samarbeidspartnere som bruker Norsk ByggRadar</span>
           </div>
-          <span class="partner-test-note">Nærmeste leverandører · rabatt i parentes</span>
+          <button class="collaboration-open" id="collaborationOpen" type="button">Åpne</button>
         </div>
-        <div id="partnerContent" class="partner-content">
-          <label class="partner-trade-field">
+        <div id="collaborationContent" class="collaboration-content" hidden>
+          <label class="collaboration-trade-field">
             <span>Fagområde</span>
-            <select id="partnerTradeInput" class="filter-select" aria-label="Velg fagområde for samarbeidspartner">
+            <select id="collaborationTradeInput" class="filter-select" aria-label="Velg fagområde for samarbeidspartner">
               <option value="">Velg fagområde</option>
-              ${partnerTrades.map((trade) => `<option value="${escapeHtml(trade)}">${escapeHtml(partnerRoleLabels[trade])}</option>`).join("")}
+              ${collaborationTrades.map((trade) => `<option value="${escapeHtml(trade)}">${escapeHtml(collaborationRoleLabels[trade])}</option>`).join("")}
             </select>
           </label>
-          <div id="partnerResults" class="partner-results" aria-live="polite"></div>
-          <div class="partner-map-block">
-            <div class="partner-map-heading">Samarbeidspartnere i kartet</div>
-            <div id="partnerMapCanvas" class="partner-map-canvas" aria-label="Kart over samarbeidspartnere"></div>
+          <div id="collaborationResults" class="collaboration-results" aria-live="polite"></div>
+          <div id="collaborationMapBlock" class="collaboration-map-block" hidden>
+            <div class="collaboration-map-heading">Samarbeidspartnere i kartet</div>
+            <div id="collaborationMapCanvas" class="collaboration-map-canvas" aria-label="Kart over samarbeidspartnere"></div>
           </div>
-          <button class="partner-close" id="partnerClose" type="button">Lukk</button>
+          <button class="collaboration-close" id="collaborationClose" type="button">Lukk</button>
         </div>
       </section>
 
@@ -902,21 +956,26 @@ function renderShell() {
   const helpText = "Åpne prosjektene du har interesse for og kontakt tiltakshaver eller ansvarlig aktør så tidlig som mulig.\n\nSi gjerne:\n\"Hei, jeg ser at dere har et prosjekt på gang i [adresse]. Vi jobber med [fag], og kan raskt avklare om vi kan bidra i planleggingen eller i utførelsen. Kan jeg sende en kort mail, eller kan jeg komme på en rask befaring?\"\n\nSender du mail, må du velge faggruppen din først. Det genereres da en e-post direkte til kontaktpersonen når du trykker på e-postadressen i prosjektet.\n\nFase 1: Rammetillatelse gitt, saksbehandling pågår eller søknad mottatt.\nFase 2: Tillatelse gitt, igangsetting søkt eller igangsettingstillatelse gitt.";
   document.querySelector("#regionIllustration")?.addEventListener("change", async (event) => {
     const selected = event.target.value;
-    if (!regionDataPaths[selected] || selected === state.regionKey) return;
+    if (!regionDataPaths[selected]) return;
+    if (selected === state.regionKey && !state.regionSelectionCleared) return;
+    state.regionSelectionCleared = false;
     state.regionKey = selected;
     state.activeRegion = locationRegions.find((region) => region.id === selected) || null;
     state.area = "";
+    state.userLocation = null;
+    resetPartnerSearch();
     if (!state.activeRegion?.municipalities.some((municipality) => normalizeMunicipalityName(municipality) === state.customerMunicipality)) {
       state.customerMunicipality = "";
     }
     updateCustomerMunicipalityOptions();
     state.selected = null;
-    state.visibleCount = standardProjectLimit;
+    state.visibleCount = currentModelLimit();
+    state.projects = [];
+    state.filtered = [];
+    state.rawProjectCount = 0;
     saveFilters();
     const notice = document.querySelector("#regionNotice");
-    if (notice) notice.textContent = "Laster valgt region ...";
-    await loadProjects();
-    state.filtered = filterProjects();
+    if (notice) notice.textContent = "Velg kommune for å laste prosjekter ...";
     render();
   });
   const helpPill = document.querySelector("#helpPill");
@@ -938,33 +997,66 @@ function renderShell() {
   });
   bindInput("tradeInput", "trade");
   bindInput("areaInput", "area");
-  document.querySelector("#partnerTradeInput")?.addEventListener("change", (event) => {
-    state.partnerTrade = event.target.value;
-    state.partnerFinderOpen = true;
-    renderPartnerFinder();
-    requestPartnerLocation();
+  document.querySelectorAll("input[name=productModel]").forEach((input) => {
+    input.addEventListener("change", () => {
+      state.productModel = input.value;
+      state.visibleCount = currentModelLimit();
+      state.selected = null;
+      resetPartnerSearch();
+      render();
+    });
   });
-  document.querySelector("#partnerClose")?.addEventListener("click", () => {
-    state.partnerFinderOpen = false;
-    state.partnerTrade = "";
-    state.partnerMapOrigin = null;
-    state.partnerSearchKey = "";
-    state.partnerSearchLoading = false;
-    state.partnerSearchError = "";
-    state.partnerSuppliers = [];
-    renderPartnerFinder();
+  document.querySelector("#collaborationOpen")?.addEventListener("click", () => {
+    state.collaborationOpen = true;
+    renderCollaborationFinder();
   });
-  document.querySelector("#partnerOpen")?.addEventListener("click", () => {
-    state.partnerFinderOpen = true;
-    renderPartnerFinder();
+  document.querySelector("#collaborationTradeInput")?.addEventListener("change", (event) => {
+    state.collaborationTrade = event.target.value;
+    state.collaborationOpen = true;
+    renderCollaborationFinder();
+  });
+  document.querySelector("#collaborationClose")?.addEventListener("click", () => {
+    state.collaborationOpen = false;
+    state.collaborationTrade = "";
+    renderCollaborationFinder();
   });
   document.querySelector("#locationButton").addEventListener("click", openAreaMap);
-  document.querySelector("#customerMunicipality")?.addEventListener("change", (event) => {
+  document.querySelector("#customerMunicipality")?.addEventListener("change", async (event) => {
     state.customerMunicipality = event.target.value;
-    state.visibleCount = standardProjectLimit;
+    state.userLocation = null;
+    const selectedRegion = locationRegions.find((region) => region.municipalities.some(
+      (municipality) => normalizeMunicipalityName(municipality) === state.customerMunicipality,
+    ));
+    if (selectedRegion) {
+      state.activeRegion = selectedRegion;
+      state.regionKey = selectedRegion.id;
+      state.regionSelectionCleared = false;
+      const regionSelect = document.querySelector("#regionIllustration");
+      if (regionSelect) regionSelect.value = selectedRegion.id;
+    }
+    resetPartnerSearch();
+    state.visibleCount = currentModelLimit();
+    state.mapViewKey = "";
+    state.selected = null;
+    state.projects = [];
+    state.filtered = [];
     saveFilters();
-    updateCustomerMunicipalityPrompt();
+    const notice = document.querySelector("#regionNotice");
+    if (!state.customerMunicipality || !state.activeRegion) {
+      if (notice) notice.textContent = "Velg region og kommune for å laste prosjekter.";
+      render();
+      return;
+    }
+    if (notice) notice.textContent = `Laster prosjekter for ${displayGeographyName(state.customerMunicipality)} ...`;
     render();
+    try {
+      await loadProjects();
+      state.filtered = filterProjects();
+      render();
+      if (state.showMap) renderMap();
+    } catch (error) {
+      if (notice) notice.textContent = error.message || "Prosjektene kunne ikke lastes.";
+    }
   });
 }
 
@@ -1368,8 +1460,9 @@ function bindInput(id, key) {
     if (key === "area") {
       state.userLocation = null;
       state.activeRegion = findRegionByText(input.value);
+      resetPartnerSearch();
     }
-    state.visibleCount = standardProjectLimit;
+    state.visibleCount = currentModelLimit();
     saveFilters();
     render();
   };
@@ -1382,7 +1475,7 @@ function render() {
     state.selected = null;
   }
 
-  state.visibleCount = Math.max(standardProjectLimit, state.visibleCount);
+  state.visibleCount = Math.max(currentModelLimit(), state.visibleCount);
   const visibleProjects = visibleDeliveryProjects();
   const summaryText = document.querySelector("#summaryText");
   const regionName = state.activeRegion?.name || locationRegions.find((region) => region.id === state.regionKey)?.name || "valgt region";
@@ -1397,17 +1490,113 @@ function render() {
   }
   document.body.dataset.map = "closed";
   renderRegionNotice({ visibleCount: visibleProjects.length, totalCount: totalProjectCount, regionName });
+  renderCollaborationFinder();
   renderPartnerFinder();
 
   renderList();
+}
+
+function renderCollaborationFinder() {
+  const content = document.querySelector("#collaborationContent");
+  const results = document.querySelector("#collaborationResults");
+  const select = document.querySelector("#collaborationTradeInput");
+  const openButton = document.querySelector("#collaborationOpen");
+  const mapBlock = document.querySelector("#collaborationMapBlock");
+  if (!content || !results || !select) return;
+  if (state.collaborationMap) {
+    state.collaborationMap.remove();
+    state.collaborationMap = null;
+  }
+  content.hidden = !state.collaborationOpen;
+  if (openButton) openButton.hidden = state.collaborationOpen;
+  if (mapBlock) mapBlock.hidden = true;
+  if (!state.collaborationOpen) return;
+
+  select.value = state.collaborationTrade;
+  const region = activePartnerRegion();
+  const origin = municipalityMapAnchor(state.customerMunicipality) || region.anchor;
+  const originName = state.customerMunicipality ? displayGeographyName(state.customerMunicipality) : region.name;
+  if (!state.collaborationTrade) {
+    results.innerHTML = `<div class="collaboration-empty">Velg et fagområde for å se samarbeidspartnere i ${escapeHtml(region.name)}.</div>`;
+    return;
+  }
+  const partners = collaborationDirectory
+    .filter((partner) => partner.regionId === region.id && partner.trade === state.collaborationTrade)
+    .map((partner) => ({ ...partner, distanceKm: distanceKm(origin.lat, origin.lon, partner.lat, partner.lon) }))
+    .sort((a, b) => a.distanceKm - b.distanceKm);
+  if (!partners.length) {
+    results.innerHTML = `<div class="collaboration-empty">Ingen samarbeidspartnere er registrert for dette fagområdet i ${escapeHtml(region.name)}.</div>`;
+    return;
+  }
+  results.innerHTML = partners.map((partner) => `
+    <article class="collaboration-row">
+      <div class="collaboration-company">
+        <strong>${escapeHtml(partner.company)}</strong>
+        <span>${escapeHtml(collaborationRoleLabels[partner.trade])} · ${escapeHtml(region.name)}</span>
+      </div>
+      <div class="collaboration-contact">
+        <span>${escapeHtml(partner.contact)}</span>
+        <a href="tel:${escapeHtml(partner.phone.replaceAll(" ", ""))}">${escapeHtml(partner.phone)}</a>
+        <span>${partner.distanceKm.toLocaleString("nb-NO", { maximumFractionDigits: 1 })} km fra ${escapeHtml(originName)}</span>
+      </div>
+      <div class="collaboration-contact">
+        <a href="mailto:${escapeHtml(partner.email)}">${escapeHtml(partner.email)}</a>
+        <a href="${escapeHtml(partner.website)}" target="_blank" rel="noopener noreferrer">Nettsted</a>
+      </div>
+    </article>
+  `).join("");
+  if (mapBlock) mapBlock.hidden = false;
+  renderCollaborationMap(partners, region, origin, originName);
+}
+
+function renderCollaborationMap(partners, region, origin, originName) {
+  const canvas = document.querySelector("#collaborationMapCanvas");
+  if (!canvas || !window.L || !partners.length) return;
+  state.collaborationMap = L.map(canvas, {
+    zoomControl: true,
+    attributionControl: true,
+    scrollWheelZoom: true,
+    doubleClickZoom: true,
+    dragging: true,
+    touchZoom: true,
+  }).setView([origin.lat, origin.lon], 10);
+  addBaseMap(state.collaborationMap);
+  const bounds = L.latLngBounds([]);
+  const originMarker = L.circleMarker([origin.lat, origin.lon], {
+    radius: 7,
+    color: "#174936",
+    weight: 2,
+    fillColor: "#ffffff",
+    fillOpacity: 1,
+  });
+  originMarker.bindTooltip(`Valgt kommune: ${escapeHtml(originName)}`, { direction: "top" });
+  originMarker.addTo(state.collaborationMap);
+  bounds.extend([origin.lat, origin.lon]);
+  partners.forEach((partner) => {
+    const marker = L.circleMarker([partner.lat, partner.lon], {
+      radius: 8,
+      color: "#8c5b27",
+      weight: 2,
+      fillColor: "#e7a24e",
+      fillOpacity: 0.92,
+    });
+    marker.bindTooltip(`${escapeHtml(partner.company)} · ${escapeHtml(collaborationRoleLabels[partner.trade])}`, {
+      direction: "top",
+      sticky: true,
+    });
+    marker.addTo(state.collaborationMap);
+    bounds.extend([partner.lat, partner.lon]);
+  });
+  if (bounds.isValid()) state.collaborationMap.fitBounds(bounds.pad(0.22), { maxZoom: 12 });
+  refreshMapSize(state.collaborationMap);
 }
 
 function activePartnerRegion() {
   return state.activeRegion || locationRegions.find((region) => region.id === state.regionKey) || locationRegions[0];
 }
 
-function partnerSearchKey(region, trade, origin) {
-  return `${region.id}|${trade}|${origin.lat.toFixed(5)}|${origin.lon.toFixed(5)}`;
+function partnerSearchKey(project, trade, origin) {
+  return `${project?.id || "no-project"}|${trade}|${origin.lat.toFixed(5)}|${origin.lon.toFixed(5)}`;
 }
 
 async function loadNearbySuppliers(region, trade, origin, key) {
@@ -1442,25 +1631,39 @@ function renderPartnerFinder() {
   const content = document.querySelector("#partnerContent");
   const results = document.querySelector("#partnerResults");
   const select = document.querySelector("#partnerTradeInput");
-  const openButton = document.querySelector("#partnerOpen");
+  const tradeField = document.querySelector("#partnerTradeField");
+  const changeTradeButton = document.querySelector("#partnerTradeChange");
   const mapBlock = document.querySelector(".partner-map-block");
   if (!content || !results || !select) return;
+  const collapseTradeField = (collapsed) => {
+    if (tradeField) tradeField.hidden = collapsed;
+    if (changeTradeButton) changeTradeButton.hidden = !collapsed;
+  };
   if (state.partnerMap) {
     state.partnerMap.remove();
     state.partnerMap = null;
   }
   content.hidden = !state.partnerFinderOpen;
-  if (openButton) openButton.hidden = state.partnerFinderOpen;
   if (mapBlock) mapBlock.hidden = true;
   if (!state.partnerFinderOpen) return;
+  collapseTradeField(false);
   select.value = state.partnerTrade;
   const region = activePartnerRegion();
-  if (!state.partnerTrade) {
-    results.innerHTML = `<div class="partner-empty">Velg et fagområde for å se samarbeidspartnere i ${escapeHtml(region.name)}.</div>`;
+  const project = state.selected;
+  if (!project) {
+    results.innerHTML = `<div class="partner-empty">Åpne et prosjekt først. Leverandørsøket bruker prosjektets lokasjon som søkepunkt.</div>`;
     return;
   }
-  const origin = partnerSearchOrigin(region);
-  const key = partnerSearchKey(region, state.partnerTrade, origin);
+  if (!state.partnerTrade) {
+    results.innerHTML = `<div class="partner-empty">Velg et fagområde for å søke fra det åpne prosjektet.</div>`;
+    return;
+  }
+  const origin = partnerSearchOrigin();
+  if (!origin) {
+    results.innerHTML = `<div class="partner-empty">Prosjektet mangler et bekreftet kartpunkt. Leverandørsøk kan ikke gjennomføres.</div>`;
+    return;
+  }
+  const key = partnerSearchKey(project, state.partnerTrade, origin);
   if (state.partnerSearchKey !== key) {
     state.partnerSearchKey = key;
     state.partnerSearchLoading = true;
@@ -1483,11 +1686,8 @@ function renderPartnerFinder() {
     results.innerHTML = `<div class="partner-empty">Ingen leverandører ble funnet i nærheten av valgt punkt.</div>`;
     return;
   }
-  const originLabel = origin === state.partnerMapOrigin
-    ? "valgt punkt i kartet"
-    : origin === state.userLocation
-      ? "din faktiske posisjon"
-      : "valgt område";
+  collapseTradeField(true);
+  const originLabel = `det åpne prosjektet${project.place ? ` på ${project.place}` : ""}`;
   const websiteLink = (website) => {
     const value = String(website || "").trim();
     if (!value) return "";
@@ -1500,7 +1700,7 @@ function renderPartnerFinder() {
     }
   };
   results.innerHTML = `
-    <div class="partner-location-note">Nærmeste leverandører fra ${escapeHtml(originLabel)}. Rabatt vises i parentes. Rabattprosentene er foreløpige testverdier.</div>
+    <div class="partner-location-note">Nærmeste leverandører fra ${escapeHtml(originLabel)}. Rabatt vises i parentes.</div>
     ${partners.map((partner) => `
     <article class="partner-row">
       <div class="partner-company">
@@ -1528,10 +1728,6 @@ function renderPartnerMap(partners, region, origin) {
     touchZoom: true,
   }).setView([origin.lat, origin.lon], 10);
   addBaseMap(state.partnerMap);
-  state.partnerMap.on("click", (event) => {
-    state.partnerMapOrigin = { lat: event.latlng.lat, lon: event.latlng.lng };
-    renderPartnerFinder();
-  });
   const originMarker = L.circleMarker([origin.lat, origin.lon], {
     radius: 7,
     color: "#1b5d83",
@@ -1539,7 +1735,7 @@ function renderPartnerMap(partners, region, origin) {
     fillColor: "#4f9bc5",
     fillOpacity: 0.95,
   });
-  originMarker.bindTooltip(origin === state.partnerMapOrigin ? "Valgt punkt i kartet" : origin === state.userLocation ? "Din posisjon" : "Valgt område", { direction: "top" });
+  originMarker.bindTooltip("Åpent prosjekt", { direction: "top" });
   originMarker.addTo(state.partnerMap);
   const bounds = L.latLngBounds([]);
   bounds.extend([origin.lat, origin.lon]);
@@ -1578,7 +1774,7 @@ function renderRegionNotice(summary = {}) {
   const notice = document.querySelector("#regionNotice");
   if (!notice) return;
   const selectedRegion = findRegionByText(state.area) || state.activeRegion;
-  if (!selectedRegion) {
+  if (!selectedRegion || !state.customerMunicipality || !state.projects.length) {
     notice.textContent = "";
     notice.hidden = true;
     return;
@@ -1590,11 +1786,16 @@ function renderRegionNotice(summary = {}) {
   const businessText = selectedRegion.constructionBusinessCount
     ? ` Regionen består av ca. ${selectedRegion.constructionBusinessCount.toLocaleString("nb-NO")} virksomheter innen bygg- og anleggsbransjen.`
     : "";
-  notice.textContent = `Valgt område: ${selectedRegion.name} (${selectedRegion.municipalities.length} kommuner) ${visibleCount} aktive prosjekter vises, av ${totalCount} for ${regionName}.${businessText}`;
+  const primaryLine = `Valgt område: ${selectedRegion.name} (${selectedRegion.municipalities.length} kommuner) ${visibleCount} aktive prosjekter vises, av ${totalCount} for ${regionName}.`;
+  notice.innerHTML = `<span>${escapeHtml(primaryLine)}</span>${businessText ? `<span>${escapeHtml(businessText.trim())}</span>` : ""}`;
 }
 
 function renderList() {
   const list = document.querySelector("#projectList");
+  if (!state.activeRegion || !state.customerMunicipality) {
+    list.innerHTML = `<div class="empty">Velg region og kommune for å laste prosjekter.</div>`;
+    return;
+  }
   if (!state.filtered.length) {
     list.innerHTML = `<div class="empty">Ingen prosjekter matcher filtrene.</div>`;
     return;
@@ -1617,7 +1818,7 @@ function renderList() {
         <span class="project-meta">
           <span class="date-badge" title="${escapeHtml(project.dateFullLabel)}">
             <span class="row-status" title="${escapeHtml(project.statusText)}">${escapeHtml(project.phaseLabel)}</span>
-            <span class="date-value">${index >= standardProjectLimit ? `<span class="extra-star" title="Utenfor standard leveranse">★</span>` : ""}${escapeHtml(project.dateLabel)}</span>
+            <span class="date-value">${index >= currentModelLimit() ? `<span class="extra-star" title="Utenfor standard leveranse">★</span>` : ""}${escapeHtml(project.dateLabel)}</span>
           </span>
         </span>
         <span class="row-copy">
@@ -1628,7 +1829,7 @@ function renderList() {
       ${state.selected?.id === project.id ? renderExpandedProject(project) : ""}
     </article>
     `).join("")}
-    ${state.visibleCount < state.filtered.length ? `
+    ${state.productModel === "pro" && state.visibleCount < state.filtered.length ? `
       <button class="load-more" id="loadMoreButton" type="button">
         Vis 20 flere prosjekter
       </button>
@@ -1637,10 +1838,43 @@ function renderList() {
   list.querySelectorAll(".project-summary").forEach((row) => {
     row.addEventListener("click", () => {
       state.selected = state.projects.find((project) => project.id === row.dataset.id);
+      resetPartnerSearch();
       if (state.showMap) closeMapPane({ renderAfterClose: false });
       writeSavedValue("selectedProjectId", state.selected?.id || "");
       render();
     });
+  });
+  list.querySelectorAll(".project-supplier-button").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const project = state.projects.find((item) => item.id === button.dataset.projectId);
+      if (!project) return;
+      state.selected = project;
+      state.partnerFinderOpen = true;
+      state.partnerTrade = "";
+      resetPartnerSearch();
+      writeSavedValue("selectedProjectId", project.id);
+      render();
+      document.querySelector("#partnerFinderTitle")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+  document.querySelector("#partnerTradeInput")?.addEventListener("change", (event) => {
+    state.partnerTrade = event.target.value;
+    state.partnerFinderOpen = true;
+    resetPartnerSearch();
+    render();
+  });
+  document.querySelector("#partnerTradeChange")?.addEventListener("click", () => {
+    state.partnerTrade = "";
+    resetPartnerSearch();
+    render();
+  });
+  document.querySelector("#partnerClose")?.addEventListener("click", () => {
+    state.partnerFinderOpen = false;
+    state.partnerTrade = "";
+    resetPartnerSearch();
+    render();
   });
   list.querySelectorAll(".project-mark").forEach((button) => {
     button.addEventListener("click", (event) => {
@@ -1665,6 +1899,7 @@ function renderList() {
   });
   document.querySelector(".close-project")?.addEventListener("click", () => {
     state.selected = null;
+    resetPartnerSearch();
     writeSavedValue("selectedProjectId", "");
     render();
   });
@@ -1674,6 +1909,7 @@ function renderList() {
     if (Date.now() < state.suppressFullMapOpenUntil) return;
     if (state.selected) openFullMap(state.selected);
   });
+  renderPartnerFinder();
   renderMiniMap();
 }
 
@@ -1696,10 +1932,43 @@ function renderExpandedProject(project) {
           ${renderProjectContact(project, { compact: true })}
         </div>
         ${projectCanOpenMap(project) ? `
-          <button class="mini-map-card" type="button" aria-label="Åpne kart for prosjektet">
-            <span>Prosjektkart</span>
-            <span id="miniMapCanvas" class="mini-map-canvas"></span>
-          </button>
+          <div class="project-map-panel">
+            <button class="mini-map-card" type="button" aria-label="Åpne kart for prosjektet">
+              <span>Prosjektkart</span>
+              <span id="miniMapCanvas" class="mini-map-canvas"></span>
+            </button>
+            <button class="project-supplier-button" type="button" data-project-id="${escapeHtml(project.id)}">
+              Finn leverandør med rabattavtale
+            </button>
+            ${state.partnerFinderOpen && state.selected?.id === project.id ? `
+              <section class="partner-finder project-partner-finder" aria-labelledby="partnerFinderTitle">
+                <div class="partner-finder-heading">
+                  <div>
+                    <h2 id="partnerFinderTitle">Finn leverandør med rabattavtale</h2>
+                    <span class="partner-test-note">Nærmeste leverandører · rabatt i parentes</span>
+                  </div>
+                </div>
+                <div id="partnerContent" class="partner-content">
+                  <label class="partner-trade-field" id="partnerTradeField">
+                    <span>Produkttype og utvalg</span>
+                    <select id="partnerTradeInput" class="filter-select" aria-label="Velg produkttype og utvalg">
+                      <option value="">Velg produkttype og utvalg</option>
+                      ${partnerTrades.map((trade) => `<option value="${escapeHtml(trade)}">${escapeHtml(partnerRoleLabels[trade])}</option>`).join("")}
+                    </select>
+                  </label>
+                  <button class="partner-trade-change" id="partnerTradeChange" type="button" hidden>
+                    Endre produkttype og utvalg
+                  </button>
+                  <div id="partnerResults" class="partner-results" aria-live="polite"></div>
+                  <div class="partner-map-block">
+                    <div class="partner-map-heading">Leverandører i kartet</div>
+                    <div id="partnerMapCanvas" class="partner-map-canvas" aria-label="Kart over leverandører"></div>
+                  </div>
+                  <button class="partner-close" id="partnerClose" type="button">Lukk</button>
+                </div>
+              </section>
+            ` : ""}
+          </div>
         ` : ""}
         ${renderContactQuality(project)}
       </div>
@@ -2303,11 +2572,14 @@ function openAreaMap() {
     return;
   }
 
-  // Kundens kommune er origo for rangeringen: standardutvalget består av de
-  // 200 nærmeste prosjektene når kommunen er valgt.
+  // Kundens kommune er origo for rangeringen og kartutsnittet.
   openFullMap(points[0]);
   if (!state.fullMap) return;
-  const bounds = L.latLngBounds(points.map((project) => [project.lat, project.lon]));
+  const origin = municipalityMapAnchor(state.customerMunicipality);
+  const bounds = L.latLngBounds([
+    ...(origin ? [[origin.lat, origin.lon]] : []),
+    ...points.map((project) => [project.lat, project.lon]),
+  ]);
   state.fullMap.fitBounds(bounds.pad(0.16), { maxZoom: 11 });
 }
 
@@ -2602,9 +2874,10 @@ function projectMapAnchor(project) {
 
 function municipalityMapAnchor(value) {
   const key = normalizeMunicipalityName(value);
-  if (municipalityMapAnchors[key]) return municipalityMapAnchors[key];
-  const text = normalizeMunicipalityName(value);
-  const match = Object.entries(municipalityMapAnchors).find(([municipality]) => text.includes(municipality));
+  if (!key) return null;
+  const exact = Object.entries(municipalityMapAnchors).find(([municipality]) => normalizeMunicipalityName(municipality) === key);
+  if (exact) return exact[1];
+  const match = Object.entries(municipalityMapAnchors).find(([municipality]) => key.includes(normalizeMunicipalityName(municipality)));
   return match?.[1] || null;
 }
 
@@ -2693,6 +2966,7 @@ function bindFullMapProjectSelection() {
 function openProjectFromMap(project) {
   const selectedProject = state.projects.find((candidate) => candidate.id === project.id) || project;
   state.selected = selectedProject;
+  resetPartnerSearch();
   const closeToken = ++state.fullMapCloseToken;
   state.suppressFullMapOpenUntil = Date.now() + 3000;
   state.forceCloseFullMapUntil = Date.now() + 3000;
@@ -2909,12 +3183,18 @@ function searchTextMatches(searchText, query) {
 
 function standardDeliveryProjects() {
   const ranked = state.filtered.slice();
-  if (ranked.length <= standardProjectLimit) return phaseBalancedSelection(ranked, ranked.length);
+  const modelLimit = currentModelLimit();
+  if (ranked.length <= modelLimit) {
+    return state.customerMunicipality
+      ? ranked.sort(customerDistanceSort)
+      : phaseBalancedSelection(ranked, ranked.length);
+  }
 
-  // Når kunden har valgt kommune, skal de 200 nærmeste prosjektene være
-  // standardleveransen. Kommunebalanseringen brukes ellers for å sikre bred
-  // regional dekning når kunden ikke har valgt et lokalt origo.
-  if (state.customerMunicipality) return phaseBalancedSelection(ranked, standardProjectLimit);
+  // Når kunden har valgt kommune, skal leveransen alltid bestå av de nærmeste
+  // prosjektene. Fase brukes bare som sekundær sortering ved lik avstand.
+  if (state.customerMunicipality) {
+    return ranked.sort(customerDistanceSort).slice(0, modelLimit);
+  }
 
   // Fordel kartgrunnlaget mellom kommunene. Prosjektene står fortsatt i
   // aktualitetsrekkefølge internt i hver kommune, men én stor kommune skal
@@ -2930,18 +3210,18 @@ function standardDeliveryProjects() {
   const balanced = [];
   let offset = 0;
   let added = true;
-  while (balanced.length < standardProjectLimit && added) {
+  while (balanced.length < modelLimit && added) {
     added = false;
     for (const projects of groups.values()) {
       const project = projects[offset];
       if (!project) continue;
       balanced.push(project);
       added = true;
-      if (balanced.length >= standardProjectLimit) break;
+      if (balanced.length >= modelLimit) break;
     }
     offset += 1;
   }
-  return phaseBalancedSelection(balanced, standardProjectLimit);
+  return phaseBalancedSelection(balanced, modelLimit);
 }
 
 function phaseBalancedSelection(projects, limit) {
@@ -2970,7 +3250,9 @@ function phaseBalancedSelection(projects, limit) {
 
 function visibleDeliveryProjects() {
   const limit = Math.min(state.visibleCount, state.filtered.length);
-  const visible = phaseBalancedSelection(state.filtered, limit);
+  const visible = state.customerMunicipality
+    ? state.filtered.slice().sort(customerDistanceSort).slice(0, limit)
+    : phaseBalancedSelection(state.filtered, limit);
   const selected = state.selected && state.filtered.find((project) => project.id === state.selected.id);
 
   // Kartet viser alle filtrerte prosjekter. Hvis et valgt prosjekt ligger
@@ -2980,7 +3262,7 @@ function visibleDeliveryProjects() {
     visible.splice(Math.max(visible.length - 1, 0), 1, selected);
   }
 
-  return visible.sort(markedFirstSort);
+  return visible.sort(state.customerMunicipality ? markedThenCustomerDistanceSort : markedFirstSort);
 }
 
 function weeklyDeliveryBatch() {
@@ -3012,6 +3294,15 @@ function deliverySort(a, b) {
     String(b.date).localeCompare(String(a.date));
 }
 
+function customerDistanceSort(a, b) {
+  const distanceDelta = customerProjectDistance(a) - customerProjectDistance(b);
+  return distanceDelta !== 0 ? distanceDelta : deliverySort(a, b);
+}
+
+function markedThenCustomerDistanceSort(a, b) {
+  return Number(isMarkedProject(b.id)) - Number(isMarkedProject(a.id)) || customerDistanceSort(a, b);
+}
+
 function projectPhaseRank(project) {
   const phase = normalize(project?.phaseLabel || project?.phase || "");
   if (phase === "fase 2") return 0;
@@ -3020,7 +3311,7 @@ function projectPhaseRank(project) {
 }
 
 function customerProjectDistance(project) {
-  const origin = municipalityMapAnchors[state.customerMunicipality];
+  const origin = municipalityMapAnchor(state.customerMunicipality);
   if (!origin) return Infinity;
   const projectPoint = Number.isFinite(project.lat) && Number.isFinite(project.lon) && project.lat !== 0 && project.lon !== 0
     ? { lat: project.lat, lon: project.lon }
@@ -3623,7 +3914,9 @@ function saveFilters() {
 function updateCustomerMunicipalityOptions() {
   const select = document.querySelector("#customerMunicipality");
   if (!select) return;
-  const region = locationRegions.find((candidate) => candidate.id === state.regionKey) || locationRegions[0];
+  const region = state.regionSelectionCleared
+    ? null
+    : locationRegions.find((candidate) => candidate.id === state.regionKey) || state.activeRegion;
   const municipalities = region?.municipalities || [];
   const selected = municipalities.some((municipality) => normalizeMunicipalityName(municipality) === state.customerMunicipality)
     ? state.customerMunicipality
@@ -3690,7 +3983,7 @@ function useCurrentLocation() {
     state.activeRegion = region;
     state.area = `${region.name} (${region.municipalities.length} kommuner)`;
     document.querySelector("#areaInput").value = state.area;
-    state.visibleCount = standardProjectLimit;
+    state.visibleCount = currentModelLimit();
     saveFilters();
     render();
   });
@@ -3777,8 +4070,14 @@ function scheduleWeeklyDeliveryRefresh() {
 }
 
 async function applyWeeklyDelivery() {
+  if (!state.activeRegion || !state.customerMunicipality) {
+    state.projects = [];
+    state.filtered = [];
+    render();
+    return;
+  }
   await loadProjects();
-  state.visibleCount = standardProjectLimit;
+    state.visibleCount = currentModelLimit();
   state.filtered = filterProjects();
   state.selected = null;
   render();
@@ -3799,7 +4098,7 @@ function nextMondayAtMidnight(fromDate) {
 
 function deliveryInfoText() {
   const nextDelivery = formatNorwegianDateTime(nextMondayAtMidnight(new Date()));
-  return `Standardleveransen er alltid ${standardProjectLimit} prosjekter. Hver mandag kl. 00.00 legges ${weeklyDeliveryCount} nye prosjekter inn i standardlisten, og de ${weeklyDeliveryCount} eldste fjernes. Prosjekter som lastes manuelt utover dette merkes med stjerne. Neste planlagte leveranse: ${nextDelivery}.`;
+  return `Standardleveransen for valgt modell er ${currentModelLimit()} prosjekter. Hver mandag kl. 00.00 legges ${weeklyDeliveryCount} nye prosjekter inn i standardlisten, og de ${weeklyDeliveryCount} eldste fjernes. Prosjekter som lastes manuelt utover dette merkes med stjerne. Neste planlagte leveranse: ${nextDelivery}.`;
 }
 
 function escapeHtml(value) {

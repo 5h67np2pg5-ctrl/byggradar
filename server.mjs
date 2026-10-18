@@ -17,20 +17,20 @@ const ssbTableCache = new Map();
 
 const supplierSearchPatterns = {
   byggevarehus: "Biltema|Optimera|Monter|Montér|Byggmakker|XL-BYGG|Obs BYGG|Maxbo|Bygger'n|Bauhaus",
-  elektrogrossist: "Ahlsell|Solar|Onninen|Rexel|Elektroimportøren|Elektroimportoren",
-  "vvs-grossist": "Brødrene Dahl|Broedrene Dahl|Ahlsell|Heidenreich|Comfort|VVS Eksperten|VVS-Eksperten",
+  elektrogrossist: "Ahlsell|Solar|Onninen|Rexel|Elektroimportøren|Elektroimportoren|Berggård Amundsen|Berggard Amundsen",
+  "vvs-grossist": "Brødrene Dahl|Broedrene Dahl|Ahlsell|Heidenreich|VVS Eksperten|VVSeksperten",
   "verktøy-maskinutleie": "Würth|Wurth|Motek|Ramirent|Renta|Cramo|Tools|TOOLS",
   "betong-pukk-grus": "NorBetong|Unicon|Veidekke|Franzefoss|NCC|Skanska",
-  "transport-kran-container": "Norsk Gjenvinning|Ragn-Sells|Renta|Cramo|Bring|Litra|kran|container",
+  "transport-kran-container": "Norsk Gjenvinning|Ragn-Sells|Renta|Cramo|Bring|Litra",
   "arbeidstoy-verneutstyr": "TOOLS|Ahlsell|Wenaas|Mascot|Proffklær|Proffklaer|Würth|Wurth",
 };
 const supplierSearchTerms = {
   byggevarehus: ["Biltema", "Optimera", "Montér", "Byggmakker", "XL-BYGG", "Obs BYGG", "Maxbo"],
   elektrogrossist: ["Ahlsell", "Solar", "Onninen", "Rexel", "Elektroimportøren"],
-  "vvs-grossist": ["Brødrene Dahl", "Ahlsell", "Heidenreich", "Comfort", "VVS Eksperten"],
+  "vvs-grossist": ["Brødrene Dahl", "Ahlsell", "Heidenreich", "VVS Eksperten"],
   "verktøy-maskinutleie": ["Würth", "Motek", "Ramirent", "Renta", "Cramo", "TOOLS"],
   "betong-pukk-grus": ["NorBetong", "Unicon", "Veidekke", "Franzefoss", "NCC"],
-  "transport-kran-container": ["Norsk Gjenvinning", "Ragn-Sells", "Renta", "Cramo", "Bring"],
+  "transport-kran-container": ["Norsk Gjenvinning", "Ragn-Sells", "Renta", "Cramo", "Bring", "Litra"],
   "arbeidstoy-verneutstyr": ["TOOLS", "Ahlsell", "Wenaas", "Mascot", "Proffklær", "Würth"],
 };
 
@@ -69,6 +69,7 @@ async function fallbackNominatimSuppliers(category, lat, lon) {
     const query = new URLSearchParams({ q: term, format: "jsonv2", limit: "5", bounded: "1", viewbox, addressdetails: "1" });
     const response = await fetch(`https://nominatim.openstreetmap.org/search?${query}`, {
       headers: { accept: "application/json", "user-agent": "NorskByggRadar/1.0" },
+      signal: AbortSignal.timeout(7000),
     });
     if (!response.ok) continue;
     const places = await response.json();
@@ -131,41 +132,59 @@ const server = http.createServer(async (request, response) => {
         response.end(JSON.stringify({ error: "Ugyldig søkepunkt eller leverandørkategori" }));
         return;
       }
-      const safeLat = lat.toFixed(6);
-      const safeLon = lon.toFixed(6);
-      const query = `[out:json][timeout:20];(nwr(around:50000,${safeLat},${safeLon})["name"~"${searchPattern}",i];${category === "byggevarehus" ? `nwr(around:50000,${safeLat},${safeLon})["shop"~"doityourself|hardware|trade",i];` : ""});out center tags;`;
       try {
-        const overpass = await fetch(`https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`, {
-          headers: { accept: "application/json", "user-agent": "NorskByggRadar/1.0" },
-        });
-        if (!overpass.ok) throw new Error(`Stedsøket svarte med ${overpass.status}`);
-        const payload = await overpass.json();
-        const seen = new Set();
-        const suppliers = (payload.elements || [])
-          .map((element) => {
-            const point = element.type === "node"
-              ? { lat: element.lat, lon: element.lon }
-              : { lat: element.center?.lat, lon: element.center?.lon };
-            const name = String(element.tags?.name || "").trim();
-            if (!name || !Number.isFinite(point.lat) || !Number.isFinite(point.lon)) return null;
-            const key = `${name.toLowerCase()}|${point.lat.toFixed(5)}|${point.lon.toFixed(5)}`;
-            if (seen.has(key)) return null;
-            seen.add(key);
-            const distanceKm = distanceBetweenCoordinates(lat, lon, point.lat, point.lon);
-            return {
-              id: `${category}-${element.type}-${element.id}`,
-              company: name,
-              category,
-              lat: point.lat,
-              lon: point.lon,
-              distanceKm,
-              discountPercent: [15, 22, 30, 18, 26][Math.abs(hashString(name)) % 5],
-              website: element.tags?.website || element.tags?.contact_website || "",
-            };
-          })
-          .filter(Boolean)
-          .sort((a, b) => a.distanceKm - b.distanceKm)
-          .slice(0, 4);
+        const seen = new Map();
+        let successfulSearch = false;
+        const overpassEndpoints = [
+          "https://overpass-api.de/api/interpreter",
+          "https://overpass.kumi.systems/api/interpreter",
+          "https://overpass.private.coffee/api/interpreter",
+        ];
+        // Søk trinnvis slik at nære treff alltid får prioritet foran treff
+        // som bare finnes fordi søkeområdet ble satt til 50 km.
+        for (const radius of [10000, 25000, 50000]) {
+          const safeLat = lat.toFixed(6);
+          const safeLon = lon.toFixed(6);
+          const query = `[out:json][timeout:20];(nwr(around:${radius},${safeLat},${safeLon})["name"~"${searchPattern}",i];${category === "byggevarehus" ? `nwr(around:${radius},${safeLat},${safeLon})["shop"~"doityourself|hardware|trade",i];` : ""});out center tags;`;
+          for (const endpoint of overpassEndpoints) {
+            try {
+              const overpass = await fetch(`${endpoint}?data=${encodeURIComponent(query)}`, {
+                headers: { accept: "application/json", "user-agent": "NorskByggRadar/1.0" },
+                signal: AbortSignal.timeout(9000),
+              });
+              if (!overpass.ok) continue;
+              successfulSearch = true;
+              const payload = await overpass.json();
+              (payload.elements || []).forEach((element) => {
+                const point = element.type === "node"
+                  ? { lat: element.lat, lon: element.lon }
+                  : { lat: element.center?.lat, lon: element.center?.lon };
+                const name = String(element.tags?.name || "").trim();
+                if (!name || !Number.isFinite(point.lat) || !Number.isFinite(point.lon)) return;
+                const key = `${name.toLowerCase()}|${point.lat.toFixed(5)}|${point.lon.toFixed(5)}`;
+                if (seen.has(key)) return;
+                const distanceKm = distanceBetweenCoordinates(lat, lon, point.lat, point.lon);
+                seen.set(key, {
+                  id: `${category}-${element.type}-${element.id}`,
+                  company: name,
+                  category,
+                  lat: point.lat,
+                  lon: point.lon,
+                  distanceKm,
+                  discountPercent: [15, 22, 30, 18, 26][Math.abs(hashString(name)) % 5],
+                  website: element.tags?.website || element.tags?.contact_website || "",
+                });
+              });
+              if (seen.size >= 4) break;
+            } catch {
+              // Prøv neste Overpass-tjeneste før Nominatim-fallback.
+            }
+          }
+          if (seen.size >= 4) break;
+        }
+        if (!successfulSearch) throw new Error("Stedsøket svarte uten gyldig resultat");
+        const suppliers = [...seen.values()].sort((a, b) => a.distanceKm - b.distanceKm).slice(0, 4);
+        if (!suppliers.length) throw new Error("Stedsøket ga ingen leverandører");
         response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
         response.end(JSON.stringify({ suppliers, source: "OpenStreetMap/Overpass", center: { lat, lon } }));
       } catch (error) {
