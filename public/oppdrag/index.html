@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="nb">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Meld inn et forestående oppdrag til Norsk ByggRadar." />
+    <title>Legg inn et oppdrag · Norsk ByggRadar</title>
+    <link rel="stylesheet" href="/oppdrag/oppdrag.css" />
+  </head>
+  <body>
+    <main class="request-page">
+      <section class="request-panel" aria-labelledby="requestTitle">
+        <div class="request-brand">
+          <img src="/assets/byggradar-radar.png" alt="Norsk ByggRadar" class="request-logo" />
+          <div>
+            <p class="eyebrow">Norsk ByggRadar</p>
+          </div>
+        </div>
+
+        <p class="intro">
+          Norsk ByggRadar har kvalitetssikret en rekke virksomheter som utfører oppdrag innenfor de fleste fagområder.
+          Ved å velge en leverandør gjennom Norsk ByggRadar kan du være trygg på at virksomhetene er seriøse og følger norske standarder for arbeidsavtaler, lønnsnivå, skatter og avgifter.
+          <br /><br />
+          Å legge inn oppdrag og å motta pristilbud er kostnadsfritt.
+        </p>
+        <h1 id="requestTitle">Legg inn et oppdrag</h1>
+
+        <form id="requestForm" class="request-form">
+          <h2>Prosjektinformasjon</h2>
+          <label class="select-field">
+            <span>Oppdragstype</span>
+            <select name="trade" required>
+              <option value="">Velg fagområde</option>
+              <option value="elektro">Elektro</option>
+              <option value="bygg">Bygg og tømrerarbeid</option>
+              <option value="rør">Rørleggerarbeid</option>
+              <option value="ventilasjon">Ventilasjon</option>
+              <option value="grunnarbeid">Grunnarbeid</option>
+              <option value="tak">Takarbeid</option>
+              <option value="maler">Malerarbeid</option>
+              <option value="prosjektering">Prosjektering</option>
+              <option value="rehabilitering">Rehabilitering</option>
+              <option value="annet">Annet</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Beskriv oppdraget</span>
+            <textarea name="description" rows="7" placeholder="Beskriv prosjektet kort. Ytterligere informasjon og eventuell befaring avtales senere." required></textarea>
+          </label>
+
+          <h2>Kontaktinformasjon</h2>
+          <div class="form-grid">
+            <label>
+              <span>Navn</span>
+              <input name="name" type="text" autocomplete="name" required />
+            </label>
+            <label>
+              <span>Telefonnummer</span>
+              <input name="phone" type="tel" autocomplete="tel" required />
+            </label>
+          </div>
+
+          <label>
+            <span>Adresse for oppdraget</span>
+            <input name="address" type="text" autocomplete="street-address" required />
+          </label>
+
+          <p class="privacy-note">Norsk ByggRadar følger nasjonale retningslinjer for behandling av personopplysninger og GDPR-regelverket.</p>
+          <button class="submit-button" type="submit">Send</button>
+          <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+    <script src="/oppdrag/oppdrag.js"></script>
+  </body>
+</html>

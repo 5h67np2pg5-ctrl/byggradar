@@ -4,8 +4,11 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
+const incomingJobRequestsPath = path.join(root, "data", "incoming_job_requests.json");
+const smsOutboxPath = path.join(root, "data", "sms_outbox.json");
 const port = Number(process.env.PORT || 4173);
 const host = process.env.HOST || "0.0.0.0";
+const smsProvider = String(process.env.NBR_SMS_PROVIDER || "queue").trim().toLowerCase();
 
 const residentialBuildingTypes = [
   "111", "112", "113", "121", "122", "123", "124", "131", "133", "135", "136",
@@ -14,6 +17,198 @@ const residentialBuildingTypes = [
 const ssbMetadataCache = new Map();
 const ssbYearCache = new Map();
 const ssbTableCache = new Map();
+const incomingJobRequests = [];
+
+function configuredTestPersonNumbers() {
+  const configured = String(process.env.NBR_TEST_PERSONS || "")
+    .split(/[;,\n]/)
+    .map((value) => value.trim())
+    .filter(Boolean);
+  if (configured.length) return configured;
+  return ["94848500", "99003233"];
+}
+
+function normalizeSmsRecipient(value) {
+  const digits = String(value || "").replace(/\D/g, "");
+  if (digits.length === 8) return `+47${digits}`;
+  if (digits.length === 10 && digits.startsWith("47")) return `+${digits}`;
+  return String(value || "").trim();
+}
+
+function smsMessageForJob(jobRequest) {
+  const trade = jobRequest.trade ? `${jobRequest.trade.charAt(0).toUpperCase()}${jobRequest.trade.slice(1)}` : "Ikke oppgitt";
+  return [
+    "Avsender: Norsk ByggRadar",
+    `Kontaktperson: ${jobRequest.name}`,
+    `Telefonnummer: ${jobRequest.phone}`,
+    `Adresse: ${jobRequest.address}`,
+    `Fagområde: ${trade}`,
+    `Beskrivelse: ${jobRequest.description}`,
+  ].join("\n");
+}
+
+function sinchConfig() {
+  const servicePlanId = String(process.env.NBR_SINCH_SERVICE_PLAN_ID || "").trim();
+  const apiToken = String(process.env.NBR_SINCH_API_TOKEN || "").trim();
+  const from = String(process.env.NBR_SINCH_FROM || "").trim();
+  const region = String(process.env.NBR_SINCH_REGION || "eu").trim();
+  return servicePlanId && apiToken && from ? { servicePlanId, apiToken, from, region } : null;
+}
+
+function sinchConversationConfig() {
+  const projectId = String(process.env.NBR_SINCH_PROJECT_ID || "").trim();
+  const appId = String(process.env.NBR_SINCH_APP_ID || "").trim();
+  const accessKey = String(process.env.NBR_SINCH_ACCESS_KEY || "").trim();
+  const keySecret = String(process.env.NBR_SINCH_KEY_SECRET || "").trim();
+  const from = String(process.env.NBR_SINCH_SMS_SENDER || "").trim();
+  const region = String(process.env.NBR_SINCH_CONVERSATION_REGION || "us").trim();
+  return projectId && appId && accessKey && keySecret && from
+    ? { projectId, appId, accessKey, keySecret, from, region }
+    : null;
+}
+
+async function sendSmsViaSinchConversation(item) {
+  const config = sinchConversationConfig();
+  if (!config) return null;
+  const endpoint = `https://${config.region}.conversation.api.sinch.com/v1/projects/${encodeURIComponent(config.projectId)}/messages:send`;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+  try {
+    const basicAuth = Buffer.from(`${config.accessKey}:${config.keySecret}`).toString("base64");
+    const result = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        Authorization: `Basic ${basicAuth}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        app_id: config.appId,
+        recipient: {
+          identified_by: {
+            channel_identities: [{ channel: "SMS", identity: item.recipient }],
+          },
+        },
+        message: { text_message: { text: item.message } },
+        channel_properties: { SMS_SENDER: config.from },
+      }),
+      signal: controller.signal,
+    });
+    const payload = await result.json().catch(() => ({}));
+    if (!result.ok) {
+      const detail = payload.message || payload.error || `HTTP ${result.status}`;
+      throw new Error(detail);
+    }
+    return { status: "submitted", provider: "sinch-conversation", messageId: payload.message_id || payload.id || null };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function sendSmsViaSinch(item) {
+  const config = sinchConfig();
+  if (!config) return { status: "queued", reason: "Sinch er ikke konfigurert." };
+  const endpoint = `https://${config.region}.sms.api.sinch.com/xms/v1/${encodeURIComponent(config.servicePlanId)}/batches`;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+  try {
+    const result = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${config.apiToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ from: config.from, to: [item.recipient], body: item.message, type: "mt_text" }),
+      signal: controller.signal,
+    });
+    const payload = await result.json().catch(() => ({}));
+    if (!result.ok) {
+      const detail = payload.message || payload.error || `HTTP ${result.status}`;
+      throw new Error(detail);
+    }
+    return { status: "submitted", provider: "sinch", batchId: payload.id || null };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function readJsonArray(filePath) {
+  try {
+    const content = await fs.readFile(filePath, "utf8");
+    const parsed = JSON.parse(content);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (error) {
+    if (error.code === "ENOENT") return [];
+    throw error;
+  }
+}
+
+async function queueSmsDistribution(jobRequest) {
+  const recipients = configuredTestPersonNumbers().map(normalizeSmsRecipient).filter(Boolean);
+  const outbox = await readJsonArray(smsOutboxPath);
+  const existingMessages = new Map(outbox.filter((item) => item.jobId === jobRequest.id).map((item) => [item.recipient, item]));
+  const message = smsMessageForJob(jobRequest);
+  const newMessages = recipients
+    .filter((recipient) => !existingMessages.has(recipient))
+    .map((recipient) => ({
+      id: `sms-${jobRequest.id}-${recipient.replace(/\D/g, "")}`,
+      jobId: jobRequest.id,
+      recipient,
+      group: "testpersoner",
+      senderName: "Norsk ByggRadar",
+      trade: jobRequest.trade,
+      message,
+      status: "queued",
+      createdAt: new Date().toISOString(),
+    }));
+  let updatedExistingMessage = false;
+  existingMessages.forEach((item) => {
+    if (item.message !== message || item.senderName !== "Norsk ByggRadar") {
+      item.message = message;
+      item.senderName = "Norsk ByggRadar";
+      updatedExistingMessage = true;
+    }
+  });
+  if (newMessages.length || updatedExistingMessage) {
+    outbox.push(...newMessages);
+    await fs.mkdir(path.dirname(smsOutboxPath), { recursive: true });
+    await fs.writeFile(smsOutboxPath, `${JSON.stringify(outbox, null, 2)}\n`, "utf8");
+  }
+  return { status: recipients.length ? "queued" : "awaiting_recipients", recipientCount: recipients.length, messageQueued: Boolean(newMessages.length) };
+}
+
+async function dispatchSmsOutbox() {
+  if (smsProvider !== "sinch" || (!sinchConversationConfig() && !sinchConfig())) return { attempted: 0, submitted: 0 };
+  const outbox = await readJsonArray(smsOutboxPath);
+  let attempted = 0;
+  let submitted = 0;
+  for (const item of outbox) {
+    if (item.status !== "queued") continue;
+    attempted += 1;
+    try {
+      const result = await sendSmsViaSinchConversation(item) || await sendSmsViaSinch(item);
+      item.status = result.status;
+      item.provider = result.provider;
+      item.providerBatchId = result.batchId;
+      item.submittedAt = new Date().toISOString();
+      submitted += 1;
+    } catch (error) {
+      item.status = "failed";
+      item.provider = "sinch";
+      item.error = error.message || "Ukjent Sinch-feil";
+      item.failedAt = new Date().toISOString();
+    }
+  }
+  if (attempted) {
+    await fs.mkdir(path.dirname(smsOutboxPath), { recursive: true });
+    await fs.writeFile(smsOutboxPath, `${JSON.stringify(outbox, null, 2)}\n`, "utf8");
+  }
+  return { attempted, submitted };
+}
+
+async function persistIncomingJobRequests() {
+  await fs.mkdir(path.dirname(incomingJobRequestsPath), { recursive: true });
+  await fs.writeFile(incomingJobRequestsPath, `${JSON.stringify(incomingJobRequests, null, 2)}\n`, "utf8");
+}
 
 const supplierSearchPatterns = {
   byggevarehus: "Biltema|Optimera|Monter|Montér|Byggmakker|XL-BYGG|Obs BYGG|Maxbo|Bygger'n|Bauhaus",
@@ -94,6 +289,54 @@ const mime = {
 const server = http.createServer(async (request, response) => {
   try {
     const url = new URL(request.url || "/", `http://${host}:${port}`);
+
+    if (url.pathname === "/api/oppdrag" && request.method === "POST") {
+      let body = "";
+      for await (const chunk of request) {
+        body += chunk;
+        if (body.length > 64 * 1024) {
+          response.writeHead(413, { "content-type": "application/json; charset=utf-8" });
+          response.end(JSON.stringify({ error: "Forespørselen er for stor." }));
+          return;
+        }
+      }
+      let payload;
+      try {
+        payload = JSON.parse(body || "{}");
+      } catch {
+        response.writeHead(400, { "content-type": "application/json; charset=utf-8" });
+        response.end(JSON.stringify({ error: "Ugyldig forespørsel." }));
+        return;
+      }
+      const requestData = Object.fromEntries(["trade", "description", "name", "address", "phone"].map((key) => [key, String(payload[key] || "").trim()]));
+      const missing = ["trade", "description", "name", "address", "phone"].filter((key) => !requestData[key]);
+      if (missing.length) {
+        response.writeHead(400, { "content-type": "application/json; charset=utf-8" });
+        response.end(JSON.stringify({ error: "Fyll ut oppdragstype, beskrivelse, navn, adresse og telefonnummer." }));
+        return;
+      }
+      const jobRequest = {
+        id: `oppdrag-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        ...requestData,
+        receivedAt: new Date().toISOString(),
+        distribution: {
+          group: "testpersoner",
+          channel: "sms",
+          status: configuredTestPersonNumbers().length ? "queued" : "awaiting_recipients",
+          recipientCount: configuredTestPersonNumbers().length,
+          tradeIsolated: true,
+        },
+      };
+      const smsDistribution = await queueSmsDistribution(jobRequest);
+      jobRequest.distribution = { ...jobRequest.distribution, ...smsDistribution };
+      incomingJobRequests.push(jobRequest);
+      if (incomingJobRequests.length > 500) incomingJobRequests.shift();
+      await persistIncomingJobRequests();
+      await dispatchSmsOutbox();
+      response.writeHead(202, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
+      response.end(JSON.stringify({ accepted: true, id: jobRequest.id, trade: jobRequest.trade, distribution: jobRequest.distribution }));
+      return;
+    }
 
     if (url.pathname === "/api/geocode") {
       const allowedKeys = [
@@ -533,8 +776,10 @@ const server = http.createServer(async (request, response) => {
 
     const safePath = path.normalize(decodeURIComponent(url.pathname)).replace(/^(\.\.[/\\])+/, "");
     let requested = safePath === "/" ? "/index.html" : safePath;
+    if (requested === "/oppdrag" || requested === "/oppdrag/") requested = "/oppdrag/index.html";
     if (requested === "/app.js") requested = "/src/main.js";
     if (requested === "/styles.css") requested = "/src/styles.css";
+    if (requested.startsWith("/oppdrag/")) requested = `/public${requested}`;
     if (requested.startsWith("/data/")) requested = `/public${requested}`;
     if (requested.startsWith("/assets/")) requested = `/public${requested}`;
     if (requested.startsWith("/vendor/")) requested = `/public${requested}`;
@@ -603,6 +848,16 @@ function extractNorwegianPhones(value, subject = "") {
     return digits.length === 10 && digits.startsWith("47") && /^[2-9]\d{7}$/.test(digits.slice(2));
   }))].slice(0, 5);
 }
+
+async function queuePendingSmsMessages() {
+  const requests = await readJsonArray(incomingJobRequestsPath);
+  for (const requestData of requests) await queueSmsDistribution(requestData);
+  await dispatchSmsOutbox();
+}
+
+queuePendingSmsMessages().catch((error) => {
+  console.error(`Kunne ikke klargjøre SMS-utboks: ${error.message || error}`);
+});
 
 server.listen(port, host, () => {
   console.log(`Norsk ByggRadar local UI: http://${host}:${port}/`);

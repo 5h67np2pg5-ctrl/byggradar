@@ -1,0 +1,178 @@
+@import url("https://fonts.googleapis.com/css2?family=Michroma&display=swap");
+
+@font-face {
+  font-family: "NBR Calibri Light";
+  src: local("Calibri Light"), local("Calibril");
+  font-style: normal;
+  font-weight: 300;
+}
+
+:root {
+  font-family: "NBR Calibri Light", "Calibri Light", Calibri, "Segoe UI Light", "Segoe UI", Arial, sans-serif;
+  font-weight: 300;
+  color: #183246;
+  background: #edf6fb;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  min-width: 320px;
+  margin: 0;
+  background: #071c2d;
+}
+
+.request-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 28px 16px 44px;
+  background:
+    radial-gradient(circle at 50% 12%, rgba(45, 171, 198, 0.15), transparent 30%),
+    linear-gradient(145deg, #071c2d 0%, #0b2b43 55%, #103c58 100%);
+}
+
+.request-panel {
+  width: min(720px, 100%);
+  padding: clamp(22px, 5vw, 42px);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.request-panel,
+.request-panel h1,
+.request-panel h2,
+.request-panel .intro,
+.request-panel label,
+.request-panel input,
+.request-panel select,
+.request-panel textarea,
+.request-panel .privacy-note,
+.request-panel .submit-button,
+.request-panel .form-status {
+  font-family: "NBR Calibri Light", "Calibri Light", Calibri, "Segoe UI Light", "Segoe UI", Arial, sans-serif;
+}
+
+.request-brand {
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.request-brand > div:last-child {
+  display: grid;
+  gap: 6px;
+}
+
+.request-logo {
+  display: block;
+  width: min(210px, 62vw);
+  aspect-ratio: 1;
+  height: auto;
+  object-fit: cover;
+  border-radius: 50%;
+  filter: drop-shadow(0 0 20px rgba(0, 255, 190, 0.22));
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: #278b83;
+  font-family: "Eurostile", "Eurostyle", "Michroma", "Segoe UI", Arial, sans-serif;
+  font-size: 1.32rem;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  text-transform: none;
+}
+
+h1 { margin: 0; color: #f4fbff; font-size: clamp(1.55rem, 4vw, 2.25rem); line-height: 1.12; font-weight: 300; }
+
+.intro {
+  margin: 26px 0 24px;
+  color: #b8d3df;
+  font-size: 1.16rem;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.request-form { display: grid; gap: 16px; }
+
+.request-form h2 {
+  margin: 10px 0 -4px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgba(137, 208, 220, 0.32);
+  color: #65e5cc;
+  font-size: 0.9rem;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+}
+
+label { display: grid; gap: 6px; color: #c8e0e7; font-size: 0.9rem; font-weight: 300; }
+
+.select-field { position: relative; }
+
+.select-field::after {
+  position: absolute;
+  right: 15px;
+  bottom: 14px;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid #9bc9d1;
+  border-bottom: 2px solid #9bc9d1;
+  content: "";
+  pointer-events: none;
+  transform: rotate(45deg);
+}
+
+input, select, textarea {
+  width: 100%;
+  border: 1px solid rgba(137, 208, 220, 0.48);
+  border-radius: 7px;
+  padding: 11px 12px;
+  color: #e8f7f8;
+  background: rgba(8, 39, 59, 0.72);
+  background-image: none;
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+select {
+  appearance: none;
+  padding-right: 38px;
+}
+
+textarea { min-height: 150px; resize: vertical; line-height: 1.5; }
+input:focus, select:focus, textarea:focus { outline: 3px solid rgba(61, 175, 165, 0.2); border-color: #3ca99d; }
+
+.form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+
+.privacy-note { margin: -2px 0 0; color: #88aebd; font-size: 0.9rem; line-height: 1.45; }
+
+.submit-button {
+  min-height: 46px;
+  border: 1px solid #26998e;
+  border-radius: 7px;
+  color: #fff;
+  background: #279f93;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 300;
+}
+
+.submit-button:hover, .submit-button:focus-visible { background: #207f77; }
+.submit-button:disabled { cursor: wait; opacity: 0.62; }
+.form-status { min-height: 1.35em; margin: 0; color: #277160; font-size: 0.9rem; line-height: 1.4; }
+.form-status.error { color: #a33f43; }
+
+@media (max-width: 560px) {
+  .request-page { padding: 14px 10px 26px; }
+  .request-panel { padding: 20px 16px 24px; border-radius: 9px; }
+  .request-brand { gap: 12px; }
+  .request-logo { width: min(210px, 62vw); }
+  .intro { margin-top: 20px; font-size: 1.06rem; }
+  .form-grid { grid-template-columns: 1fr; }
+}

@@ -113,7 +113,7 @@ const loadMoreStep = 20;
 const weeklyDeliveryCount = 50;
 const statisticsSavedSearchesKey = "byggradar.statistics.savedSearches.v1";
 // Produktversjonen vises på forsiden. Øk dette tallet med ett ved hver ny publisert versjon.
-const appVersion = 200;
+const appVersion = 203;
 
 function currentModelLimit() {
   return productModelLimits[state.productModel] || standardProjectLimit;
