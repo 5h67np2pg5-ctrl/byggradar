@@ -60,6 +60,13 @@ body {
   gap: 9px;
 }
 
+.login-version {
+  margin: 0;
+  color: rgba(184, 211, 223, 0.78);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+
 .login-logo {
   width: min(210px, 62vw);
   aspect-ratio: 1;

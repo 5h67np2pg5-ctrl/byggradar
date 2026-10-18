@@ -112,6 +112,8 @@ const productModelLimits = { model75: 75, model150: 150, pro: standardProjectLim
 const loadMoreStep = 20;
 const weeklyDeliveryCount = 50;
 const statisticsSavedSearchesKey = "byggradar.statistics.savedSearches.v1";
+// Produktversjonen vises på forsiden. Øk dette tallet med ett ved hver ny publisert versjon.
+const appVersion = 200;
 
 function currentModelLimit() {
   return productModelLimits[state.productModel] || standardProjectLimit;
@@ -587,6 +589,7 @@ function renderLogin() {
       <section class="login-panel" aria-labelledby="loginTitle">
         <div class="login-brand">
           <img src="/assets/byggradar-radar.png" alt="" class="login-logo" />
+          <p class="login-version">Versjon ${appVersion}</p>
         </div>
         <div class="login-copy">
           <h1 id="loginTitle">Velkommen til Norsk ByggRadar</h1>
