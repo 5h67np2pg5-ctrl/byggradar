@@ -488,7 +488,7 @@ function renderLogin() {
         </div>
         <div class="login-copy">
           <h1 id="loginTitle">Velkommen til Norsk ByggRadar</h1>
-          <p>Få relevant informasjon om byggeprosjekter, tiltak og anskaffelser i Norge.</p>
+          <p>Informasjon om byggeprosjekter, tiltak og anskaffelser i Norge.</p>
         </div>
         <fieldset class="role-choice">
           <legend>Velg visning</legend>
