@@ -2429,9 +2429,10 @@ function renderMiniMap() {
     tap: false,
   }).setView([selectedPoint.lat, selectedPoint.lon], selectedPoint.isMunicipalityFallbackPoint ? 12 : 15);
   addBaseMap(state.miniMap, { compact: true });
+  // Små kart skal bare gi oversikt og hover-info. Prosjektvalg skjer først
+  // når brukeren åpner det store områdekartet.
   addProjectMarkers(state.miniMap, mapPointProjects(), selectedPoint, {
     compact: true,
-    onMarkerClick: openProjectFromMap,
   });
   refreshMapSize(state.miniMap);
 
