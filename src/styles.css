@@ -693,6 +693,7 @@ a {
 }
 
 .partner-open {
+  justify-self: center;
   min-height: 34px;
   padding: 0 12px;
   border: 1px solid #b8d0c1;

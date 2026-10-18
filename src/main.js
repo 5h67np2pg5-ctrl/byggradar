@@ -239,6 +239,8 @@ const locationRegions = [
     id: "bergensregionen",
     name: "Bergensregionen",
     anchor: { lat: 60.39299, lon: 5.32415 },
+    constructionBusinessCount: 3803,
+    constructionBusinessCountBasis: "SSB tabell 14151, registrerte foretak innen bygg og anlegg, 2023. Tallet er summert for alle 17 kommunene i regionen.",
     municipalities: [
       "Bergen kommune",
       "Askøy kommune",
@@ -263,6 +265,8 @@ const locationRegions = [
     id: "stavangerregionen",
     name: "Stavangerregionen",
     anchor: { lat: 58.9700, lon: 5.7331 },
+    constructionBusinessCount: 2673,
+    constructionBusinessCountBasis: "SSB tabell 14151, registrerte foretak innen bygg og anlegg, 2023. Tallet er summert for alle kommunene i regionen.",
     municipalities: [
       "Stavanger kommune", "Sandnes kommune", "Sola kommune", "Randaberg kommune",
       "Klepp kommune", "Time kommune", "Hå kommune", "Gjesdal kommune",
@@ -275,6 +279,8 @@ const locationRegions = [
     id: "haugalandsregionen",
     name: "Haugalandsregionen",
     anchor: { lat: 59.505, lon: 5.70 },
+    constructionBusinessCount: 1600,
+    constructionBusinessCountBasis: "SSB tabell 14151, registrerte foretak innen bygg og anlegg, 2023. Tallet er summert for alle 13 kommunene i regionen.",
     municipalities: [
       "Kvinnherad kommune",
       "Stord kommune",
@@ -295,8 +301,8 @@ const locationRegions = [
     id: "grenlandsregionen",
     name: "Grenlandsregionen",
     anchor: { lat: 59.1400, lon: 9.6100 },
-    constructionBusinessCount: 2183,
-    constructionBusinessCountBasis: "Beregnet ut fra SSB 2026-tall for bygge- og anleggsvirksomhet; kan avvike noe fra kommunefordelte uttrekk.",
+    constructionBusinessCount: 2181,
+    constructionBusinessCountBasis: "SSB tabell 14151, registrerte foretak innen bygg og anlegg, 2023. Tallet er summert for alle 17 kommunene i regionen.",
     municipalities: [
       "Skien kommune", "Porsgrunn kommune", "Bamble kommune", "Notodden kommune",
       "Midt-Telemark kommune", "Kragerø kommune", "Nome kommune", "Tinn kommune",
@@ -309,6 +315,8 @@ const locationRegions = [
     id: "sorlandsregionen",
     name: "Sørlandsregionen",
     anchor: { lat: 58.1467, lon: 7.9956 },
+    constructionBusinessCount: 2436,
+    constructionBusinessCountBasis: "SSB tabell 14151, registrerte foretak innen bygg og anlegg, 2023. Tallet er summert for alle kommunene i regionen.",
     municipalities: [
       "Kristiansand kommune", "Lindesnes kommune", "Vennesla kommune", "Lillesand kommune",
       "Lyngdal kommune", "Farsund kommune", "Flekkefjord kommune", "Kvinesdal kommune",
