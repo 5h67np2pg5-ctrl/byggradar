@@ -35,6 +35,11 @@ function normalizeSmsRecipient(value) {
   return String(value || "").trim();
 }
 
+function maskedSmsRecipient(value) {
+  const digits = String(value || "").replace(/\D/g, "");
+  return digits.length >= 4 ? `…${digits.slice(-4)}` : "ukjent";
+}
+
 function smsMessageForJob(jobRequest) {
   const trade = jobRequest.trade ? `${jobRequest.trade.charAt(0).toUpperCase()}${jobRequest.trade.slice(1)}` : "Ikke oppgitt";
   return [
@@ -184,18 +189,32 @@ async function dispatchSmsOutbox() {
   for (const item of outbox) {
     if (item.status !== "queued") continue;
     attempted += 1;
+    const recipientLabel = maskedSmsRecipient(item.recipient);
+    console.info("SMS attempt", { recipient: recipientLabel, jobId: item.jobId });
     try {
       const result = await sendSmsViaSinchConversation(item) || await sendSmsViaSinch(item);
       item.status = result.status;
       item.provider = result.provider;
-      item.providerBatchId = result.batchId;
+      item.providerMessageId = result.messageId || null;
+      item.providerBatchId = result.batchId || null;
       item.submittedAt = new Date().toISOString();
       submitted += 1;
+      console.info("SMS submitted", {
+        recipient: recipientLabel,
+        jobId: item.jobId,
+        provider: result.provider,
+        providerMessageId: item.providerMessageId,
+      });
     } catch (error) {
       item.status = "failed";
       item.provider = "sinch";
       item.error = error.message || "Ukjent Sinch-feil";
       item.failedAt = new Date().toISOString();
+      console.error("SMS dispatch failed", {
+        recipient: recipientLabel,
+        jobId: item.jobId,
+        error: item.error,
+      });
     }
   }
   if (attempted) {
