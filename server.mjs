@@ -44,6 +44,17 @@ function normalizeSupplierText(value) {
   return String(value || "").toLocaleLowerCase("nb-NO").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
 }
 
+function supplierPlaceMatchesAllowed(place, allowedPlaces) {
+  const normalizedPlace = normalizeSupplierText(place).replace(/\b(kommune|herad)\b/g, "").trim();
+  if (!normalizedPlace || !allowedPlaces.length) return false;
+  return allowedPlaces.some((allowed) => {
+    const normalizedAllowed = normalizeSupplierText(allowed).replace(/\b(kommune|herad)\b/g, "").trim();
+    return normalizedAllowed && (normalizedPlace === normalizedAllowed
+      || normalizedPlace.startsWith(`${normalizedAllowed} `)
+      || normalizedAllowed.startsWith(`${normalizedPlace} `));
+  });
+}
+
 function googleAdsSupplierKey(supplier) {
   return normalizeSupplierText(supplier.website || supplier.name);
 }
@@ -1257,15 +1268,16 @@ async function fetchMittanbudSuppliers(municipalityCodesValue, workTypesValue, t
     result = await fetchPage(page);
   }
   const seen = new Set();
-  const allowedPlaces = allowedMunicipalityNames.map((name) => normalizeSupplierText(name));
+  const allowedPlaces = allowedMunicipalityNames.map((name) => normalizeSupplierText(name)).filter(Boolean);
   return candidates.filter((candidate) => {
     const key = String(candidate.id || candidate.name || "").trim();
     if (!key || seen.has(key)) return false;
-    if (allowedPlaces.length && candidate.addresses?.length) {
-      const hasLocalAddress = candidate.addresses.some((address) => {
-        const place = normalizeSupplierText(address?.place);
-        return place && allowedPlaces.some((allowed) => place === allowed || place.includes(allowed) || allowed.includes(place));
-      });
+    if (allowedPlaces.length) {
+      // Region- og kommunesøk skal være lukket: uten en faktisk adresse i
+      // utvalget skal virksomheten ikke vises, selv om upstream returnerer
+      // virksomheten som fremhevet eller nasjonal kandidat.
+      const hasLocalAddress = Array.isArray(candidate.addresses)
+        && candidate.addresses.some((address) => supplierPlaceMatchesAllowed(address?.place, allowedPlaces));
       if (!hasLocalAddress) return false;
     }
     seen.add(key);
