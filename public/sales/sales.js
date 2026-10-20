@@ -1,6 +1,9 @@
-const SALES_VERSION = 321;
+const SALES_VERSION = 327;
 const salesEntryIsApproved = (() => {
-  try { return sessionStorage.getItem("nbr-entry-version") === String(SALES_VERSION); }
+  try {
+    return sessionStorage.getItem("nbr-entry-version") === String(SALES_VERSION)
+      && sessionStorage.getItem("nbr-entry-mode") === "sales";
+  }
   catch { return false; }
 })();
 

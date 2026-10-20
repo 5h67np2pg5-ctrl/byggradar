@@ -116,8 +116,11 @@ const loadMoreStep = 20;
 const weeklyDeliveryCount = 50;
 const statisticsSavedSearchesKey = "byggradar.statistics.savedSearches.v1";
 // Produktversjonen vises på forsiden. Hver ny implementering starter på innloggingssiden.
-const appVersion = 326;
-const loginAccessCode = "norskbyggradar1000";
+const appVersion = 327;
+const loginAccessCodes = {
+  vendor: "norskbyggradar1000",
+  sales: "norskbyggradar2000",
+};
 
 function currentModelLimit() {
   return productModelLimits[state.productModel] || standardProjectLimit;
@@ -557,15 +560,24 @@ const app = document.querySelector("#app");
 init();
 
 async function init() {
+  const routeMode = location.pathname === "/sales" ? "sales" : location.pathname === "/user" ? "vendor" : "";
+  const authorizedMode = sessionStorage.getItem("nbr-entry-mode");
+  const authorizedVersion = sessionStorage.getItem("nbr-entry-version");
+  if (routeMode && authorizedMode === routeMode && authorizedVersion === String(appVersion)) {
+    state.userMode = routeMode;
+    await initVendorApplication();
+    return;
+  }
   // En ny lasting skal alltid begynne på innloggingssiden før plattformvalg.
   renderLogin();
 }
 
 async function startUserMode(mode) {
   state.userMode = mode;
-  if (mode === "sales") {
-    sessionStorage.setItem("nbr-entry-version", String(appVersion));
-    window.location.assign(`/sales?v=${appVersion}`);
+  sessionStorage.setItem("nbr-entry-version", String(appVersion));
+  sessionStorage.setItem("nbr-entry-mode", mode);
+  if (mode === "sales" || mode === "vendor") {
+    window.location.assign(`/${mode === "sales" ? "sales" : "user"}?v=${appVersion}`);
     return;
   }
   if (mode === "statistics") {
@@ -644,7 +656,7 @@ function renderLogin() {
             <strong>Leverandørplattform</strong>
             <span>Finn relevante prosjekter, tiltak og oppdrag.</span>
           </button>
-          <button class="role-option is-disabled" type="button" data-mode="sales" disabled aria-disabled="true">
+          <button class="role-option" type="button" data-mode="sales">
             <strong>Selgerflate</strong>
             <span>Se prosjekter rundt kundens adresse.</span>
           </button>
@@ -677,7 +689,7 @@ function renderLogin() {
   });
   const attemptLogin = () => {
     if (!selectedMode) return;
-    if (loginCode.value.normalize("NFKC").trim() !== loginAccessCode) {
+    if (loginCode.value.normalize("NFKC").trim() !== loginAccessCodes[selectedMode]) {
       loginCode.setAttribute("aria-invalid", "true");
       document.querySelector("#loginCodeError").hidden = false;
       loginCode.focus();

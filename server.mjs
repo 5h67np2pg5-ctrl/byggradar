@@ -464,8 +464,9 @@ const server = http.createServer(async (request, response) => {
     }
 
     if ((url.pathname === "/user" || url.pathname === "/user/") && request.method === "GET") {
-      response.writeHead(308, { location: `/${url.search}` });
-      response.end();
+      const userHtml = await fs.readFile(path.join(root, "index.html"));
+      response.writeHead(200, { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" });
+      response.end(userHtml);
       return;
     }
 
