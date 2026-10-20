@@ -116,7 +116,7 @@ const loadMoreStep = 20;
 const weeklyDeliveryCount = 50;
 const statisticsSavedSearchesKey = "byggradar.statistics.savedSearches.v1";
 // Produktversjonen vises på forsiden. Hver ny implementering starter på innloggingssiden.
-const appVersion = 321;
+const appVersion = 322;
 
 function currentModelLimit() {
   return productModelLimits[state.productModel] || standardProjectLimit;
@@ -643,7 +643,7 @@ function renderLogin() {
             <strong>Leverandørplattform</strong>
             <span>Finn relevante prosjekter, tiltak og oppdrag.</span>
           </button>
-          <button class="role-option" type="button" data-mode="sales">
+          <button class="role-option is-disabled" type="button" data-mode="sales" disabled aria-disabled="true">
             <strong>Selgerflate</strong>
             <span>Se prosjekter rundt kundens adresse.</span>
           </button>
