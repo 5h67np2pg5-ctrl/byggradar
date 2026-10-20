@@ -116,7 +116,7 @@ const loadMoreStep = 20;
 const weeklyDeliveryCount = 50;
 const statisticsSavedSearchesKey = "byggradar.statistics.savedSearches.v1";
 // Produktversjonen vises på forsiden. Hver ny implementering starter på innloggingssiden.
-const appVersion = 322;
+const appVersion = 323;
 
 function currentModelLimit() {
   return productModelLimits[state.productModel] || standardProjectLimit;
@@ -652,24 +652,42 @@ function renderLogin() {
             <span>Se samlet statistikk for regioner og kommuner.</span>
           </button>
         </fieldset>
+        <div class="login-code">
+          <label for="loginCode">Innloggingskode</label>
+          <input id="loginCode" type="password" autocomplete="off" placeholder="Skriv inn kode" />
+          <p id="loginCodeError" class="login-code-error" hidden>Innloggingskoden er ikke riktig.</p>
+        </div>
         <button class="login-button" id="loginButton" type="button" disabled>Logg inn</button>
       </section>
     </main>
   `;
 
   let selectedMode = "";
+  const loginCode = document.querySelector("#loginCode");
+  const loginButton = document.querySelector("#loginButton");
+  const updateLoginButton = () => { if (loginButton) loginButton.disabled = !selectedMode || loginCode.value.length === 0; };
+  loginCode.addEventListener("input", () => {
+    document.querySelector("#loginCodeError").hidden = true;
+    loginCode.removeAttribute("aria-invalid");
+    updateLoginButton();
+  });
   document.querySelectorAll(".role-option").forEach((button) => {
     button.addEventListener("click", () => {
       if (button.disabled) return;
       selectedMode = button.dataset.mode || "";
       document.querySelectorAll(".role-option").forEach((option) => option.classList.toggle("is-selected", option === button));
-      const loginButton = document.querySelector("#loginButton");
-      if (loginButton) loginButton.disabled = !selectedMode;
+      updateLoginButton();
     });
   });
 
-  document.querySelector("#loginButton")?.addEventListener("click", () => {
+  loginButton?.addEventListener("click", () => {
     if (!selectedMode) return;
+    if (loginCode.value !== "norskbyggradar1000") {
+      loginCode.setAttribute("aria-invalid", "true");
+      document.querySelector("#loginCodeError").hidden = false;
+      loginCode.focus();
+      return;
+    }
     startUserMode(selectedMode);
   });
 }

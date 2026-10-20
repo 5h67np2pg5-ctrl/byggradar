@@ -200,6 +200,41 @@ body {
   transform: none;
 }
 
+.login-code {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  text-align: left;
+}
+
+.login-code label {
+  color: #b8d3df;
+  font-size: 0.82rem;
+}
+
+.login-code input {
+  min-height: 46px;
+  width: 100%;
+  padding: 0 12px;
+  border: 1px solid rgba(137, 208, 220, 0.42);
+  border-radius: 8px;
+  background: rgba(8, 39, 59, 0.72);
+  color: #f4fbff;
+  font: inherit;
+  outline: none;
+}
+
+.login-code input:focus {
+  border-color: #54e0c2;
+  box-shadow: 0 0 0 3px rgba(84, 224, 194, 0.14);
+}
+
+.login-code-error {
+  margin: 0;
+  color: #ffb7b7;
+  font-size: 0.78rem;
+}
+
 .login-button {
   min-height: 46px;
   border: 1px solid #4de2c2;
