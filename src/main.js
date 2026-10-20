@@ -116,7 +116,7 @@ const loadMoreStep = 20;
 const weeklyDeliveryCount = 50;
 const statisticsSavedSearchesKey = "byggradar.statistics.savedSearches.v1";
 // Produktversjonen vises på forsiden. Hver ny implementering starter på innloggingssiden.
-const appVersion = 324;
+const appVersion = 325;
 const loginAccessCode = "norskbyggradar1000";
 
 function currentModelLimit() {
@@ -674,6 +674,22 @@ function renderLogin() {
     loginCode.removeAttribute("aria-invalid");
     updateLoginButton();
   });
+  const attemptLogin = () => {
+    if (!selectedMode) return;
+    if (loginCode.value.normalize("NFKC").trim() !== loginAccessCode) {
+      loginCode.setAttribute("aria-invalid", "true");
+      document.querySelector("#loginCodeError").hidden = false;
+      loginCode.focus();
+      return;
+    }
+    startUserMode(selectedMode);
+  };
+  loginCode.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && !loginButton.disabled) {
+      event.preventDefault();
+      attemptLogin();
+    }
+  });
   document.querySelectorAll(".role-option").forEach((button) => {
     button.addEventListener("click", () => {
       if (button.disabled) return;
@@ -683,16 +699,7 @@ function renderLogin() {
     });
   });
 
-  loginButton?.addEventListener("click", () => {
-    if (!selectedMode) return;
-    if (loginCode.value.trim() !== loginAccessCode) {
-      loginCode.setAttribute("aria-invalid", "true");
-      document.querySelector("#loginCodeError").hidden = false;
-      loginCode.focus();
-      return;
-    }
-    startUserMode(selectedMode);
-  });
+  loginButton?.addEventListener("click", attemptLogin);
 }
 
 async function loadProjects() {
