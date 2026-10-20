@@ -116,7 +116,7 @@ const loadMoreStep = 20;
 const weeklyDeliveryCount = 50;
 const statisticsSavedSearchesKey = "byggradar.statistics.savedSearches.v1";
 // Produktversjonen vises på forsiden. Hver ny implementering starter på innloggingssiden.
-const appVersion = 328;
+const appVersion = 329;
 const loginAccessCodes = {
   vendor: "norskbyggradar1000",
   sales: "norskbyggradar2000",
@@ -566,6 +566,10 @@ async function init() {
   if (routeMode && authorizedMode === routeMode && authorizedVersion === String(appVersion)) {
     state.userMode = routeMode;
     await initVendorApplication();
+    return;
+  }
+  if (routeMode) {
+    window.location.replace(`/?login=1&v=${appVersion}`);
     return;
   }
   // En ny lasting skal alltid begynne på innloggingssiden før plattformvalg.
