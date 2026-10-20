@@ -44,14 +44,32 @@ function normalizeSupplierText(value) {
   return String(value || "").toLocaleLowerCase("nb-NO").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
 }
 
+const supplierMunicipalityLocalities = {
+  kvinnherad: ["husnes", "rosendal", "uskedalen", "dimmelsvik", "sunde", "halsnoy", "seimsfoss"],
+  stord: ["stord", "leirvik", "sagvag", "nordbygdo"],
+  fitjar: ["fitjar"],
+  bomlo: ["bomlo", "bremnes", "rubbestadneset", "mosterhamn", "langevag", "svortland"],
+  sveio: ["sveio", "forde", "auklandshamn"],
+  haugesund: ["haugesund"],
+  karmoy: ["karmoy", "kopervik", "akrahamn", "skudeneshavn", "avaldsnes", "vedavagen", "norheim", "vormedal", "torvastad", "kolnes", "veavagen"],
+  tysvaer: ["tysvaer", "aksdal", "forresfjorden", "frakkagjerd", "tysvaervag", "nedstrand", "skjoldastraumen"],
+  bokn: ["bokn", "foresvik"],
+  utsira: ["utsira"],
+  vindafjord: ["vindafjord", "olensvag", "olen", "vikedal", "sandeid", "skjold", "vats"],
+  etne: ["etne", "skanevik"],
+  sauda: ["sauda"],
+};
+
 function supplierPlaceMatchesAllowed(place, allowedPlaces) {
   const normalizedPlace = normalizeSupplierText(place).replace(/\b(kommune|herad)\b/g, "").trim();
   if (!normalizedPlace || !allowedPlaces.length) return false;
   return allowedPlaces.some((allowed) => {
     const normalizedAllowed = normalizeSupplierText(allowed).replace(/\b(kommune|herad)\b/g, "").trim();
+    const localities = supplierMunicipalityLocalities[normalizedAllowed] || [];
     return normalizedAllowed && (normalizedPlace === normalizedAllowed
       || normalizedPlace.startsWith(`${normalizedAllowed} `)
-      || normalizedAllowed.startsWith(`${normalizedPlace} `));
+      || normalizedAllowed.startsWith(`${normalizedPlace} `)
+      || localities.some((locality) => normalizedPlace === locality || normalizedPlace.startsWith(`${locality} `)));
   });
 }
 
@@ -1237,20 +1255,29 @@ async function fetchMittanbudSuppliers(municipalityCodesValue, workTypesValue, t
     "x-version": "12.0.3",
   };
   const fetchPage = async (page) => {
-    const upstream = await fetch("https://mittanbud.no/graphql", {
-      method: "POST",
-      headers,
-      body: JSON.stringify({
-        operationName: "PublicBusinessSearchV2",
-        query,
-        variables: { input: { pageSelect: { page, size: 50 }, municipalities, ...(worktypes.length ? { worktypes } : {}) } },
-      }),
-      signal: AbortSignal.timeout(12000),
-    });
-    const payload = await upstream.json().catch(() => ({}));
-    if (!upstream.ok) throw new Error(`Mittanbud svarte med HTTP ${upstream.status}.`);
-    if (payload.errors?.length) throw new Error(payload.errors[0].message || "Mittanbud kunne ikke gjennomføre søket.");
-    return payload.data?.businessSearchV2 || null;
+    let lastError;
+    for (let attempt = 0; attempt < 3; attempt += 1) {
+      try {
+        const upstream = await fetch("https://mittanbud.no/graphql", {
+          method: "POST",
+          headers,
+          body: JSON.stringify({
+            operationName: "PublicBusinessSearchV2",
+            query,
+            variables: { input: { pageSelect: { page, size: 50 }, municipalities, ...(worktypes.length ? { worktypes } : {}) } },
+          }),
+          signal: AbortSignal.timeout(12000),
+        });
+        const payload = await upstream.json().catch(() => ({}));
+        if (!upstream.ok) throw new Error(`Mittanbud svarte med HTTP ${upstream.status}.`);
+        if (payload.errors?.length) throw new Error(payload.errors[0].message || "Mittanbud kunne ikke gjennomføre søket.");
+        return payload.data?.businessSearchV2 || null;
+      } catch (error) {
+        lastError = error;
+        if (attempt < 2) await new Promise((resolve) => setTimeout(resolve, 350 * (attempt + 1)));
+      }
+    }
+    throw lastError || new Error("Mittanbud-søket kunne ikke gjennomføres.");
   };
 
   const candidates = [];
@@ -1299,9 +1326,16 @@ async function fetchMittanbudSuppliers(municipalityCodesValue, workTypesValue, t
 
 async function fetchAllMittanbudSuppliers(municipalitiesValue, workTypesValue, tradeValue = "", all = false, deduplicate = true, allowedMunicipalityNames = []) {
   const municipalityList = String(municipalitiesValue || "").split(",").map((value) => value.trim()).filter(Boolean);
-  const municipalityResults = await Promise.all(municipalityList.map((municipality) =>
-    fetchMittanbudSuppliers(municipality, workTypesValue, tradeValue, all, allowedMunicipalityNames).catch(() => [])
-  ));
+  const municipalityResults = [];
+  // Begrens samtidige forespørsler for å unngå at Mittanbud avviser deler av
+  // regionen. Hvert kommunesøk har i tillegg egne retry-forsøk.
+  for (let index = 0; index < municipalityList.length; index += 3) {
+    const batch = municipalityList.slice(index, index + 3);
+    const results = await Promise.all(batch.map((municipality) =>
+      fetchMittanbudSuppliers(municipality, workTypesValue, tradeValue, all, allowedMunicipalityNames).catch(() => [])
+    ));
+    municipalityResults.push(...results);
+  }
   const rows = municipalityResults.flat();
   if (!deduplicate) return rows;
   const supplierMap = new Map();
