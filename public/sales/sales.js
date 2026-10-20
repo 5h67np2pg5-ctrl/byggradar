@@ -1,4 +1,4 @@
-const SALES_VERSION = 333;
+const SALES_VERSION = 334;
 const salesEntryIsApproved = (() => {
   try {
     return sessionStorage.getItem("nbr-entry-version") === String(SALES_VERSION)
@@ -13,6 +13,7 @@ const regions = [
   { id: "haugalandsregionen", name: "Haugalandsregionen", anchor: [59.505, 5.700], municipalities: ["Kvinnherad kommune", "Stord kommune", "Fitjar kommune", "Bømlo kommune", "Sveio kommune", "Haugesund kommune", "Karmøy kommune", "Tysvær kommune", "Bokn kommune", "Utsira kommune", "Vindafjord kommune", "Etne kommune", "Sauda kommune"] },
   { id: "grenlandsregionen", name: "Grenlandsregionen", anchor: [59.140, 9.610], municipalities: ["Skien kommune", "Porsgrunn kommune", "Bamble kommune", "Notodden kommune", "Midt-Telemark kommune", "Kragerø kommune", "Nome kommune", "Tinn kommune", "Drangedal kommune", "Vinje kommune", "Seljord kommune", "Kviteseid kommune", "Siljan kommune", "Tokke kommune", "Hjartdal kommune", "Nissedal kommune", "Fyresdal kommune"] },
   { id: "sorlandsregionen", name: "Sørlandsregionen", anchor: [58.147, 7.996], municipalities: ["Kristiansand kommune", "Lindesnes kommune", "Vennesla kommune", "Lillesand kommune", "Lyngdal kommune", "Farsund kommune", "Flekkefjord kommune", "Kvinesdal kommune", "Birkenes kommune", "Sirdal kommune", "Hægebostad kommune", "Iveland kommune"] },
+  { id: "vestfoldkongsbergregionen", name: "Vestfold- og Kongsbergregionen", anchor: [59.250, 10.200], municipalities: ["Drammen kommune", "Sandefjord kommune", "Tønsberg kommune", "Larvik kommune", "Horten kommune", "Holmestrand kommune", "Lier kommune", "Kongsberg kommune", "Færder kommune", "Øvre Eiker kommune"] },
 ];
 const allRegionMunicipalityNames = [...new Set(regions.flatMap((item) => item.municipalities))];
 
@@ -24,6 +25,7 @@ const municipalityCodes = {
   kvinnherad: "3104", stord: "3101", fitjar: "3102", bomlo: "3100", sveio: "3099", haugesund: "2387", karmoy: "2407", tysvaer: "2406", bokn: "2405", utsira: "2408", vindafjord: "2409", etne: "3098", sauda: "2401",
   skien: "3054", porsgrunn: "3053", bamble: "3058", notodden: "3055", midttelemark: "3062", kragero: "3059", nome: "3061", tinn: "3063", drangedal: "3060", vinje: "3070", seljord: "3065", kviteseid: "3066", siljan: "3057", tokke: "3069", hjartdal: "3064", nissedal: "3067", fyresdal: "3068",
   kristiansand: "3074", lindesnes: "3075", farsund: "3076", flekkefjord: "3077", lillesand: "3082", birkenes: "3083", iveland: "3085", vennesla: "3090", lyngdal: "3092", haegebostad: "3093", kvinesdal: "3094"
+  , drammen: "3301", sandefjord: "3907", tonsberg: "3905", larvik: "3909", horten: "3901", holmestrand: "3903", lier: "3312", kongsberg: "3303", faerder: "3811", ovreeiker: "3314"
 };
 const officialMunicipalitySources = {
   alver: "https://innsyn.sing.no/alver/innsyn/wfinnsyn.ashx?response=arkivsak_sok_tomdefault&showresults=true",

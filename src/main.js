@@ -106,7 +106,7 @@ function partnerSearchOrigin() {
 }
 
 // Midlertidig visning av regionvalg. Valget kobles til kundens faste region senere.
-const illustrationRegions = ["Bergensregionen", "Stavangerregionen", "Haugalandsregionen", "Grenlandsregionen", "Sørlandsregionen"];
+const illustrationRegions = ["Bergensregionen", "Stavangerregionen", "Haugalandsregionen", "Grenlandsregionen", "Sørlandsregionen", "Vestfold- og Kongsbergregionen"];
 
 const savedFiltersKey = "byggradar.filters.v1";
 const markedProjectsKey = "byggradar.markedProjects.v1";
@@ -116,7 +116,7 @@ const loadMoreStep = 20;
 const weeklyDeliveryCount = 50;
 const statisticsSavedSearchesKey = "byggradar.statistics.savedSearches.v1";
 // Produktversjonen vises på forsiden. Hver ny implementering starter på innloggingssiden.
-const appVersion = 333;
+const appVersion = 334;
 const loginAccessCodes = {
   vendor: "norskbyggradar1000",
   sales: "norskbyggradar2000",
@@ -299,6 +299,18 @@ const locationRegions = [
       "Birkenes kommune", "Sirdal kommune", "Hægebostad kommune", "Iveland kommune",
     ],
   },
+  {
+    id: "vestfoldkongsbergregionen",
+    name: "Vestfold- og Kongsbergregionen",
+    anchor: { lat: 59.25, lon: 10.20 },
+    constructionBusinessCount: 0,
+    constructionBusinessCountBasis: "SSB-tall hentes og summeres for regionens 10 kommuner.",
+    municipalities: [
+      "Drammen kommune", "Sandefjord kommune", "Tønsberg kommune", "Larvik kommune",
+      "Horten kommune", "Holmestrand kommune", "Lier kommune", "Kongsberg kommune",
+      "Færder kommune", "Øvre Eiker kommune",
+    ],
+  },
 ];
 
 const coveredMunicipalityCount = new Set(
@@ -311,6 +323,7 @@ const regionDataPaths = {
   haugalandsregionen: "/data/regions/haugalandsregionen",
   grenlandsregionen: "/data/regions/grenlandsregionen",
   sorlandsregionen: "/data/regions/sorlandsregionen",
+  vestfoldkongsbergregionen: "/data/regions/vestfoldkongsbergregionen",
 };
 
 const municipalityMapAnchors = {
@@ -387,6 +400,16 @@ const municipalityMapAnchors = {
   "hjartdal": { lat: 59.6130, lon: 8.6250 },
   "nissedal": { lat: 59.1730, lon: 8.5230 },
   "fyresdal": { lat: 59.1860, lon: 8.0890 },
+  "drammen": { lat: 59.7441, lon: 10.2045 },
+  "sandefjord": { lat: 59.1312, lon: 10.2167 },
+  "tønsberg": { lat: 59.2675, lon: 10.4076 },
+  "larvik": { lat: 59.0533, lon: 10.0352 },
+  "horten": { lat: 59.4172, lon: 10.4834 },
+  "holmestrand": { lat: 59.4876, lon: 10.3176 },
+  "lier": { lat: 59.7865, lon: 10.2450 },
+  "kongsberg": { lat: 59.6686, lon: 9.6502 },
+  "færder": { lat: 59.2272, lon: 10.4154 },
+  "øvre eiker": { lat: 59.7710, lon: 9.9090 },
   "hægebostad": { lat: 58.3750, lon: 7.2200 },
   "iveland": { lat: 58.4610, lon: 7.8660 },
 };
@@ -509,6 +532,15 @@ const officialMunicipalitySources = {
   "voss": "https://voss.herad.no/administrasjon/postliste-og-innsyn-i-arkiv/sok/",
   "øygarden": "https://www.oygarden.kommune.no/tjenester/innsyn-og-naring/innsyn/postliste/",
   "etne": "https://www.etne.kommune.no/om-kommunen/innsyn/sok/",
+  "sandefjord": "https://www.sandefjord.kommune.no/engasjer-deg/politikk-og-innsyn/apenhet/",
+  "tonsberg": "https://www.tonsberg.kommune.no/tjenester/politikk-og-medvirkning/innsyn-og-postlister/",
+  "larvik": "https://www.larvik.kommune.no/administrasjon/postlister/",
+  "holmestrand": "https://holmestrand.kommune.no/innbyggerhjelpen/politikk-og-innsyn/innsyn-og-postliste/",
+  "kongsberg": "https://www.kongsberg.kommune.no/",
+  "faerder": "https://faerder.kommune.no/tjenester/plan-kart-bygg-og-eiendom/bygge-rive-eller-endre/hva-skjer-etter-du-har-sokt/",
+  "horten": "https://www.horten.kommune.no/",
+  "lier": "https://www.lier.kommune.no/",
+  "ovreeiker": "https://ovre-eiker.kommune.no/om-kommunen/innsyn.2927.aspx",
 };
 
 const approvedMunicipalityHosts = new Set([

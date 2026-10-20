@@ -1,0 +1,30 @@
+{
+  "regionId": "vestfoldkongsbergregionen",
+  "filter": {
+    "include": [
+      "byggesak", "byggesøknad", "byggetillatelse", "rammetillatelse",
+      "igangsettingstillatelse", "igangsetting", "fasade", "påbygg",
+      "tilbygg", "rivning", "fradeling", "seksjonering", "reguleringsplan",
+      "planinitiativ", "dispensasjon", "oppføring", "garasje", "bolig",
+      "næring", "terreng", "forstøtningsmur", "bruksendring"
+    ],
+    "exclude": [
+      "avslag", "klage", "ferdigmelding", "ferdigattest", "tilsyn",
+      "ulovlighetsoppfølging", "innsynsbegjæring", "møteinnkalling",
+      "postmottak", "oversendelse", "arkiv", "anmodning om dokument"
+    ],
+    "languages": ["bokmål", "nynorsk"]
+  },
+  "municipalities": [
+    { "name": "Drammen kommune", "sourceUrl": "https://www.drammen.kommune.no/" },
+    { "name": "Sandefjord kommune", "sourceUrl": "https://www.sandefjord.kommune.no/engasjer-deg/politikk-og-innsyn/apenhet/" },
+    { "name": "Tønsberg kommune", "sourceUrl": "https://www.tonsberg.kommune.no/tjenester/politikk-og-medvirkning/innsyn-og-postlister/" },
+    { "name": "Larvik kommune", "sourceUrl": "https://www.larvik.kommune.no/administrasjon/postlister/" },
+    { "name": "Horten kommune", "sourceUrl": "https://www.horten.kommune.no/" },
+    { "name": "Holmestrand kommune", "sourceUrl": "https://holmestrand.kommune.no/innbyggerhjelpen/politikk-og-innsyn/innsyn-og-postliste/" },
+    { "name": "Lier kommune", "sourceUrl": "https://www.lier.kommune.no/" },
+    { "name": "Kongsberg kommune", "sourceUrl": "https://www.kongsberg.kommune.no/" },
+    { "name": "Færder kommune", "sourceUrl": "https://faerder.kommune.no/tjenester/plan-kart-bygg-og-eiendom/bygge-rive-eller-endre/hva-skjer-etter-du-har-sokt/" },
+    { "name": "Øvre Eiker kommune", "sourceUrl": "https://ovre-eiker.kommune.no/om-kommunen/innsyn.2927.aspx" }
+  ]
+}
