@@ -116,7 +116,7 @@ const loadMoreStep = 20;
 const weeklyDeliveryCount = 50;
 const statisticsSavedSearchesKey = "byggradar.statistics.savedSearches.v1";
 // Produktversjonen vises på forsiden. Hver ny implementering starter på innloggingssiden.
-const appVersion = 325;
+const appVersion = 326;
 const loginAccessCode = "norskbyggradar1000";
 
 function currentModelLimit() {
@@ -663,9 +663,10 @@ function renderLogin() {
     </main>
   `;
 
-  let selectedMode = "";
+  let selectedMode = "vendor";
   const loginCode = document.querySelector("#loginCode");
   const loginButton = document.querySelector("#loginButton");
+  document.querySelector('.role-option[data-mode="vendor"]')?.classList.add("is-selected");
   const updateLoginButton = () => {
     if (loginButton) loginButton.disabled = !selectedMode || loginCode.value.trim().length === 0;
   };
