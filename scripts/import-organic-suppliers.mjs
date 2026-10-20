@@ -29,13 +29,14 @@ const regionMunicipalities = {
   haugalandsregionen: ["Kvinnherad kommune", "Stord kommune", "Fitjar kommune", "Bømlo kommune", "Sveio kommune", "Haugesund kommune", "Karmøy kommune", "Tysvær kommune", "Bokn kommune", "Utsira kommune", "Vindafjord kommune", "Etne kommune", "Sauda kommune"],
   grenlandsregionen: ["Skien kommune", "Porsgrunn kommune", "Bamble kommune", "Notodden kommune", "Midt-Telemark kommune", "Kragerø kommune", "Nome kommune", "Tinn kommune", "Drangedal kommune", "Vinje kommune", "Seljord kommune", "Kviteseid kommune", "Siljan kommune", "Tokke kommune", "Hjartdal kommune", "Nissedal kommune", "Fyresdal kommune"],
   sorlandsregionen: ["Kristiansand kommune", "Lindesnes kommune", "Vennesla kommune", "Lillesand kommune", "Lyngdal kommune", "Farsund kommune", "Flekkefjord kommune", "Kvinesdal kommune", "Birkenes kommune", "Sirdal kommune", "Hægebostad kommune", "Iveland kommune"],
+  vestfoldkongsbergregionen: ["Drammen kommune", "Sandefjord kommune", "Tønsberg kommune", "Larvik kommune", "Horten kommune", "Holmestrand kommune", "Lier kommune", "Kongsberg kommune", "Færder kommune", "Øvre Eiker kommune"],
 };
 const supportedTrades = [
   ["tomrer", "Snekker"], ["elektriker", "Elektriker"], ["rorlegger", "Rørlegger"], ["ventilasjon", "Ventilasjon"],
   ["murer", "Murer"], ["grunnarbeid", "Grunnarbeid"], ["maler", "Maler"], ["taklegger", "Taklegger"],
   ["gulvlegger", "Gulvlegger"], ["varmepumpe", "Varmepumpemontør"], ["byggmester", "Byggmester"],
 ];
-const slugMunicipality = (name) => name.replace(/ kommune| herad/gi, "").toLocaleLowerCase("nb-NO").replace(/å/g, "a").replace(/ø/g, "o").replace(/æ/g, "ae");
+const slugMunicipality = (name) => name.replace(/ kommune| herad/gi, "").toLocaleLowerCase("nb-NO").replace(/å/g, "a").replace(/ø/g, "o").replace(/æ/g, "ae").replace(/[^a-z0-9]/g, "");
 const allSources = Object.entries(regionMunicipalities).flatMap(([regionId, municipalities]) => municipalities.flatMap((municipality) => supportedTrades.map(([slug, trade]) => [regionId, municipality, slug, trade])));
 const regionFilter = String(process.env.NBR_IMPORT_REGION || "").trim().toLocaleLowerCase("nb-NO");
 const sources = process.argv.includes("--all") ? allSources.filter(([regionId]) => !regionFilter || regionId === regionFilter) : seedSources;
