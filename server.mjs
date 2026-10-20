@@ -1310,7 +1310,14 @@ async function fetchMittanbudSuppliers(municipalityCodesValue, workTypesValue, t
     seen.add(key);
     return true;
   }).map((candidate) => {
-    const address = (candidate.addresses || []).find((item) => item?.street || item?.place) || {};
+    // Et firma kan ha flere avdelinger. Når regionfilteret har godkjent en
+    // regional adresse, må den samme adressen vises; ellers kan et firma fra
+    // riktig region se ut som en utenforstående virksomhet.
+    const address = (candidate.addresses || []).find((item) =>
+      item?.street || item?.place
+        ? (!allowedPlaces.length || supplierPlaceMatchesAllowed(item?.place, allowedPlaces))
+        : false
+    ) || (candidate.addresses || []).find((item) => item?.street || item?.place) || {};
     return {
       name: candidate.name || "Ukjent virksomhet",
       trade: tradeLabel,

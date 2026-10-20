@@ -1,4 +1,4 @@
-const SALES_VERSION = 331;
+const SALES_VERSION = 332;
 const salesEntryIsApproved = (() => {
   try {
     return sessionStorage.getItem("nbr-entry-version") === String(SALES_VERSION)
