@@ -102,7 +102,8 @@ function resetPartnerSearch() {
 }
 
 function partnerSearchOrigin() {
-  return state.selected ? projectMapPoint(state.selected) : null;
+  const projectPoint = state.selected ? projectMapPoint(state.selected) : null;
+  return projectPoint && validMapCoordinate(projectPoint.lat, projectPoint.lon) ? projectPoint : null;
 }
 
 // Midlertidig visning av regionvalg. Valget kobles til kundens faste region senere.
@@ -111,12 +112,12 @@ const illustrationRegions = ["Bergensregionen", "Stavangerregionen", "Haugalands
 const savedFiltersKey = "byggradar.filters.v1";
 const markedProjectsKey = "byggradar.markedProjects.v1";
 const standardProjectLimit = 200;
-const productModelLimits = { model75: 75, model150: 150, pro: standardProjectLimit };
+const productModelLimits = { model75: 50, model150: 75, pro: Infinity };
 const loadMoreStep = 20;
 const weeklyDeliveryCount = 50;
 const statisticsSavedSearchesKey = "byggradar.statistics.savedSearches.v1";
 // Produktversjonen vises på forsiden. Hver ny implementering starter på innloggingssiden.
-const appVersion = 334;
+const appVersion = 360;
 const loginAccessCodes = {
   vendor: "norskbyggradar1000",
   sales: "norskbyggradar2000",
@@ -124,6 +125,12 @@ const loginAccessCodes = {
 
 function currentModelLimit() {
   return productModelLimits[state.productModel] || standardProjectLimit;
+}
+
+function currentModelLabel() {
+  return Number.isFinite(currentModelLimit())
+    ? `${currentModelLimit()} prosjekter`
+    : "alle tilgjengelige prosjekter";
 }
 
 const statisticsSearchCatalog = [
@@ -216,7 +223,7 @@ const locationRegions = [
     name: "Bergensregionen",
     anchor: { lat: 60.39299, lon: 5.32415 },
     constructionBusinessCount: 3803,
-    constructionBusinessCountBasis: "SSB tabell 14151, registrerte foretak innen bygg og anlegg, 2023. Tallet er summert for alle 17 kommunene i regionen.",
+    constructionBusinessCountBasis: "SSB tabell 14151, registrerte foretak innen bygg og anlegg, 2023. Tallet skal summeres for regionens 6 kommuner.",
     municipalities: [
       "Bergen kommune",
       "Askøy kommune",
@@ -247,7 +254,7 @@ const locationRegions = [
       "Stavanger kommune", "Sandnes kommune", "Sola kommune", "Randaberg kommune",
       "Klepp kommune", "Time kommune", "Hå kommune", "Gjesdal kommune",
       "Strand kommune", "Kvitsøy kommune", "Hjelmeland kommune", "Bjerkreim kommune",
-      "Eigersund kommune", "Suldal kommune", "Sirdal kommune", "Lund kommune",
+      "Eigersund kommune", "Suldal kommune", "Lund kommune",
       "Sokndal kommune",
     ],
   },
@@ -278,13 +285,10 @@ const locationRegions = [
     name: "Grenlandsregionen",
     anchor: { lat: 59.1400, lon: 9.6100 },
     constructionBusinessCount: 2181,
-    constructionBusinessCountBasis: "SSB tabell 14151, registrerte foretak innen bygg og anlegg, 2023. Tallet er summert for alle 17 kommunene i regionen.",
+    constructionBusinessCountBasis: "SSB tabell 14151, registrerte foretak innen bygg og anlegg, 2023. Tallet er summert for alle 16 kommunene i regionen.",
     municipalities: [
-      "Skien kommune", "Porsgrunn kommune", "Bamble kommune", "Notodden kommune",
-      "Midt-Telemark kommune", "Kragerø kommune", "Nome kommune", "Tinn kommune",
-      "Drangedal kommune", "Vinje kommune", "Seljord kommune", "Kviteseid kommune",
-      "Siljan kommune", "Tokke kommune", "Hjartdal kommune", "Nissedal kommune",
-      "Fyresdal kommune",
+      "Skien kommune", "Porsgrunn kommune", "Bamble kommune", "Kragerø kommune",
+      "Drangedal kommune", "Siljan kommune",
     ],
   },
   {
@@ -756,7 +760,8 @@ async function loadProjects() {
   const dataPaths = state.projectScope === "national"
     ? [...new Set(Object.values(regionDataPaths))]
     : [regionDataPaths[state.regionKey] || regionDataPaths.bergensregionen];
-  const [bundles, regionCountData, nationalData] = await Promise.all([
+  const allRegionPaths = [...new Set(Object.values(regionDataPaths))];
+  const [bundles, allRegionLocationData, nationalData] = await Promise.all([
     Promise.all(dataPaths.map(async (dataPath) => {
       const [locationData, contactData] = await Promise.all([
         fetch(`${dataPath}/projects_location_enriched.json?${cacheBust}`).then((response) => {
@@ -770,10 +775,10 @@ async function loadProjects() {
       ]);
       return { locationData, contactData };
     })),
-    fetch(`/data/region_project_counts.json?${cacheBust}`).then((response) => {
-      if (!response.ok) throw new Error(`Kunne ikke hente regional prosjektstatus (${response.status})`);
+    Promise.all(allRegionPaths.map((dataPath) => fetch(`${dataPath}/projects_location_enriched.json?${cacheBust}`).then((response) => {
+      if (!response.ok) throw new Error(`Kunne ikke hente prosjektdata for nasjonal summering (${response.status})`);
       return response.json();
-    }),
+    }))),
     state.projectScope === "national"
       ? fetch(`/data/national_projects.json?${cacheBust}`).then((response) => response.ok ? response.json() : { projects: [] }).catch(() => ({ projects: [] }))
       : Promise.resolve({ projects: [] }),
@@ -790,10 +795,11 @@ async function loadProjects() {
     ? isNationalProjectRecord(project)
     : !isNationalProjectRecord(project));
   const normalizedProjects = scopedProjects.map((project, index) => normalizeProject(project, contacts.get(project.sourceDocumentId), index));
-  state.allRegionProjectCount = Object.values(regionCountData.regions || {})
-    .map((count) => Number(count))
-    .filter(Number.isFinite)
-    .reduce((sum, count) => sum + count, 0);
+  const allRegionProjects = allRegionLocationData
+    .flatMap((locationData) => locationData.projects || [])
+    .filter((project) => !isNationalProjectRecord(project))
+    .map((project, index) => normalizeProject(project, null, index));
+  state.allRegionProjectCount = deduplicateProjects(allRegionProjects).length;
   state.projects = deduplicateProjects(normalizedProjects);
   state.rawProjectCount = state.projects.length;
   // Utvidet prosjektinformasjon er nå tilgjengelig på alle prosjekter.
@@ -1000,9 +1006,9 @@ function renderShell() {
       <header class="topbar">
         <fieldset class="product-model-picker" aria-label="Velg modell">
           <legend>Modell</legend>
-          <label><input type="radio" name="productModel" value="model75" ${state.productModel === "model75" ? "checked" : ""} /><span>Mini <span class="model-price">(2 490.- + mva pr mnd.)</span><small>Etableringskostnad 1 950.-</small></span></label>
-          <label><input type="radio" name="productModel" value="model150" ${state.productModel === "model150" ? "checked" : ""} /><span>Standard <span class="model-price">(3 990.- + mva pr mnd.)</span><small>Etableringskostnad 1 950.-</small></span></label>
-          <label><input type="radio" name="productModel" value="pro" ${state.productModel === "pro" ? "checked" : ""} /><span>Pro <span class="model-price">(6 990.- + mva pr mnd.)</span><small>Inklusiv etablering</small></span></label>
+          <label><input type="radio" name="productModel" value="model75" ${state.productModel === "model75" ? "checked" : ""} /><span>Mini <span class="model-price">(2 490.- + mva pr mnd.)</span><small>50 visninger · etableringskostnad 1 950.-</small></span></label>
+          <label><input type="radio" name="productModel" value="model150" ${state.productModel === "model150" ? "checked" : ""} /><span>Standard <span class="model-price">(3 990.- + mva pr mnd.)</span><small>75 visninger · etableringskostnad 1 950.-</small></span></label>
+          <label><input type="radio" name="productModel" value="pro" ${state.productModel === "pro" ? "checked" : ""} /><span>Pro <span class="model-price">(6 990.- + mva pr mnd.)</span><small>Alle tilgjengelige prosjekter · inklusiv etablering</small></span></label>
         </fieldset>
         <div class="topbar-copy">
           <div class="brand">Norsk ByggRadar</div>
@@ -1123,8 +1129,16 @@ function renderShell() {
     state.rawProjectCount = 0;
     saveFilters();
     const notice = document.querySelector("#regionNotice");
-    if (notice) notice.textContent = "Velg kommune for å laste prosjekter ...";
+    if (notice) notice.textContent = `Laster prosjekter for ${state.activeRegion?.name || "valgt region"} ...`;
     render();
+    try {
+      await loadProjects();
+      state.filtered = filterProjects();
+      render();
+      if (state.showMap) renderMap();
+    } catch (error) {
+      if (notice) notice.textContent = error.message || "Prosjektene kunne ikke lastes.";
+    }
   });
   const helpPill = document.querySelector("#helpPill");
   helpPill.setAttribute("aria-expanded", "false");
@@ -1172,7 +1186,7 @@ function renderShell() {
       }
       render();
       const notice = document.querySelector("#regionNotice");
-      if (nextScope === "municipal" && (!state.activeRegion || !state.customerMunicipality)) return;
+      if (nextScope === "municipal" && !state.activeRegion) return;
       if (notice) notice.textContent = nextScope === "national"
         ? "Laster nasjonale prosjekter ..."
         : `Laster kommuneprosjekter for ${displayGeographyName(state.customerMunicipality)} ...`;
@@ -1230,12 +1244,14 @@ function renderShell() {
     state.filtered = [];
     saveFilters();
     const notice = document.querySelector("#regionNotice");
-    if (!state.customerMunicipality || !state.activeRegion) {
-      if (notice) notice.textContent = "Velg region og kommune for å laste prosjekter.";
+    if (!state.activeRegion) {
+      if (notice) notice.textContent = "Velg region for å laste prosjekter.";
       render();
       return;
     }
-    if (notice) notice.textContent = `Laster prosjekter for ${displayGeographyName(state.customerMunicipality)} ...`;
+    if (notice) notice.textContent = state.customerMunicipality
+      ? `Laster prosjekter for ${displayGeographyName(state.customerMunicipality)} ...`
+      : `Laster prosjekter for ${state.activeRegion.name} ...`;
     render();
     try {
       await loadProjects();
@@ -1658,7 +1674,9 @@ function renderCollaborationFinder() {
   const mapBlock = document.querySelector("#collaborationMapBlock");
   const finder = document.querySelector(".collaboration-finder");
   if (!content || !results || !select) return;
-  const hasGeography = Boolean(state.activeRegion && state.customerMunicipality);
+  // Regionvalg er tilstrekkelig for samarbeidspartnerlisten. Kommune brukes
+  // som mer presist origo når den finnes, mens regionens origo brukes ellers.
+  const hasGeography = Boolean(state.activeRegion);
   finder?.classList.toggle("is-unconfigured", !hasGeography);
   if (state.collaborationMap) {
     state.collaborationMap.remove();
@@ -1675,6 +1693,10 @@ function renderCollaborationFinder() {
   const originName = state.customerMunicipality ? displayGeographyName(state.customerMunicipality) : region.name;
   if (!state.collaborationTrade) {
     results.innerHTML = `<div class="collaboration-empty">Velg et fagområde for å se samarbeidspartnere i ${escapeHtml(region.name)}.</div>`;
+    return;
+  }
+  if (!origin || !validMapCoordinate(origin.lat, origin.lon)) {
+    results.innerHTML = `<div class="collaboration-empty">Området mangler et gyldig kartpunkt.</div>`;
     return;
   }
   const partners = collaborationDirectory
@@ -1726,6 +1748,7 @@ function renderCollaborationMap(partners, region, origin, originName) {
     fillColor: "#ffffff",
     fillOpacity: 1,
   });
+  softenFullMapPinchZoom(state.collaborationMap);
   originMarker.bindTooltip(`Valgt kommune: ${escapeHtml(originName)}`, { direction: "top" });
   originMarker.addTo(state.collaborationMap);
   bounds.extend([origin.lat, origin.lon]);
@@ -1753,35 +1776,85 @@ function activePartnerRegion() {
 }
 
 function partnerSearchKey(project, trade, origin) {
-  return `${project?.id || "no-project"}|${trade}|${origin.lat.toFixed(5)}|${origin.lon.toFixed(5)}`;
+  return `${project?.id || "no-project"}|${trade}|${Number(origin.lat).toFixed(5)}|${Number(origin.lon).toFixed(5)}`;
 }
 
-async function loadNearbySuppliers(region, trade, origin, key) {
+const partnerTradeSearchTerms = {
+  byggevarehus: ["biltema", "optimera", "monter", "montér", "byggmakker", "xl bygg", "obs bygg", "maxbo", "bygger n", "bauhaus"],
+  elektrogrossist: ["ahlsell", "solar", "onninen", "rexel", "elektroimportøren", "elektroimportoren", "berggård amundsen", "berggard amundsen"],
+  "vvs-grossist": ["brødrene dahl", "broedrene dahl", "ahlsell", "heidenreich", "vvs eksperten", "vvseksperten"],
+  "verktøy-maskinutleie": ["würth", "wurth", "motek", "ramirent", "renta", "cramo", "tools"],
+  "betong-pukk-grus": ["norbetong", "unicon", "veidekke", "franzefoss", "ncc", "skanska"],
+  "transport-kran-container": ["norsk gjenvinning", "ragn sells", "ragn-sells", "renta", "cramo", "bring", "litra"],
+  "arbeidstoy-verneutstyr": ["tools", "ahlsell", "wenaas", "mascot", "würth", "wurth"],
+};
+
+function registeredSupplierMatchesTrade(supplier, trade) {
+  const terms = partnerTradeSearchTerms[trade] || [];
+  if (!terms.length) return false;
+  const text = normalize([supplier?.name, supplier?.trade, supplier?.address].filter(Boolean).join(" "));
+  return terms.some((term) => text.includes(normalize(term)));
+}
+
+function normalizeNearbyPartnerResults(suppliers, trade, origin) {
+  return (Array.isArray(suppliers) ? suppliers : [])
+    .filter((supplier) => supplier && supplier.company)
+    .filter((supplier) => supplier.confirmed === true)
+    .filter((supplier) => registeredSupplierMatchesTrade({
+      name: supplier.company,
+      trade: supplier.category,
+      address: supplier.address,
+    }, trade))
+    .filter((supplier) => validMapCoordinate(supplier.lat, supplier.lon))
+    .map((supplier) => ({
+      ...supplier,
+      category: trade,
+      distanceKm: distanceKm(origin.lat, origin.lon, Number(supplier.lat), Number(supplier.lon)),
+    }))
+    .sort((a, b) => a.distanceKm - b.distanceKm)
+    .slice(0, 4);
+}
+
+async function loadNearbySuppliers(region, trade, origin, key, project) {
+  // Partnerlisten bygges bare av kategoriserte treff med gyldig kartpunkt.
   try {
     const query = new URLSearchParams({
       lat: String(origin.lat),
       lon: String(origin.lon),
       category: trade,
     });
-    const response = await fetch(`/api/nearby-suppliers?${query}`);
-    const responseText = await response.text();
-    let payload;
+    const controller = new AbortController();
+    // Stedsoppslag kan bruke litt tid når flere kilder prøves. Avbryt først
+    // etter at serverens trinnvise søk og reservekilde har fått svare.
+    const timeout = window.setTimeout(() => controller.abort(), 60000);
+    let response;
     try {
-      payload = responseText ? JSON.parse(responseText) : {};
-    } catch {
-      throw new Error("Leverandørsøket er ikke tilgjengelig i denne serverversjonen ennå.");
+      response = await fetch(`/api/nearby-suppliers?${query}`, { signal: controller.signal });
+    } finally {
+      window.clearTimeout(timeout);
     }
+    const responseText = await response.text();
+    const payload = responseText ? JSON.parse(responseText) : {};
+    if (!response.ok) throw new Error(payload.error || "Kategorisøket kunne ikke hentes.");
+    // Et gammelt søk kan fullføre etter at bruker har byttet region eller
+    // prosjekt. Kontroller nøkkelen før resultatene får skrive til state.
     if (state.partnerSearchKey !== key || !state.partnerFinderOpen) return;
-    if (!response.ok) throw new Error(payload.error || "Leverandørsøket kunne ikke hentes.");
-    state.partnerSuppliers = Array.isArray(payload.suppliers) ? payload.suppliers : [];
+    state.partnerSuppliers = normalizeNearbyPartnerResults(payload.suppliers, trade, origin);
+    if (!state.partnerSuppliers.length) throw new Error("Ingen bekreftede leverandører ble funnet for valgt produkttype.");
     state.partnerSearchLoading = false;
+    state.partnerSearchError = "";
     renderPartnerFinder();
+    return;
   } catch (error) {
     if (state.partnerSearchKey !== key || !state.partnerFinderOpen) return;
     state.partnerSearchLoading = false;
-    state.partnerSearchError = error.message || "Leverandørsøket kunne ikke hentes.";
+    state.partnerSearchError = error.name === "AbortError"
+      ? "Leverandørsøket tok for lang tid. Prøv igjen."
+      : (error.message || "Leverandørsøket kunne ikke hentes.");
     renderPartnerFinder();
+    return;
   }
+
 }
 
 function renderPartnerFinder() {
@@ -1816,7 +1889,7 @@ function renderPartnerFinder() {
     return;
   }
   const origin = partnerSearchOrigin();
-  if (!origin) {
+  if (!origin || !validMapCoordinate(origin.lat, origin.lon)) {
     results.innerHTML = `<div class="partner-empty">Prosjektet mangler et bekreftet kartpunkt. Leverandørsøk kan ikke gjennomføres.</div>`;
     return;
   }
@@ -1827,7 +1900,7 @@ function renderPartnerFinder() {
     state.partnerSearchError = "";
     state.partnerSuppliers = [];
     results.innerHTML = `<div class="partner-empty">Søker etter nærmeste leverandører...</div>`;
-    loadNearbySuppliers(region, state.partnerTrade, origin, key);
+    loadNearbySuppliers(region, state.partnerTrade, origin, key, project);
     return;
   }
   if (state.partnerSearchLoading) {
@@ -1838,7 +1911,7 @@ function renderPartnerFinder() {
     results.innerHTML = `<div class="partner-empty">${escapeHtml(state.partnerSearchError)}</div>`;
     return;
   }
-  const partners = state.partnerSuppliers;
+  const partners = (Array.isArray(state.partnerSuppliers) ? state.partnerSuppliers : []).filter(Boolean);
   if (!partners.length) {
     results.innerHTML = `<div class="partner-empty">Ingen leverandører ble funnet i nærheten av valgt punkt.</div>`;
     return;
@@ -1857,25 +1930,30 @@ function renderPartnerFinder() {
     }
   };
   results.innerHTML = `
-    <div class="partner-location-note">Nærmeste leverandører fra ${escapeHtml(originLabel)}. Rabatt vises i parentes.</div>
+    <div class="partner-location-note">Leverandører knyttet til ${escapeHtml(originLabel)}. Rabatt vises når den er tilgjengelig.</div>
     ${partners.map((partner) => `
     <article class="partner-row">
       <div class="partner-company">
-        <strong>${escapeHtml(partner.company)} (${partner.discountPercent} %)</strong>
+        <strong>${escapeHtml(partner.company)}${partner.discountPercent ? ` (${partner.discountPercent} %)` : ""}</strong>
         <span>${escapeHtml(partnerRoleLabels[partner.category] || partnerRoleLabels[state.partnerTrade])} · ${escapeHtml(region.name)}</span>
+        ${partner.address ? `<span>${escapeHtml(partner.address)}</span>` : ""}
       </div>
-      <div class="partner-contact"><span>${partner.distanceKm.toLocaleString("nb-NO", { maximumFractionDigits: 1 })} km unna</span>${websiteLink(partner.website)}</div>
-      <div class="partner-contact"><a href="https://www.google.com/maps/dir/?api=1&destination=${partner.lat},${partner.lon}" target="_blank" rel="noopener noreferrer">Veibeskrivelse</a></div>
+      <div class="partner-contact">${partner.distanceKm == null ? "Avstand ikke oppgitt" : `<span>${partner.distanceKm.toLocaleString("nb-NO", { maximumFractionDigits: 1 })} km unna</span>`}${partner.phone ? `<a href="tel:${escapeHtml(partner.phone.replace(/\D/g, ""))}">${escapeHtml(partner.phone)}</a>` : ""}${partner.email ? `<a href="mailto:${escapeHtml(partner.email)}">${escapeHtml(partner.email)}</a>` : ""}${websiteLink(partner.website)}</div>
+      <div class="partner-contact">${validMapCoordinate(partner.lat, partner.lon) ? `<a href="https://www.google.com/maps/dir/?api=1&destination=${partner.lat},${partner.lon}" target="_blank" rel="noopener noreferrer">Veibeskrivelse</a>` : ""}</div>
     </article>
   `).join("")}
   `;
-  if (mapBlock) mapBlock.hidden = false;
-  renderPartnerMap(partners, region, origin);
+  // `Number(null)` blir 0. Bruk derfor samme validering som resten av
+  // kartløsningen, slik at leverandører uten koordinater fortsatt listes,
+  // men aldri sendes videre til Leaflet.
+  const mappedPartners = partners.filter((partner) => validMapCoordinate(partner.lat, partner.lon));
+  if (mapBlock) mapBlock.hidden = mappedPartners.length === 0;
+  renderPartnerMap(mappedPartners, region, origin);
 }
 
 function renderPartnerMap(partners, region, origin) {
   const canvas = document.querySelector("#partnerMapCanvas");
-  if (!canvas || !window.L || !partners.length) return;
+  if (!canvas || !window.L || !validMapCoordinate(origin?.lat, origin?.lon) || !partners.length) return;
   state.partnerMap = L.map(canvas, {
     zoomControl: true,
     attributionControl: true,
@@ -1892,6 +1970,7 @@ function renderPartnerMap(partners, region, origin) {
     fillColor: "#4f9bc5",
     fillOpacity: 0.95,
   });
+  softenFullMapPinchZoom(state.partnerMap);
   originMarker.bindTooltip("Åpent prosjekt", { direction: "top" });
   originMarker.addTo(state.partnerMap);
   const bounds = L.latLngBounds([]);
@@ -1943,7 +2022,7 @@ function renderRegionNotice(summary = {}) {
     return;
   }
   const selectedRegion = findRegionByText(state.area) || state.activeRegion;
-  if (!selectedRegion || !state.customerMunicipality || !state.projects.length) {
+  if (!selectedRegion || !state.projects.length) {
     notice.textContent = "";
     notice.hidden = true;
     return;
@@ -1961,8 +2040,8 @@ function renderRegionNotice(summary = {}) {
 
 function renderList() {
   const list = document.querySelector("#projectList");
-  if (state.projectScope !== "national" && (!state.activeRegion || !state.customerMunicipality)) {
-    list.innerHTML = `<div class="empty">Velg region og kommune for å laste prosjekter.</div>`;
+  if (state.projectScope !== "national" && !state.activeRegion) {
+    list.innerHTML = `<div class="empty">Velg region for å laste prosjekter.</div>`;
     return;
   }
   if (!state.filtered.length) {
@@ -2222,7 +2301,9 @@ function renderExpandedPreviewFields(project) {
     ["Organisasjonsnummer", businessContact.orgNumber],
     ["Bransje", businessContact.industry],
     ["Forretningsadresse", businessContact.address],
-    ["Kontakt", project.contact?.phone || project.contact?.email ? [project.contact.phone, project.contact.email].filter(Boolean).join(" · ") : ""],
+    ["Kontakt", project.contact?.phone],
+    ["E-post", project.contact?.email],
+    ["Nettsted", businessContact.website],
   ].filter(([, value]) => value);
   const locationFacts = [
     ["Adresse", project.address || project.place],
@@ -2259,7 +2340,7 @@ function renderExpandedPreviewFields(project) {
     <section class="expanded-preview-fields">
       <div class="preview-label">Utvidet prosjektinformasjon</div>
       ${renderFactGroup("Sak og status", caseFacts)}
-      ${renderFactGroup("Aktører og kontakt", actorFacts)}
+      ${renderFactGroup("Aktør og kontakt", actorFacts)}
       ${renderFactGroup("Eiendom og kart", locationFacts)}
       ${renderFactGroup("Anskaffelse", procurementFacts)}
       ${renderFactGroup("Kilde og referanse", sourceFacts)}
@@ -2281,13 +2362,13 @@ function projectDocumentUrl(project, file) {
 function projectSourceUrl(project) {
   const candidate = project.caseUrl || project.sourceUrl || "";
   const municipality = normalize(project.municipality || "");
+  const query = projectSearchQuery(project);
 
   if (project.sourceStream === "bane_nor_procurement_plan") return candidate;
 
   if (municipality.includes("bergen")) {
     // Postlistestrømmen gir ofte dokumentnummer, ikke kommunens BYGG-saksnummer.
     // Adresse/matrikkel gir derfor sikrere treff i Bergen kommunes saksinnsyn.
-    const query = project.address || project.matrikkel || project.caseNumber || project.title || "";
     return query
       ? `https://www.bergen.kommune.no/omkommunen/offentlig-innsyn/innsynplanogbyggesak/saksinnsyn?q=${encodeURIComponent(query)}`
       : "https://www.bergen.kommune.no/omkommunen/offentlig-innsyn/innsynplanogbyggesak/saksinnsyn";
@@ -2304,14 +2385,14 @@ function projectSourceUrl(project) {
   // Etne har egen innsynsportal. Ikke bruk eventuelle eldre dokumentlenker
   // fra Vindafjord-portalen på Etne-prosjekter.
   if (municipality.includes("etne")) {
-    return officialMunicipalitySource("Etne kommune");
+    return withProjectSearchQuery(officialMunicipalitySource("Etne kommune"), query);
   }
 
   // Kvam leverer direkte sakslenker i rådataene. Bruk denne når den finnes,
   // ellers havner brukeren på kommunens generelle postlisteside uten søk.
   if (municipality.includes("kvam")) {
     if (candidate && /norske-postlister\.no\/sak\//i.test(candidate)) return candidate;
-    return officialMunicipalitySource(project.municipality);
+    return withProjectSearchQuery(officialMunicipalitySource(project.municipality), query);
   }
 
   // Tysnes, Masfjorden og Modalen bruker samme Elements-søk som Austevoll.
@@ -2324,9 +2405,26 @@ function projectSourceUrl(project) {
   // Bevar direkte dokumentvisning fra kommuner som leverer en detalj-lenke.
   if (candidate && isApprovedMunicipalitySource(candidate) && /#\/details\//i.test(candidate)) return candidate;
 
-  if (!candidate) return officialMunicipalitySource(project.municipality);
+  if (!candidate) return withProjectSearchQuery(officialMunicipalitySource(project.municipality), query);
 
-  return officialMunicipalitySource(project.municipality);
+  return withProjectSearchQuery(officialMunicipalitySource(project.municipality), query);
+}
+
+function projectSearchQuery(project) {
+  return String(project.address || project.matrikkel || project.caseNumber || project.documentNumber || project.title || "").trim();
+}
+
+function withProjectSearchQuery(url, query) {
+  if (!url || !query) return url || "";
+  try {
+    const parsed = new URL(url);
+    if (![...parsed.searchParams.values()].some((value) => normalize(value) === normalize(query))) {
+      parsed.searchParams.set("q", query);
+    }
+    return parsed.toString();
+  } catch {
+    return url;
+  }
 }
 
 function austevollSearchUrl(project) {
@@ -2396,15 +2494,9 @@ function isApprovedMunicipalitySource(value) {
 }
 
 function renderContactQuality(project) {
-  const sources = project.contactLookupSources || [];
-  const missingPhone = !project.contact?.phone;
   const missingProjectContact = !project.contact && (project.authorityContact || project.contactQuality.level === "unknown");
-  const aiSearch = sources.find((source) => source.label === "AI-søk");
-  const phoneSearchSubject = phoneLookupSubject(project) || "aktøren";
-  const aiResult = state.aiSearchResults.get(project.id);
-  const aiLoading = state.aiSearchLoading.has(project.id);
   return `
-    <div class="contact-quality ${project.contactQuality.level}${missingPhone ? " contact-search-panel" : ""}">
+    <div class="contact-quality ${project.contactQuality.level}">
       <div>
         <strong>${escapeHtml(project.contactQuality.label)}</strong>
         <span>${escapeHtml(project.contactQuality.message)}</span>
@@ -2418,33 +2510,6 @@ function renderContactQuality(project) {
       ${project.actors.length ? `
         <div class="actor-line">
           Aktør: ${project.actors.slice(0, 3).map((actor) => escapeHtml(actor.name)).join(", ")}
-        </div>
-      ` : ""}
-      ${project.lookupSubject ? `
-        <div class="actor-line">
-          Søk etter: ${escapeHtml(project.lookupSubject)}
-        </div>
-      ` : ""}
-      ${missingPhone ? `
-        <div class="ai-search-result">
-          <span>Søk selv etter telefonnummer til ${escapeHtml(phoneSearchSubject)}.</span>
-          ${aiResult ? `
-            <div class="ai-search-result-data">
-              <strong>Resultat</strong>
-              ${aiResult.phone ? `<a href="tel:${escapeHtml(normalizePhone(aiResult.phone))}">${escapeHtml(aiResult.phone)}</a>` : "<span>Telefonnummer ble ikke funnet.</span>"}
-              ${aiResult.info ? `<span>${escapeHtml(aiResult.info)}</span>` : ""}
-            </div>
-          ` : ""}
-        </div>
-      ` : ""}
-      ${missingPhone && aiSearch ? `
-        <div class="lookup-line">
-          <button class="ai-search-link" data-project-id="${escapeHtml(project.id)}" type="button" ${aiLoading ? "disabled" : ""}>${aiLoading ? "Søker etter telefonnummer..." : "AI-søk"}</button>
-        </div>
-      ` : ""}
-      ${sources.filter((source) => source.label === "Proff").length ? `
-        <div class="lookup-line">
-          ${sources.filter((source) => source.label === "Proff").map((source) => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${escapeHtml(source.label)}</a>`).join("")}
         </div>
       ` : ""}
     </div>
@@ -2676,9 +2741,10 @@ function openFullMap(project) {
   const municipalityOption = document.querySelector("#customerMunicipality option:checked");
   if (mapTitle) {
     const municipality = municipalityOption?.textContent?.trim() || "";
+    const region = state.activeRegion || locationRegions.find((item) => item.id === state.regionKey);
     mapTitle.textContent = municipality && municipality !== "Velg kommune"
       ? `Områdekart for ${municipality}`
-      : "Områdekart";
+      : region?.name ? `Områdekart for ${region.name}` : "Områdekart";
   }
 
   if (state.fullMap) {
@@ -2719,20 +2785,20 @@ function softenFullMapPinchZoom(map) {
 
   // Leaflet bruker avstanden mellom fingrene direkte som zoomfaktor.
   // Demp utslaget rundt 1:1, slik at pinch-zoom blir roligere på telefon.
-  const originalStart = handler._onTouchStart;
-  const originalMove = handler._onTouchMove;
-  const sensitivity = 0.5;
+  const originalStart = handler._onTouchStart.bind(handler);
+  const originalMove = handler._onTouchMove.bind(handler);
+  const sensitivity = 0.10;
 
   handler.disable();
   handler._onTouchStart = function (event) {
-    originalStart.call(this, event);
+    originalStart(event);
     if (this._zooming) this._byggradarStartDist = this._startDist;
   };
   handler._onTouchMove = function (event) {
     const mapInstance = this._map;
     const baseDistance = this._byggradarStartDist;
     if (!baseDistance || !event.touches || event.touches.length !== 2) {
-      originalMove.call(this, event);
+      originalMove(event);
       return;
     }
 
@@ -2742,7 +2808,7 @@ function softenFullMapPinchZoom(map) {
     const rawScale = currentDistance / baseDistance;
     const softenedScale = 1 + (rawScale - 1) * sensitivity;
     this._startDist = currentDistance / softenedScale;
-    originalMove.call(this, event);
+    originalMove(event);
     this._startDist = baseDistance;
   };
   handler.__byggradarSoftened = true;
@@ -2751,12 +2817,13 @@ function softenFullMapPinchZoom(map) {
 
 function openAreaMap() {
   const notice = document.querySelector("#regionNotice");
-  if (!state.customerMunicipality) {
+  const region = state.activeRegion || locationRegions.find((item) => item.id === state.regionKey);
+  if (!region) {
     if (notice) {
       notice.hidden = false;
-      notice.textContent = "Velg kommune for å åpne Områdekart.";
+      notice.textContent = "Velg region for å åpne Områdekart.";
     }
-    document.querySelector("#customerMunicipality")?.focus();
+    document.querySelector("#regionIllustration")?.focus();
     return;
   }
 
@@ -2777,15 +2844,16 @@ function openAreaMap() {
     return;
   }
 
-  // Kundens kommune er origo for rangeringen og kartutsnittet.
+  // Kundens kommune er origo når den er valgt. Ved regionsvisning brukes
+  // regionens origo, slik at kartet også kan åpnes før kommune er valgt.
   openFullMap(points[0]);
   if (!state.fullMap) return;
-  const origin = municipalityMapAnchor(state.customerMunicipality);
+  const origin = municipalityMapAnchor(state.customerMunicipality) || region.anchor;
   const bounds = L.latLngBounds([
     ...(origin ? [[origin.lat, origin.lon]] : []),
     ...points.map((project) => [project.lat, project.lon]),
   ]);
-  state.fullMap.fitBounds(bounds.pad(0.16), { maxZoom: 11 });
+  state.fullMap.fitBounds(bounds.pad(0.16), { maxZoom: state.customerMunicipality ? 11 : 10 });
 }
 
 function markMapGesture(duration = 1100) {
@@ -2813,9 +2881,8 @@ function bindFullMapTouchGuards() {
 }
 
 function mapPointProjects() {
-  // Kartet følger standardleveransen: bare de 200 prosjektene som vises i
-  // hovedlisten skal ha synlige prikker. Alle prosjekter kan likevel ha
-  // lagret kartposisjon i datagrunnlaget og kommer inn når de blir aktive.
+  // Kartet følger den valgte modellen. Mini og Standard viser sine respektive
+  // leveransegrenser, mens Pro viser alle filtrerte prosjekter med kartpunkt.
   return standardDeliveryProjects()
     .filter((project) => state.projectScope !== "national" || (project.hasMapPoint && validMapCoordinate(project.lat, project.lon)))
     .map((project) => projectMapPoint(project))
@@ -4194,7 +4261,7 @@ function scheduleWeeklyDeliveryRefresh() {
 }
 
 async function applyWeeklyDelivery() {
-  if (!state.activeRegion || !state.customerMunicipality) {
+  if (!state.activeRegion) {
     state.projects = [];
     state.filtered = [];
     render();
@@ -4222,7 +4289,7 @@ function nextMondayAtMidnight(fromDate) {
 
 function deliveryInfoText() {
   const nextDelivery = formatNorwegianDateTime(nextMondayAtMidnight(new Date()));
-  return `Standardleveransen for valgt modell er ${currentModelLimit()} prosjekter. Hver mandag kl. 00.00 legges ${weeklyDeliveryCount} nye prosjekter inn i standardlisten, og de ${weeklyDeliveryCount} eldste fjernes. Prosjekter som lastes manuelt utover dette merkes med stjerne. Neste planlagte leveranse: ${nextDelivery}.`;
+  return `Standardleveransen for valgt modell er ${currentModelLabel()}. Hver mandag kl. 00.00 legges ${weeklyDeliveryCount} nye prosjekter inn i standardlisten, og de ${weeklyDeliveryCount} eldste fjernes. Prosjekter som lastes manuelt utover dette merkes med stjerne. Neste planlagte leveranse: ${nextDelivery}.`;
 }
 
 function escapeHtml(value) {

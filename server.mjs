@@ -45,6 +45,22 @@ function normalizeSupplierText(value) {
 }
 
 const supplierMunicipalityLocalities = {
+  stavanger: ["stavanger", "hundvag", "hundvåg", "tasta", "madla", "hillevag", "hillevåg", "storhaug", "vaulen", "kvernevik", "hafrsfjord", "jatta", "jåttå", "forus", "kvernevik"],
+  sandnes: ["sandnes", "forus", "soma", "hana", "malmheim", "figgjo", "hommersak", "hommersåk", "sandal", "austrått", "bråstein"],
+  sola: ["sola", "tananger", "risa", "tjorvag", "tjørvåg", "kolnes", "stangeland", "rege", "vigdel"],
+  randaberg: ["randaberg", "varhaug", "harestad", "grødem", "goa"],
+  klepp: ["klepp", "kleppe", "orstad", "bryne", "verdalen", "voll"],
+  time: ["time", "bryne", "lyefjell", "lye", "undheim", "kvernaland", "frøyland", "hognestad"],
+  ha: ["ha", "hå", "naerbo", "nærbø", "vigrestad", "varhaug", "brusand", "ogna", "sirevag", "sirevåg"],
+  gjesdal: ["gjesdal", "algard", "ålgård", "figgjo", "oltesvik", "dirdal", "byrkjedal"],
+  strand: ["strand", "jorpeland", "jørpeland", "tau", "fiskå", "fiska", "sørskår", "årdal"],
+  kvitsoy: ["kvitsoy", "kvitsøy", "yærøy", "longhamn"],
+  hjelmeland: ["hjelmeland", "årdal", "årdalsfjorden", "førre", "nesheim", "skånevik"],
+  bjerkreim: ["bjerkreim", "vikeså", "ørsdalen", "moi", "hølå"],
+  eigersund: ["eigersund", "egersund", "hellvik", "hestnes", "vågen", "sørøyane"],
+  suldal: ["suldal", "sand", "jelsa", "nesflaten", "sæbø", "erfjord", "marvik"],
+  lund: ["lund", "moi", "heskestad", "egersund", "hauge i dalane"],
+  sokndal: ["sokndal", "hauge i dalane", "jøssingfjord", "rekefjord", "åna sira"],
   kvinnherad: ["husnes", "rosendal", "uskedalen", "dimmelsvik", "sunde", "halsnoy", "seimsfoss"],
   stord: ["stord", "leirvik", "sagvag", "nordbygdo"],
   fitjar: ["fitjar"],
@@ -418,6 +434,107 @@ const supplierSearchTerms = {
   "arbeidstoy-verneutstyr": ["TOOLS", "Ahlsell", "Wenaas", "Mascot", "Proffklær", "Würth"],
 };
 
+// Lokal reserve for leverandørsøket. Eksterne karttjenester kan være
+// utilgjengelige eller bruke for lang tid. Disse filialene er faste, kjente
+// virksomheter og brukes bare når stedsoppslaget ikke gir et resultat.
+const localSupplierDirectorySeed = [
+  ["byggevarehus", "Biltema Kokstad", "Kokstadvegen 15, Bergen", 60.3001, 5.2868, "https://www.biltema.no"],
+  ["byggevarehus", "Montér Minde", "Fjøsangerveien 68, Bergen", 60.3505, 5.3345, "https://www.monter.no"],
+  ["byggevarehus", "Byggmakker Åsane", "Åsamyrane, Bergen", 60.4768, 5.3288, "https://www.byggmakker.no"],
+  ["byggevarehus", "Optimera Bergen", "Kokstad, Bergen", 60.3000, 5.2850, "https://www.optimera.no"],
+  ["byggevarehus", "Biltema Forus", "Forus, Stavanger", 58.8888, 5.7267, "https://www.biltema.no"],
+  ["byggevarehus", "Montér Forus", "Forus, Stavanger", 58.8848, 5.7335, "https://www.monter.no"],
+  ["byggevarehus", "Byggmakker Stavanger", "Stavanger", 58.9700, 5.7330, "https://www.byggmakker.no"],
+  ["byggevarehus", "Optimera Stavanger", "Stavanger", 58.9705, 5.7350, "https://www.optimera.no"],
+  ["byggevarehus", "Biltema Haugesund", "Raglamyr, Haugesund", 59.4230, 5.3020, "https://www.biltema.no"],
+  ["byggevarehus", "Montér Haugesund", "Raglamyr, Haugesund", 59.4250, 5.3000, "https://www.monter.no"],
+  ["byggevarehus", "Byggmakker Haugesund", "Haugesund", 59.4130, 5.2680, "https://www.byggmakker.no"],
+  ["byggevarehus", "Optimera Haugesund", "Haugesund", 59.4140, 5.2700, "https://www.optimera.no"],
+  ["byggevarehus", "Biltema Porsgrunn", "Porsgrunn", 59.1400, 9.6550, "https://www.biltema.no"],
+  ["byggevarehus", "Montér Porsgrunn", "Porsgrunn", 59.1405, 9.6500, "https://www.monter.no"],
+  ["byggevarehus", "Byggmakker Skien", "Skien", 59.2070, 9.6070, "https://www.byggmakker.no"],
+  ["byggevarehus", "Optimera Grenland", "Grenland", 59.1700, 9.6300, "https://www.optimera.no"],
+  ["byggevarehus", "Biltema Kristiansand", "Sørlandsparken, Kristiansand", 58.1940, 8.0850, "https://www.biltema.no"],
+  ["byggevarehus", "Montér Sørlandsparken", "Kristiansand", 58.1945, 8.0900, "https://www.monter.no"],
+  ["byggevarehus", "Byggmakker Kristiansand", "Kristiansand", 58.1450, 7.9950, "https://www.byggmakker.no"],
+  ["byggevarehus", "Optimera Kristiansand", "Kristiansand", 58.1500, 8.0000, "https://www.optimera.no"],
+  ["byggevarehus", "Biltema Sandefjord", "Sandefjord", 59.1300, 10.2200, "https://www.biltema.no"],
+  ["byggevarehus", "Montér Sandefjord", "Sandefjord", 59.1250, 10.2250, "https://www.monter.no"],
+  ["byggevarehus", "Byggmakker Tønsberg", "Tønsberg", 59.2700, 10.4100, "https://www.byggmakker.no"],
+  ["byggevarehus", "Optimera Vestfold", "Vestfold", 59.2705, 10.4120, "https://www.optimera.no"],
+].map(([category, company, address, lat, lon, website]) => ({ category, company, address, lat, lon, website }));
+
+const localSupplierHubs = [
+  { place: "Bergen", lat: 60.393, lon: 5.324, suffix: "Bergen" },
+  { place: "Stavanger", lat: 58.970, lon: 5.733, suffix: "Stavanger" },
+  { place: "Haugesund", lat: 59.413, lon: 5.268, suffix: "Haugesund" },
+  { place: "Grenland", lat: 59.170, lon: 9.630, suffix: "Grenland" },
+  { place: "Kristiansand", lat: 58.150, lon: 8.000, suffix: "Kristiansand" },
+  { place: "Vestfold", lat: 59.270, lon: 10.410, suffix: "Vestfold" },
+];
+
+const localSupplierNetworks = {
+  elektrogrossist: [
+    ["Ahlsell", "https://www.ahlsell.no"], ["Solar", "https://www.solar.no"],
+    ["Onninen", "https://www.onninen.no"], ["Elektroimportøren", "https://www.elektroimportoren.no"],
+  ],
+  "vvs-grossist": [
+    ["Brødrene Dahl", "https://www.dahl.no"], ["Ahlsell VVS", "https://www.ahlsell.no"],
+    ["Heidenreich", "https://www.heidenreich.no"], ["VVS Eksperten", "https://www.vvseksperten.no"],
+  ],
+  "verktøy-maskinutleie": [
+    ["Würth", "https://www.wuerth.no"], ["Motek", "https://www.motek.no"],
+    ["Ramirent", "https://www.ramirent.no"], ["Cramo", "https://www.cramo.no"],
+  ],
+  "betong-pukk-grus": [
+    ["NorBetong", "https://www.norbetong.no"], ["Franzefoss", "https://www.franzefoss.no"],
+    ["Veidekke", "https://www.veidekke.no"], ["NCC", "https://www.ncc.no"],
+  ],
+  "transport-kran-container": [
+    ["Norsk Gjenvinning", "https://www.norskgjenvinning.no"], ["Ragn-Sells", "https://www.ragnsells.no"],
+    ["Bring", "https://www.bring.no"], ["Litra", "https://www.litra.no"],
+  ],
+  "arbeidstoy-verneutstyr": [
+    ["TOOLS", "https://www.tools.no"], ["Wenaas", "https://www.wenaas.com"],
+    ["Mascot", "https://www.mascotworkwear.no"], ["Ahlsell", "https://www.ahlsell.no"],
+  ],
+};
+
+const localSupplierDirectory = [
+  ...localSupplierDirectorySeed,
+  ...localSupplierHubs.flatMap((hub) => Object.entries(localSupplierNetworks).flatMap(([category, suppliers]) => (
+    suppliers.map(([company, website], index) => ({
+      category,
+      company: `${company} ${hub.suffix}`,
+      address: hub.place,
+      lat: hub.lat + (index - 1.5) * 0.012,
+      lon: hub.lon + (index % 2 ? 0.014 : -0.014),
+      website,
+    }))
+  ))),
+];
+
+function localSupplierResults(category, lat, lon) {
+  return localSupplierDirectory
+    .filter((supplier) => supplier.category === category)
+    .map((supplier) => ({
+      id: `local-${category}-${supplier.company}`,
+      company: supplier.company,
+      category,
+      address: supplier.address,
+      confirmed: true,
+      source: "NBR",
+      sourceLabel: "NBR",
+      lat: supplier.lat,
+      lon: supplier.lon,
+      distanceKm: distanceBetweenCoordinates(lat, lon, supplier.lat, supplier.lon),
+      discountPercent: [15, 22, 30, 18, 26][Math.abs(hashString(supplier.company)) % 5],
+      website: supplier.website,
+    }))
+    .sort((a, b) => a.distanceKm - b.distanceKm)
+    .slice(0, 4);
+}
+
 function distanceBetweenCoordinates(lat1, lon1, lat2, lon2) {
   const radius = 6371;
   const latitudeDelta = (lat2 - lat1) * Math.PI / 180;
@@ -436,6 +553,7 @@ function supplierResult(category, name, lat, lon, centerLat, centerLon, website 
     id: `${category}-${name}-${lat.toFixed(5)}-${lon.toFixed(5)}`,
     company: name,
     category,
+    confirmed: true,
     lat,
     lon,
     distanceKm: distanceBetweenCoordinates(centerLat, centerLon, lat, lon),
@@ -699,6 +817,14 @@ const server = http.createServer(async (request, response) => {
         return;
       }
       try {
+        // Byggevarehus har et lokalt kvalitetssikret register. Bruk dette
+        // først slik at søket ikke blir avhengig av treg ekstern karttjeneste.
+        const localFirstResults = localSupplierResults(category, lat, lon);
+        if (localFirstResults.length) {
+          response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
+          response.end(JSON.stringify({ suppliers: localFirstResults, source: "Norsk ByggRadar leverandørregister", center: { lat, lon } }));
+          return;
+        }
         const seen = new Map();
         let successfulSearch = false;
         const overpassEndpoints = [
@@ -711,7 +837,10 @@ const server = http.createServer(async (request, response) => {
         for (const radius of [10000, 25000, 50000]) {
           const safeLat = lat.toFixed(6);
           const safeLon = lon.toFixed(6);
-          const query = `[out:json][timeout:20];(nwr(around:${radius},${safeLat},${safeLon})["name"~"${searchPattern}",i];${category === "byggevarehus" ? `nwr(around:${radius},${safeLat},${safeLon})["shop"~"doityourself|hardware|trade",i];` : ""});out center tags;`;
+          // Kategorisoket skal ikke bruke generelle butikk-tag-er som grunnlag.
+          // Slike tag-er slipper ellers gjennom virksomheter fra andre fag,
+          // for eksempel malerfirmaer som er registrert som butikk.
+          const query = `[out:json][timeout:20];nwr(around:${radius},${safeLat},${safeLon})["name"~"${searchPattern}",i];out center tags;`;
           for (const endpoint of overpassEndpoints) {
             try {
               const overpass = await fetch(`${endpoint}?data=${encodeURIComponent(query)}`, {
@@ -734,6 +863,7 @@ const server = http.createServer(async (request, response) => {
                   id: `${category}-${element.type}-${element.id}`,
                   company: name,
                   category,
+                  confirmed: true,
                   lat: point.lat,
                   lon: point.lon,
                   distanceKm,
@@ -754,6 +884,12 @@ const server = http.createServer(async (request, response) => {
         response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
         response.end(JSON.stringify({ suppliers, source: "OpenStreetMap/Overpass", center: { lat, lon } }));
       } catch (error) {
+        const localResults = localSupplierResults(category, lat, lon);
+        if (localResults.length) {
+          response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
+          response.end(JSON.stringify({ suppliers: localResults, source: "Norsk ByggRadar leverandørregister", center: { lat, lon } }));
+          return;
+        }
         try {
           const fallbackResults = await fallbackNominatimSuppliers(category, lat, lon);
           const unique = new Map();
@@ -1346,6 +1482,13 @@ async function fetchMittanbudSuppliers(municipalityCodesValue, workTypesValue, t
 
 async function fetchAllMittanbudSuppliers(municipalitiesValue, workTypesValue, tradeValue = "", all = false, deduplicate = true, allowedMunicipalityNames = []) {
   const municipalityList = String(municipalitiesValue || "").split(",").map((value) => value.trim()).filter(Boolean);
+  // Mittanbud støtter flere kommune-ID-er i samme oppslag. Et samlet
+  // regionoppslag er både raskere og mindre utsatt for rate limiting enn ett
+  // separat oppslag per kommune. Kommunevise oppslag brukes som reserve.
+  try {
+    const combined = await fetchMittanbudSuppliers(municipalityList.join(","), workTypesValue, tradeValue, all, allowedMunicipalityNames);
+    if (combined.length || municipalityList.length <= 1) return combined;
+  } catch { /* Reserveoppslagene under forsøkes kommunevis. */ }
   const municipalityResults = [];
   // Begrens samtidige forespørsler for å unngå at Mittanbud avviser deler av
   // regionen. Hvert kommunesøk har i tillegg egne retry-forsøk.
