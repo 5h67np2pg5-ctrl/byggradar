@@ -1,4 +1,4 @@
-const SALES_VERSION = 332;
+const SALES_VERSION = 333;
 const salesEntryIsApproved = (() => {
   try {
     return sessionStorage.getItem("nbr-entry-version") === String(SALES_VERSION)
@@ -94,10 +94,10 @@ function renderShell() {
   void loadGlobalSupplierCount();
 }
 
-async function loadSupplierCount(names, successText, requestId) {
+async function loadSupplierCount(regionGroups, requestId) {
   const count = document.querySelector("#salesSupplierCount");
   try {
-    const params = new URLSearchParams({ municipalityNames: names.join(",") });
+    const params = new URLSearchParams({ regions: JSON.stringify(regionGroups) });
     const response = await fetch(`/api/mittanbud-supplier-summary?${params}`);
     const payload = await response.json();
     if (!response.ok) throw new Error(payload.error || "Kunne ikke hente leverandørantallet.");
@@ -115,7 +115,7 @@ function loadGlobalSupplierCount() {
   const requestId = ++supplierCountRequest;
   const count = document.querySelector("#salesSupplierCount");
   count.textContent = "Beregner unike leverandører i alle Norsk ByggRadars registrerte regioner...";
-  void loadSupplierCount(allRegionMunicipalityNames, "i alle regioner", requestId);
+  void loadSupplierCount(regions.map((item) => ({ id: item.id, municipalities: item.municipalities })), requestId);
 }
 
 function bindEvents() {

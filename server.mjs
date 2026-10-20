@@ -530,18 +530,31 @@ const server = http.createServer(async (request, response) => {
     }
 
     if (url.pathname === "/api/mittanbud-supplier-summary" && request.method === "GET") {
-      const municipalityNames = String(url.searchParams.get("municipalityNames") || "").split(",").map((value) => value.trim()).filter(Boolean);
-      const municipalities = await resolveMittanbudMunicipalityIds(municipalityNames, "");
-      if (!municipalities) {
-        response.writeHead(503, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
-        response.end(JSON.stringify({ error: "Kommunene kunne ikke kobles sikkert til Mittanbuds kommune-ID-er." }));
-        return;
-      }
-      const mittanbudSuppliers = await fetchAllMittanbudSuppliers(municipalities, "", "", true, true, municipalityNames);
+      const requestedGroups = String(url.searchParams.get("regions") || "").trim();
+      const groups = requestedGroups
+        ? JSON.parse(requestedGroups).filter((group) => Array.isArray(group?.municipalities) && group.municipalities.length)
+        : [{ id: "", municipalities: String(url.searchParams.get("municipalityNames") || "").split(",").map((value) => value.trim()).filter(Boolean) }];
       const googleAdsSuppliers = await readGoogleAdsSuppliers();
-      const suppliers = [...new Map([...mittanbudSuppliers, ...googleAdsSuppliers].map((supplier) => [supplier.website || `${supplier.name}|${supplier.address}`, supplier])).values()];
+      const regionResults = await Promise.all(groups.map(async (group) => {
+        const municipalityNames = group.municipalities;
+        const municipalities = await resolveMittanbudMunicipalityIds(municipalityNames, "");
+        if (!municipalities) return { id: group.id || "ukjent", suppliers: [] };
+        const mittanbudSuppliers = await fetchAllMittanbudSuppliers(municipalities, "", "", true, true, municipalityNames);
+        const allowedPlaces = municipalityNames.map((name) => normalizeSupplierText(name)).filter(Boolean);
+        const localSuppliers = googleAdsSuppliers.filter((supplier) => {
+          const sameRegion = !group.id || !supplier.regionId || supplier.regionId === group.id;
+          const hasLocalAddress = supplierPlaceMatchesAllowed(
+            String(supplier.municipality || supplier.address || "").split(",").pop(),
+            allowedPlaces
+          );
+          return sameRegion && hasLocalAddress;
+        });
+        return { id: group.id || "ukjent", suppliers: [...mittanbudSuppliers, ...localSuppliers] };
+      }));
+      const suppliers = [...new Map(regionResults.flatMap((result) => result.suppliers).map((supplier) => [supplier.website || `${supplier.name}|${supplier.address}`, supplier])).values()];
+      const byRegion = Object.fromEntries(regionResults.map((result) => [result.id, [...new Set(result.suppliers.map((supplier) => supplier.website || `${supplier.name}|${supplier.address}`))].length]));
       response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
-      response.end(JSON.stringify({ count: suppliers.length }));
+      response.end(JSON.stringify({ count: suppliers.length, byRegion }));
       return;
     }
 
