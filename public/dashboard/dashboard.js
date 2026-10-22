@@ -1,4 +1,6 @@
-const DASHBOARD_VERSION = 442;
+const userVersion = 442;
+const dashboardBuildVersion = 442;
+const DASHBOARD_VERSION = userVersion + dashboardBuildVersion;
 const DASHBOARD_PASSWORD = "norskbyggradar3000";
 const dashboardAuthKey = "nbr-dashboard-auth-v1";
 const dashboardSupplierHandoffKey = "nbr-dashboard-supplier-handoff";

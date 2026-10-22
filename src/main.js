@@ -117,7 +117,9 @@ const loadMoreStep = 20;
 const weeklyDeliveryCount = 50;
 const statisticsSavedSearchesKey = "byggradar.statistics.savedSearches.v1";
 // Produktversjonen vises på forsiden. Hver ny implementering starter på innloggingssiden.
-const appVersion = 442;
+const userVersion = 442;
+const dashboardVersion = 442;
+const appVersion = userVersion + dashboardVersion;
 const loginAccessCodes = {
   vendor: "norskbyggradar1000",
   dashboard: "norskbyggradar3000",

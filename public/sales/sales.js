@@ -1,4 +1,6 @@
-const SALES_VERSION = 442;
+const userVersion = 442;
+const dashboardVersion = 442;
+const SALES_VERSION = userVersion + dashboardVersion;
 const salesEntryIsApproved = (() => {
   try {
     return sessionStorage.getItem("nbr-entry-version") === String(SALES_VERSION)
