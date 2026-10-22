@@ -1,7 +1,6 @@
 const state = {
   projects: [],
   rawProjectCount: 0,
-  allRegionProjectCount: 0,
   filtered: [],
   selected: null,
   trade: "",
@@ -322,10 +321,6 @@ const locationRegions = [
     ],
   },
 ];
-
-const coveredMunicipalityCount = new Set(
-  locationRegions.flatMap((region) => region.municipalities.map((municipality) => normalizeMunicipalityName(municipality))),
-).size;
 
 const regionDataPaths = {
   bergensregionen: "/data/regions/bergensregionen",
@@ -779,32 +774,17 @@ function renderLogin() {
 
 async function loadProjects() {
   const cacheBust = `t=${Date.now()}`;
-  const dataPaths = state.projectScope === "national"
-    ? [...new Set(Object.values(regionDataPaths))]
-    : [regionDataPaths[state.regionKey] || regionDataPaths.bergensregionen];
-  const allRegionPaths = [...new Set(Object.values(regionDataPaths))];
-  const [bundles, allRegionLocationData, nationalData] = await Promise.all([
-    Promise.all(dataPaths.map(async (dataPath) => {
-      const [locationData, contactData] = await Promise.all([
-        fetch(`${dataPath}/projects_location_enriched.json?${cacheBust}`).then((response) => {
-          if (!response.ok) throw new Error(`Kunne ikke hente prosjektdata (${response.status})`);
-          return response.json();
-        }),
-        fetch(`${dataPath}/projects_contact_enriched.json?${cacheBust}`).then((response) => {
-          if (!response.ok) throw new Error(`Kunne ikke hente kontaktdata (${response.status})`);
-          return response.json();
-        }),
-      ]);
-      return { locationData, contactData };
-    })),
-    Promise.all(allRegionPaths.map((dataPath) => fetch(`${dataPath}/projects_location_enriched.json?${cacheBust}`).then((response) => {
-      if (!response.ok) throw new Error(`Kunne ikke hente prosjektdata for nasjonal summering (${response.status})`);
-      return response.json();
-    }))),
-    state.projectScope === "national"
-      ? fetch(`/data/national_projects.json?${cacheBust}`).then((response) => response.ok ? response.json() : { projects: [] }).catch(() => ({ projects: [] }))
-      : Promise.resolve({ projects: [] }),
-  ]);
+  const query = new URLSearchParams({
+    regionId: state.regionKey || "bergensregionen",
+    scope: state.projectScope === "national" ? "national" : "region",
+  });
+  const response = await fetch(`/api/project-data?${query}&${cacheBust}`);
+  if (!response.ok) throw new Error(`Kunne ikke hente prosjektdata (${response.status})`);
+  const payload = await response.json();
+  const bundles = Array.isArray(payload.bundles) ? payload.bundles : [];
+  const nationalData = state.projectScope === "national"
+    ? await fetch(`/data/national_projects.json?${cacheBust}`).then((nationalResponse) => nationalResponse.ok ? nationalResponse.json() : { projects: [] }).catch(() => ({ projects: [] }))
+    : { projects: [] };
 
   const contacts = new Map();
   const rawProjects = [];
@@ -817,11 +797,6 @@ async function loadProjects() {
     ? isNationalProjectRecord(project)
     : !isNationalProjectRecord(project));
   const normalizedProjects = scopedProjects.map((project, index) => normalizeProject(project, contacts.get(project.sourceDocumentId), index));
-  const allRegionProjects = allRegionLocationData
-    .flatMap((locationData) => locationData.projects || [])
-    .filter((project) => !isNationalProjectRecord(project))
-    .map((project, index) => normalizeProject(project, null, index));
-  state.allRegionProjectCount = deduplicateClosedProjectText(deduplicateProjects(allRegionProjects)).length;
   state.projects = deduplicateClosedProjectText(deduplicateProjects(normalizedProjects));
   state.rawProjectCount = state.projects.length;
   // Utvidet prosjektinformasjon er nå tilgjengelig på alle prosjekter.
@@ -1050,7 +1025,7 @@ function renderShell() {
         </fieldset>
         <div class="topbar-copy">
           <div class="brand">Norsk ByggRadar</div>
-          <div class="national-project-count" id="nationalProjectCount">Laster registrerte og aktive byggprosjekter fra ${coveredMunicipalityCount} kommuner...</div>
+          <div class="region-project-count" id="regionProjectCount">Laster registrerte og aktive byggprosjekter for valgt region...</div>
           <div class="subtle" id="summaryText" tabindex="0">Laster prosjekter...</div>
           <div class="region-notice" id="regionNotice" aria-live="polite"></div>
         </div>
@@ -1684,9 +1659,9 @@ function render() {
   const summaryText = document.querySelector("#summaryText");
   const regionName = state.activeRegion?.name || locationRegions.find((region) => region.id === state.regionKey)?.name || "valgt region";
   const totalProjectCount = regionSummaryTotalCount();
-  const nationalProjectCount = document.querySelector("#nationalProjectCount");
-  if (nationalProjectCount) {
-    nationalProjectCount.textContent = `${state.allRegionProjectCount.toLocaleString("nb-NO")} registrerte og aktive byggprosjekter fra ${coveredMunicipalityCount} kommuner`;
+  const regionProjectCount = document.querySelector("#regionProjectCount");
+  if (regionProjectCount) {
+    regionProjectCount.textContent = `${state.rawProjectCount.toLocaleString("nb-NO")} registrerte og aktive byggprosjekter for ${regionName}`;
   }
   if (summaryText) {
     summaryText.textContent = "";

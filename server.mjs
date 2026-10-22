@@ -11,6 +11,15 @@ const smsOutboxPath = path.join(root, "data", "sms_outbox.json");
 const googleAdsSuppliersPath = path.join(root, "data", "google_ads_suppliers.json");
 const payingUsersPath = path.join(root, "data", "paying_users.json");
 const supplierContactNotesPath = path.join(root, "data", "supplier_contact_notes.json");
+const projectRegionIds = [
+  "bergensregionen",
+  "stavangerregionen",
+  "haugalandsregionen",
+  "grenlandsregionen",
+  "sorlandsregionen",
+  "vestfoldkongsbergregionen",
+];
+const projectDataCache = new Map();
 const port = Number(process.env.PORT || 4173);
 const host = process.env.HOST || "0.0.0.0";
 const smsProvider = String(process.env.NBR_SMS_PROVIDER || "queue").trim().toLowerCase();
@@ -35,6 +44,17 @@ let supplierRegistryCache = { signature: "", suppliers: null };
 const verifiedProffProfileUrls = {
   "935000548": "https://www.proff.no/selskap/alt-i-r%C3%B8r-as/bergen/r%C3%B8rleggertjenester/IFGOB1G07RG",
 };
+
+async function readProjectJson(regionId, filename) {
+  const safeRegionId = projectRegionIds.includes(regionId) ? regionId : "bergensregionen";
+  const cacheKey = `${safeRegionId}/${filename}`;
+  const cached = projectDataCache.get(cacheKey);
+  if (cached) return cached;
+  const filePath = path.join(root, "public", "data", "regions", safeRegionId, filename);
+  const payload = JSON.parse(await fs.readFile(filePath, "utf8"));
+  projectDataCache.set(cacheKey, payload);
+  return payload;
+}
 
 function htmlText(value) {
   return String(value || "")
@@ -909,6 +929,24 @@ const server = http.createServer(async (request, response) => {
       const dashboardHtml = await fs.readFile(path.join(root, "public", "dashboard", "index.html"));
       response.writeHead(200, { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" });
       response.end(dashboardHtml);
+      return;
+    }
+
+    if (url.pathname === "/api/project-data" && request.method === "GET") {
+      const requestedRegion = String(url.searchParams.get("regionId") || "").trim().toLowerCase();
+      const regionId = projectRegionIds.includes(requestedRegion) ? requestedRegion : "bergensregionen";
+      const scope = url.searchParams.get("scope") === "national" ? "national" : "region";
+      const regionIds = scope === "national" ? projectRegionIds : [regionId];
+      const bundles = await Promise.all(regionIds.map(async (id) => ({
+        regionId: id,
+        locationData: await readProjectJson(id, "projects_location_enriched.json"),
+        contactData: await readProjectJson(id, "projects_contact_enriched.json"),
+      })));
+      response.writeHead(200, {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=300, stale-while-revalidate=3600",
+      });
+      response.end(JSON.stringify({ bundles, source: "Railway project data service" }));
       return;
     }
 
