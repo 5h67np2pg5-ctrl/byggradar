@@ -1,0 +1,155 @@
+{
+  "municipality": "Øygarden kommune",
+  "municipalityId": "3113",
+  "maUnique": 642,
+  "nameCandidates": 33,
+  "imported": 0,
+  "existingByOrganization": 15,
+  "review": 18,
+  "reviewCandidates": [
+    {
+      "name": "Oneco Elektro AS Avd Laksevåg",
+      "address": "Postboks 1910 Damsgård, 5830",
+      "brregName": "ONECO ELEKTRO AS",
+      "brregAddress": "Østensjøveien 34, 0667, OSLO",
+      "organizationNumber": "996669173",
+      "score": 3
+    },
+    {
+      "name": "Hegreneset Bil og Dekkservice AS",
+      "address": "Hegrenesveien 15B, 5042, Bergen",
+      "brregName": "BIL OG DEKKSERVICE AS",
+      "brregAddress": ", 6854, KAUPANGER",
+      "organizationNumber": "960055187",
+      "score": 3
+    },
+    {
+      "name": "A.furulund",
+      "address": "Logndalsvegen 586, 4540, Åseral",
+      "brregName": "A.FURULUND ASFALT AS",
+      "brregAddress": "Andorstuvegen 141A, 2054, MOGREINA",
+      "organizationNumber": "998806240",
+      "score": 3
+    },
+    {
+      "name": "2S Servicetjenster AS",
+      "address": "Eidsvågveien 150, 5105, Eidsvåg i åsane",
+      "brregName": "2S SERVICETJENESTER AS",
+      "brregAddress": "Eidsvågveien 150, 5105, EIDSVÅG I ÅSANE",
+      "organizationNumber": "933223825",
+      "score": 3
+    },
+    {
+      "name": "HORDALAND BYGG MESTER M.B MITICA BABA",
+      "address": "Nygjerdet 9, 5162, Laksevåg",
+      "brregName": "HORDALAND BYGG M.B. MITICA BABA",
+      "brregAddress": "Nygjerdet 9, 5162, LAKSEVÅG",
+      "organizationNumber": "911968649",
+      "score": 3
+    },
+    {
+      "name": "Vest Hage og Gravesevice Eldrid Grytøyr",
+      "address": "Nordre Toppe 3, 5136, Mjølkeråen",
+      "brregName": "VEST HAGE OG GRAVESERVICE ELDRID GRYTØYR",
+      "brregAddress": "Nordre Toppe 3, 5136, MJØLKERÅEN",
+      "organizationNumber": "929641914",
+      "score": 3
+    },
+    {
+      "name": "Trold Trepleie",
+      "address": "Troldhaugvegen 61, 5232, Paradis",
+      "brregName": "TROLD BJORØY TREPLEIE",
+      "brregAddress": "Troldhaugvegen 61, 5232, PARADIS",
+      "organizationNumber": "934350553",
+      "score": 3
+    },
+    {
+      "name": "Straume Byggmester",
+      "address": "Sageneset 40, 5244, Fana",
+      "brregName": "STRAUME",
+      "brregAddress": "c/o Petter Straume, Kjenndalsveien 63, 3750, DRANGEDAL",
+      "organizationNumber": "922862605",
+      "score": 3
+    },
+    {
+      "name": "Haugen motor og ved",
+      "address": "krøderfjordveien 2323, 3536, Noresund",
+      "brregName": "HAUGEN MOTOR AS",
+      "brregAddress": "Ytrehornsvegen 35, 6763, HORNINDAL",
+      "organizationNumber": "959578435",
+      "score": 3
+    },
+    {
+      "name": "MEGA Arkitektkontor",
+      "address": "Solløkkakrokken 1, 3233, Sandefjord",
+      "brregName": "MEGA AS",
+      "brregAddress": "Goaveien 145, 4071, RANDABERG",
+      "organizationNumber": "921888155",
+      "score": 3
+    },
+    {
+      "name": "Pintor D.M Delgado Macias",
+      "address": "Nattlandsveien 14 C, 5093, Bergen",
+      "brregName": "PINTOR.DM DELGADO MACIAS",
+      "brregAddress": "Nattlandsveien 14C, 5093, BERGEN",
+      "organizationNumber": "933794563",
+      "score": 3
+    },
+    {
+      "name": "Recover Bergen",
+      "address": "Spelhaugen 16, 5147, Fyllingsdalen",
+      "brregName": "RECOVER AS",
+      "brregAddress": "Lilleakerveien 4A, 0283, OSLO",
+      "organizationNumber": "995761440",
+      "score": 3
+    },
+    {
+      "name": "DAXARO ARKITEKTUR AS",
+      "address": "C. J. Hambros plass 2 c, 0164, Oslo",
+      "brregName": "DAXARO NORGE AS",
+      "brregAddress": "C. J. Hambros plass 2c, 0164, OSLO",
+      "organizationNumber": "925580910",
+      "score": 3
+    },
+    {
+      "name": "Olov svahn",
+      "address": "Tjernevejen 8, 5232, Paradis",
+      "brregName": "SVAHN OLOV",
+      "brregAddress": "Tjernvegen 8, 5232, PARADIS",
+      "organizationNumber": "970120114",
+      "score": 3
+    },
+    {
+      "name": "FOSSTVEIT ENTREPRENØR MARKUS FOSSTVEIT OLSEN",
+      "address": "Bukkebladkjærveien 30, 4900, Tvedestrand",
+      "brregName": "FOSSTVEIT ENTREPRENØR OG TRANSPORT MARKUS OLSEN",
+      "brregAddress": "Bukkebladkjærveien 30, 4900, TVEDESTRAND",
+      "organizationNumber": "918945652",
+      "score": 3
+    },
+    {
+      "name": "Yvonne Håland Interiørdesigner - En drøm i praksis",
+      "address": "Eidsvågskogen 25, 5104, Eidsvåg i åsane",
+      "brregName": "PRAKSIS",
+      "brregAddress": "Rådhusgata 19, 0158, OSLO",
+      "organizationNumber": "915733417",
+      "score": 3
+    },
+    {
+      "name": "MELVINS TESTPROFIL",
+      "address": "Hagegata 22, 0653, Oslo",
+      "brregName": "MELVIN AS",
+      "brregAddress": "c/o Fredrik Melby, Osterhaus' gate 8B, 0183, OSLO",
+      "organizationNumber": "916838522",
+      "score": 4
+    },
+    {
+      "name": "Bravida Norge AS Vaksdal Elektro",
+      "address": "Brualeitet 28, 5725, Vaksdal",
+      "brregName": "BRAVIDA VAKSDAL MONTØRKLUBB",
+      "brregAddress": "Brualeitet 28, 5725, VAKSDAL",
+      "organizationNumber": "933765466",
+      "score": 3
+    }
+  ]
+}

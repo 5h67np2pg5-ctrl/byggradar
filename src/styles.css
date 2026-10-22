@@ -313,6 +313,14 @@ a {
   font-weight: 400;
 }
 
+.national-supplier-count {
+  margin-top: 3px;
+  color: #285f79;
+  font-size: 0.78rem;
+  line-height: 1.15;
+  font-weight: 400;
+}
+
 .subtle {
   position: relative;
   display: grid;

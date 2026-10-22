@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 
-const regions = ["bergensregionen", "stavangerregionen", "haugalandsregionen"];
+const regionManifest = JSON.parse(await fs.readFile("config/region-structure.json", "utf8"));
+const regions = regionManifest.regions.map((region) => region.id);
 const municipalityNumbers = {
   bergen: "4601", tysnes: "4616", voss: "4621", kvam: "4622", samnanger: "4623",
   bjørnafjorden: "4624", austevoll: "4625", øygarden: "4626", askøy: "4627", vaksdal: "4628",
@@ -12,6 +13,14 @@ const municipalityNumbers = {
   time: "1121", hå: "1119", gjesdal: "1122", strand: "1130", kvitsøy: "1144",
   hjelmeland: "1133", bjerkreim: "1114", eigersund: "1101", suldal: "1134", sirdal: "4228",
   lund: "1112", sokndal: "1111",
+  kristiansand: "4204", lindesnes: "4205", vennesla: "4223", lillesand: "4215", lyngdal: "4225",
+  farsund: "4206", flekkefjord: "4207", kvinesdal: "4227", birkenes: "4216", "hægebostad": "4226",
+  iveland: "4218", skien: "4003", porsgrunn: "4001", bamble: "4012", notodden: "4005",
+  "midt-telemark": "4020", kragerø: "4014", nome: "4018", tinn: "4026", drangedal: "4016",
+  vinje: "4036", seljord: "4022", kviteseid: "4028", siljan: "4010", tokke: "4034",
+  hjartdal: "4024", nissedal: "4030", fyresdal: "4032", drammen: "3301", sandefjord: "3907",
+  tønsberg: "3905", larvik: "3909", horten: "3901", holmestrand: "3903", lier: "3312",
+  kongsberg: "3306", færder: "3911", "øvre eiker": "3314",
 };
 
 const streetPattern = /\b([A-ZÆØÅ][\p{L}.'-]*(?:\s+[A-ZÆØÅ][\p{L}.'-]*)*\s+(?:vegen|veien|veg|vei|gata|gate|gaten|plassen|bakken|haugen|lia|marka|åsen|stien|tunet|hagen|holmen|myra|odden|berget|toppen|jordet))\s+(\d+[A-Za-z]?)\b/iu;
@@ -133,8 +142,8 @@ async function run() {
     const projects = data.projects || [];
     let attempted = 0;
     let enriched = 0;
-    for (let index = 0; index < projects.length; index += 3) {
-      const batch = projects.slice(index, index + 3).filter((project) => !(project.locationEnrichment?.hasMapPoint));
+    for (let index = 0; index < projects.length; index += 12) {
+      const batch = projects.slice(index, index + 12).filter((project) => !(project.locationEnrichment?.hasMapPoint));
       attempted += batch.length;
       const results = await Promise.all(batch.map(enrich));
       enriched += results.filter(Boolean).length;

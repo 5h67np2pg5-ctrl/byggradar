@@ -1,0 +1,2013 @@
+{
+  "region": "Stavangerregionen",
+  "municipalities": 16,
+  "missingMunicipalities": [],
+  "perMunicipality": {
+    "Stavanger kommune": 581,
+    "Sandnes kommune": 567,
+    "Sola kommune": 560,
+    "Randaberg kommune": 542,
+    "Klepp kommune": 525,
+    "Time kommune": 512,
+    "Hå kommune": 477,
+    "Gjesdal kommune": 505,
+    "Strand kommune": 453,
+    "Kvitsøy kommune": 400,
+    "Hjelmeland kommune": 425,
+    "Bjerkreim kommune": 452,
+    "Eigersund kommune": 424,
+    "Suldal kommune": 404,
+    "Lund kommune": 407,
+    "Sokndal kommune": 405
+  },
+  "maUniqueAcrossRegion": 622,
+  "alreadyInNbrByName": 340,
+  "newConfirmedByBrreg": 256,
+  "newWithOrganizationNumber": 256,
+  "newWithBrregAddress": 256,
+  "newWithMatchingAddressOrPostcode": 211,
+  "alreadyInNbrByOrganization": 3,
+  "review": 23,
+  "reviewCandidates": [
+    {
+      "name": "BestDrive Norway AS AVD STAVANGER 5648",
+      "address": "Gamle Forusveien 37, 4031",
+      "brregName": "BESTDRIVE NORWAY AS",
+      "brregAddress": "Fredrik Selmers vei 3, 0663, OSLO",
+      "organizationNumber": "966242825",
+      "score": 0
+    },
+    {
+      "name": "DAK & INGENIØRTJENESTER AS",
+      "address": "Postboks 56, 1371, Asker",
+      "brregName": "INGENIØRTJENESTER AS",
+      "brregAddress": "Risør Næringspark, Porsveien 10, 4994, AKLAND",
+      "organizationNumber": "996262626",
+      "score": 0
+    },
+    {
+      "name": "Hover Byggservice",
+      "address": "Kjøttmeisveien, 4353, Klepp stasjon",
+      "brregName": "HOVER BYGGSERVICE V/ FRANCISCUS WILHELMUS HOVER",
+      "brregAddress": "Kjøttmeisvegen 3, 4353, KLEPP STASJON",
+      "organizationNumber": "925803111",
+      "score": 0
+    },
+    {
+      "name": "A.furulund",
+      "address": "Logndalsvegen 586, 4540, Åseral",
+      "brregName": "A.FURULUND ASFALT AS",
+      "brregAddress": "Andorstuvegen 141A, 2054, MOGREINA",
+      "organizationNumber": "998806240",
+      "score": 0
+    },
+    {
+      "name": "Sørlandet Mur & Hage",
+      "address": "Vindholmen 15C, 4841, Arendal",
+      "brregName": "MYKING MUR OG HAGE",
+      "brregAddress": "Hammaren 20, 5919, FREKHAUG",
+      "organizationNumber": "996845400",
+      "score": 0
+    },
+    {
+      "name": "2S Servicetjenster AS",
+      "address": "Eidsvågveien 150, 5105, Eidsvåg i åsane",
+      "brregName": "2S BYGG AS",
+      "brregAddress": "Storgata 54B, 2003, LILLESTRØM",
+      "organizationNumber": "917041407",
+      "score": 0
+    },
+    {
+      "name": "Stavanger Revhab AS",
+      "address": "39 sandnesgata, 4015, Stavanger",
+      "brregName": "SO STAVANGER AS",
+      "brregAddress": "c/o Øvergaard, Austerheimvegen 91C, 4055, SOLA",
+      "organizationNumber": "913117956",
+      "score": 0
+    },
+    {
+      "name": "H.B Fasade og Varme",
+      "address": "Granittveien 18 B, 4027, Stavanger",
+      "brregName": "HENNING BRYPLASS FASADE OG VARME",
+      "brregAddress": "Granittveien 18B, 4027, STAVANGER",
+      "organizationNumber": "928768058",
+      "score": 0
+    },
+    {
+      "name": "Daniel Haver",
+      "address": "Nærbøgata, 4365, Nærbø",
+      "brregName": "DANIEL HAVER BETONGARBEID",
+      "brregAddress": "Strandgata 182, 5525, HAUGESUND",
+      "organizationNumber": "931517732",
+      "score": 0
+    },
+    {
+      "name": "Haugen motor og ved",
+      "address": "krøderfjordveien 2323, 3536, Noresund",
+      "brregName": "HAUGEN MOTOR AS",
+      "brregAddress": "Ytrehornsvegen 35, 6763, HORNINDAL",
+      "organizationNumber": "959578435",
+      "score": 0
+    },
+    {
+      "name": "Vitenrør AS",
+      "address": "Hovemarka 108, 4325, Sandnes",
+      "brregName": "AS SITT AS",
+      "brregAddress": "Einerholen 6A, 4026, STAVANGER",
+      "organizationNumber": "929139550",
+      "score": 0
+    },
+    {
+      "name": "jæren bygg & anlegg service",
+      "address": "Rundvegen 13, 4362, Vigrestad",
+      "brregName": "JÆREN BYGG & ANLEGGS SERVICE OSKAR MÆLAND BJORLAND",
+      "brregAddress": "Rundvegen 13, 4362, VIGRESTAD",
+      "organizationNumber": "928112748",
+      "score": 0
+    },
+    {
+      "name": "DAXARO ARKITEKTUR AS",
+      "address": "C. J. Hambros plass 2 c, 0164, Oslo",
+      "brregName": "DAXARO EIENDOM AS",
+      "brregAddress": "Nymoens torg 6, 3611, KONGSBERG",
+      "organizationNumber": "931958313",
+      "score": 0
+    },
+    {
+      "name": "MEGA Arkitektkontor",
+      "address": "Solløkkakrokken 1, 3233, Sandefjord",
+      "brregName": "MEGA OG MEGA RUGAITIENE",
+      "brregAddress": "Tyristubben 8A, 2016, FROGNER",
+      "organizationNumber": "930580414",
+      "score": 0
+    },
+    {
+      "name": "Pintor D.M Delgado Macias",
+      "address": "Nattlandsveien 14 C, 5093, Bergen",
+      "brregName": "PINTOR.DM DELGADO MACIAS",
+      "brregAddress": "Nattlandsveien 14C, 5093, BERGEN",
+      "organizationNumber": "933794563",
+      "score": 0
+    },
+    {
+      "name": "FOSSTVEIT ENTREPRENØR MARKUS FOSSTVEIT OLSEN",
+      "address": "Bukkebladkjærveien 30, 4900, Tvedestrand",
+      "brregName": "FOSSTVEIT ENTREPRENØR OG TRANSPORT MARKUS OLSEN",
+      "brregAddress": "Bukkebladkjærveien 30, 4900, TVEDESTRAND",
+      "organizationNumber": "918945652",
+      "score": 0
+    },
+    {
+      "name": "Stacom AS",
+      "address": "Hordaveien 3b,, 4307, Sandnes",
+      "brregName": "ADVOKATFIRMA STACOM AS",
+      "brregAddress": "Hordaveien 3B, 4307, SANDNES",
+      "organizationNumber": "989152750",
+      "score": 0
+    },
+    {
+      "name": "MELVINS TESTPROFIL",
+      "address": "Hagegata 22, 0653, Oslo",
+      "brregName": "MELVIN MEDIA MELVIN ØSTENSEN",
+      "brregAddress": "Midtveien 2, 1526, MOSS",
+      "organizationNumber": "917035989",
+      "score": 0
+    },
+    {
+      "name": "H.T Service",
+      "address": "Almeveien 28, 4515, Mandal",
+      "brregName": "H.T SERVICE. AVDELING KALLHOVD",
+      "brregAddress": "Almeveien 28, 4515, MANDAL",
+      "organizationNumber": "935709075",
+      "score": 0
+    },
+    {
+      "name": "Yvonne Håland Interiørdesigner - En drøm i praksis",
+      "address": "Eidsvågskogen 25, 5104, Eidsvåg i åsane",
+      "brregName": "EN MIDTSOMMERNATTS DRØM",
+      "brregAddress": "C/O Fantasiforbundet, Karl Johans gate 8, 0154, OSLO",
+      "organizationNumber": "995487322",
+      "score": 0
+    },
+    {
+      "name": "HAUGALAND BYGGSPESIALISTEN AS",
+      "address": "Nedstrandsvegen 328, 5567, Skjoldastraumen",
+      "brregName": "BYGGSPESIALISTEN AS",
+      "brregAddress": "Sentrumsveien 4, 8920, SØMNA",
+      "organizationNumber": "957897266",
+      "score": 0
+    },
+    {
+      "name": "HELGEVOLD ELEKTRO AS",
+      "address": "Saudavegen 5772, 5585, Sandeid",
+      "brregName": "EL OG IT KLUBBEN HELGEVOLD ELEKTRO AS",
+      "brregAddress": "Saudavegen 5772, 5585, SANDEID",
+      "organizationNumber": "921052952",
+      "score": 0
+    },
+    {
+      "name": "Kvina Maskin 2 AS",
+      "address": "Industrivegen 2, 4484",
+      "brregName": "KVINA MASKIN AS",
+      "brregAddress": "Industrivegen 2, 4484, ØYESTRANDA",
+      "organizationNumber": "827439762",
+      "score": 0
+    }
+  ],
+  "confirmedNew": [
+    {
+      "name": "UTLEIEHJELPEREN GERLYNG",
+      "maAddress": "UtleieHjelperen, 4007, Stavanger",
+      "brregName": "UTLEIEHJELPEREN GERLYNG",
+      "brregAddress": "c/o Innoasis, Sverdrups gate 27, 4007, STAVANGER",
+      "organizationNumber": "919223065"
+    },
+    {
+      "name": "THE ART OF COLOR ZORAN BOJYADZHIEV",
+      "maAddress": "Karlsminnegata 107, 4015, Stavanger",
+      "brregName": "THE ART OF COLOR ZORAN BOJYADZHIEV",
+      "brregAddress": "Karlsminnegata 107, 4015, STAVANGER",
+      "organizationNumber": "916176643"
+    },
+    {
+      "name": "ASKVIG BYGG NILS-CHRISTIAN ASKVIG",
+      "maAddress": "Kvednadalen 58, 4353, Klepp stasjon",
+      "brregName": "ASKVIG BYGG NILS-CHRISTIAN ASKVIG",
+      "brregAddress": "Kvednadalen 58, 4353, KLEPP STASJON",
+      "organizationNumber": "919695234"
+    },
+    {
+      "name": "AUTOFIKS AS",
+      "maAddress": "Forusparken 1, 4031, Stavanger",
+      "brregName": "AUTOFIKS AS",
+      "brregAddress": "Forusparken 1, 4031, STAVANGER",
+      "organizationNumber": "997334078"
+    },
+    {
+      "name": "Euro Hage Og Anlegg AS",
+      "maAddress": "Lerkeskogen 48, 4083, Hundvåg",
+      "brregName": "EURO HAGE OG ANLEGG AS",
+      "brregAddress": "Lerkeskogen 48, 4083, HUNDVÅG",
+      "organizationNumber": "979905122"
+    },
+    {
+      "name": "LURA AUTO SERVICE AS",
+      "maAddress": "Gamleveien 85, 4315, Sandnes",
+      "brregName": "LURA AUTO SERVICE AS",
+      "brregAddress": "Gamleveien 85, 4315, SANDNES",
+      "organizationNumber": "916100132"
+    },
+    {
+      "name": "Stein Systemer AS",
+      "maAddress": "Forusskogen 1, 4031, Stavanger",
+      "brregName": "STEIN SYSTEMER AS",
+      "brregAddress": "Forusskogen 1, 4031, STAVANGER",
+      "organizationNumber": "989474995"
+    },
+    {
+      "name": "NEAG DANIEL",
+      "maAddress": "Ormøyveien 85, 4085, Hundvåg",
+      "brregName": "NEAG DANIEL",
+      "brregAddress": "Ormøyveien 85B, 4085, HUNDVÅG",
+      "organizationNumber": "922617864"
+    },
+    {
+      "name": "JOHNNY BYGG USVAT",
+      "maAddress": "Vikebekken 8 , Vikevag, 4150, Rennesøy",
+      "brregName": "JOHNNY BYGG USVAT",
+      "brregAddress": "Vikebekken 8, 4150, RENNESØY",
+      "organizationNumber": "922357811"
+    },
+    {
+      "name": "BERGESEN SERVICE",
+      "maAddress": "Skjeringen 11, 4016, Stavanger",
+      "brregName": "BERGESEN SERVICE",
+      "brregAddress": "Skjeringen 11, 4016, STAVANGER",
+      "organizationNumber": "931930869"
+    },
+    {
+      "name": "KEMPA BYGG",
+      "maAddress": "Harald Hårfagres gate 8, 4014, Stavanger",
+      "brregName": "KEMPA BYGG",
+      "brregAddress": "Pedersgata 115, 4014, STAVANGER",
+      "organizationNumber": "994577700"
+    },
+    {
+      "name": "Sandu Buble",
+      "maAddress": "Harkmarksveien 264, 4516, Mandal",
+      "brregName": "SANDU BUBLE",
+      "brregAddress": "Harkmarksveien 264, 4516, MANDAL",
+      "organizationNumber": "918828613"
+    },
+    {
+      "name": "SUPER MARIO MARIUSZ RAJMUND TALAROWSKI",
+      "maAddress": "GARDSHAUGVEGEN 52, 4053, Ræge",
+      "brregName": "SUPER MARIO MARIUSZ RAJMUND TALAROWSKI",
+      "brregAddress": "Gardshaugvegen 52, 4053, RÆGE",
+      "organizationNumber": "912523829"
+    },
+    {
+      "name": "JOHANNESSEN BYGG/MALESERVICE",
+      "maAddress": "doktor veien 1c, 3340, Åmot",
+      "brregName": "JOHANNESSEN BYGG/MALESERVICE",
+      "brregAddress": "c/o LILLIAN HELEN FJØRSTAD, Doktorveien 1C, 3340, ÅMOT",
+      "organizationNumber": "916382758"
+    },
+    {
+      "name": "Elumina AS",
+      "maAddress": "Jernbanegata 9, 4340, Bryne",
+      "brregName": "ELUMINA AS",
+      "brregAddress": "Bolignummer H0201, Jernbanegata 9, 4340, BRYNE",
+      "organizationNumber": "928732568"
+    },
+    {
+      "name": "Hanna holding as",
+      "maAddress": "Postboks 576, 2203, Kongsvinger",
+      "brregName": "HANNA HOLDING AS",
+      "brregAddress": "Isak H. Wiiks gate 6, 1461, LØRENSKOG",
+      "organizationNumber": "920766633"
+    },
+    {
+      "name": "SHAM SHEIKH-MOHAMED",
+      "maAddress": "Jonsokveien 5D, 4046, Hafrsfjord",
+      "brregName": "SHAM SHEIKH-MOHAMED",
+      "brregAddress": "Jonsokveien 5D, 4046, HAFRSFJORD",
+      "organizationNumber": "927195275"
+    },
+    {
+      "name": "Holen Lakkering",
+      "maAddress": "Vardheivegen 53, 4340, Bryne",
+      "brregName": "HOLEN LAKKERING",
+      "brregAddress": "Vardheivegen 53, 4340, BRYNE",
+      "organizationNumber": "997805208"
+    },
+    {
+      "name": "PA EXPRESS TRANSPORT SINGH SEHAJPREET",
+      "maAddress": "Rombekkveien, 1407, Vinterbro",
+      "brregName": "PA EXPRESS TRANSPORT SINGH SEHAJPREET",
+      "brregAddress": "Rombekkveien 2, 1407, VINTERBRO",
+      "organizationNumber": "930555061"
+    },
+    {
+      "name": "ALL CLEAN SERVICES V/ISMAIL",
+      "maAddress": "Lervigbrygga 1, 4014, Stavanger",
+      "brregName": "ALL CLEAN SERVICES V/ISMAIL",
+      "brregAddress": "Lervigbrygga 1, 4014, STAVANGER",
+      "organizationNumber": "927898357"
+    },
+    {
+      "name": "MBR V/ OLE SALOMONSEN",
+      "maAddress": "Bjørkåsen 2, 9610, Rypefjord",
+      "brregName": "MBR V/ OLE SALOMONSEN",
+      "brregAddress": "Gosenstubben 37, 4041, HAFRSFJORD",
+      "organizationNumber": "984101627"
+    },
+    {
+      "name": "TreÅtte Renhold AS",
+      "maAddress": "Nesevegen 50, 4352, Kleppe",
+      "brregName": "TREÅTTE RENHOLD AS",
+      "brregAddress": "Nesevegen 50, 4352, KLEPPE",
+      "organizationNumber": "836627962"
+    },
+    {
+      "name": "PROPAINT PER EGIL HAGEN",
+      "maAddress": "Kolheihagen 26, 4034, Stavanger",
+      "brregName": "PROPAINT PER EGIL HAGEN",
+      "brregAddress": "Boganesveien 27, 4020, STAVANGER",
+      "organizationNumber": "989585428"
+    },
+    {
+      "name": "KVITSØY HUSHJELP AS",
+      "maAddress": "Vassbotnen 11B, 4313, Sandnes",
+      "brregName": "KVITSØY HUSHJELP AS",
+      "brregAddress": "Neset 1, 4180, KVITSØY",
+      "organizationNumber": "930807028"
+    },
+    {
+      "name": "ROYAL MALERSERVICE ALBATRAN",
+      "maAddress": "Bernt Støylensvei, 4026, Stavanger",
+      "brregName": "ROYAL MALERSERVICE ALBATRAN",
+      "brregAddress": "Bernt Støylens vei 16, 4026, STAVANGER",
+      "organizationNumber": "989842838"
+    },
+    {
+      "name": "GRO RENHOLD AS",
+      "maAddress": "NEDRE DALGATE 1, 4013, Stavanger",
+      "brregName": "GRO RENHOLD AS",
+      "brregAddress": "Hogstadbakken 18, 4330, ÅLGÅRD",
+      "organizationNumber": "935707021"
+    },
+    {
+      "name": "PEISKONGEN AS",
+      "maAddress": "forusparken 20, 4031, Stavanger",
+      "brregName": "PEISKONGEN AS",
+      "brregAddress": "Forusparken 20, 4031, STAVANGER",
+      "organizationNumber": "920647022"
+    },
+    {
+      "name": "Kyndesen Den Lille Smed & Vaktmester Tjeneste",
+      "maAddress": "Karistø 48A, 4045, Hafrsfjord",
+      "brregName": "KYNDESEN DEN LILLE SMED & VAKTMESTER TJENESTE",
+      "brregAddress": "Karistø 48A, 4045, HAFRSFJORD",
+      "organizationNumber": "934085868"
+    },
+    {
+      "name": "TOYOTA SØRVEST AS",
+      "maAddress": "Vestre Svanholmen 9, 4313, Sandnes",
+      "brregName": "TOYOTA SØRVEST AS",
+      "brregAddress": "Vestre Svanholmen 9, 4313, SANDNES",
+      "organizationNumber": "937665482"
+    },
+    {
+      "name": "Ydstebø Elektro",
+      "maAddress": "Moldberget 24, 4336, Sandnes",
+      "brregName": "YDSTEBØ ELEKTRO",
+      "brregAddress": "Moldberget 24, 4336, SANDNES",
+      "organizationNumber": "932301865"
+    },
+    {
+      "name": "BYGG & SNEKKER BUIVYDAS",
+      "maAddress": "Skafsåvegen 1448 A, 3882, Åmdals verk",
+      "brregName": "BYGG & SNEKKER BUIVYDAS",
+      "brregAddress": "Skafsåvegen 1448A, 3882, ÅMDALS VERK",
+      "organizationNumber": "922599874"
+    },
+    {
+      "name": "Campbell Renhold",
+      "maAddress": "Heiå 30, 4070, Randaberg",
+      "brregName": "CAMPBELL RENHOLD",
+      "brregAddress": "Heiå 30, 4070, RANDABERG",
+      "organizationNumber": "935387892"
+    },
+    {
+      "name": "VAIDA SKÅDEL",
+      "maAddress": "Skjilebegata 26, 5515, Haugesund",
+      "brregName": "VAIDA SKÅDEL",
+      "brregAddress": "Solheimslio 21B, 5555, FØRDE I HORDALAND",
+      "organizationNumber": "921656750"
+    },
+    {
+      "name": "Hognestad Bygg AS",
+      "maAddress": "Nedre Gauselvågen 15, 4031, Stavanger",
+      "brregName": "HOGNESTAD BYGG AS",
+      "brregAddress": "Nedre Gauselvågen 15, 4031, STAVANGER",
+      "organizationNumber": "984824998"
+    },
+    {
+      "name": "Hrybkov Company AS",
+      "maAddress": "Ulsberghagen 23, 4034, Stavanger",
+      "brregName": "HRYBKOV COMPANY AS",
+      "brregAddress": "Ulsberghagen 23, 4034, STAVANGER",
+      "organizationNumber": "934496914"
+    },
+    {
+      "name": "MARKUS TREFELLING & ARBORIST SERVICE",
+      "maAddress": "Jøssangvegen 180, 4100, Jørpeland",
+      "brregName": "MARKUS TREFELLING & ARBORIST SERVICE",
+      "brregAddress": "Marmorsvingen 16A, 4104, JØRPELAND",
+      "organizationNumber": "920683894"
+    },
+    {
+      "name": "JG SERVICE AS",
+      "maAddress": "Bygdaveien 135, 4333, Oltedal",
+      "brregName": "JG SERVICE AS",
+      "brregAddress": "Bygdaveien 135, 4333, OLTEDAL",
+      "organizationNumber": "936464017"
+    },
+    {
+      "name": "BYGGMESTER SARMADAWI",
+      "maAddress": "lyder sagens gate 41, 4012, Stavanger",
+      "brregName": "BYGGMESTER SARMADAWI",
+      "brregAddress": "Lyder Sagens gate 41, 4012, STAVANGER",
+      "organizationNumber": "935667046"
+    },
+    {
+      "name": "Stavanger elektro AS",
+      "maAddress": "Auglendsveien 14, 4019, Stavanger",
+      "brregName": "STAVANGER ELEKTRO AS",
+      "brregAddress": "Auglendsveien 14, 4019, STAVANGER",
+      "organizationNumber": "917583935"
+    },
+    {
+      "name": "Taras Pulynets",
+      "maAddress": "Melingsgarden 26, 4180, Kvitsøy",
+      "brregName": "TARAS PULYNETS",
+      "brregAddress": "Skjerahaugen 10, 4180, KVITSØY",
+      "organizationNumber": "933932761"
+    },
+    {
+      "name": "BEARDAL",
+      "maAddress": "vistegata 6, 4007, Stavanger",
+      "brregName": "BEARDAL",
+      "brregAddress": "Vølstadveien 99, 4025, STAVANGER",
+      "organizationNumber": "824985502"
+    },
+    {
+      "name": "ES RØR ESPEN SÆTHERSKAR",
+      "maAddress": "Kilealleen 6, 3516, Hønefoss",
+      "brregName": "ES RØR ESPEN SÆTHERSKAR",
+      "brregAddress": "Kilealleen 6, 3516, HØNEFOSS",
+      "organizationNumber": "993006777"
+    },
+    {
+      "name": "BRILLIANT RENHOLD AS",
+      "maAddress": "Novstubben 13, 4044, Hafrsfjord",
+      "brregName": "BRILLIANT RENHOLD AS",
+      "brregAddress": "Gartnerveien 4, 4016, STAVANGER",
+      "organizationNumber": "922718431"
+    },
+    {
+      "name": "BETONGSAGING AS",
+      "maAddress": "Nordsjøvegen 2442, 4360, Varhaug",
+      "brregName": "BETONGSAGING AS",
+      "brregAddress": "Nordsjøvegen 2442, 4360, VARHAUG",
+      "organizationNumber": "984828535"
+    },
+    {
+      "name": "KVERME RØR AS",
+      "maAddress": "Bekkasinvegen 41, 4353, Klepp stasjon",
+      "brregName": "KVERME RØR AS",
+      "brregAddress": "Bekkasinvegen 41, 4353, KLEPP STASJON",
+      "organizationNumber": "912616703"
+    },
+    {
+      "name": "Mur & Flis Kung",
+      "maAddress": "c/o Er Cin Kung, Grødemveien 69C, 4029, Stavanger",
+      "brregName": "MUR & FLIS KUNG",
+      "brregAddress": "c/o Er Cin Kung, Grødemveien 69C, 4029, STAVANGER",
+      "organizationNumber": "937408900"
+    },
+    {
+      "name": "Ngd-bygg AS",
+      "maAddress": "Gjervoldsøyveien 39, 4817, His",
+      "brregName": "NGD-BYGG AS",
+      "brregAddress": "Heldalsplatået 4, 4810, EYDEHAVN",
+      "organizationNumber": "934352750"
+    },
+    {
+      "name": "Don Lawrence Arkitekt AS",
+      "maAddress": "Akersbakken 5, 0172, Oslo",
+      "brregName": "DON LAWRENCE ARKITEKT AS",
+      "brregAddress": "Akersbakken 37A, 0172, OSLO",
+      "organizationNumber": "915432980"
+    },
+    {
+      "name": "Svein Eidesen AS",
+      "maAddress": "Frøyerveien 53, 4328, Sandnes",
+      "brregName": "SVEIN EIDESEN AS",
+      "brregAddress": "Frøyerveien 53, 4328, SANDNES",
+      "organizationNumber": "920941044"
+    },
+    {
+      "name": "Skeie Hageglede og Renhold AS",
+      "maAddress": "Tinngata 1, 4014, Stavanger",
+      "brregName": "SKEIE HAGEGLEDE OG RENHOLD AS",
+      "brregAddress": "Tinngata 1, 4014, STAVANGER",
+      "organizationNumber": "938104158"
+    },
+    {
+      "name": "JONN OLAV INGVARTSEN",
+      "maAddress": "Østhusvikveien 482, 4150, Rennesøy",
+      "brregName": "JONN OLAV INGVARTSEN",
+      "brregAddress": "Østhusvikveien 482, 4150, RENNESØY",
+      "organizationNumber": "999306950"
+    },
+    {
+      "name": "EILO EIENDOM AS",
+      "maAddress": "Nedre Suldalsgate 6, 4012, Stavanger",
+      "brregName": "EILO EIENDOM AS",
+      "brregAddress": "Nedre Suldalsgate 6, 4012, STAVANGER",
+      "organizationNumber": "936805078"
+    },
+    {
+      "name": "BG KURAS",
+      "maAddress": "Overlege Cappelens Gate 3B, 4011, Stavanger",
+      "brregName": "BG KURAS",
+      "brregAddress": "Overlege Cappelens gate 3B, 4011, STAVANGER",
+      "organizationNumber": "925111201"
+    },
+    {
+      "name": "BJØRN OLGEIRSSON MALERSERVICE",
+      "maAddress": "Løbergsjå 2b, 4337",
+      "brregName": "BJØRN OLGEIRSSON MALERSERVICE",
+      "brregAddress": "Løbergsjå 2B, 4337, SANDNES",
+      "organizationNumber": "984118503"
+    },
+    {
+      "name": "Suster Byggservice",
+      "maAddress": "Høgeveien 10, 4026, Stavanger",
+      "brregName": "SUSTER BYGGSERVICE",
+      "brregAddress": "Høgeveien 10, 4026, STAVANGER",
+      "organizationNumber": "936546129"
+    },
+    {
+      "name": "JM SERVICES AS",
+      "maAddress": "Kongsgata 7, 4331",
+      "brregName": "JM SERVICES AS",
+      "brregAddress": "Kongsgata 7, 4331, ÅLGÅRD",
+      "organizationNumber": "925135151"
+    },
+    {
+      "name": "ALHUSSEIN GO",
+      "maAddress": "Breigata 19, 4006, Stavanger",
+      "brregName": "ALHUSSEIN GO",
+      "brregAddress": "Breigata 19, 4006, STAVANGER",
+      "organizationNumber": "936330916"
+    },
+    {
+      "name": "FRIIS MATHIESEN GROUP",
+      "maAddress": "Øynevegen 33, 3560, Hemsedal",
+      "brregName": "FRIIS MATHIESEN GROUP",
+      "brregAddress": "Borger Withs gate 22, 0482, OSLO",
+      "organizationNumber": "829948702"
+    },
+    {
+      "name": "LORA PUTSYK",
+      "maAddress": "Verven 38, 4014, Stavanger",
+      "brregName": "LORA PUTSYK",
+      "brregAddress": "Verven 38, 4014, STAVANGER",
+      "organizationNumber": "937081561"
+    },
+    {
+      "name": "SOLA HAGE OG ANLEGG AS",
+      "maAddress": "Opstadvegen 35, 4365",
+      "brregName": "SOLA HAGE OG ANLEGG AS",
+      "brregAddress": "Sveinsvollvegen 199, 4354, VOLL",
+      "organizationNumber": "986550437"
+    },
+    {
+      "name": "RUNAR RYDDESERVICE",
+      "maAddress": "Forane 5, 4031, Stavanger",
+      "brregName": "RUNAR RYDDESERVICE",
+      "brregAddress": "Forane 5, 4031, STAVANGER",
+      "organizationNumber": "928567699"
+    },
+    {
+      "name": "Proff Vaktmaster og Flis AS",
+      "maAddress": "lyngvegen22, 5535, Haugesund",
+      "brregName": "PROFF VAKTMASTER OG FLIS AS",
+      "brregAddress": "Lyngvegen 22, 5535, HAUGESUND",
+      "organizationNumber": "934964438"
+    },
+    {
+      "name": "T - Maksymenko",
+      "maAddress": "Kleivsvegen 3, 4480, Kvinesdal",
+      "brregName": "T - MAKSYMENKO",
+      "brregAddress": "Kleivsvegen 3, 4480, KVINESDAL",
+      "organizationNumber": "935477123"
+    },
+    {
+      "name": "Bådsvik Montering",
+      "maAddress": "Kapellveien 27A, 1410, Kolbotn",
+      "brregName": "BÅDSVIK MONTERING",
+      "brregAddress": "Kapellveien 27A, 1410, KOLBOTN",
+      "organizationNumber": "929780205"
+    },
+    {
+      "name": "LANDSNES ANLEGG & TRANSPORT",
+      "maAddress": "Sevjeveien 5, 4310, Hommersåk",
+      "brregName": "LANDSNES ANLEGG & TRANSPORT",
+      "brregAddress": "Sevjeveien 5, 4310, HOMMERSÅK",
+      "organizationNumber": "871596972"
+    },
+    {
+      "name": "RØRLEGGERFIRMA VAALAND",
+      "maAddress": "Skibmannsvegen 3, 4056, Tananger",
+      "brregName": "RØRLEGGERFIRMA VAALAND",
+      "brregAddress": "Skibmannsvegen 3, 4056, TANANGER",
+      "organizationNumber": "932145987"
+    },
+    {
+      "name": "STIAN AASLAND",
+      "maAddress": "Utslåtto 43, 4333, Oltedal",
+      "brregName": "STIAN AASLAND",
+      "brregAddress": "c/o Stian Andre F. Aasland, Giljagarden 8, 4335, DIRDAL",
+      "organizationNumber": "898168042"
+    },
+    {
+      "name": "AM Construction AS",
+      "maAddress": "Rudsteinveien 5, 1480, Slattum",
+      "brregName": "AM CONSTRUCTION AS",
+      "brregAddress": "Åmotshagan 30, 2022, GJERDRUM",
+      "organizationNumber": "927808404"
+    },
+    {
+      "name": "Erøyvik Trevare As",
+      "maAddress": "Erfjordvegen 206, 4233, Erfjord",
+      "brregName": "ERØYVIK TREVARE AS",
+      "brregAddress": "Erøy, 4233, ERFJORD",
+      "organizationNumber": "994819070"
+    },
+    {
+      "name": "Lina Transport AS",
+      "maAddress": "Solvangen 80, 2013, Skjetten",
+      "brregName": "LINA TRANSPORT AS",
+      "brregAddress": "Solvangen 80, 2013, SKJETTEN",
+      "organizationNumber": "990860904"
+    },
+    {
+      "name": "KRISTOFAN VIPBAD",
+      "maAddress": "Daleveien 131, 4329, Sandnes",
+      "brregName": "KRISTOFAN VIPBAD",
+      "brregAddress": "Daleveien 131, 4329, SANDNES",
+      "organizationNumber": "911738392"
+    },
+    {
+      "name": "PARKETTSPESIALISTEN Ben Eirik Motland",
+      "maAddress": "Buhagen 10, 4016, Stavanger",
+      "brregName": "PARKETTSPESIALISTEN Ben Eirik Motland",
+      "brregAddress": "Buhagen 10A, 4016, STAVANGER",
+      "organizationNumber": "982294657"
+    },
+    {
+      "name": "Termo-Bygg Terje Monsen",
+      "maAddress": "Børeringen 26, 4085, Hundvåg",
+      "brregName": "TERMO-BYGG Terje Monsen",
+      "brregAddress": "Børeringen 26, 4085, HUNDVÅG",
+      "organizationNumber": "979706189"
+    },
+    {
+      "name": "Vask Serafin Romova",
+      "maAddress": "Bergliveien 9A, 4020, Stavanger",
+      "brregName": "VASK SERAFIN ROMOVA",
+      "brregAddress": "Bergliveien 9A, 4020, STAVANGER",
+      "organizationNumber": "934427238"
+    },
+    {
+      "name": "BILCO BILVERKSTED AS",
+      "maAddress": "Maskinveien 16, 4033, Stavanger",
+      "brregName": "BILCO BILVERKSTED AS",
+      "brregAddress": "Maskinveien 16, 4033, STAVANGER",
+      "organizationNumber": "932220377"
+    },
+    {
+      "name": "Pettersen Renhold",
+      "maAddress": "Bjørnøystraen 16, 4085, Hundvåg",
+      "brregName": "PETTERSEN RENHOLD",
+      "brregAddress": "Lifjellveien 18, 4310, HOMMERSÅK",
+      "organizationNumber": "937855494"
+    },
+    {
+      "name": "VM INVEST AS",
+      "maAddress": "trelastvegen 5, 4365, Nærbø",
+      "brregName": "VM INVEST AS",
+      "brregAddress": "Trelastvegen 5, 4365, NÆRBØ",
+      "organizationNumber": "928410005"
+    },
+    {
+      "name": "GISLE ESPELAND",
+      "maAddress": "Postveien 183 a, 4307, Sandnes",
+      "brregName": "GISLE ESPELAND",
+      "brregAddress": "Postveien 183A, 4307, SANDNES",
+      "organizationNumber": "917729468"
+    },
+    {
+      "name": "Frudalen Hageservice AS",
+      "maAddress": "Pollestadtunet 8, 4343, Orre",
+      "brregName": "FRUDALEN HAGESERVICE AS",
+      "brregAddress": "Mikkelsbærstien 34, 4324, SANDNES",
+      "organizationNumber": "996918238"
+    },
+    {
+      "name": "Herredsvela Maskin AS",
+      "maAddress": "https://www.google.com/maps/search/?api=1&amp query=J%C3%B8destadveien+144, Hommers%C3%A5k, 4311, Hommersåk",
+      "brregName": "HERREDSVELA MASKIN AS",
+      "brregAddress": "Jødestadveien 144, 4311, HOMMERSÅK",
+      "organizationNumber": "995051877"
+    },
+    {
+      "name": "LURA HUS OG ANLEGG IVAN POPOVIC",
+      "maAddress": "Bjørkeveien 1B, 4315, Sandnes",
+      "brregName": "LURA HUS OG ANLEGG IVAN POPOVIC",
+      "brregAddress": "Bjørkeveien 1B, 4315, SANDNES",
+      "organizationNumber": "916680287"
+    },
+    {
+      "name": "Meran Bakki",
+      "maAddress": "Clipperveien 7, 4077, Hundvåg",
+      "brregName": "MERAN BAKKI",
+      "brregAddress": "Clipperveien 7, 4077, HUNDVÅG",
+      "organizationNumber": "924017503"
+    },
+    {
+      "name": "Alkhalil Byggservice",
+      "maAddress": "Kastanjevegen 44, 4051, Sola",
+      "brregName": "ALKHALIL BYGGSERVICE",
+      "brregAddress": "Kastanjevegen 44, 4051, SOLA",
+      "organizationNumber": "932589257"
+    },
+    {
+      "name": "OBOR GRUPPEN AS",
+      "maAddress": "Selma Ellefsens Vei 6, 0581, Oslo",
+      "brregName": "OBOR GRUPPEN AS",
+      "brregAddress": "Nedre Rælingsveg 117A, 2005, RÆLINGEN",
+      "organizationNumber": "921361440"
+    },
+    {
+      "name": "Murerfirma Sven G Gangså AS",
+      "maAddress": "Åloveien 76, 4641, Søgne",
+      "brregName": "MURERFIRMA SVEN G GANGSÅ AS",
+      "brregAddress": "Åloveien 76, 4641, SØGNE",
+      "organizationNumber": "927365014"
+    },
+    {
+      "name": "Handeland Ved Og Vel",
+      "maAddress": "Briggvegen 7B, 4056, Tananger",
+      "brregName": "HANDELAND VED OG VEL",
+      "brregAddress": "Briggvegen 7B, 4056, TANANGER",
+      "organizationNumber": "913649087"
+    },
+    {
+      "name": "SHW LOGISTICS AS",
+      "maAddress": "Skjeneholen 73B, 4313, Sandnes",
+      "brregName": "SHW LOGISTICS AS",
+      "brregAddress": "Skjeneholen 73B, 4313, SANDNES",
+      "organizationNumber": "934745914"
+    },
+    {
+      "name": "MALER OG BYGG ALIBRAHIM",
+      "maAddress": "Grasmyrveien 5, 4034, Stavanger",
+      "brregName": "MALER OG BYGG ALIBRAHIM",
+      "brregAddress": "Grasmyrveien 5, 4034, STAVANGER",
+      "organizationNumber": "929476735"
+    },
+    {
+      "name": "G Vask AS",
+      "maAddress": "Åsenstubben 3, 4055",
+      "brregName": "G VASK AS",
+      "brregAddress": "Hanna Winsnes gate 1, 4020, STAVANGER",
+      "organizationNumber": "930093599"
+    },
+    {
+      "name": "Skåland stubbefresing",
+      "maAddress": "Nymyra 59, 4352, Kleppe",
+      "brregName": "SKÅLAND STUBBEFRESING",
+      "brregAddress": "c/o Brian Skåland, Nymyra 59, 4351, KLEPPE",
+      "organizationNumber": "932980983"
+    },
+    {
+      "name": "RENT HJEM & KONSULENT SERVICE AS",
+      "maAddress": "Gamle Frøylandsvei 7, 4311, Hommersåk",
+      "brregName": "RENT HJEM & KONSULENT SERVICE AS",
+      "brregAddress": "Gamle Frøylandsvei 7, 4311, HOMMERSÅK",
+      "organizationNumber": "820237722"
+    },
+    {
+      "name": "CHRISTOPHER WILLIAM DODDS",
+      "maAddress": "Gjerdestien, 4045, Hafrsfjord",
+      "brregName": "CHRISTOPHER WILLIAM DODDS",
+      "brregAddress": "Gjerdestien 4, 4045, HAFRSFJORD",
+      "organizationNumber": "920339980"
+    },
+    {
+      "name": "MALKOV SPARKLING&MALING",
+      "maAddress": "Prestegårdsveien 3, 4371",
+      "brregName": "MALKOV SPARKLING&MALING",
+      "brregAddress": "Prestegårdsveien 3, 4371, EGERSUND",
+      "organizationNumber": "930970476"
+    },
+    {
+      "name": "VARME & MILJØ AS",
+      "maAddress": "Stamsøyveien 28, 4580, Lyngdal",
+      "brregName": "VARME & MILJØ AS",
+      "brregAddress": "Stamsøyveien 28, 4580, LYNGDAL",
+      "organizationNumber": "920233686"
+    },
+    {
+      "name": "Sala Solutions",
+      "maAddress": "Storehamn 22, 4160, Finnøy",
+      "brregName": "SALA SOLUTIONS",
+      "brregAddress": "Storehamn 22, 4160, FINNØY",
+      "organizationNumber": "935612594"
+    },
+    {
+      "name": "SOLA AUTO AS",
+      "maAddress": "Arabergvegen 2, 4055, SOLA",
+      "brregName": "SOLA AUTO AS",
+      "brregAddress": "Arabergvegen 2, 4055, SOLA",
+      "organizationNumber": "995926628"
+    },
+    {
+      "name": "ALIKAJ &DINU RENOVERING",
+      "maAddress": "granumsvegen 50, 2838, Snertingdal",
+      "brregName": "ALIKAJ &DINU RENOVERING",
+      "brregAddress": "Granumsvegen 50, 2838, SNERTINGDAL",
+      "organizationNumber": "937116209"
+    },
+    {
+      "name": "Aleksandrov Maler Service A&M",
+      "maAddress": "Brekkå 6, 4100, Jørpeland",
+      "brregName": "ALEKSANDROV MALER SERVICE A&M",
+      "brregAddress": "Brekkå 6, 4100, JØRPELAND",
+      "organizationNumber": "928020428"
+    },
+    {
+      "name": "DOBRA PRACA SP. Z.O.O.",
+      "maAddress": "Orstadvegen 134, 4353, Klepp stasjon",
+      "brregName": "DOBRA PRACA SP. Z.O.O.",
+      "brregAddress": "Al. Jerozolimskie 44 lok 1125, PL00024 Warszawa",
+      "organizationNumber": "991202463"
+    },
+    {
+      "name": "AGDER RØR OG ANLEGGSERVICE AS",
+      "maAddress": "Rauliveien 23, 4407",
+      "brregName": "AGDER RØR OG ANLEGGSERVICE AS",
+      "brregAddress": "Rauliveien 23, 4407, FLEKKEFJORD",
+      "organizationNumber": "927063972"
+    },
+    {
+      "name": "EIGIL KRISTENSEN",
+      "maAddress": "Tjeltavegen 109, 4054, Tjelta",
+      "brregName": "EIGIL KRISTENSEN",
+      "brregAddress": "Tjeltavegen 109, 4054, TJELTA",
+      "organizationNumber": "917246564"
+    },
+    {
+      "name": "Bygg og Fjell Haider",
+      "maAddress": "Sellhundveien 13, 4083, Hundvåg",
+      "brregName": "BYGG OG FJELL HAIDER",
+      "brregAddress": "Selhundveien 13, 4083, HUNDVÅG",
+      "organizationNumber": "929639243"
+    },
+    {
+      "name": "GB MALERSERVICE GRZEGORZ BUTRYN",
+      "maAddress": "Engøyklubben 8A, 4077, Hundvåg",
+      "brregName": "GB MALERSERVICE GRZEGORZ BUTRYN",
+      "brregAddress": "Engøyklubben 8A, 4077, HUNDVÅG",
+      "organizationNumber": "931838814"
+    },
+    {
+      "name": "Make Malerservice Ademovic",
+      "maAddress": "Hannasdalsgata 25, 4009, Stavanger",
+      "brregName": "MAKE MALERSERVICE ADEMOVIC",
+      "brregAddress": "Hannasdalsgata 25, 4009, STAVANGER",
+      "organizationNumber": "935384273"
+    },
+    {
+      "name": "Pro40 Multitjenester Catalin Lungu",
+      "maAddress": "Bergåsveien 12, 4016, Stavanger",
+      "brregName": "PRO40 MULTITJENESTER CATALIN LUNGU",
+      "brregAddress": "Bergåsveien 12, 4016, STAVANGER",
+      "organizationNumber": "931160656"
+    },
+    {
+      "name": "MYHRE BYGG OG SERVICE",
+      "maAddress": "Moldberget 178, 4336, Sandnes",
+      "brregName": "MYHRE BYGG OG SERVICE",
+      "brregAddress": "Øygardsbakken 31, 4327, SANDNES",
+      "organizationNumber": "917793808"
+    },
+    {
+      "name": "DANIEL'S BETONG & HAGE AS",
+      "maAddress": "Mælshammaren 41, 4110, Forsand",
+      "brregName": "DANIEL'S BETONG & HAGE AS",
+      "brregAddress": "Mælshammaren 41, 4110, FORSAND",
+      "organizationNumber": "926522698"
+    },
+    {
+      "name": "TOTALSERVICE & SHEIKH-MOHAMED",
+      "maAddress": "Mjughaug Terrasse 10, 4048, Hafrsfjord",
+      "brregName": "TOTALSERVICE & SHEIKH-MOHAMED",
+      "brregAddress": "Mjughaug Terrasse 10, 4048, HAFRSFJORD",
+      "organizationNumber": "830826432"
+    },
+    {
+      "name": "RETTEDAL GRUPPEN AS",
+      "maAddress": "Gamle Ålgårdsveien 127, 4325, Sandnes",
+      "brregName": "RETTEDAL GRUPPEN AS",
+      "brregAddress": "Gamle Ålgårdsveien 127, 4325, SANDNES",
+      "organizationNumber": "933242641"
+    },
+    {
+      "name": "Sham Ibrahim",
+      "maAddress": "Markaholen 2, 4032, Stavanger",
+      "brregName": "SHAM IBRAHIM",
+      "brregAddress": "Markaholen 2, 4032, STAVANGER",
+      "organizationNumber": "937321341"
+    },
+    {
+      "name": "KOVALSKY BYGG PRZEMYSLAW KOWALCZYK",
+      "maAddress": "Nedreveien 1, 4018, Stavanger",
+      "brregName": "KOVALSKY BYGG PRZEMYSLAW KOWALCZYK",
+      "brregAddress": "Fredtunvegen 34B, 4050, SOLA",
+      "organizationNumber": "920246958"
+    },
+    {
+      "name": "PROSJEKTPILOT AS",
+      "maAddress": "Trosavigveien 162, 4375, Hellvik",
+      "brregName": "PROSJEKTPILOT AS",
+      "brregAddress": "Trosavigveien 162, 4375, HELLVIK",
+      "organizationNumber": "935998654"
+    },
+    {
+      "name": "repelowicz",
+      "maAddress": "Malminhagen 68, 4312, Sandnes",
+      "brregName": "REPELOWICZ",
+      "brregAddress": "Malminhagen 68, 4312, SANDNES",
+      "organizationNumber": "935337488"
+    },
+    {
+      "name": "DUDUS ZHANNA",
+      "maAddress": "Kvitlyngveien 15, 4332, Figgjo",
+      "brregName": "DUDUS ZHANNA",
+      "brregAddress": "Kvitlyngveien 15, 4332, FIGGJO",
+      "organizationNumber": "937120575"
+    },
+    {
+      "name": "Tony Bygg AS",
+      "maAddress": "Motlandsmarka 96, 4365, Nærbø",
+      "brregName": "TONY BYGG AS",
+      "brregAddress": "Motlandsmarka 96, 4365, NÆRBØ",
+      "organizationNumber": "929667808"
+    },
+    {
+      "name": "Stavanger Malerservice Almoussa",
+      "maAddress": "Jernalderveien 32, 4041, Hafrsfjord",
+      "brregName": "STAVANGER MALERSERVICE ALMOUSSA",
+      "brregAddress": "Jernalderveien 32, 4041, HAFRSFJORD",
+      "organizationNumber": "937440049"
+    },
+    {
+      "name": "Elonsa Bilverksted AS",
+      "maAddress": "Heiamyrå, 4031, Stavanger",
+      "brregName": "ELONSA BILVERKSTED AS",
+      "brregAddress": "Høgeholvegen 52, 4054, TJELTA",
+      "organizationNumber": "935373581"
+    },
+    {
+      "name": "NM Renhold AS",
+      "maAddress": "Åsenstubben 2, 4055, SOLA",
+      "brregName": "NM RENHOLD AS",
+      "brregAddress": "Åsenstubben 2, 4055, SOLA",
+      "organizationNumber": "934309375"
+    },
+    {
+      "name": "Masterhaus AS",
+      "maAddress": "Neset 7, 4180, Kvitsøy",
+      "brregName": "MASTERHAUS AS",
+      "brregAddress": "Neset 7, 4180, KVITSØY",
+      "organizationNumber": "936713157"
+    },
+    {
+      "name": "Priwoz Partner AS",
+      "maAddress": "Skasvegen 52, 4354, Voll",
+      "brregName": "PRIWOZ PARTNER AS",
+      "brregAddress": "Skasvegen 52, 4354, VOLL",
+      "organizationNumber": "934944216"
+    },
+    {
+      "name": "CHOP CHOP AS",
+      "maAddress": "Slynggata 12, 4307, Sandnes",
+      "brregName": "CHOP CHOP AS",
+      "brregAddress": "Slynggata 12, 4307, SANDNES",
+      "organizationNumber": "935967279"
+    },
+    {
+      "name": "LENDE BYGG AS",
+      "maAddress": "Vibestraen 4, 4049, Hafrsfjord",
+      "brregName": "LENDE BYGG AS",
+      "brregAddress": "Vibestraen 4, 4049, HAFRSFJORD",
+      "organizationNumber": "992728639"
+    },
+    {
+      "name": "ANDREASSEN DRIFT & SERVICE",
+      "maAddress": "sandnesgata 36, 4015, Stavanger",
+      "brregName": "ANDREASSEN DRIFT & SERVICE",
+      "brregAddress": "Sandnesgata 36, 4015, STAVANGER",
+      "organizationNumber": "938026807"
+    },
+    {
+      "name": "Bjelland Betongsaging AS",
+      "maAddress": "Runestad, 4330, Ålgård",
+      "brregName": "BJELLAND BETONGSAGING AS",
+      "brregAddress": "Runestad, 4164, FOGN",
+      "organizationNumber": "921294786"
+    },
+    {
+      "name": "Bore Service As",
+      "maAddress": "Torgvegen 14, 4350",
+      "brregName": "BORE SERVICE AS",
+      "brregAddress": "Torgvegen 14, 4350, KLEPPE",
+      "organizationNumber": "926189417"
+    },
+    {
+      "name": "Richert Bygg AS",
+      "maAddress": "Østre Hamravei 12, 4315, Sandnes",
+      "brregName": "RICHERT BYGG AS",
+      "brregAddress": "Furuveien 1, 4314, SANDNES",
+      "organizationNumber": "831043652"
+    },
+    {
+      "name": "HANASET HAGE & LANDBRUK",
+      "maAddress": "liarvegen 8, 4265, Håvik",
+      "brregName": "HANASET HAGE & LANDBRUK",
+      "brregAddress": "Liarvegen 8, 4265, HÅVIK",
+      "organizationNumber": "920753124"
+    },
+    {
+      "name": "Ecohage AS",
+      "maAddress": "Svebastadveien 129, 4325, Sandnes",
+      "brregName": "ECOHAGE AS",
+      "brregAddress": "Svebastadveien 129, 4325, SANDNES",
+      "organizationNumber": "934397762"
+    },
+    {
+      "name": "Boiko Fix & Ferdig 24/7",
+      "maAddress": "Lerkeveien 6B, 4314, Sandnes",
+      "brregName": "BOIKO FIX & FERDIG 24/7",
+      "brregAddress": "Lerkeveien 6B, 4314, SANDNES",
+      "organizationNumber": "937618379"
+    },
+    {
+      "name": "ALFA-BYGG AS",
+      "maAddress": "Nedreveien 1, 4018, Stavanger",
+      "brregName": "ALFA BYGG AS",
+      "brregAddress": "Johan Ellingsens veg 7, 7562, SAKSVIK",
+      "organizationNumber": "998009057"
+    },
+    {
+      "name": "Fasade Tak Maling AS",
+      "maAddress": "Pedersgata 21, 4013, Stavanger",
+      "brregName": "FASADE TAK MALING AS",
+      "brregAddress": "Pedersgata 21, 4013, STAVANGER",
+      "organizationNumber": "935114896"
+    },
+    {
+      "name": "Askeladden Trepleie AS",
+      "maAddress": "Vibevegen 1, 4340, Bryne",
+      "brregName": "ASKELADDEN TREPLEIE AS",
+      "brregAddress": "Vibevegen 1, 4340, BRYNE",
+      "organizationNumber": "932832402"
+    },
+    {
+      "name": "TRANSPORT & FLYTTING AS",
+      "maAddress": "Odins gate 15, 4306, Sandnes",
+      "brregName": "TRANSPORT & FLYTTING AS",
+      "brregAddress": "Odins gate 15, 4306, SANDNES",
+      "organizationNumber": "925687545"
+    },
+    {
+      "name": "RASKT HJEM AS",
+      "maAddress": "stavanger, 4045",
+      "brregName": "RASKT HJEM AS",
+      "brregAddress": "Nedre Hedlevikveien 18, 4156, MOSTERØY",
+      "organizationNumber": "935541379"
+    },
+    {
+      "name": "Holtet takst",
+      "maAddress": "strandkaien 28, 4005, Stavanger",
+      "brregName": "HOLTET TAKST AS",
+      "brregAddress": "Kadettveien 22, 4045, HAFRSFJORD",
+      "organizationNumber": "932481391"
+    },
+    {
+      "name": "RYSZARD JASINSKI SERVICE",
+      "maAddress": "Sørhauggata 202, 5525, Haugesund",
+      "brregName": "RYSZARD JASINSKI SERVICE",
+      "brregAddress": "Sørhauggata 202, 5525, HAUGESUND",
+      "organizationNumber": "997227328"
+    },
+    {
+      "name": "Galta Hageservice AS",
+      "maAddress": "Goaveien 101, 4073",
+      "brregName": "GALTA HAGESERVICE AS",
+      "brregAddress": "Goaveien 101, 4073, RANDABERG",
+      "organizationNumber": "934395190"
+    },
+    {
+      "name": "GIEDRIUS HAGE ZUKAITIS",
+      "maAddress": "Øykhagen 7, 4311, Hommersåk",
+      "brregName": "GIEDRIUS HAGE ZUKAITIS",
+      "brregAddress": "Øykhagen 7, 4311, HOMMERSÅK",
+      "organizationNumber": "996193721"
+    },
+    {
+      "name": "ALF JOHAN WALGERMO LIMA",
+      "maAddress": "Våglandsvegen 38, 4334",
+      "brregName": "ALF JOHAN WALGERMO LIMA",
+      "brregAddress": "Våglandsvegen 38, 4334, ÅLGÅRD",
+      "organizationNumber": "991063323"
+    },
+    {
+      "name": "BIELIAIEV BYGG & MONTERING",
+      "maAddress": "Gamleveien 29, 4370, Egersund",
+      "brregName": "BIELIAIEV BYGG & MONTERING",
+      "brregAddress": "Gamleveien 29, 4370, EGERSUND",
+      "organizationNumber": "937501730"
+    },
+    {
+      "name": "Gabrielsen Bygg og Mur AS",
+      "maAddress": "Somahagen 10, 4316, Sandnes",
+      "brregName": "GABRIELSEN BYGG OG MUR AS",
+      "brregAddress": "Somahagen 10, 4316, SANDNES",
+      "organizationNumber": "937788657"
+    },
+    {
+      "name": "OLSEN UTESERVICE",
+      "maAddress": "Sandskjellveien 54, 4310, Hommersåk",
+      "brregName": "OLSEN UTESERVICE",
+      "brregAddress": "Sandskjellveien 54, 4310, HOMMERSÅK",
+      "organizationNumber": "937160275"
+    },
+    {
+      "name": "Agder Rekkverk og Glass AS",
+      "maAddress": "Lillevei 5, 4870, Fevik",
+      "brregName": "AGDER REKKVERK OG GLASS AS",
+      "brregAddress": "Lillevei 5, 4870, FEVIK",
+      "organizationNumber": "920247326"
+    },
+    {
+      "name": "SKALIKOV FLIS OG MUR",
+      "maAddress": "Orredalsveien 4, 4376, Helleland",
+      "brregName": "SKALIKOV FLIS OG MUR",
+      "brregAddress": "Orredalsveien 4, 4376, HELLELAND",
+      "organizationNumber": "936362443"
+    },
+    {
+      "name": "Njå tre og villmark",
+      "maAddress": "Granlistien 14, 4332, Figgjo",
+      "brregName": "NJÅ TRE OG VILLMARK",
+      "brregAddress": "Granlistien 14, 4332, FIGGJO",
+      "organizationNumber": "930831646"
+    },
+    {
+      "name": "BUIKUS BYGG",
+      "maAddress": "Svelabakken 19C, 4389, Vikeså",
+      "brregName": "BUIKUS BYGG",
+      "brregAddress": "Gerardas Buikus, Svelabakken 19C, 4389, VIKESÅ",
+      "organizationNumber": "923110380"
+    },
+    {
+      "name": "Olaru Renovering",
+      "maAddress": "Smølaveien 33, 4029",
+      "brregName": "OLARU RENOVERING",
+      "brregAddress": "Smølaveien 33, 4029, STAVANGER",
+      "organizationNumber": "837649862"
+    },
+    {
+      "name": "LVL Opp VVS & Bygg AS",
+      "maAddress": "Trosterudveien 19, 0778, Oslo",
+      "brregName": "LVL OPP VVS & BYGG AS",
+      "brregAddress": "Trosterudveien 19, 0778, OSLO",
+      "organizationNumber": "937910916"
+    },
+    {
+      "name": "CC Bygg & Betong Constantinides",
+      "maAddress": "Notbasveien 17, 4083, Hundvåg",
+      "brregName": "CC BYGG & BETONG CONSTANTINIDES",
+      "brregAddress": "Notbasveien 17, 4083, HUNDVÅG",
+      "organizationNumber": "835944522"
+    },
+    {
+      "name": "RIL TRANSPORT AS",
+      "maAddress": "skulegata 11, 4340, Bryne",
+      "brregName": "RIL TRANSPORT AS",
+      "brregAddress": "Skulegata 11, 4340, BRYNE",
+      "organizationNumber": "934297156"
+    },
+    {
+      "name": "Betongeksperten AS",
+      "maAddress": "Fedevollen 25, 4485, Feda",
+      "brregName": "BETONGEKSPERTEN AS",
+      "brregAddress": "Fedevollen 25, 4485, FEDA",
+      "organizationNumber": "933910253"
+    },
+    {
+      "name": "STORM BOLIG AS",
+      "maAddress": "Linerlevegen 2, 7224, Melhus",
+      "brregName": "STORM BOLIG AS",
+      "brregAddress": "Linerlevegen 2, 7224, MELHUS",
+      "organizationNumber": "927442639"
+    },
+    {
+      "name": "WATHNE BLIKK",
+      "maAddress": "Lyngnesveien 5a, 4018, Stavanger",
+      "brregName": "WATHNE BLIKK",
+      "brregAddress": "Lyngnesveien 5A, 4018, STAVANGER",
+      "organizationNumber": "936642381"
+    },
+    {
+      "name": "Oddvar Birkemo",
+      "maAddress": "Nordsjøvegen 462, 4053, Ræge",
+      "brregName": "ODDVAR BIRKEMO",
+      "brregAddress": "Nordsjøvegen 462, 4053, RÆGE",
+      "organizationNumber": "996786048"
+    },
+    {
+      "name": "Fyra AS",
+      "maAddress": "Krossbergveien 21A, 4047",
+      "brregName": "FYRA AS",
+      "brregAddress": "Krossbergveien 21A, 4047, HAFRSFJORD",
+      "organizationNumber": "926838504"
+    },
+    {
+      "name": "ARNE HAMRE",
+      "maAddress": "Jutlandveien, 4312, Sandnes",
+      "brregName": "ARNE HAMRE",
+      "brregAddress": "Jutlandveien 108, 4312, SANDNES",
+      "organizationNumber": "932742268"
+    },
+    {
+      "name": "Makitech AS",
+      "maAddress": "Tjønnvoll Industriområde 8, 4706",
+      "brregName": "MAKITECH AS",
+      "brregAddress": "Åsvegen 13, 4708, VENNESLA",
+      "organizationNumber": "911694360"
+    },
+    {
+      "name": "AMPLOY AS",
+      "maAddress": "Stasjonsvegen 14, 4360, Varhaug",
+      "brregName": "AMPLOY AS",
+      "brregAddress": "Pauline Wiigs veg 4, 4344, BRYNE",
+      "organizationNumber": "918697780"
+    },
+    {
+      "name": "SVEINSVOLL DRIFT",
+      "maAddress": "sveinsvollvegen 199, 4354, Voll",
+      "brregName": "SVEINSVOLL DRIFT",
+      "brregAddress": "Sveinsvollvegen 199, 4354, VOLL",
+      "organizationNumber": "936519601"
+    },
+    {
+      "name": "SØRLANDSHUS AS",
+      "maAddress": "Buøystranda 14, 4517, Mandal",
+      "brregName": "SØRLANDSHUS AS",
+      "brregAddress": "Buøystranda 14, 4517, MANDAL",
+      "organizationNumber": "819439702"
+    },
+    {
+      "name": "NORDISK GLANS BYGG LILIANA PREDICA",
+      "maAddress": "Ostrestrangate, 4608, Kristiansand s",
+      "brregName": "NORDISK GLANS BYGG LILIANA PREDICA",
+      "brregAddress": "Østre Strandgate 62, 4608, KRISTIANSAND S",
+      "organizationNumber": "837474612"
+    },
+    {
+      "name": "Halseid Flytt og Transport og Service ENK",
+      "maAddress": "Øvre Fjellstad 54, 5550, Sveio",
+      "brregName": "HALSEID FLYTT OG TRANSPORT OG SERVICE ENK",
+      "brregAddress": "Øvre Fjellstad 54, 5550, SVEIO",
+      "organizationNumber": "938166412"
+    },
+    {
+      "name": "SNEKKER PETER HANSSEN",
+      "maAddress": "Blåtoppveien, 4017, Stavanger",
+      "brregName": "SNEKKER PETER HANSSEN",
+      "brregAddress": "Colin Archers vei 25, 4077, HUNDVÅG",
+      "organizationNumber": "935976596"
+    },
+    {
+      "name": "STAFF RESOURCES GROUP NORWAY AS",
+      "maAddress": "Hølsøyveien, 8370, Leknes",
+      "brregName": "STAFF RESOURCES GROUP NORWAY AS",
+      "brregAddress": "Holsøyveien 10A, 8370, LEKNES",
+      "organizationNumber": "936493009"
+    },
+    {
+      "name": "GRAVERMOEN CONSULTING",
+      "maAddress": "Andøysløyfen 103, 4623",
+      "brregName": "GRAVERMOEN CONSULTING",
+      "brregAddress": "Andøysløyfen 103, 4623, KRISTIANSAND S",
+      "organizationNumber": "882159922"
+    },
+    {
+      "name": "MAGNUSSEN-YUSSIF BYGG",
+      "maAddress": "Bukken Bruseveien 12, 4314, Sandnes",
+      "brregName": "MAGNUSSEN-YUSSIF BYGG",
+      "brregAddress": "Bukken Bruseveien 12, 4314, SANDNES",
+      "organizationNumber": "936728669"
+    },
+    {
+      "name": "CLEAN UP AS",
+      "maAddress": "Fredtunkroken 7, 4050, Sola",
+      "brregName": "CLEAN UP AS",
+      "brregAddress": "Fredtunkroken 7A, 4050, SOLA",
+      "organizationNumber": "995726858"
+    },
+    {
+      "name": "Huspartneren AS",
+      "maAddress": "Gamle Frøylandsvei 23, 4311, Hommersåk",
+      "brregName": "HUSPARTNEREN AS",
+      "brregAddress": "Gamle Frøylandsvei 23, 4311, HOMMERSÅK",
+      "organizationNumber": "935355206"
+    },
+    {
+      "name": "A.hetland AS",
+      "maAddress": "Malmvegen 16, 4347, Lye",
+      "brregName": "A.HETLAND AS",
+      "brregAddress": "Malmvegen 16, 4347, LYE",
+      "organizationNumber": "933251632"
+    },
+    {
+      "name": "SØR BETONG AS",
+      "maAddress": "Vatneveien 10, 4560, Vanse",
+      "brregName": "SØR BETONG AS",
+      "brregAddress": "Vatneveien 10, 4560, VANSE",
+      "organizationNumber": "932289482"
+    },
+    {
+      "name": "Eco Malerservice Muric",
+      "maAddress": "Motlandsmarka 116B, 4365, Nærbø",
+      "brregName": "ECO MALERSERVICE MURIC",
+      "brregAddress": "Motlandsmarka 116B, 4365, NÆRBØ",
+      "organizationNumber": "935945186"
+    },
+    {
+      "name": "VOLD SERVICE & UTLEIE ENK",
+      "maAddress": "Skoglyvegen 20, 4362, Vigrestad",
+      "brregName": "VOLD SERVICE & UTLEIE ENK",
+      "brregAddress": "Skoglyvegen 20, 4362, VIGRESTAD",
+      "organizationNumber": "937996225"
+    },
+    {
+      "name": "Skartveit Transport",
+      "maAddress": "c/o Rolf Skartveit, Hognes gate 37, 4041, Hafrsfjord",
+      "brregName": "SKARTVEIT TRANSPORT",
+      "brregAddress": "c/o Rolf Skartveit, Hognes gate 37, 4041, HAFRSFJORD",
+      "organizationNumber": "936213324"
+    },
+    {
+      "name": "STENSVAND EIENDOM AS",
+      "maAddress": "Moyveien 4, 4885, Grimstad",
+      "brregName": "STENSVAND EIENDOM AS",
+      "brregAddress": "Moyveien 4, 4885, GRIMSTAD",
+      "organizationNumber": "917472629"
+    },
+    {
+      "name": "FASADEVASKER'N TØNNESSEN",
+      "maAddress": "Treheia 15, 4513, Mandal",
+      "brregName": "FASADEVASKER'N TØNNESSEN",
+      "brregAddress": "Treheia 15, 4513, MANDAL",
+      "organizationNumber": "938152314"
+    },
+    {
+      "name": "MG Betong Glod Marcin",
+      "maAddress": "Nesbu terrasse 71, 4052, Røyneberg",
+      "brregName": "MG BETONG GLOD MARCIN",
+      "brregAddress": "Nesbuveien 130, 4020, STAVANGER",
+      "organizationNumber": "927140667"
+    },
+    {
+      "name": "MÆVER THUE",
+      "maAddress": "Haramsvegen 399, 6290, Haramsøy",
+      "brregName": "MÆVER THUE",
+      "brregAddress": "Haramsvegen 399, 6290, HARAMSØY",
+      "organizationNumber": "925373745"
+    },
+    {
+      "name": "Gregor Enteprenør Trubitsyna-suprun",
+      "maAddress": "Austarheimsvegen 110, 4200, Sauda",
+      "brregName": "GREGOR ENTEPRENØR TRUBITSYNA-SUPRUN",
+      "brregAddress": "Austarheimsvegen 110, 4200, SAUDA",
+      "organizationNumber": "932681250"
+    },
+    {
+      "name": "Pust Ventilasjon",
+      "maAddress": "Inkognito Terrasse 3, 0256, Oslo",
+      "brregName": "PUST VENTILASJON AS",
+      "brregAddress": "Inkognito terrasse 3, 0256, OSLO",
+      "organizationNumber": "933470725"
+    },
+    {
+      "name": "RK Service & Entreprenør AS",
+      "maAddress": "Svegeveien 6C, 4400, Flekkefjord",
+      "brregName": "RK SERVICE & ENTREPRENØR AS",
+      "brregAddress": "Svegeveien 6C, 4400, FLEKKEFJORD",
+      "organizationNumber": "937088124"
+    },
+    {
+      "name": "3D CON AS",
+      "maAddress": "Kydnatunet 13, 4310, Hommersåk",
+      "brregName": "3D CON AS",
+      "brregAddress": "Kydnatunet 13, 4310, HOMMERSÅK",
+      "organizationNumber": "935197465"
+    },
+    {
+      "name": "VIKEN MALERSERVICE KARABOGA",
+      "maAddress": "korsveien 72, 3028, Drammen",
+      "brregName": "VIKEN MALERSERVICE KARABOGA",
+      "brregAddress": "Korsveien 72, 3028, DRAMMEN",
+      "organizationNumber": "937887892"
+    },
+    {
+      "name": "SALVOR AS",
+      "maAddress": "Rødsbakkene 32, 3480, Filtvet",
+      "brregName": "SALVOR AS",
+      "brregAddress": "c/o Branches As, Rødsbakkene 32A, 3480, FILTVET",
+      "organizationNumber": "937980779"
+    },
+    {
+      "name": "ENGER LARS-PETTER",
+      "maAddress": "Torper, 1850, Mysen",
+      "brregName": "ENGER LARS-PETTER",
+      "brregAddress": "Torperåsveien 33, 1852, MYSEN",
+      "organizationNumber": "970199608"
+    },
+    {
+      "name": "ING. A. BAIG",
+      "maAddress": "Rettenveien 41, 1466, Strømmen",
+      "brregName": "ING. A. BAIG",
+      "brregAddress": "Rettenveien 41, 1466, STRØMMEN",
+      "organizationNumber": "937394861"
+    },
+    {
+      "name": "Jensen",
+      "maAddress": "Bersagelveien 8, 4311",
+      "brregName": "JENSEN",
+      "brregAddress": "Moskenesveien 764, 8392, SØRVÅGEN",
+      "organizationNumber": "929476514"
+    },
+    {
+      "name": "OP TRANSPORT OG GRAVING AS",
+      "maAddress": "Lyngveien 12b, 1433, Ås",
+      "brregName": "OP TRANSPORT OG GRAVING AS",
+      "brregAddress": "c/o Oskar Platzack, Lyngveien 12B, 1433, ÅS",
+      "organizationNumber": "936316565"
+    },
+    {
+      "name": "Iversen bygg",
+      "maAddress": "Kvimarka 74, 4365, Nærbø",
+      "brregName": "IVERSEN BYGG",
+      "brregAddress": "Briggvegen 35, 4056, TANANGER",
+      "organizationNumber": "935158400"
+    },
+    {
+      "name": "ISAK DRANGSLAND - VAKTMESTERSERVICE",
+      "maAddress": "Rosfjordveien 69, 4580, Lyngdal",
+      "brregName": "ISAK DRANGSLAND - VAKTMESTERSERVICE",
+      "brregAddress": "Rosfjordveien 69, 4580, LYNGDAL",
+      "organizationNumber": "931781863"
+    },
+    {
+      "name": "TA-DAM RENHOLD AS",
+      "maAddress": "Øvre haukeligate 26, 4014, Stavanger",
+      "brregName": "TA-DAM RENHOLD AS",
+      "brregAddress": "Øvre Haukeligate 26, 4014, STAVANGER",
+      "organizationNumber": "938061955"
+    },
+    {
+      "name": "GULVSLIPEREN JOHN HENRIK ROSING",
+      "maAddress": "østervåg 47, 4006, Stavanger",
+      "brregName": "GULVSLIPEREN JOHN HENRIK ROSING",
+      "brregAddress": "Østervåg 47, 4006, STAVANGER",
+      "organizationNumber": "933641066"
+    },
+    {
+      "name": "QB BOLIG AS",
+      "maAddress": "Friheim 16, 4047, Hafrsfjord",
+      "brregName": "QB BOLIG AS",
+      "brregAddress": "Friheim 16, 4047, HAFRSFJORD",
+      "organizationNumber": "934968395"
+    },
+    {
+      "name": "BYGGMESTER-1 AS",
+      "maAddress": "Skudeviga 23, 4625, Flekkerøy",
+      "brregName": "BYGGMESTER 1 AS",
+      "brregAddress": "Osloveien 280A, 7028, TRONDHEIM",
+      "organizationNumber": "993150215"
+    },
+    {
+      "name": "ARKINAUT AS",
+      "maAddress": "Pedersgata 8, 4013, Stavanger",
+      "brregName": "ARKINAUT AS",
+      "brregAddress": "Rektor Erichsens gate 2, 4022, STAVANGER",
+      "organizationNumber": "925331309"
+    },
+    {
+      "name": "Maler og Snekker Gutta Eng",
+      "maAddress": "Peter Møllers vei 8, 0585, Oslo",
+      "brregName": "MALER OG SNEKKER GUTTA ENG",
+      "brregAddress": "Peter Møllers vei 8, 0585, OSLO",
+      "organizationNumber": "937206232"
+    },
+    {
+      "name": "Odd Arild Espedal",
+      "maAddress": "Vågedalsstubben 13a, 4020, Stavanger",
+      "brregName": "ODD ARILD ESPEDAL",
+      "brregAddress": "Herigstadvegen 67, 4346, BRYNE",
+      "organizationNumber": "926422200"
+    },
+    {
+      "name": "Eggen Betong AS",
+      "maAddress": "Odderheisløyfen 26, 4639, Kristiansand s",
+      "brregName": "EGGEN BETONG AS",
+      "brregAddress": "c/o KF Regnskap AS, Rådhusgata 3, 4611, KRISTIANSAND S",
+      "organizationNumber": "931947788"
+    },
+    {
+      "name": "Stanis Multitjenester",
+      "maAddress": "Hesbyvegen 62, 4160, Finnøy",
+      "brregName": "STANIS MULTITJENESTER",
+      "brregAddress": "Hesbyvegen 62, 4160, FINNØY",
+      "organizationNumber": "935612691"
+    },
+    {
+      "name": "SEKIEL GIMRE",
+      "maAddress": "Tunarmen 1, 4055, SOLA",
+      "brregName": "SEKIEL GIMRE",
+      "brregAddress": "Tunarmen 1, 4055, SOLA",
+      "organizationNumber": "936471781"
+    },
+    {
+      "name": "Hageservice & Anlegg AS",
+      "maAddress": "Jåttåveien 108, 4020, Stavanger",
+      "brregName": "HAGESERVICE & ANLEGG AS",
+      "brregAddress": "Jåttåveien 108, 4020, STAVANGER",
+      "organizationNumber": "934359321"
+    },
+    {
+      "name": "OrenB Tor Magne Øren",
+      "maAddress": "Byfjordparken 8, 4007, Stavanger",
+      "brregName": "ORENB TOR MAGNE ØREN",
+      "brregAddress": "Byfjordparken 8, 4007, STAVANGER",
+      "organizationNumber": "938530785"
+    },
+    {
+      "name": "Proff Maler Eyvazova",
+      "maAddress": "Tårngata 9, 4013, Stavanger",
+      "brregName": "PROFF MALER EYVAZOVA",
+      "brregAddress": "Tårngata 9, 4013, STAVANGER",
+      "organizationNumber": "938246475"
+    },
+    {
+      "name": "WOONIQUE AS",
+      "maAddress": "Kleppvegen 163, 4051, Sola",
+      "brregName": "WOONIQUE AS",
+      "brregAddress": "Kleppvegen 163, 4051, SOLA",
+      "organizationNumber": "934194780"
+    },
+    {
+      "name": "Rolovs Bygg",
+      "maAddress": "Heiamyrå 6, 4031, Stavanger",
+      "brregName": "ROLOVS BYGG",
+      "brregAddress": "Rossåssvingen 16, 4332, FIGGJO",
+      "organizationNumber": "936996604"
+    },
+    {
+      "name": "A&A Services Pavlova",
+      "maAddress": "Lysefjordgata 72, 4014, Stavanger",
+      "brregName": "A&A SERVICES PAVLOVA",
+      "brregAddress": "Lysefjordgata 72, 4014, STAVANGER",
+      "organizationNumber": "938006652"
+    },
+    {
+      "name": "RENESMI KOZACHUK",
+      "maAddress": "Svegeveien 6 C, 4405",
+      "brregName": "RENESMI KOZACHUK",
+      "brregAddress": "Svegeveien 6C, 4400, FLEKKEFJORD",
+      "organizationNumber": "938521654"
+    },
+    {
+      "name": "AL Alosh Høylandsbygg",
+      "maAddress": "Torkelstien 3, 4056, Tananger",
+      "brregName": "AL ALOSH HØYLANDSBYGG",
+      "brregAddress": "Torkelstien 3, 4056, TANANGER",
+      "organizationNumber": "938438072"
+    },
+    {
+      "name": "Circular-Services AS",
+      "maAddress": "Kobberveien 2, 4313, Sandnes",
+      "brregName": "CIRCULAR-SERVICES AS",
+      "brregAddress": "Kobberveien 2, 4313, SANDNES",
+      "organizationNumber": "822661572"
+    },
+    {
+      "name": "HENG DRIFT AS",
+      "maAddress": "Fjeldebakken 25, 4103",
+      "brregName": "HENG DRIFT AS",
+      "brregAddress": "c/o Janne Heng, Fjeldebakken 25, 4103, JØRPELAND",
+      "organizationNumber": "936442234"
+    },
+    {
+      "name": "BLIR AS",
+      "maAddress": "Hillevågsveien 85, 4016, Stavanger",
+      "brregName": "BLIR AS",
+      "brregAddress": "Luramyrveien 65, 4313, SANDNES",
+      "organizationNumber": "936393802"
+    },
+    {
+      "name": "Jada Facility Services AS",
+      "maAddress": "Postboks 1012 Hillevåg, 4095, Stavanger",
+      "brregName": "JADA FACILITY SERVICES AS",
+      "brregAddress": "Auglendsmyrå 6, 4016, STAVANGER",
+      "organizationNumber": "938696977"
+    },
+    {
+      "name": "Ydstebø & Sønner AS",
+      "maAddress": "c/o Per Asle Ydstebø, Godesetkroken 18, 4034, Stavanger",
+      "brregName": "YDSTEBØ & SØNNER AS",
+      "brregAddress": "c/o Per Asle Ydstebø, Godesetkroken 18, 4034, STAVANGER",
+      "organizationNumber": "930567574"
+    },
+    {
+      "name": "VASILACHE INTERIØRDETALJER",
+      "maAddress": "Heievegen 2, 5576, Øvre vats",
+      "brregName": "VASILACHE INTERIØRDETALJER",
+      "brregAddress": "Heievegen 2, 5576, ØVRE VATS",
+      "organizationNumber": "838491502"
+    },
+    {
+      "name": "Ph Meling Maskinstasjon",
+      "maAddress": "Bautaveien 47, 4156, Mosterøy",
+      "brregName": "PH MELING MASKINSTASJON",
+      "brregAddress": "Bautaveien 47, 4156, MOSTERØY",
+      "organizationNumber": "933522024"
+    },
+    {
+      "name": "Hetland & Kristiansen AS",
+      "maAddress": "Bersagelveien 56, 4311, Hommersåk",
+      "brregName": "HETLAND & KRISTIANSEN AS",
+      "brregAddress": "Bersagelveien 56, 4311, HOMMERSÅK",
+      "organizationNumber": "938432783"
+    },
+    {
+      "name": "AVEDAL BYGG",
+      "maAddress": "Fjordtunvegen 8, 4120, Tau",
+      "brregName": "AVEDAL BYGG",
+      "brregAddress": "Avedalvegen 92, 6947, LAVIK",
+      "organizationNumber": "933696065"
+    },
+    {
+      "name": "Tanzhu Tahir Demir",
+      "maAddress": "Eskelandsgeilen 7A, 4028",
+      "brregName": "TANZHU TAHIR DEMIR",
+      "brregAddress": "Eskelandsgeilen 7A, 4028, STAVANGER",
+      "organizationNumber": "935023807"
+    },
+    {
+      "name": "BIRGER SALTE",
+      "maAddress": "Saltevegen83, 4343, Orre",
+      "brregName": "BIRGER SALTE",
+      "brregAddress": "Saltevegen 83, 4343, ORRE",
+      "organizationNumber": "934979613"
+    },
+    {
+      "name": "HUB-OPERATIONS AS",
+      "maAddress": "Runeveien 4, 4077, Hundvåg",
+      "brregName": "HUB-OPERATIONS AS",
+      "brregAddress": "Runeveien 4, 4077, HUNDVÅG",
+      "organizationNumber": "934882296"
+    },
+    {
+      "name": "PROSTEIN Tom-Eirik Gudmestad Grødem",
+      "maAddress": "Knausen 1A, 4355, Kvernaland",
+      "brregName": "PROSTEIN Tom-Eirik Gudmestad Grødem",
+      "brregAddress": "Knausen 1A, 4355, KVERNALAND",
+      "organizationNumber": "980737225"
+    },
+    {
+      "name": "TN Renhold Nikolaieva",
+      "maAddress": "Espelandveien 273, 4337",
+      "brregName": "TN RENHOLD NIKOLAIEVA",
+      "brregAddress": "Espelandveien 273, 4337, SANDNES",
+      "organizationNumber": "838460852"
+    },
+    {
+      "name": "JÆREN FARGESENTER AS",
+      "maAddress": "Jadarvegen 6A, 4365, Nærbø",
+      "brregName": "JÆREN FARGESENTER AS",
+      "brregAddress": "Jadarvegen 6A, 4365, NÆRBØ",
+      "organizationNumber": "927332477"
+    },
+    {
+      "name": "UA BYGG AS",
+      "maAddress": "sikvalandsvegen 2, 4342, Undheim",
+      "brregName": "UA BYGG AS",
+      "brregAddress": "Sikvalandsvegen 2, 4342, UNDHEIM",
+      "organizationNumber": "933219771"
+    },
+    {
+      "name": "LI CONSULTING AS",
+      "maAddress": "Gamle forusveien 1, 4011, Stavanger",
+      "brregName": "LI CONSULTING AS",
+      "brregAddress": "Gamle Forusveien 1, 4031, STAVANGER",
+      "organizationNumber": "935264693"
+    },
+    {
+      "name": "HEIMLY ENTREPRENØR AS",
+      "maAddress": "Daleveien 103, 4328, Sandnes",
+      "brregName": "HEIMLY ENTREPRENØR AS",
+      "brregAddress": "Daleveien 103, 4328, SANDNES",
+      "organizationNumber": "937731094"
+    },
+    {
+      "name": "Jæren Støyp og Forskaling AS",
+      "maAddress": "Eskemyrkroken 9, 4310, Hommersåk",
+      "brregName": "JÆREN STØYP OG FORSKALING AS",
+      "brregAddress": "Eskemyrkroken 9, 4310, HOMMERSÅK",
+      "organizationNumber": "937452233"
+    },
+    {
+      "name": "KOZYNETS BILPLEIE OG RENHOLD",
+      "maAddress": "Bogsundvegen 374, 4233, Erfjord",
+      "brregName": "KOZYNETS BILPLEIE OG RENHOLD",
+      "brregAddress": "Bogsundvegen 374, 4233, ERFJORD",
+      "organizationNumber": "935366003"
+    },
+    {
+      "name": "Stange Garasjen AS",
+      "maAddress": "Soplimkroken 123, 2345, Ådalsbruk",
+      "brregName": "STANGE GARASJEN AS",
+      "brregAddress": "Soplimkroken 123, 2345, ÅDALSBRUK",
+      "organizationNumber": "937344295"
+    },
+    {
+      "name": "NÆRLAND MASKIN OG EIENDOM AS",
+      "maAddress": "Lalandsvegen 330, 4341, Bryne",
+      "brregName": "NÆRLAND MASKIN OG EIENDOM AS",
+      "brregAddress": "Lalandsvegen 330, 4341, BRYNE",
+      "organizationNumber": "915003001"
+    },
+    {
+      "name": "TOPPARTNER AS",
+      "maAddress": "Ringveien 20, 4400, Flekkefjord",
+      "brregName": "TOPPARTNER AS",
+      "brregAddress": "Ringveien 20, 4405, FLEKKEFJORD",
+      "organizationNumber": "920353932"
+    },
+    {
+      "name": "TORLAND SAU",
+      "maAddress": "Viervegen 15 b, 4350",
+      "brregName": "TORLAND SAU",
+      "brregAddress": "Viervegen 15B, 4350, KLEPPE",
+      "organizationNumber": "920169201"
+    },
+    {
+      "name": "BARSTAD HAGESERVICE AS",
+      "maAddress": "Buevegen 662, 4360",
+      "brregName": "BARSTAD HAGESERVICE AS",
+      "brregAddress": "Buevegen 662, 4360, VARHAUG",
+      "organizationNumber": "938069662"
+    },
+    {
+      "name": "SOLEND BYGG",
+      "maAddress": "Gamlesomavei 81, 4313, Sandnes",
+      "brregName": "SOLEND BYGG",
+      "brregAddress": "Gamle Somavei 81, 4313, SANDNES",
+      "organizationNumber": "934535480"
+    },
+    {
+      "name": "Klinkenberg",
+      "maAddress": "Hauglandsvegen 1C, 4362, Vigrestad",
+      "brregName": "KLINKENBERG",
+      "brregAddress": "Ekebergveien 146B, 1177, OSLO",
+      "organizationNumber": "926081551"
+    },
+    {
+      "name": "EIKREM TAK OG BYGG",
+      "maAddress": "Raveien 271, 3220, Sandefjord",
+      "brregName": "EIKREM TAK OG BYGG",
+      "brregAddress": "Hinderveien 7, 3223, SANDEFJORD",
+      "organizationNumber": "936026567"
+    },
+    {
+      "name": "Asgard Renhold AS",
+      "maAddress": "Tårnfalkveien 37, 4318, Sandnes",
+      "brregName": "ASGARD RENHOLD AS",
+      "brregAddress": "Tårnfalkveien 37, 4318, SANDNES",
+      "organizationNumber": "938472599"
+    },
+    {
+      "name": "Stavanger Vask AS",
+      "maAddress": "Fjeldehagen 1B, 4046, Hafrsfjord",
+      "brregName": "STAVANGER VASK AS",
+      "brregAddress": "Fjeldehagen 1B, 4046, HAFRSFJORD",
+      "organizationNumber": "937865953"
+    },
+    {
+      "name": "PARADIS INTERIØR AS",
+      "maAddress": "Kirkegaten 12, 4006, Stavanger",
+      "brregName": "PARADIS INTERIØR AS",
+      "brregAddress": "Lagårdsveien 91, 4010, STAVANGER",
+      "organizationNumber": "932985624"
+    },
+    {
+      "name": "LIVAR NEDREBØ",
+      "maAddress": "Grevlingvegen 1, 4347, Lye",
+      "brregName": "LIVAR NEDREBØ",
+      "brregAddress": "Grevlingvegen 1, 4347, LYE",
+      "organizationNumber": "985877297"
+    },
+    {
+      "name": "Oancea Artist Malerservice",
+      "maAddress": "Heievegen 2, 5576, Øvre vats",
+      "brregName": "OANCEA ARTIST MALERSERVICE",
+      "brregAddress": "Heievegen 2, 5576, ØVRE VATS",
+      "organizationNumber": "938014930"
+    },
+    {
+      "name": "VARGA HOME SERVICES",
+      "maAddress": "Valåsvegen 29, 5574, Skjold",
+      "brregName": "VARGA HOME SERVICES",
+      "brregAddress": "Valåsvegen 29, 5574, SKJOLD",
+      "organizationNumber": "938228892"
+    },
+    {
+      "name": "ANDERSEN BIRØKTER",
+      "maAddress": "Rogalandgate 63, 5531",
+      "brregName": "ANDERSEN BIRØKTER",
+      "brregAddress": "Rogalandgata 63, 5531, HAUGESUND",
+      "organizationNumber": "937841043"
+    },
+    {
+      "name": "KJETIL KVAMME",
+      "maAddress": "Svehaugvegen 8, 4250, Kopervik",
+      "brregName": "KJETIL KVAMME",
+      "brregAddress": "Svehaugvegen 8, 4250, KOPERVIK",
+      "organizationNumber": "994526081"
+    },
+    {
+      "name": "MÆLAND BYGGSERVICE",
+      "maAddress": "Kleivalandsveien 80, 4130, Hjelmeland",
+      "brregName": "MÆLAND BYGGSERVICE",
+      "brregAddress": "Kleivalandsvegen 80, 4130, HJELMELAND",
+      "organizationNumber": "974526581"
+    },
+    {
+      "name": "KR OPPMÅLING OG ANLEGG AS",
+      "maAddress": "Halsaneset 57, 5570, Aksdal",
+      "brregName": "KR OPPMÅLING OG ANLEGG AS",
+      "brregAddress": "Halsaneset 57, 5570, AKSDAL",
+      "organizationNumber": "937154348"
+    },
+    {
+      "name": "Snekker Andersson",
+      "maAddress": "Myrdalvegen 13, 4270, Åkrehamn",
+      "brregName": "SNEKKER ANDERSSON",
+      "brregAddress": "Myrdalvegen 13, 4270, ÅKREHAMN",
+      "organizationNumber": "933317188"
+    },
+    {
+      "name": "K KNUTSEN MASKIN",
+      "maAddress": "Epleskogen 39A, 5580, Ølen",
+      "brregName": "K KNUTSEN MASKIN",
+      "brregAddress": "Hjartakervegen 64, 5584, BJOA",
+      "organizationNumber": "835952312"
+    },
+    {
+      "name": "OSNES GARD V/ JOHANNES MYKLEBUST",
+      "maAddress": "Osnesvegen 295, 5590, Etne",
+      "brregName": "OSNES GARD V/ JOHANNES MYKLEBUST",
+      "brregAddress": "Osnesvegen 295, 5590, ETNE",
+      "organizationNumber": "920167500"
+    },
+    {
+      "name": "Syre Maskin",
+      "maAddress": "Aureivegen15, 4275, Sævelandsvik",
+      "brregName": "SYRE MASKIN",
+      "brregAddress": "Aureivegen 15, 4275, SÆVELANDSVIK",
+      "organizationNumber": "922529752"
+    },
+    {
+      "name": "O Jakobsen entreprenør",
+      "maAddress": "Ilshaug, 4250, Kopervik",
+      "brregName": "O JAKOBSEN ENTREPRENØR",
+      "brregAddress": "Ilshaug 60, 4250, KOPERVIK",
+      "organizationNumber": "934300696"
+    },
+    {
+      "name": "Emil Tveit Halsnes",
+      "maAddress": "Haukelivegen 523, 5576, Øvre vats",
+      "brregName": "EMIL TVEIT HALSNES",
+      "brregAddress": "Haukelivegen 523, 5576, ØVRE VATS",
+      "organizationNumber": "935274966"
+    },
+    {
+      "name": "HAUGARNE MASKIN AS",
+      "maAddress": "Industrivegen 12, 3895, Edland",
+      "brregName": "HAUGARNE MASKIN AS",
+      "brregAddress": "Industrivegen 12, 3895, EDLAND",
+      "organizationNumber": "923106413"
+    },
+    {
+      "name": "Thuen Bygg & Anlegg AS",
+      "maAddress": "Fjelltun 29, 5532, Haugesund",
+      "brregName": "THUEN BYGG & ANLEGG AS",
+      "brregAddress": "Fjelltun 29, 5532, HAUGESUND",
+      "organizationNumber": "935324564"
+    },
+    {
+      "name": "KVALVÅG ALL SERVICE AS",
+      "maAddress": "røstevegen 22|, 4270, Høng",
+      "brregName": "KVALVÅG ALL SERVICE AS",
+      "brregAddress": "Røstevegen 22, 4270, ÅKREHAMN",
+      "organizationNumber": "928090469"
+    },
+    {
+      "name": "M4 ELEKTRO AS",
+      "maAddress": "Sundegaten 5A, 4404",
+      "brregName": "M4 ELEKTRO AS",
+      "brregAddress": "Sundegaten 5A, 4405, FLEKKEFJORD",
+      "organizationNumber": "925148504"
+    },
+    {
+      "name": "Ren & Klar AS",
+      "maAddress": "Bråvannstoppen 35, 4624, Kristiansand s",
+      "brregName": "REN & KLAR AS",
+      "brregAddress": "Bråvannstoppen 35, 4624, KRISTIANSAND S",
+      "organizationNumber": "937844794"
+    }
+  ],
+  "note": "211 adresse-/postnummersamsvarende virksomheter ble importert; avvikskandidater ble ikke importert.",
+  "imported": 211
+}

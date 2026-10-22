@@ -1,6 +1,143 @@
 {
   "regionId": "vestfoldkongsbergregionen",
-  "status": "pbe-innhenting-under-arbeid",
-  "municipalities": 10,
-  "projects": 0
+  "generatedAt": "2026-10-20T08:31:05.999Z",
+  "filter": {
+    "include": [
+      "byggesak",
+      "byggesøknad",
+      "byggetillatelse",
+      "rammetillatelse",
+      "igangsettingstillatelse",
+      "igangsetting",
+      "fasade",
+      "påbygg",
+      "tilbygg",
+      "rivning",
+      "fradeling",
+      "seksjonering",
+      "reguleringsplan",
+      "planinitiativ",
+      "dispensasjon",
+      "oppføring",
+      "garasje",
+      "bolig",
+      "næring",
+      "terreng",
+      "forstøtningsmur",
+      "bruksendring",
+      "nabovarsel",
+      "forhåndskonferanse",
+      "tillatelse",
+      "nytt bygg",
+      "søknad"
+    ],
+    "exclude": [
+      "avslag",
+      "klage",
+      "ferdigmelding",
+      "ferdigattest",
+      "tilsyn",
+      "ulovlighetsoppfølging",
+      "innsynsbegjæring",
+      "møteinnkalling",
+      "postmottak",
+      "oversendelse",
+      "arkiv",
+      "anmodning om dokument",
+      "innsyn",
+      "dokumenter fra tidligere",
+      "^cv\\b",
+      "jobbsøknad",
+      "virksomhetsleder",
+      "stilling",
+      "ansettelse",
+      "gebyrregulativ",
+      "gebyr",
+      "^tilbud\\b",
+      "ikke operativt",
+      "høring",
+      "prioritering av byggesaker",
+      "spørsmål",
+      "veiledning",
+      "forlenget frist",
+      "saksbehandling pågår"
+    ],
+    "languages": [
+      "bokmål",
+      "nynorsk"
+    ]
+  },
+  "municipalities": [
+    {
+      "municipality": "Drammen kommune",
+      "adapter": "drammen-postjournal",
+      "status": "hentet",
+      "count": 442,
+      "sourceUrl": "https://innsyn2020.drammen.kommune.no/postjournal-v2/450d153d-62f7-4564-ab1b-60370477c471"
+    },
+    {
+      "municipality": "Sandefjord kommune",
+      "adapter": "acos",
+      "status": "hentet",
+      "count": 92,
+      "sourceUrl": "https://www.sandefjord.kommune.no/engasjer-deg/politikk-og-innsyn/sok-etter-saker-og-dokumenter/"
+    },
+    {
+      "municipality": "Tønsberg kommune",
+      "adapter": "acos",
+      "status": "hentet",
+      "count": 102,
+      "sourceUrl": "https://www.tonsberg.kommune.no/tjenester/innsyn/sok-i-postlister-saker-og-dokumenter/"
+    },
+    {
+      "municipality": "Larvik kommune",
+      "adapter": "onacos",
+      "status": "hentet",
+      "count": 168,
+      "sourceUrl": "https://innsynpluss.onacos.no/larvik/sok/"
+    },
+    {
+      "municipality": "Horten kommune",
+      "adapter": "acos",
+      "status": "hentet",
+      "count": 68,
+      "sourceUrl": "https://www.horten.kommune.no/innsyn/sok-i-postlister-saker-og-dokumenter/"
+    },
+    {
+      "municipality": "Holmestrand kommune",
+      "adapter": "acos",
+      "status": "hentet",
+      "count": 60,
+      "sourceUrl": "https://holmestrand.kommune.no/innbyggerhjelpen/politikk-og-innsyn/innsyn-og-postliste/sok-i-postlister-saker-og-dokumenter/"
+    },
+    {
+      "municipality": "Lier kommune",
+      "adapter": "elements",
+      "status": "hentet",
+      "count": 27,
+      "sourceUrl": "https://prod01.elementscloud.no/publikum/857566122_PROD-857566122/"
+    },
+    {
+      "municipality": "Kongsberg kommune",
+      "adapter": "elements",
+      "status": "hentet",
+      "count": 22,
+      "sourceUrl": "https://prod02.elementscloud.no/publikum/942402465_PROD-942402465/"
+    },
+    {
+      "municipality": "Færder kommune",
+      "adapter": "acos",
+      "status": "hentet",
+      "count": 88,
+      "sourceUrl": "https://faerder.kommune.no/politikk-og-samfunn/politikk/innsyn/sok-etter-dokument-eller-arkivsak/"
+    },
+    {
+      "municipality": "Øvre Eiker kommune",
+      "adapter": "elements",
+      "status": "hentet",
+      "count": 18,
+      "sourceUrl": "https://prod01.elementscloud.no/publikum/954597482_PROD-954597482/"
+    }
+  ],
+  "projectCount": 1064
 }

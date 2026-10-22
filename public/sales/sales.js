@@ -1,4 +1,4 @@
-const SALES_VERSION = 334;
+const SALES_VERSION = 441;
 const salesEntryIsApproved = (() => {
   try {
     return sessionStorage.getItem("nbr-entry-version") === String(SALES_VERSION)
@@ -9,9 +9,9 @@ const salesEntryIsApproved = (() => {
 
 const regions = [
   { id: "bergensregionen", name: "Bergensregionen", anchor: [60.393, 5.324], municipalities: ["Bergen kommune", "Askøy kommune", "Øygarden kommune", "Bjørnafjorden kommune", "Osterøy kommune", "Alver kommune", "Samnanger kommune", "Vaksdal kommune", "Austevoll kommune", "Kvam herad", "Voss herad", "Modalen kommune", "Masfjorden kommune", "Austrheim kommune", "Fedje kommune", "Gulen kommune", "Tysnes kommune"] },
-  { id: "stavangerregionen", name: "Stavangerregionen", anchor: [58.970, 5.733], municipalities: ["Stavanger kommune", "Sandnes kommune", "Sola kommune", "Randaberg kommune", "Klepp kommune", "Time kommune", "Hå kommune", "Gjesdal kommune", "Strand kommune", "Kvitsøy kommune", "Hjelmeland kommune", "Bjerkreim kommune", "Eigersund kommune", "Suldal kommune", "Sirdal kommune", "Lund kommune", "Sokndal kommune"] },
+  { id: "stavangerregionen", name: "Stavangerregionen", anchor: [58.970, 5.733], municipalities: ["Stavanger kommune", "Sandnes kommune", "Sola kommune", "Randaberg kommune", "Klepp kommune", "Time kommune", "Hå kommune", "Gjesdal kommune", "Strand kommune", "Kvitsøy kommune", "Hjelmeland kommune", "Bjerkreim kommune", "Eigersund kommune", "Suldal kommune", "Lund kommune", "Sokndal kommune"] },
   { id: "haugalandsregionen", name: "Haugalandsregionen", anchor: [59.505, 5.700], municipalities: ["Kvinnherad kommune", "Stord kommune", "Fitjar kommune", "Bømlo kommune", "Sveio kommune", "Haugesund kommune", "Karmøy kommune", "Tysvær kommune", "Bokn kommune", "Utsira kommune", "Vindafjord kommune", "Etne kommune", "Sauda kommune"] },
-  { id: "grenlandsregionen", name: "Grenlandsregionen", anchor: [59.140, 9.610], municipalities: ["Skien kommune", "Porsgrunn kommune", "Bamble kommune", "Notodden kommune", "Midt-Telemark kommune", "Kragerø kommune", "Nome kommune", "Tinn kommune", "Drangedal kommune", "Vinje kommune", "Seljord kommune", "Kviteseid kommune", "Siljan kommune", "Tokke kommune", "Hjartdal kommune", "Nissedal kommune", "Fyresdal kommune"] },
+  { id: "grenlandsregionen", name: "Grenlandsregionen", anchor: [59.140, 9.610], municipalities: ["Skien kommune", "Porsgrunn kommune", "Bamble kommune", "Kragerø kommune", "Drangedal kommune", "Siljan kommune"] },
   { id: "sorlandsregionen", name: "Sørlandsregionen", anchor: [58.147, 7.996], municipalities: ["Kristiansand kommune", "Lindesnes kommune", "Vennesla kommune", "Lillesand kommune", "Lyngdal kommune", "Farsund kommune", "Flekkefjord kommune", "Kvinesdal kommune", "Birkenes kommune", "Sirdal kommune", "Hægebostad kommune", "Iveland kommune"] },
   { id: "vestfoldkongsbergregionen", name: "Vestfold- og Kongsbergregionen", anchor: [59.250, 10.200], municipalities: ["Drammen kommune", "Sandefjord kommune", "Tønsberg kommune", "Larvik kommune", "Horten kommune", "Holmestrand kommune", "Lier kommune", "Kongsberg kommune", "Færder kommune", "Øvre Eiker kommune"] },
 ];
@@ -70,8 +70,13 @@ const supplierTradeLabels = [...new Map(supplierTradeTerms.map(([, slug]) => [sl
 const supplierWorkTypeIds = { snekker: "213", elektriker: "123", rorlegger: "207", bad: "153", tak: "229" };
 const supplierCalledStorageKey = "nbr-supplier-called-v1";
 const supplierPhoneStorageKey = "nbr-supplier-phone-v1";
+const salesRegionContextKey = "nbr-sales-region-context";
 const supplierCalledDays = 30;
 let supplierCountRequest = 0;
+
+function sortSuppliersAlphabetically(suppliers) {
+  return [...suppliers].sort((a, b) => String(a.name || "").localeCompare(String(b.name || ""), "nb-NO", { sensitivity: "base" }));
+}
 
 function renderShell() {
   app.innerHTML = `
@@ -88,12 +93,19 @@ function renderShell() {
       </section>
       <section class="sales-summary"><strong id="salesSummary">Velg område og skriv inn kundens adresse for å starte salgsvisningen.</strong><span id="salesAddressStatus">Ingen kundeadresse valgt</span></section>
       <section class="sales-map-section"><div class="section-heading"><h1>Områdekart for <span id="mapAreaName">Bergensregionen</span></h1><span id="mapCount">Klar for søk</span></div><div id="salesMap" class="sales-map" aria-label="Områdekart med prosjekter og kundens adresse"></div><p class="map-legend"><span class="legend-dot red"></span>Kundens adresse <span class="legend-dot blue"></span>Prosjekt</p></section>
-      <section class="sales-suppliers" aria-labelledby="salesSuppliersTitle"><div class="section-heading"><div><h2 id="salesSuppliersTitle">Andre leverandører i Norge</h2><p id="salesSupplierCount" class="supplier-count">Beregner unike leverandører i alle regioner...</p><p>Vis alle leverandører i valgt område, eller filtrer listen etter fagområde.</p></div></div><div class="supplier-search-row"><button id="salesSupplierAll" type="button" class="supplier-all-button">Vis alle leverandører</button><select id="salesSupplierTrade" aria-label="Fagområde"><option value="">Velg fagområde</option>${supplierTradeLabels.map((label) => { const slug = Object.entries({ snekker: "Snekker", elektriker: "Elektriker", rorlegger: "Rørlegger", maler: "Maler", kjokken: "Kjøkken", bad: "Pusse opp bad", fasade: "Fasade", kjeller: "Kjeller", grunnarbeid: "Grunnarbeid", tak: "Tak", borettslag: "Borettslag/sameie", xl: "Større prosjekter" }).find(([, value]) => value === label)?.[0] || ""; return `<option value="${slug}">${esc(label)}</option>`; }).join("")} </select><button id="salesSupplierSearch" type="button">Filtrer fagområde</button></div><div id="salesSupplierResults" class="supplier-results" aria-live="polite"></div><div id="salesSelectedProject" class="sales-selected-project" hidden></div></section>
+      <section class="sales-suppliers" aria-labelledby="salesSuppliersTitle"><div class="section-heading"><div><h2 id="salesSuppliersTitle">Andre leverandører i Norge</h2><p id="salesSupplierCount" class="supplier-count">Beregner unike leverandører i alle regioner...</p><p>Vis alle leverandører i valgt område, eller filtrer listen etter fagområde.</p></div></div><div class="supplier-search-row"><button id="salesSupplierAll" type="button" class="supplier-all-button">Vis alle leverandører</button><select id="salesSupplierTrade" aria-label="Fagområde"><option value="">Alle virksomheter</option>${supplierTradeLabels.map((label) => { const slug = Object.entries({ snekker: "Snekker", elektriker: "Elektriker", rorlegger: "Rørlegger", maler: "Maler", kjokken: "Kjøkken", bad: "Pusse opp bad", fasade: "Fasade", kjeller: "Kjeller", grunnarbeid: "Grunnarbeid", tak: "Tak", borettslag: "Borettslag/sameie", xl: "Større prosjekter" }).find(([, value]) => value === label)?.[0] || ""; return `<option value="${slug}">${esc(label)}</option>`; }).join("")} </select><button id="salesSupplierSearch" type="button">Filtrer fagområde</button></div><div id="salesSupplierResults" class="supplier-results" aria-live="polite"></div><div id="salesSelectedProject" class="sales-selected-project" hidden></div></section>
     </main>`;
   bindEvents();
+  rememberSalesRegionContext();
   updateMunicipalities();
   loadProjects();
   void loadGlobalSupplierCount();
+}
+
+function rememberSalesRegionContext() {
+  try {
+    sessionStorage.setItem(salesRegionContextKey, JSON.stringify({ id: state.regionId, name: region().name, municipalities: region().municipalities }));
+  } catch { /* Regionkontekst er bare nødvendig i den aktive arbeidsøkten. */ }
 }
 
 async function loadSupplierCount(regionGroups, requestId) {
@@ -121,18 +133,22 @@ function loadGlobalSupplierCount() {
 }
 
 function bindEvents() {
-  document.querySelector("#salesRegion").addEventListener("change", (event) => { state.regionId = event.target.value; state.municipality = ""; clearSupplierResults(); updateMunicipalities(); loadProjects(); });
+  document.querySelector("#salesRegion").addEventListener("change", (event) => { state.regionId = event.target.value; state.municipality = ""; rememberSalesRegionContext(); clearSupplierResults(); updateMunicipalities(); loadProjects(); });
   document.querySelector("#salesMunicipality").addEventListener("change", (event) => { state.municipality = event.target.value; clearSupplierResults(); loadProjects(); });
   document.querySelector("#salesSupplierAll").addEventListener("click", () => searchExternalSuppliers({ showAll: true }));
   document.querySelector("#salesSupplierSearch").addEventListener("click", () => searchExternalSuppliers({ showAll: false }));
   document.querySelector("#salesSupplierTrade").addEventListener("change", (event) => { state.supplierTrade = event.target.value; });
-  document.querySelector("#salesSupplierResults").addEventListener("change", (event) => {
-    const checkbox = event.target.closest("[data-supplier-called]");
-    if (checkbox) markSupplierCalled(Number(checkbox.dataset.supplierCalled));
-  });
   document.querySelector("#salesSupplierResults").addEventListener("click", (event) => {
+    const star = event.target.closest("[data-supplier-called]");
+    if (star) {
+      event.preventDefault();
+      markSupplierCalled(Number(star.dataset.supplierCalled));
+      return;
+    }
     const link = event.target.closest("[data-supplier-phone-search]");
     if (link) enrichSupplierPhone(state.suppliers[Number(link.dataset.supplierPhoneSearch)]);
+    const dashboardLink = event.target.closest("[data-open-supplier-dashboard]");
+    if (dashboardLink) openSupplierDashboard(Number(dashboardLink.dataset.openSupplierDashboard));
   });
 
   document.querySelector("#addressSearch").addEventListener("click", geocodeCustomerAddress);
@@ -201,27 +217,6 @@ async function searchGoogleAds() {
   } finally { state.googleAdsLoading = false; }
 }
 
-async function searchGoogleOrganic() {
-  const input = document.querySelector("#googleAdsQuery");
-  const trade = document.querySelector("#salesSupplierTrade").selectedOptions[0]?.textContent?.trim() || "";
-  const query = input.value.trim() || trade;
-  const results = document.querySelector("#salesSupplierResults");
-  if (!query) { results.innerHTML = `<div class="supplier-empty">Velg fagområde eller skriv inn virksomhet før søket.</div>`; return; }
-  results.innerHTML = `<div class="supplier-empty">Søker organisk etter virksomheter...</div>`;
-  try {
-    const params = new URLSearchParams({ q: query, regionId: state.regionId, regionName: region().name, municipality: state.municipality, trade });
-    const response = await fetch(`/api/google-organic-suppliers?${params}`);
-    const payload = await response.json();
-    if (!response.ok) throw new Error(payload.error || "Det organiske søket kunne ikke gjennomføres.");
-    const organic = Array.isArray(payload.suppliers) ? payload.suppliers : [];
-    state.suppliers = [...organic, ...state.suppliers.filter((supplier) => supplier.source !== "G")];
-    state.supplierSearched = true;
-    renderSupplierResults(payload.message || "");
-  } catch (error) {
-    results.innerHTML = `<div class="supplier-empty"><strong>Organisk søk kunne ikke gjennomføres.</strong><p>${esc(error.message || "Ukjent feil")}</p></div>`;
-  }
-}
-
 function supplierSearchParams() {
   const query = state.municipality || region().name;
   const normalizedQuery = query.toLocaleLowerCase("nb-NO");
@@ -254,7 +249,7 @@ async function searchExternalSuppliers({ showAll = false } = {}) {
     const response = await fetch(`/api/mittanbud-suppliers?${params}`);
     const payload = await response.json();
     if (!response.ok) throw new Error(payload.error || "Leverandørlisten kunne ikke hentes.");
-    state.suppliers = filterCalledSuppliers(Array.isArray(payload.suppliers) ? payload.suppliers : []).map(hydrateCachedSupplierPhone);
+    state.suppliers = sortSuppliersAlphabetically(filterCalledSuppliers(Array.isArray(payload.suppliers) ? payload.suppliers : []).map(hydrateCachedSupplierPhone));
     if (!state.suppliers.length) throw new Error(payload.message || "Ingen leverandører ble funnet.");
     renderSupplierResults();
   } catch (error) {
@@ -275,9 +270,31 @@ function renderSupplierResults(extraMessage = "") {
       : `<span>${supplier.aiLoading ? "Søker etter telefonnummer..." : "Telefon ikke oppgitt"}</span><span class="supplier-phone-search-label">Søk selv etter telefonnummer</span>`;
     const aiInfo = supplier.aiInfo && !supplier.phone ? `<span class="supplier-ai-info">${esc(supplier.aiInfo)}</span>` : "";
     const sourceCode = supplier.source === "Mittanbud" ? "MA" : String(supplier.source || supplier.sourceLabel || "MA").toUpperCase();
-    const sourceBadge = sourceCode === "GA" ? `<span class="supplier-source-badge" title="Funnet via Google Ads">GA</span>` : sourceCode === "G" ? `<span class="supplier-source-badge organic" title="Funnet via organisk Google-søk">G</span>` : sourceCode === "HP" ? `<span class="supplier-source-badge hp" title="Funnet via Håndverkerportalen">HP</span>` : `<span class="supplier-source-badge mittanbud" title="Funnet via Mittanbud">MA</span>`;
-    return `<article class="supplier-row"><div><strong>${sourceBadge}${esc(supplier.name || "Ukjent virksomhet")}</strong><span>Fagområde: ${esc(supplier.trade || "Fagområde ikke oppgitt")}</span><span>${esc(supplier.address || "Adresse ikke oppgitt")}</span>${supplier.description ? `<span>${esc(supplier.description)}</span>` : ""}</div><div>${phone}${aiInfo}${supplier.email ? `<a href="mailto:${esc(supplier.email)}">${esc(supplier.email)}</a>` : ""}${supplier.website ? `<a href="${esc(supplier.website)}" target="_blank" rel="noreferrer">Nettsted</a>` : ""}<label class="supplier-called"><input type="checkbox" data-supplier-called="${index}" ${calledAt ? "checked" : ""} /> Oppringt</label>${calledText}</div></article>`;
+    const sourceBadge = sourceCode === "GA" ? `<span class="supplier-source-badge" title="Funnet via Google Ads">GA</span>` : sourceCode === "HP" ? `<span class="supplier-source-badge hp" title="Funnet via Håndverkerportalen">HP</span>` : sourceCode === "DIB" ? `<span class="supplier-source-badge dib" title="Funnet via DiBK SGregister">DIB</span>` : `<span class="supplier-source-badge mittanbud" title="Funnet via Mittanbud">MA</span>`;
+    return `<article class="supplier-row"><div><strong>${sourceBadge}<button type="button" class="supplier-dashboard-link" data-open-supplier-dashboard="${index}">${esc(supplier.name || "Ukjent virksomhet")}</button></strong><span>Fagområde: ${esc(supplier.trade || "Fagområde ikke oppgitt")}</span><span>${esc(supplier.address || "Adresse ikke oppgitt")}</span>${supplier.description ? `<span>${esc(supplier.description)}</span>` : ""}</div><div>${phone}${aiInfo}${supplier.email ? `<a href="mailto:${esc(supplier.email)}">${esc(supplier.email)}</a>` : ""}${supplier.website ? `<a href="${esc(supplier.website)}" target="_blank" rel="noreferrer">Nettsted</a>` : ""}<button type="button" class="supplier-called-star ${calledAt ? "is-called" : ""}" data-supplier-called="${index}" aria-pressed="${calledAt ? "true" : "false"}" title="${calledAt ? "Oppringt " + formatCalledDate(calledAt) : "Marker som oppringt"}">★</button>${calledText}</div></article>`;
   }).join("");
+}
+
+function openSupplierDashboard(index) {
+  const supplier = state.suppliers[index];
+  if (!supplier) return;
+  const dashboardSupplier = {
+    ...supplier,
+    salesRegionId: state.regionId,
+    salesRegionName: region().name,
+    salesMunicipalities: region().municipalities,
+    salesMunicipality: state.municipality,
+  };
+  try {
+    sessionStorage.setItem("nbr-sales-dashboard-handoff", JSON.stringify(dashboardSupplier));
+    sessionStorage.setItem("nbr-dashboard-overview-snapshot", JSON.stringify({
+      regionId: state.regionId,
+      regionName: region().name,
+      municipalities: region().municipalities,
+      suppliers: state.suppliers,
+    }));
+  } catch { /* Dashboardet viser en fallback hvis økten ikke kan lagres. */ }
+  window.location.href = "/dashboard?login=1&v=441";
 }
 
 function formatCalledDate(timestamp) {
@@ -298,31 +315,27 @@ function readSupplierPhoneCache() {
 
 function hydrateCachedSupplierPhone(supplier) {
   const cached = readSupplierPhoneCache()[supplierKey(supplier)];
-  return cached?.phone ? { ...supplier, phone: cached.phone, aiInfo: "Telefonnummer funnet via AI-søk.", aiChecked: true, aiSearchUrl: cached.searchUrl || "" } : supplier;
+  return cached?.phone || cached?.website ? { ...supplier, phone: cached.phone || supplier.phone, website: cached.website || supplier.website, aiInfo: cached.phone ? "Telefonnummer funnet via AI-søk." : "Nettsted funnet via AI-søk.", aiChecked: true, aiSearchUrl: cached.searchUrl || "" } : supplier;
 }
 
 function rememberSupplierPhone(supplier, payload) {
-  if (!payload.phone) return;
+  if (!payload.phone && !payload.website) return;
   try {
     const cached = readSupplierPhoneCache();
-    cached[supplierKey(supplier)] = { phone: payload.phone, searchUrl: payload.searchUrl || "", savedAt: Date.now() };
+    cached[supplierKey(supplier)] = { phone: payload.phone || "", website: payload.website || "", searchUrl: payload.searchUrl || "", savedAt: Date.now() };
     localStorage.setItem(supplierPhoneStorageKey, JSON.stringify(cached));
   } catch { /* Telefonresultatet er fortsatt tilgjengelig i den aktive visningen. */ }
 }
 
 function readCalledSuppliers() {
   try {
-    const now = Date.now();
     const entries = JSON.parse(localStorage.getItem(supplierCalledStorageKey) || "{}");
-    const active = Object.fromEntries(Object.entries(entries).filter(([, timestamp]) => Number(timestamp) > now - supplierCalledDays * 24 * 60 * 60 * 1000));
-    localStorage.setItem(supplierCalledStorageKey, JSON.stringify(active));
-    return active;
+    return entries && typeof entries === "object" ? entries : {};
   } catch { return {}; }
 }
 
 function filterCalledSuppliers(suppliers) {
-  const called = readCalledSuppliers();
-  return suppliers.filter((supplier) => !called[supplierKey(supplier)]);
+  return suppliers;
 }
 
 function markSupplierCalled(index) {
@@ -350,6 +363,7 @@ async function enrichSupplierPhone(supplier) {
     const payload = await response.json();
     if (!response.ok) throw new Error(payload.error || "AI-søk feilet.");
     supplier.phone = payload.phone || "";
+    supplier.website = payload.website || supplier.website || "";
     supplier.aiInfo = payload.phone ? "Telefonnummer funnet via AI-søk." : payload.info || "Telefonnummer ble ikke funnet i AI-søket.";
     supplier.aiSearchUrl = payload.searchUrl || "";
     rememberSupplierPhone(supplier, payload);
@@ -498,7 +512,7 @@ function enableGentlePinchZoom(map) {
       const second = map.mouseEventToContainerPoint(event.touches[1]);
       const currentDistance = first.distanceTo(second);
       const rawRatio = currentDistance / touchZoom._startDist;
-      const easedRatio = Math.pow(rawRatio, 0.55);
+      const easedRatio = 1 + (rawRatio - 1) * 0.10;
       const originalStartDistance = touchZoom._startDist;
       touchZoom._startDist = currentDistance / easedRatio;
       try {

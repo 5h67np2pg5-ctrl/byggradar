@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "description": "Felles regionregister for Norsk ByggRadar. Nye regioner skal legges til her før de tas i bruk.",
+  "requiredProjectFiles": [
+    "projects_location_enriched.json",
+    "projects_contact_enriched.json"
+  ],
+  "requiredIntegrationPoints": [
+    "user",
+    "sales",
+    "supplierImport",
+    "postlistSources"
+  ],
+  "regions": [
+    {
+      "id": "bergensregionen",
+      "name": "Bergensregionen",
+      "anchor": { "lat": 60.39299, "lon": 5.32415 },
+      "municipalities": ["Bergen kommune", "Askøy kommune", "Øygarden kommune", "Bjørnafjorden kommune", "Osterøy kommune", "Alver kommune", "Samnanger kommune", "Vaksdal kommune", "Austevoll kommune", "Kvam herad", "Voss herad", "Modalen kommune", "Masfjorden kommune", "Austrheim kommune", "Fedje kommune", "Gulen kommune", "Tysnes kommune"]
+    },
+    {
+      "id": "stavangerregionen",
+      "name": "Stavangerregionen",
+      "anchor": { "lat": 58.97, "lon": 5.7331 },
+      "municipalities": ["Stavanger kommune", "Sandnes kommune", "Sola kommune", "Randaberg kommune", "Klepp kommune", "Time kommune", "Hå kommune", "Gjesdal kommune", "Strand kommune", "Kvitsøy kommune", "Hjelmeland kommune", "Bjerkreim kommune", "Eigersund kommune", "Suldal kommune", "Lund kommune", "Sokndal kommune"]
+    },
+    {
+      "id": "haugalandsregionen",
+      "name": "Haugalandsregionen",
+      "anchor": { "lat": 59.505, "lon": 5.7 },
+      "municipalities": ["Kvinnherad kommune", "Stord kommune", "Fitjar kommune", "Bømlo kommune", "Sveio kommune", "Haugesund kommune", "Karmøy kommune", "Tysvær kommune", "Bokn kommune", "Utsira kommune", "Vindafjord kommune", "Etne kommune", "Sauda kommune"]
+    },
+    {
+      "id": "grenlandsregionen",
+      "name": "Grenlandsregionen",
+      "anchor": { "lat": 59.14, "lon": 9.61 },
+      "municipalities": ["Skien kommune", "Porsgrunn kommune", "Bamble kommune", "Kragerø kommune", "Drangedal kommune", "Siljan kommune"]
+    },
+    {
+      "id": "sorlandsregionen",
+      "name": "Sørlandsregionen",
+      "anchor": { "lat": 58.1467, "lon": 7.9956 },
+      "municipalities": ["Kristiansand kommune", "Lindesnes kommune", "Vennesla kommune", "Lillesand kommune", "Lyngdal kommune", "Farsund kommune", "Flekkefjord kommune", "Kvinesdal kommune", "Birkenes kommune", "Sirdal kommune", "Hægebostad kommune", "Iveland kommune"]
+    },
+    {
+      "id": "vestfoldkongsbergregionen",
+      "name": "Vestfold- og Kongsbergregionen",
+      "anchor": { "lat": 59.25, "lon": 10.2 },
+      "municipalities": ["Drammen kommune", "Sandefjord kommune", "Tønsberg kommune", "Larvik kommune", "Horten kommune", "Holmestrand kommune", "Lier kommune", "Kongsberg kommune", "Færder kommune", "Øvre Eiker kommune"]
+    }
+  ]
+}

@@ -6,9 +6,22 @@
   "scripts": {
     "start": "node server.mjs",
     "dev": "node server.mjs",
-    "build": "node --check src/main.js && node --check server.mjs",
+    "build": "node --check src/main.js && node --check server.mjs && node scripts/validate-region-structure.mjs",
     "preview": "node server.mjs",
-    "collect:national": "node scripts/collect-national-procurements.mjs"
+    "collect:national": "node scripts/collect-national-procurements.mjs",
+    "collect:vestfold-kongsberg": "node scripts/collect-region-building-cases.mjs",
+    "collect:vestfold-elements": "node scripts/collect-elements-cases.mjs",
+    "collect:drammen": "node scripts/collect-drammen-postjournal.mjs",
+    "collect:larvik": "node scripts/collect-larvik-onacos.mjs",
+    "enrich:map": "node scripts/enrich-map-points.mjs",
+    "enrich:contacts": "node scripts/enrich-all-project-contacts.mjs",
+    "enrich:supplier-org-numbers": "node scripts/enrich-supplier-org-numbers.mjs",
+    "import:dib-missing": "node scripts/import-dib-missing-suppliers.mjs",
+    "import:ma-region": "node scripts/import-ma-region.mjs",
+    "import:ma-all": "node scripts/import-ma-all-regions.mjs",
+    "import:ma-municipality": "node scripts/import-ma-municipality.mjs",
+    "sync:suppliers": "node scripts/weekly-supplier-refresh.mjs",
+    "validate:regions": "node scripts/validate-region-structure.mjs"
   },
   "dependencies": {},
   "devDependencies": {}

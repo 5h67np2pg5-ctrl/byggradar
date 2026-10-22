@@ -1,4 +1,5 @@
 import http from "node:http";
+import { spawn } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -7,6 +8,7 @@ const root = path.dirname(fileURLToPath(import.meta.url));
 const incomingJobRequestsPath = path.join(root, "data", "incoming_job_requests.json");
 const smsOutboxPath = path.join(root, "data", "sms_outbox.json");
 const googleAdsSuppliersPath = path.join(root, "data", "google_ads_suppliers.json");
+const supplierContactNotesPath = path.join(root, "data", "supplier_contact_notes.json");
 const port = Number(process.env.PORT || 4173);
 const host = process.env.HOST || "0.0.0.0";
 const smsProvider = String(process.env.NBR_SMS_PROVIDER || "queue").trim().toLowerCase();
@@ -23,7 +25,85 @@ const aiPhoneCacheTtlMs = 24 * 60 * 60 * 1000;
 const googleAdsSyncCache = new Map();
 const googleAdsSyncTtlMs = 24 * 60 * 60 * 1000;
 const mittanbudMunicipalityCache = { expiresAt: 0, values: new Map() };
+const brregBusinessCache = new Map();
+const proffEmployeeCache = new Map();
 const incomingJobRequests = [];
+
+const verifiedProffProfileUrls = {
+  "935000548": "https://www.proff.no/selskap/alt-i-r%C3%B8r-as/bergen/r%C3%B8rleggertjenester/IFGOB1G07RG",
+};
+
+function htmlText(value) {
+  return String(value || "")
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;|&#160;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;|&apos;/gi, "'")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function extractProffEmployeeCount(html) {
+  const text = htmlText(html);
+  const match = text.match(/(?:antall\s+)?ansatte\s*:?[\s-]*(\d+\s*[–-]\s*\d+|\d{1,3}(?:[ .]\d{3})?)/i);
+  if (!match) return "";
+  return match[1].replace(/\s*[–-]\s*/g, " - ").replace(/\s+/g, " ").trim();
+}
+
+function extractProffProfileUrl(html, fallback = "") {
+  const source = String(html || "");
+  const candidates = [];
+  const canonical = source.match(/<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']+)["']/i);
+  if (canonical?.[1]) candidates.push(canonical[1]);
+  const links = source.matchAll(/href=["']([^"']*\/selskap\/[^"']+)["']/gi);
+  for (const match of links) candidates.push(match[1]);
+  for (const candidate of candidates) {
+    const decoded = String(candidate).replace(/&amp;/gi, "&");
+    try {
+      const url = new URL(decoded, "https://www.proff.no");
+      if (url.hostname === "www.proff.no" && /\/selskap\//i.test(url.pathname)) return url.href;
+    } catch { /* Ugyldig kandidat ignoreres. */ }
+  }
+  return /^https:\/\/www\.proff\.no\/selskap\//i.test(String(fallback)) ? String(fallback) : "";
+}
+
+async function lookupProffEmployees({ name = "", orgNumber = "", profileUrl = "" } = {}) {
+  const cleanOrgNumber = String(orgNumber).replace(/\D/g, "");
+  const cleanName = String(name).trim();
+  const cacheKey = cleanOrgNumber || normalizeSupplierText(cleanName);
+  if (!cacheKey) return null;
+  const cached = proffEmployeeCache.get(cacheKey);
+  if (cached && cached.expiresAt > Date.now()) return cached.value;
+  const urls = [];
+  const verifiedUrl = String(profileUrl || verifiedProffProfileUrls[cleanOrgNumber] || "").trim();
+  if (verifiedUrl) urls.push(verifiedUrl);
+  if (cleanOrgNumber) urls.push(`https://www.proff.no/bransjesøk?q=${encodeURIComponent(cleanOrgNumber)}`);
+  for (const url of urls) {
+    try {
+      const response = await fetch(url, {
+        headers: {
+          accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+          "accept-language": "nb-NO,nb;q=0.9,en;q=0.8",
+          referer: "https://www.proff.no/",
+          "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/131.0.0.0 Safari/537.36",
+        },
+        signal: AbortSignal.timeout(8000),
+      });
+      if (!response.ok) continue;
+      const html = await response.text();
+      const employees = extractProffEmployeeCount(html);
+      if (!employees) continue;
+      const value = { employees, employeesSource: "Proff", employeesCheckedAt: new Date().toISOString(), proffProfileUrl: extractProffProfileUrl(html, verifiedUrl) };
+      proffEmployeeCache.set(cacheKey, { value, expiresAt: Date.now() + 24 * 60 * 60 * 1000 });
+      return value;
+    } catch { /* Neste Proff-kilde forsøkes. */ }
+  }
+  proffEmployeeCache.set(cacheKey, { value: null, expiresAt: Date.now() + 60 * 60 * 1000 });
+  return null;
+}
 
 async function readGoogleAdsSuppliers() {
   try {
@@ -40,11 +120,127 @@ async function writeGoogleAdsSuppliers(suppliers) {
   await fs.writeFile(googleAdsSuppliersPath, `${JSON.stringify(suppliers, null, 2)}\n`, "utf8");
 }
 
+// Alle kilder skriver til samme register. Serialisering hindrer at parallelle
+// søk overskriver hverandres treff med en eldre kopi av filen.
+let supplierRegistryWriteQueue = Promise.resolve();
+let supplierContactNotesWriteQueue = Promise.resolve();
+
+async function updateSupplierRegistry(mutator) {
+  const operation = supplierRegistryWriteQueue.then(async () => {
+    const current = await readGoogleAdsSuppliers();
+    const updated = await mutator(current);
+    await writeGoogleAdsSuppliers(updated);
+    return updated;
+  });
+  supplierRegistryWriteQueue = operation.catch(() => {});
+  return operation;
+}
+
 function normalizeSupplierText(value) {
-  return String(value || "").toLocaleLowerCase("nb-NO").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
+  return String(value || "").toLocaleLowerCase("nb-NO").replace(/æ/g, "ae").replace(/ø/g, "o").replace(/å/g, "a").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
+}
+
+function brregAddressText(address = {}) {
+  return [address.adresse?.join?.(", ") || address.adresse, address.postnummer, address.poststed]
+    .filter(Boolean)
+    .join(", ");
+}
+
+async function lookupBrregBusiness({ name = "", orgNumber = "", address = "" } = {}) {
+  const cleanOrgNumber = String(orgNumber).replace(/\D/g, "");
+  const cleanName = String(name).trim();
+  const cacheKey = cleanOrgNumber || normalizeSupplierText(cleanName);
+  if (!cacheKey) return null;
+  const cached = brregBusinessCache.get(cacheKey);
+  if (cached && cached.expiresAt > Date.now()) return cached.value;
+
+  const endpoint = cleanOrgNumber
+    ? `https://data.brreg.no/enhetsregisteret/api/enheter/${encodeURIComponent(cleanOrgNumber)}`
+    : `https://data.brreg.no/enhetsregisteret/api/enheter?navn=${encodeURIComponent(cleanName)}&size=20`;
+  const response = await fetch(endpoint, {
+    headers: { accept: "application/json", "user-agent": "NorskByggRadar/1.0" },
+    signal: AbortSignal.timeout(8000),
+  });
+  if (!response.ok) return null;
+  const payload = await response.json().catch(() => null);
+  const candidates = cleanOrgNumber ? [payload] : (payload?._embedded?.enheter || []);
+  const normalizedName = normalizeSupplierText(cleanName);
+  const normalizedAddress = normalizeSupplierText(address);
+  const match = candidates
+    .filter(Boolean)
+    .map((item) => ({ item, itemName: normalizeSupplierText(item.navn), itemAddress: normalizeSupplierText(brregAddressText(item.forretningsadresse || item.postadresse)) }))
+    .sort((a, b) => {
+      const score = (entry) => (entry.itemName === normalizedName ? 3 : entry.itemName.includes(normalizedName) || normalizedName.includes(entry.itemName) ? 2 : 0) + (normalizedAddress && entry.itemAddress && (normalizedAddress.includes(entry.itemAddress) || entry.itemAddress.includes(normalizedAddress)) ? 2 : 0);
+      return score(b) - score(a);
+    })[0]?.item;
+  if (!match) return null;
+  const resolvedOrgNumber = match.organisasjonsnummer || cleanOrgNumber;
+  const [subunitResponse, rolesResponse, accountsResponse] = resolvedOrgNumber
+    ? await Promise.all([
+      fetch(`https://data.brreg.no/enhetsregisteret/api/underenheter?overordnetEnhet=${encodeURIComponent(resolvedOrgNumber)}&size=20`, { headers: { accept: "application/json", "user-agent": "NorskByggRadar/1.0" }, signal: AbortSignal.timeout(8000) }).catch(() => null),
+      fetch(`https://data.brreg.no/enhetsregisteret/api/enheter/${encodeURIComponent(resolvedOrgNumber)}/roller`, { headers: { accept: "application/json", "user-agent": "NorskByggRadar/1.0" }, signal: AbortSignal.timeout(8000) }).catch(() => null),
+      fetch(`https://data.brreg.no/regnskapsregisteret/regnskap/${encodeURIComponent(resolvedOrgNumber)}`, { headers: { accept: "application/json", "user-agent": "NorskByggRadar/1.0" }, signal: AbortSignal.timeout(8000) }).catch(() => null),
+    ])
+    : [null, null, null];
+  const subunitPayload = subunitResponse?.ok ? await subunitResponse.json().catch(() => null) : null;
+  const rolesPayload = rolesResponse?.ok ? await rolesResponse.json().catch(() => null) : null;
+  const accountsPayload = accountsResponse?.ok ? await accountsResponse.json().catch(() => null) : null;
+  const subunit = subunitPayload?._embedded?.underenheter?.[0] || {};
+  const latestAccounts = [...(Array.isArray(accountsPayload) ? accountsPayload : [])].sort((a, b) => String(b.regnskapsperiode?.tilDato || "").localeCompare(String(a.regnskapsperiode?.tilDato || "")))[0] || {};
+  const accountsResult = latestAccounts.resultatregnskapResultat || {};
+  const accountsBalance = latestAccounts.eiendelergjeld || latestAccounts.egenkapitalGjeld || {};
+  const activeRoles = (rolesPayload?.rollegrupper || []).flatMap((group) => (group.roller || []).filter((role) => !role.avregistrert).map((role) => ({
+    type: role.type?.beskrivelse || role.type?.kode || "Rolle",
+    name: role.person?.navn ? [role.person.navn.fornavn, role.person.navn.etternavn].filter(Boolean).join(" ") : role.enhet?.navn?.[0] || "",
+  }))).filter((role) => role.name);
+  const value = {
+    organizationNumber: resolvedOrgNumber,
+    legalName: match.navn || "",
+    organizationForm: match.organisasjonsform?.beskrivelse || "",
+    registeredAddress: brregAddressText(match.forretningsadresse || {}),
+    municipality: match.forretningsadresse?.kommune || "",
+    industryCode: match.naeringskode1?.kode || subunit.naeringskode1?.kode || "",
+    industry: match.naeringskode1?.beskrivelse || subunit.naeringskode1?.beskrivelse || "",
+    activity: (match.aktivitet || []).join("; "),
+    purpose: (match.vedtektsfestetFormaal || []).join("; "),
+    employees: match.antallAnsatte ?? subunit.antallAnsatte ?? "",
+    employeesRegistered: Boolean(match.harRegistrertAntallAnsatte || subunit.harRegistrertAntallAnsatte),
+    registeredDate: match.registreringsdatoEnhetsregisteret || match.registrertIEnhetsregisteret || "",
+    foundedDate: match.stiftelsesdato || "",
+    lastAnnualAccounts: match.sisteInnsendteAarsregnskap || "",
+    capital: match.kapital?.belop ? `${new Intl.NumberFormat("nb-NO").format(match.kapital.belop)} ${match.kapital.valuta || "NOK"}` : "",
+    revenue: accountsResult.driftsresultat?.driftsinntekter?.sumDriftsinntekter ?? "",
+    operatingResult: accountsResult.driftsresultat?.driftsresultat ?? "",
+    profitBeforeTax: accountsResult.ordinaertResultatFoerSkattekostnad ?? "",
+    annualResult: accountsResult.aarsresultat ?? "",
+    totalAssets: accountsBalance.eiendeler?.sumEiendeler ?? "",
+    totalEquity: accountsBalance.egenkapital?.sumEgenkapital ?? "",
+    revenueYear: latestAccounts.regnskapsperiode?.tilDato?.slice(0, 4) || "",
+    revenueSource: "Brønnøysundregistrene · Regnskapsregisteret",
+    proffProfileUrl: verifiedProffProfileUrls[resolvedOrgNumber] || "",
+    registerFlags: {
+      foretak: Boolean(match.registrertIForetaksregisteret),
+      mva: Boolean(match.registrertIMvaregisteret),
+      frivillig: Boolean(match.registrertIFrivillighetsregisteret),
+    },
+    roles: activeRoles,
+    status: match.konkurs ? "Konkurs" : match.underAvvikling ? "Under avvikling" : match.tvangsavvikling ? "Tvangsavvikling" : "Registrert",
+    businessWebsite: match.hjemmeside || "",
+    employeesSource: "Brønnøysundregistrene",
+    employeesCheckedAt: new Date().toISOString(),
+    profileSource: "Brønnøysundregistrene",
+    profileCheckedAt: new Date().toISOString(),
+  };
+  if (value.employees === "" || value.employees === null || value.employees === undefined) {
+    const proff = await lookupProffEmployees({ name: value.legalName || cleanName, orgNumber: resolvedOrgNumber, profileUrl: value.proffProfileUrl });
+    if (proff) Object.assign(value, proff);
+  }
+  brregBusinessCache.set(cacheKey, { value, expiresAt: Date.now() + 24 * 60 * 60 * 1000 });
+  return value;
 }
 
 const supplierMunicipalityLocalities = {
+  oygarden: ["oygarden", "øygarden", "straume", "knarrevik", "rong", "fjell", "skoge", "blomvag", "blomvåg", "toft", "stura", "misje", "turøy", "turøyna", "hjeltefjorden", "angeltveit", "vikavagen", "vikavågen", "hellesøy", "ågotnes", "kystbasen ågotnes", "brattholmen", "kolltveit", "klokkarvik", "steinsland", "glesvær", "skogsvåg", "5346", "5347", "5350", "5353", "5354", "5355", "5357", "5360", "5363", "5366", "5378", "5379", "5381", "5382"],
   stavanger: ["stavanger", "hundvag", "hundvåg", "tasta", "madla", "hillevag", "hillevåg", "storhaug", "vaulen", "kvernevik", "hafrsfjord", "jatta", "jåttå", "forus", "kvernevik"],
   sandnes: ["sandnes", "forus", "soma", "hana", "malmheim", "figgjo", "hommersak", "hommersåk", "sandal", "austrått", "bråstein"],
   sola: ["sola", "tananger", "risa", "tjorvag", "tjørvåg", "kolnes", "stangeland", "rege", "vigdel"],
@@ -89,14 +285,53 @@ function supplierPlaceMatchesAllowed(place, allowedPlaces) {
   });
 }
 
+function supplierAddressMatchesAllowed(address, allowedPlaces) {
+  return supplierPlaceMatchesAllowed(
+    [address?.place, address?.postCode].filter(Boolean).join(" "),
+    allowedPlaces
+  );
+}
+
+function supplierMunicipalityFromAddress(address, allowedPlaces) {
+  const place = String(address || "").trim();
+  return allowedPlaces.find((municipality) => supplierPlaceMatchesAllowed(place, [municipality])) || "";
+}
+
 function googleAdsSupplierKey(supplier) {
-  return normalizeSupplierText(supplier.website || supplier.name);
+  return supplierRegistryKey(supplier);
+}
+
+function supplierNameIdentity(value) {
+  let text = String(value || "").trim();
+  // Søkeresultater legger ofte til fag, sted eller kilden etter firmanavnet.
+  // Identiteten skal bygge på selve virksomhetsnavnet, ikke resultattittelen.
+  text = text.replace(/^(privatkunder|bedriftskunder|kontakt(?:\s+oss)?)\s*[-:]\s*/i, "");
+  text = text.replace(/\s+(din lokale|lokale|autoriserte|autorisert)\b[\s\S]*$/i, "");
+  text = text.split(/\s+\|\s+|\s+[–-]\s+|,\s+/)[0];
+  text = normalizeSupplierText(text)
+    .replace(/\b(aksjeselskap|allmennaksjeselskap|as|asa|ans|da|sa|nuf)\b/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  return text.replace(/^(privatkunder|bedriftskunder|kontakt)\s+/, "").trim();
+}
+
+function supplierRegistryKey(supplier) {
+  const organizationNumber = String(supplier?.organizationNumber || supplier?.orgNumber || "").replace(/\D/g, "");
+  if (organizationNumber) return `org:${organizationNumber}`;
+  const name = supplierNameIdentity(supplier?.name || supplier?.company || "");
+  if (name) return `name:${name}`;
+  const address = normalizeSupplierText(supplier?.address || supplier?.businessAddress || supplier?.registeredAddress || "");
+  return address ? `address:${address}` : "";
 }
 
 function normalizeSupplierSource(supplier) {
   const raw = String(supplier.source || supplier.sourceLabel || "").trim().toUpperCase();
   const source = raw === "MITTANBUD" ? "MA" : raw;
-  return { ...supplier, source: source || "MA", sourceLabel: source || "MA" };
+  const sources = [...new Set([
+    ...(Array.isArray(supplier.sources) ? supplier.sources : []),
+    source,
+  ].filter(Boolean).map((value) => String(value).toUpperCase() === "MITTANBUD" ? "MA" : String(value).toUpperCase()))];
+  return { ...supplier, source: source || "MA", sourceLabel: source || "MA", sources };
 }
 
 function supplierFromGoogleAd(ad, context) {
@@ -121,55 +356,9 @@ function supplierFromGoogleAd(ad, context) {
   };
 }
 
-function extractOrganicGoogleCandidates(html, context) {
-  const source = String(html || "");
-  const links = extractDuckDuckGoLinks(source);
-  const titlePattern = /<a[^>]+class=["'][^"']*result__a[^"']*["'][^>]*>([\s\S]*?)<\/a>/gi;
-  const snippetPattern = /<a[^>]+class=["'][^"']*result__snippet[^"']*["'][^>]*>([\s\S]*?)<\/a>|<div[^>]+class=["'][^"']*result__snippet[^"']*["'][^>]*>([\s\S]*?)<\/div>/gi;
-  const titles = [];
-  const snippets = [];
-  let match;
-  while ((match = titlePattern.exec(source))) titles.push(decodeHtmlEntities(stripHtml(match[1])).replace(/\s+/g, " ").trim());
-  while ((match = snippetPattern.exec(source))) snippets.push(decodeHtmlEntities(stripHtml(match[1] || match[2])).replace(/\s+/g, " ").trim());
-  return links.slice(0, 20).map((link, index) => {
-    const title = titles[index] || new URL(link).hostname.replace(/^www\./, "");
-    const description = snippets[index] || "";
-    return {
-      name: title,
-      trade: context.tradeLabel || "Fagområde ikke oppgitt",
-      address: context.municipality || context.regionName || "",
-      phone: extractNorwegianPhones(`${title} ${description}`, title)[0] || "",
-      email: "",
-      website: link,
-      source: "G",
-      sourceLabel: "G",
-      regionId: context.regionId || "",
-      municipality: context.municipality || "",
-      description,
-      collectedAt: new Date().toISOString(),
-    };
-  });
-}
-
-async function searchOrganicGoogleSuppliers({ query, regionId, regionName, municipality, tradeLabel }) {
-  const searchQuery = [query, tradeLabel, municipality || regionName, "virksomhet Norge"].filter(Boolean).join(" ");
-  const response = await fetch(`https://html.duckduckgo.com/html/?q=${encodeURIComponent(searchQuery)}`, {
-    headers: { accept: "text/html,application/xhtml+xml", "user-agent": "NorskByggRadar/1.0 (organic supplier research)" },
-    signal: AbortSignal.timeout(15000),
-  });
-  if (!response.ok) throw new Error(`Det organiske søket svarte med HTTP ${response.status}.`);
-  const html = await response.text();
-  const discovered = extractOrganicGoogleCandidates(html, { regionId, regionName, municipality, tradeLabel });
-  const existing = await readGoogleAdsSuppliers();
-  const merged = new Map(existing.map((supplier) => [googleAdsSupplierKey(supplier), supplier]));
-  discovered.forEach((supplier) => merged.set(googleAdsSupplierKey(supplier), supplier));
-  await writeGoogleAdsSuppliers([...merged.values()]);
-  return { suppliers: discovered, configured: true, message: discovered.length ? `${discovered.length} organiske Google-treff ble lagt til og merket G.` : "Det organiske søket ga ingen lesbare virksomhetstreff." };
-}
-
 async function searchGoogleAdsSuppliers({ query, regionId, regionName, municipality, tradeLabel }) {
   const local = (await readGoogleAdsSuppliers()).filter((supplier) => {
-    const sameRegion = !regionId || !supplier.regionId || supplier.regionId === regionId;
+    const sameRegion = !regionId || supplier.regionId === regionId;
     const sameMunicipality = !municipality || !supplier.municipality || normalizeSupplierText(supplier.municipality) === normalizeSupplierText(municipality);
     const haystack = normalizeSupplierText(`${supplier.name} ${supplier.trade} ${supplier.address} ${supplier.description}`);
     return sameRegion && sameMunicipality && (!query || haystack.includes(normalizeSupplierText(query)));
@@ -182,10 +371,11 @@ async function searchGoogleAdsSuppliers({ query, regionId, regionName, municipal
   const payload = await response.json();
   const ads = Array.isArray(payload.ads) ? payload.ads : (Array.isArray(payload.sponsored_results) ? payload.sponsored_results : []);
   const discovered = ads.map((ad) => supplierFromGoogleAd(ad, { regionId, regionName, municipality, tradeLabel })).filter(Boolean);
-  const existing = await readGoogleAdsSuppliers();
-  const merged = new Map(existing.map((supplier) => [googleAdsSupplierKey(supplier), supplier]));
-  discovered.forEach((supplier) => merged.set(googleAdsSupplierKey(supplier), supplier));
-  await writeGoogleAdsSuppliers([...merged.values()]);
+  await updateSupplierRegistry((existing) => {
+    const merged = new Map(existing.map((supplier) => [googleAdsSupplierKey(supplier), supplier]));
+    discovered.forEach((supplier) => merged.set(googleAdsSupplierKey(supplier), supplier));
+    return [...merged.values()];
+  });
   const combined = [...new Map([...local, ...discovered].map((supplier) => [googleAdsSupplierKey(supplier), supplier])).values()];
   return { suppliers: combined, configured: true, message: discovered.length ? `${discovered.length} Google Ads-funn ble lagt til i leverandørregisteret.` : "Google Ads leverte ingen annonser for dette søket." };
 }
@@ -597,16 +787,92 @@ const server = http.createServer(async (request, response) => {
   try {
     const url = new URL(request.url || "/", `http://${host}:${port}`);
 
-    if (url.pathname === "/sales/" && request.method === "GET") {
-      response.writeHead(308, { location: `/sales${url.search}` });
+    if ((url.pathname === "/sales" || url.pathname === "/sales/") && request.method === "GET") {
+      response.writeHead(308, { location: `/dashboard${url.search}` });
       response.end();
       return;
     }
 
-    if (url.pathname === "/sales" && request.method === "GET") {
-      const salesHtml = await fs.readFile(path.join(root, "public", "sales", "index.html"));
+    if ((url.pathname === "/dashboard" || url.pathname === "/dashboard/") && request.method === "GET") {
+      const dashboardHtml = await fs.readFile(path.join(root, "public", "dashboard", "index.html"));
       response.writeHead(200, { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" });
-      response.end(salesHtml);
+      response.end(dashboardHtml);
+      return;
+    }
+
+    if (url.pathname === "/api/business-profile" && request.method === "GET") {
+      const name = String(url.searchParams.get("name") || "").trim().slice(0, 160);
+      const orgNumber = String(url.searchParams.get("orgNumber") || "").replace(/\D/g, "").slice(0, 9);
+      const address = String(url.searchParams.get("address") || "").trim().slice(0, 180);
+      if (!name && !orgNumber) {
+        response.writeHead(400, { "content-type": "application/json; charset=utf-8" });
+        response.end(JSON.stringify({ error: "Virksomhetsnavn eller organisasjonsnummer mangler." }));
+        return;
+      }
+      try {
+        const profile = await lookupBrregBusiness({ name, orgNumber, address });
+        response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
+        response.end(JSON.stringify({ profile, source: profile?.employeesSource === "Proff" ? "Brønnøysundregistrene/Proff" : "Brønnøysundregistrene" }));
+      } catch (error) {
+        response.writeHead(502, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
+        response.end(JSON.stringify({ profile: null, error: error.message || "Virksomhetsopplysningene kunne ikke hentes." }));
+      }
+      return;
+    }
+
+    if (url.pathname === "/api/national-supplier-count" && request.method === "GET") {
+      const suppliers = await readGoogleAdsSuppliers();
+      const uniqueSuppliers = new Set(suppliers.map((supplier) => supplierRegistryKey(supplier)).filter(Boolean));
+      response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
+      response.end(JSON.stringify({ count: uniqueSuppliers.size, source: "Norsk ByggRadar leverandørregister" }));
+      return;
+    }
+
+    if (url.pathname === "/api/dashboard-supplier-notes" && request.method === "GET") {
+      let notes = {};
+      try { notes = JSON.parse(await fs.readFile(supplierContactNotesPath, "utf8")); } catch { /* Tomt register ved første oppstart. */ }
+      response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
+      response.end(JSON.stringify({ notes: notes && typeof notes === "object" ? notes : {} }));
+      return;
+    }
+
+    if (url.pathname === "/api/dashboard-supplier-notes" && request.method === "POST") {
+      let body = "";
+      for await (const chunk of request) {
+        body += chunk;
+        if (body.length > 256 * 1024) { response.writeHead(413, { "content-type": "application/json; charset=utf-8" }); response.end(JSON.stringify({ error: "Notatregisteret er for stort." })); return; }
+      }
+      let payload;
+      try { payload = JSON.parse(body || "{}"); }
+      catch {
+        response.writeHead(400, { "content-type": "application/json; charset=utf-8" });
+        response.end(JSON.stringify({ error: "Ugyldig kommentarformat." }));
+        return;
+      }
+      const incoming = payload.notes && typeof payload.notes === "object" ? payload.notes : {};
+      const operation = supplierContactNotesWriteQueue.then(async () => {
+        let existing = {};
+        try { existing = JSON.parse(await fs.readFile(supplierContactNotesPath, "utf8")); } catch { /* Første lagring oppretter registeret. */ }
+        const notes = { ...(existing && typeof existing === "object" ? existing : {}) };
+        for (const [key, value] of Object.entries(incoming)) {
+          if (!/^[a-z0-9:_|.-]{1,240}$/i.test(key) || !value || typeof value !== "object") continue;
+          const heading = String(value.heading || "").trim().slice(0, 40);
+          const text = String(value.text || "").trim().slice(0, 50);
+          if (!heading && !text) continue;
+          // Kommentarregisteret er append-only. Eksisterende kommentarer skal aldri fjernes.
+          notes[key] = notes[key] && typeof notes[key] === "object"
+            ? { heading: notes[key].heading || heading, text: notes[key].text || text }
+            : { heading, text };
+        }
+        await fs.mkdir(path.dirname(supplierContactNotesPath), { recursive: true });
+        const temporaryPath = `${supplierContactNotesPath}.tmp`;
+        await fs.writeFile(temporaryPath, `${JSON.stringify(notes, null, 2)}\n`, "utf8");
+        await fs.rename(temporaryPath, supplierContactNotesPath);
+      });
+      supplierContactNotesWriteQueue = operation.catch(() => {});
+      await operation;
+      response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
+      response.end(JSON.stringify({ saved: true }));
       return;
     }
 
@@ -621,11 +887,6 @@ const server = http.createServer(async (request, response) => {
       const requestedMunicipalities = String(url.searchParams.get("municipalities") || "").replace(/[^0-9,]/g, "");
       const municipalityNames = String(url.searchParams.get("municipalityNames") || "").split(",").map((value) => value.trim()).filter(Boolean);
       const municipalities = await resolveMittanbudMunicipalityIds(municipalityNames, requestedMunicipalities);
-      if (!municipalities) {
-        response.writeHead(503, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
-        response.end(JSON.stringify({ error: "Kommunen kunne ikke kobles sikkert til Mittanbuds kommune-ID." }));
-        return;
-      }
       const all = url.searchParams.get("all") === "1";
       const workTypes = all ? "" : String(url.searchParams.get("workTypes") || "153").replace(/[^0-9,]/g, "");
       const trade = String(url.searchParams.get("trade") || "").replace(/[^a-z0-9-]/gi, "");
@@ -633,17 +894,27 @@ const server = http.createServer(async (request, response) => {
       const regionId = String(url.searchParams.get("regionId") || "").replace(/[^a-z0-9-]/gi, "");
       const regionName = String(url.searchParams.get("regionName") || "").trim().slice(0, 80);
       const sourceUrl = `https://mittanbud.no/bedriftsok?municipalities=${encodeURIComponent(municipalities)}${all ? "" : `&workTypes=${encodeURIComponent(workTypes)}&trade=${encodeURIComponent(trade)}`}&place=${encodeURIComponent(place)}`;
-      const mittanbudSuppliers = await fetchAllMittanbudSuppliers(municipalities, workTypes, trade, all, true, municipalityNames);
+      let mittanbudSuppliers = [];
+      if (municipalities) {
+        try {
+          mittanbudSuppliers = await fetchAllMittanbudSuppliers(municipalities, workTypes, trade, all, true, municipalityNames);
+        } catch { /* Lokale NBR-kilder skal fortsatt vises når Mittanbud ikke svarer. */ }
+      }
       await syncGoogleAdsForSupplierContext({ regionId, regionName, municipality: municipalityNames.join(", "), tradeLabel: trade });
       const googleAdsSuppliers = (await readGoogleAdsSuppliers()).filter((supplier) => {
         const sameRegion = !regionId || supplier.regionId === regionId;
-        const sameMunicipality = !municipalityNames.length || Boolean(supplier.municipality) && municipalityNames.some((name) => normalizeSupplierText(name) === normalizeSupplierText(supplier.municipality));
+        const supplierMunicipality = normalizeSupplierText(supplier.municipality);
+        const sameMunicipality = !municipalityNames.length || !supplierMunicipality || municipalityNames.some((name) => {
+          const normalizedName = normalizeSupplierText(name);
+          return supplierMunicipality === normalizedName || supplierMunicipality.includes(normalizedName);
+        });
         const sameTrade = all || !trade || normalizeSupplierText(supplier.trade).includes(normalizeSupplierText(trade));
         return sameRegion && sameMunicipality && sameTrade;
       });
-      const suppliers = [...new Map([...mittanbudSuppliers, ...googleAdsSuppliers].map((supplier) => [supplier.website || `${supplier.name}|${supplier.address}`, supplier])).values()];
+      const suppliers = [...new Map([...mittanbudSuppliers, ...googleAdsSuppliers].map((supplier) => [supplierRegistryKey(supplier), supplier]).filter(([key]) => key)).values()]
+        .map(normalizeSupplierSource);
       response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
-      response.end(JSON.stringify({ sourceUrl, suppliers, message: suppliers.length ? "" : "Mittanbud leverte ingen lesbare leverandørposter i dette søket." }));
+      response.end(JSON.stringify({ sourceUrl, suppliers: suppliers.map((supplier) => ({ ...supplier, regionId, regionName })), message: suppliers.length ? "" : "Mittanbud leverte ingen lesbare leverandørposter i dette søket." }));
       return;
     }
 
@@ -656,11 +927,15 @@ const server = http.createServer(async (request, response) => {
       const regionResults = await Promise.all(groups.map(async (group) => {
         const municipalityNames = group.municipalities;
         const municipalities = await resolveMittanbudMunicipalityIds(municipalityNames, "");
-        if (!municipalities) return { id: group.id || "ukjent", suppliers: [] };
-        const mittanbudSuppliers = await fetchAllMittanbudSuppliers(municipalities, "", "", true, true, municipalityNames);
+        let mittanbudSuppliers = [];
+        if (municipalities) {
+          try {
+            mittanbudSuppliers = await fetchAllMittanbudSuppliers(municipalities, "", "", true, true, municipalityNames);
+          } catch { /* Lokale NBR-kilder skal fortsatt inngå i summeringen. */ }
+        }
         const allowedPlaces = municipalityNames.map((name) => normalizeSupplierText(name)).filter(Boolean);
         const localSuppliers = googleAdsSuppliers.filter((supplier) => {
-          const sameRegion = !group.id || !supplier.regionId || supplier.regionId === group.id;
+          const sameRegion = !group.id || supplier.regionId === group.id;
           const hasLocalAddress = supplierPlaceMatchesAllowed(
             String(supplier.municipality || supplier.address || "").split(",").pop(),
             allowedPlaces
@@ -669,7 +944,8 @@ const server = http.createServer(async (request, response) => {
         });
         return { id: group.id || "ukjent", suppliers: [...mittanbudSuppliers, ...localSuppliers] };
       }));
-      const suppliers = [...new Map(regionResults.flatMap((result) => result.suppliers).map((supplier) => [supplier.website || `${supplier.name}|${supplier.address}`, supplier])).values()];
+      const suppliers = [...new Map(regionResults.flatMap((result) => result.suppliers).map((supplier) => [supplier.website || `${supplier.name}|${supplier.address}`, supplier])).values()]
+        .map(normalizeSupplierSource);
       const byRegion = Object.fromEntries(regionResults.map((result) => [result.id, [...new Set(result.suppliers.map((supplier) => supplier.website || `${supplier.name}|${supplier.address}`))].length]));
       response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
       response.end(JSON.stringify({ count: suppliers.length, byRegion }));
@@ -694,28 +970,6 @@ const server = http.createServer(async (request, response) => {
       } catch (error) {
         response.writeHead(502, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
         response.end(JSON.stringify({ error: error.message || "Google Ads-søket kunne ikke gjennomføres." }));
-      }
-      return;
-    }
-
-    if (url.pathname === "/api/google-organic-suppliers" && request.method === "GET") {
-      const queryText = String(url.searchParams.get("q") || "").trim().slice(0, 120);
-      const regionId = String(url.searchParams.get("regionId") || "").replace(/[^a-z0-9-]/gi, "");
-      const regionName = String(url.searchParams.get("regionName") || "").trim().slice(0, 80);
-      const municipality = String(url.searchParams.get("municipality") || "").trim().slice(0, 80);
-      const tradeLabel = String(url.searchParams.get("trade") || "").trim().slice(0, 80);
-      if (!queryText && !tradeLabel) {
-        response.writeHead(400, { "content-type": "application/json; charset=utf-8" });
-        response.end(JSON.stringify({ error: "Velg fagområde eller skriv inn virksomhet før organisk søk." }));
-        return;
-      }
-      try {
-        const payload = await searchOrganicGoogleSuppliers({ query: queryText, regionId, regionName, municipality, tradeLabel });
-        response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
-        response.end(JSON.stringify(payload));
-      } catch (error) {
-        response.writeHead(502, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
-        response.end(JSON.stringify({ error: error.message || "Det organiske søket kunne ikke gjennomføres." }));
       }
       return;
     }
@@ -916,7 +1170,7 @@ const server = http.createServer(async (request, response) => {
         return;
       }
 
-      const aiPhoneCacheKey = subject.toLocaleLowerCase("nb-NO").replace(/\s+/g, " ").trim();
+      const aiPhoneCacheKey = `v2:${subject.toLocaleLowerCase("nb-NO").replace(/\s+/g, " ").trim()}`;
       const cachedPhoneSearch = aiPhoneCache.get(aiPhoneCacheKey);
       if (cachedPhoneSearch && cachedPhoneSearch.expiresAt > Date.now()) {
         response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
@@ -936,6 +1190,7 @@ const server = http.createServer(async (request, response) => {
       let plainText = "";
       let firstPhone = "";
       let phones = [];
+      let businessWebsite = "";
       let blocked = false;
       for (const { url: searchUrl, kind } of searchRequests) {
         let candidateText = "";
@@ -950,7 +1205,26 @@ const server = http.createServer(async (request, response) => {
           const rawHtml = await searchResponse.text();
           const linkedPhones = extractTelPhones(rawHtml);
           candidateText = decodeHtmlEntities(stripHtml(rawHtml)).replace(/\s+/g, " ").trim();
+          const candidateLinks = [...extractSearchLinks(rawHtml, kind), ...extractDuckDuckGoLinks(rawHtml)]
+            .filter((link, index, links) => links.indexOf(link) === index);
+          const candidateWebsite = selectBusinessWebsite(candidateLinks, subject);
+          if (!businessWebsite && candidateWebsite) businessWebsite = candidateWebsite;
           let candidatePhones = [...linkedPhones, ...extractNorwegianPhones(candidateText, subject)];
+          if (candidateWebsite) {
+            try {
+              const websiteResponse = await fetch(candidateWebsite, {
+                headers: { accept: "text/html,application/xhtml+xml", "user-agent": "Mozilla/5.0 (NorskByggRadar business research)" },
+                signal: AbortSignal.timeout(8000),
+              });
+              if (websiteResponse.ok) {
+                const websiteHtml = await websiteResponse.text();
+                const websiteText = decodeHtmlEntities(stripHtml(websiteHtml)).replace(/\s+/g, " ").trim();
+                const websitePhones = [...extractTelPhones(websiteHtml), ...extractNorwegianPhones(websiteText, subject)];
+                if (websitePhones.length) candidatePhones = [...candidatePhones, ...websitePhones];
+                if (websitePhones.length || candidateText.length < 180) candidateText = websiteText;
+              }
+            } catch { /* En enkelt virksomhetsside skal ikke stoppe resten av søket. */ }
+          }
           if (!candidatePhones.length && kind === "duckduckgo") {
             const resultLinks = extractDuckDuckGoLinks(rawHtml).slice(0, 5);
             for (const resultLink of resultLinks) {
@@ -999,6 +1273,7 @@ const server = http.createServer(async (request, response) => {
         searchUrl: searchUrls[0],
         phone: firstPhone,
         phones,
+        website: businessWebsite,
         blocked,
         info: firstPhone ? (phoneIndex >= 0 ? context : "Telefonnummer funnet i søkeresultatene.") : (blocked ? "Google blokkerte det automatiske AI-søket med CAPTCHA eller samtykkeside." : "Telefonnummer ble ikke funnet i søkeresultatene."),
         source: "AI-søk",
@@ -1286,6 +1561,7 @@ const server = http.createServer(async (request, response) => {
     if (requested === "/styles.css") requested = "/src/styles.css";
     if (requested.startsWith("/oppdrag/")) requested = `/public${requested}`;
     if (requested.startsWith("/sales/")) requested = `/public${requested}`;
+    if (requested.startsWith("/dashboard/")) requested = `/public${requested}`;
     if (requested.startsWith("/data/")) requested = `/public${requested}`;
     if (requested.startsWith("/assets/")) requested = `/public${requested}`;
     if (requested.startsWith("/vendor/")) requested = `/public${requested}`;
@@ -1453,7 +1729,7 @@ async function fetchMittanbudSuppliers(municipalityCodesValue, workTypesValue, t
       // utvalget skal virksomheten ikke vises, selv om upstream returnerer
       // virksomheten som fremhevet eller nasjonal kandidat.
       const hasLocalAddress = Array.isArray(candidate.addresses)
-        && candidate.addresses.some((address) => supplierPlaceMatchesAllowed(address?.place, allowedPlaces));
+        && candidate.addresses.some((address) => supplierAddressMatchesAllowed(address, allowedPlaces));
       if (!hasLocalAddress) return false;
     }
     seen.add(key);
@@ -1464,13 +1740,14 @@ async function fetchMittanbudSuppliers(municipalityCodesValue, workTypesValue, t
     // riktig region se ut som en utenforstående virksomhet.
     const address = (candidate.addresses || []).find((item) =>
       item?.street || item?.place
-        ? (!allowedPlaces.length || supplierPlaceMatchesAllowed(item?.place, allowedPlaces))
+        ? (!allowedPlaces.length || supplierAddressMatchesAllowed(item, allowedPlaces))
         : false
     ) || (candidate.addresses || []).find((item) => item?.street || item?.place) || {};
     return {
       name: candidate.name || "Ukjent virksomhet",
       trade: tradeLabel,
       address: [address.street, address.postCode, address.place].filter(Boolean).join(", "),
+      municipality: supplierMunicipalityFromAddress([address.place, address.postCode].filter(Boolean).join(" "), allowedMunicipalityNames),
       phone: String(candidate.phone || candidate.telephone || "").trim(),
       email: "",
       website: candidate.id ? `https://mittanbud.no/bedrift/${encodeURIComponent(candidate.id)}` : "",
@@ -1581,10 +1858,65 @@ function extractDuckDuckGoLinks(value) {
   return [...new Set(links)];
 }
 
+function extractSearchLinks(value, kind = "") {
+  const links = [];
+  const pattern = /href=["']([^"']+)["']/gi;
+  const blockedHosts = /(^|\.)google\.[^/]+$|(^|\.)googleusercontent\.com$|(^|\.)1881\.no$|(^|\.)gulesider\.no$|(^|\.)duckduckgo\.com$|(^|\.)bing\.com$/i;
+  let match;
+  while ((match = pattern.exec(String(value || "")))) {
+    let candidate = match[1].replace(/&amp;/g, "&");
+    try {
+      if (candidate.startsWith("/url?")) candidate = new URL(`https://www.google.com${candidate}`).searchParams.get("q") || "";
+      if (candidate.startsWith("//")) candidate = `https:${candidate}`;
+      const parsed = new URL(candidate);
+      if (!/^https?:$/.test(parsed.protocol) || blockedHosts.test(parsed.hostname)) continue;
+      if (/\/search|\/url$|\/l\//i.test(parsed.pathname)) continue;
+      links.push(parsed.origin + parsed.pathname.replace(/\/$/, ""));
+    } catch { /* Ugyldige eller relative søkeresultatlenker ignoreres. */ }
+  }
+  return [...new Set(links)].slice(0, kind === "google-ai" ? 4 : 3);
+}
+
+function selectBusinessWebsite(links, subject) {
+  const ignoredTerms = new Set(["as", "asa", "ans", "da", "sa", "nuf", "the", "norge", "norway"]);
+  const terms = String(subject || "")
+    .toLocaleLowerCase("nb-NO")
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .split(/\s+/)
+    .map((term) => term.replace(/[^a-z0-9æøå]/g, ""))
+    .filter((term) => term.length >= 3 && !ignoredTerms.has(term));
+  return links
+    .map((link) => {
+      try {
+        const hostname = new URL(link).hostname.toLocaleLowerCase("nb-NO");
+        const normalizedHost = hostname.replace(/[^a-z0-9æøå]/g, "");
+        const score = terms.reduce((total, term) => total + (normalizedHost.includes(term) ? term.length : 0), 0);
+        return { link, score };
+      } catch { return { link, score: 0 }; }
+    })
+    .filter((item) => item.score > 0)
+    .sort((a, b) => b.score - a.score)[0]?.link || "";
+}
+
 async function queuePendingSmsMessages() {
   const requests = await readJsonArray(incomingJobRequestsPath);
   for (const requestData of requests) await queueSmsDistribution(requestData);
   await dispatchSmsOutbox();
+}
+
+let lastWeeklySupplierRefresh = "";
+function startWeeklySupplierRefreshScheduler() {
+  if (String(process.env.NBR_WEEKLY_SUPPLIER_REFRESH || "true").toLowerCase() === "false") return;
+  setInterval(() => {
+    const now = new Date();
+    const parts = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Oslo", weekday: "short", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false }).formatToParts(now);
+    const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+    const runKey = `${values.year}-${values.month}-${values.day}`;
+    if (values.weekday !== "Mon" || values.hour !== "06" || values.minute !== "00" || lastWeeklySupplierRefresh === runKey) return;
+    lastWeeklySupplierRefresh = runKey;
+    const child = spawn(process.execPath, [path.join(root, "scripts", "weekly-supplier-refresh.mjs")], { cwd: root, env: process.env, stdio: "inherit" });
+    child.on("error", (error) => console.error(`Ukentlig bedriftsinnhenting feilet: ${error.message || error}`));
+  }, 60 * 1000).unref();
 }
 
 queuePendingSmsMessages().catch((error) => {
@@ -1593,6 +1925,7 @@ queuePendingSmsMessages().catch((error) => {
 
 server.listen(port, host, () => {
   console.log(`Norsk ByggRadar local UI: http://${host}:${port}/`);
+  startWeeklySupplierRefreshScheduler();
 });
 
 async function fetchSsbTable(table, dimensions) {

@@ -25,9 +25,9 @@ const seedSources = [
 
 const regionMunicipalities = {
   bergensregionen: ["Bergen kommune", "Askøy kommune", "Øygarden kommune", "Bjørnafjorden kommune", "Osterøy kommune", "Alver kommune", "Samnanger kommune", "Vaksdal kommune", "Austevoll kommune", "Kvam herad", "Voss herad", "Modalen kommune", "Masfjorden kommune", "Austrheim kommune", "Fedje kommune", "Gulen kommune", "Tysnes kommune"],
-  stavangerregionen: ["Stavanger kommune", "Sandnes kommune", "Sola kommune", "Randaberg kommune", "Klepp kommune", "Time kommune", "Hå kommune", "Gjesdal kommune", "Strand kommune", "Kvitsøy kommune", "Hjelmeland kommune", "Bjerkreim kommune", "Eigersund kommune", "Suldal kommune", "Sirdal kommune", "Lund kommune", "Sokndal kommune"],
+  stavangerregionen: ["Stavanger kommune", "Sandnes kommune", "Sola kommune", "Randaberg kommune", "Klepp kommune", "Time kommune", "Hå kommune", "Gjesdal kommune", "Strand kommune", "Kvitsøy kommune", "Hjelmeland kommune", "Bjerkreim kommune", "Eigersund kommune", "Suldal kommune", "Lund kommune", "Sokndal kommune"],
   haugalandsregionen: ["Kvinnherad kommune", "Stord kommune", "Fitjar kommune", "Bømlo kommune", "Sveio kommune", "Haugesund kommune", "Karmøy kommune", "Tysvær kommune", "Bokn kommune", "Utsira kommune", "Vindafjord kommune", "Etne kommune", "Sauda kommune"],
-  grenlandsregionen: ["Skien kommune", "Porsgrunn kommune", "Bamble kommune", "Notodden kommune", "Midt-Telemark kommune", "Kragerø kommune", "Nome kommune", "Tinn kommune", "Drangedal kommune", "Vinje kommune", "Seljord kommune", "Kviteseid kommune", "Siljan kommune", "Tokke kommune", "Hjartdal kommune", "Nissedal kommune", "Fyresdal kommune"],
+  grenlandsregionen: ["Skien kommune", "Porsgrunn kommune", "Bamble kommune", "Kragerø kommune", "Drangedal kommune", "Siljan kommune"],
   sorlandsregionen: ["Kristiansand kommune", "Lindesnes kommune", "Vennesla kommune", "Lillesand kommune", "Lyngdal kommune", "Farsund kommune", "Flekkefjord kommune", "Kvinesdal kommune", "Birkenes kommune", "Sirdal kommune", "Hægebostad kommune", "Iveland kommune"],
   vestfoldkongsbergregionen: ["Drammen kommune", "Sandefjord kommune", "Tønsberg kommune", "Larvik kommune", "Horten kommune", "Holmestrand kommune", "Lier kommune", "Kongsberg kommune", "Færder kommune", "Øvre Eiker kommune"],
 };
@@ -41,9 +41,10 @@ const allSources = Object.entries(regionMunicipalities).flatMap(([regionId, muni
 const regionFilter = String(process.env.NBR_IMPORT_REGION || "").trim().toLocaleLowerCase("nb-NO");
 const sources = process.argv.includes("--all") ? allSources.filter(([regionId]) => !regionFilter || regionId === regionFilter) : seedSources;
 
-const headers = { accept: "text/html,application/xhtml+xml", "user-agent": "NorskByggRadar/1.0 (organic supplier import)" };
+const headers = { accept: "text/html,application/xhtml+xml", "user-agent": "NorskByggRadar/1.0 (Håndverkerportalen supplier import)" };
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const strip = (value) => String(value || "").replace(/<[^>]+>/g, " ").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&#39;|&apos;/g, "'").replace(/\s+/g, " ").trim();
+const hpOrgNumberFromUrl = (value) => String(value || "").match(/(?:^|[^0-9])(\d{9})(?:[^0-9]|$)/)?.[1] || "";
 const keyOf = (row) => String(row.orgNumber || row.website || row.name).toLocaleLowerCase("nb-NO").trim();
 
 async function jsonLd(html) {
@@ -95,7 +96,7 @@ async function importSource([regionId, municipality, slug, trade]) {
           sourceUrl: listingUrl,
           regionId,
           municipality,
-          orgNumber: String(business.identifier || business.taxID || "").trim(),
+          orgNumber: String(business.identifier || business.taxID || hpOrgNumberFromUrl(website)).replace(/\D/g, "").slice(0, 9),
           description: `Fagområde hentet fra Håndverkerportalen: ${trade}`,
           collectedAt: new Date().toISOString(),
         };
@@ -118,7 +119,28 @@ for (let index = 0; index < sources.length; index += 3) {
   const results = await Promise.all(batch.map((source) => importSource(source)));
   results.forEach((result, resultIndex) => {
     const source = batch[resultIndex];
-    result.rows.forEach((row) => { merged.set(keyOf(row), row); imported += 1; });
+    result.rows.forEach((row) => {
+      const key = keyOf(row);
+      const current = merged.get(key);
+      if (!current) {
+        merged.set(key, row);
+        imported += 1;
+        return;
+      }
+      merged.set(key, {
+        ...current,
+        ...row,
+        source: current.source || row.source || "HP",
+        sourceLabel: current.sourceLabel || row.sourceLabel || current.source || "HP",
+        sources: [...new Set([...(Array.isArray(current.sources) ? current.sources : []), ...(Array.isArray(row.sources) ? row.sources : []), current.source, row.source, "HP"].filter(Boolean))],
+        orgNumber: row.orgNumber || current.orgNumber || "",
+        address: row.address || current.address || "",
+        phone: row.phone || current.phone || "",
+        email: row.email || current.email || "",
+        website: row.website || current.website || "",
+      });
+      imported += 1;
+    });
     console.log(`${source[1]} · ${source[3]}: ${result.rows.length} oppføringer (${result.listingUrl})`);
   });
   await fs.mkdir(path.dirname(registerPath), { recursive: true });

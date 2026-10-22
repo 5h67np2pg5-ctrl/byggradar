@@ -34400,12 +34400,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.41415,
+        "longitude": 5.27475
       }
     },
     {
@@ -44719,12 +44721,14 @@
         "priority": "A"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kartverket Eiendom-API",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "addressSource": "Kartverket Eiendom-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "matrikkel slått opp i Kartverket",
+        "latitude": 59.80257,
+        "longitude": 5.50684
       }
     },
     {

@@ -117,10 +117,10 @@ const loadMoreStep = 20;
 const weeklyDeliveryCount = 50;
 const statisticsSavedSearchesKey = "byggradar.statistics.savedSearches.v1";
 // Produktversjonen vises på forsiden. Hver ny implementering starter på innloggingssiden.
-const appVersion = 360;
+const appVersion = 441;
 const loginAccessCodes = {
   vendor: "norskbyggradar1000",
-  sales: "norskbyggradar2000",
+  dashboard: "norskbyggradar3000",
 };
 
 function currentModelLimit() {
@@ -593,12 +593,23 @@ const phaseOneStatuses = new Set([
 ]);
 
 const app = document.querySelector("#app");
+
+function readSessionValue(key) {
+  try { return sessionStorage.getItem(key) || ""; }
+  catch { return ""; }
+}
+
+function writeSessionValue(key, value) {
+  try { sessionStorage.setItem(key, value); }
+  catch { /* Plattformen fungerer også når nettleseren blokkerer øktlagring. */ }
+}
+
 init();
 
 async function init() {
   const routeMode = location.pathname === "/sales" ? "sales" : location.pathname === "/user" ? "vendor" : "";
-  const authorizedMode = sessionStorage.getItem("nbr-entry-mode");
-  const authorizedVersion = sessionStorage.getItem("nbr-entry-version");
+  const authorizedMode = readSessionValue("nbr-entry-mode");
+  const authorizedVersion = readSessionValue("nbr-entry-version");
   if (routeMode && authorizedMode === routeMode && authorizedVersion === String(appVersion)) {
     state.userMode = routeMode;
     await initVendorApplication();
@@ -614,8 +625,13 @@ async function init() {
 
 async function startUserMode(mode) {
   state.userMode = mode;
-  sessionStorage.setItem("nbr-entry-version", String(appVersion));
-  sessionStorage.setItem("nbr-entry-mode", mode);
+  writeSessionValue("nbr-entry-version", String(appVersion));
+  writeSessionValue("nbr-entry-mode", mode);
+  if (mode === "dashboard") {
+    writeSessionValue("nbr-dashboard-auth-v1", "ok");
+    window.location.assign(`/dashboard?v=${appVersion}`);
+    return;
+  }
   if (mode === "sales" || mode === "vendor") {
     window.location.assign(`/${mode === "sales" ? "sales" : "user"}?v=${appVersion}`);
     return;
@@ -693,15 +709,15 @@ function renderLogin() {
         <fieldset class="role-choice">
           <legend>Velg plattform</legend>
           <button class="role-option" type="button" data-mode="vendor">
-            <strong>Leverandørplattform</strong>
+            <strong>Brukerplattform</strong>
             <span>Finn relevante prosjekter, tiltak og oppdrag.</span>
           </button>
-          <button class="role-option" type="button" data-mode="sales">
-            <strong>Selgerflate</strong>
-            <span>Se prosjekter rundt kundens adresse.</span>
+          <button class="role-option" type="button" data-mode="dashboard">
+            <strong>Dashboard</strong>
+            <span>Arbeidsflate for virksomheter, kunder og salgsoppfølging.</span>
           </button>
           <button class="role-option is-disabled" type="button" data-mode="statistics" disabled aria-disabled="true">
-            <strong>Statestikkplattform</strong>
+            <strong>Statistikkplattform</strong>
             <span>Se samlet statistikk for regioner og kommuner.</span>
           </button>
         </fieldset>
@@ -799,8 +815,8 @@ async function loadProjects() {
     .flatMap((locationData) => locationData.projects || [])
     .filter((project) => !isNationalProjectRecord(project))
     .map((project, index) => normalizeProject(project, null, index));
-  state.allRegionProjectCount = deduplicateProjects(allRegionProjects).length;
-  state.projects = deduplicateProjects(normalizedProjects);
+  state.allRegionProjectCount = deduplicateClosedProjectText(deduplicateProjects(allRegionProjects)).length;
+  state.projects = deduplicateClosedProjectText(deduplicateProjects(normalizedProjects));
   state.rawProjectCount = state.projects.length;
   // Utvidet prosjektinformasjon er nå tilgjengelig på alle prosjekter.
   // Feltene filtreres i renderExpandedPreviewFields slik at tomme etiketter aldri vises.
@@ -814,6 +830,20 @@ function deduplicateProjects(projects) {
   const grouped = new Map();
   for (const project of projects) {
     const key = projectIdentityKey(project);
+    const existing = grouped.get(key);
+    grouped.set(key, existing ? mergeProjectRecords(existing, project) : project);
+  }
+  return [...grouped.values()];
+}
+
+function deduplicateClosedProjectText(projects) {
+  const grouped = new Map();
+  for (const project of projects) {
+    const key = normalize([project.firstLine, project.secondLine].filter(Boolean).join(" | "));
+    if (!key) {
+      grouped.set(`${project.id}:empty`, project);
+      continue;
+    }
     const existing = grouped.get(key);
     grouped.set(key, existing ? mergeProjectRecords(existing, project) : project);
   }
@@ -872,7 +902,9 @@ function normalizeProject(project, contactProject, index) {
   const derivedMatrikkel = extractMatrikkelFromProject(project);
   const title = cleanTitle(project.title || project.shortFacts || project.caseTitle || "Ukjent prosjekt");
   const status = classification.stage || project.status || project.phase || "Ukjent status";
-  const phaseLabel = classification.phase || classifyProjectPhase(status);
+  const phaseLabel = /^fase\s*[12]$/i.test(String(classification.phase || "").trim())
+    ? String(classification.phase).replace(/\s+/g, " ").replace(/^fase\s*/i, "Fase ")
+    : classifyProjectPhase(status);
   const projectText = projectClassificationText(project, title);
   const classifiedTypes = (classification.projectTypes || []).filter((type) => !/^ukjent$/i.test(String(type || "").trim()));
   const inferredTypes = inferProjectTypes(projectText);
@@ -2930,6 +2962,8 @@ function extractAddressFromProject(project, location = {}) {
   // Hent bare gatenavn med husnummer, slik at gnr/bnr og statusord ikke blir
   // sendt til adresseoppslaget som om de var adresser.
   const streetPattern = /\b([A-ZÆØÅ][\p{L}.'-]*(?:\s+[A-ZÆØÅ][\p{L}.'-]*)*\s+(?:vegen|veien|veg|vei|gata|gate|gaten|plassen|bakken|haugen|lia|marka|åsen|stien|tunet|hagen|holmen|myra|odden|berget|toppen|jordet))\s+(\d+[A-Za-z]?)\b/iu;
+  const namedAddressPattern = /\b([A-ZÆØÅ][\p{L}.'-]*(?:\s+[A-ZÆØÅ][\p{L}.'-]*){0,4})\s+(\d+[A-Za-z]?)\b/iu;
+  const streetNamePattern = /\b([A-ZÆØÅ][\p{L}.'-]*(?:\s+[A-ZÆØÅ][\p{L}.'-]*)*\s+(?:vegen|veien|veg|vei|gata|gate|gaten|plassen|bakken|haugen|lia|marka|åsen|stien|tunet|hagen|holmen|myra|odden|berget|toppen|jordet))\b/iu;
   const attachmentText = (project.files || [])
     .flatMap((file) => [file.title, file.name, file.filename])
     .filter(Boolean)
@@ -2940,13 +2974,22 @@ function extractAddressFromProject(project, location = {}) {
     project.shortFacts,
     project.documentTitle,
     project.title,
+    project.rawTitle,
     project.description,
+    project.documentText,
+    project.sourceText,
+    project.caseDescription,
+    project.documentDescription,
+    project.text,
     attachmentText,
   ];
   for (const candidate of candidates) {
-    const match = String(candidate || "").match(streetPattern);
+    const text = stripMarkup(candidate);
+    const match = text.match(streetPattern) || text.match(namedAddressPattern);
     const address = validAddressCandidate(match?.[0] || "");
     if (address) return address;
+    const streetName = validStreetNameCandidate(text.match(streetNamePattern)?.[0] || "");
+    if (streetName) return streetName;
   }
   return "";
 }
@@ -3088,8 +3131,14 @@ function validAddressCandidate(value) {
     .replace(/^[-–—\s]+/, "")
     .replace(/\s+/g, " ")
     .trim();
-  if (!text || /\b(gbnr|gnr|bnr|matrikkel|s\.?nr\.?|seksjonsnummer|tiltak på|godkjent|søknad om|løyve|rammeløyve)\b/i.test(text)) return "";
+  if (!text || /\b(gbnr|gnr|bnr|matrikkel|s\.?nr\.?|seksjonsnummer|tiltak på|godkjent|søknad om|løyve|rammeløyve|bygg|bygning|søknad|tillatelse|oppføring|prosjekt|enebolig|garasje|leilighetsbygg|boligfelt)\b/i.test(text)) return "";
   return /\d/.test(text) ? text.split("|")[0].trim() : "";
+}
+
+function validStreetNameCandidate(value) {
+  const text = String(value || "").replace(/\s+/g, " ").trim();
+  if (!text || /\b(gnr|bnr|gbnr|søknad|tillatelse|oppføring|prosjekt|bygg|bygning|boligfelt)\b/i.test(text)) return "";
+  return text;
 }
 
 function parseMatrikkel(value) {
@@ -3891,11 +3940,17 @@ function cleanTitle(value) {
 
 function fileDisplayTitle(value) {
   return String(value || "Vedlegg")
+    .replace(/^\s*\[([\s\S]*)\]\([^)]*\)\s*$/, "$1")
+    .replace(/\\(?=<\/?i\b)/gi, "")
     .replace(/<[^>]*>/g, "")
+    .replace(/[\[\]]/g, "")
     .replace(/&aring;/g, "å")
     .replace(/&oslash;/g, "ø")
     .replace(/&aelig;/g, "æ")
     .replace(/&amp;/g, "&")
+    .replace(/&#x([0-9a-f]+);/gi, (_, code) => String.fromCodePoint(parseInt(code, 16)))
+    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
+    .replace(/\\/g, "")
     .replace(/\s+/g, " ")
     .trim()
     .slice(0, 100);
