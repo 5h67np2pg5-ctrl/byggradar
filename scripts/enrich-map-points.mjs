@@ -2,6 +2,9 @@ import fs from "node:fs/promises";
 
 const regionManifest = JSON.parse(await fs.readFile("config/region-structure.json", "utf8"));
 const regions = regionManifest.regions.map((region) => region.id);
+const selectedRegions = process.env.MAP_REGION
+  ? regions.filter((region) => region === process.env.MAP_REGION)
+  : regions;
 const municipalityNumbers = {
   bergen: "4601", tysnes: "4616", voss: "4621", kvam: "4622", samnanger: "4623",
   bjørnafjorden: "4624", austevoll: "4625", øygarden: "4626", askøy: "4627", vaksdal: "4628",
@@ -120,6 +123,11 @@ async function lookup(query) {
 
 async function enrich(project) {
   if (project.locationEnrichment?.hasMapPoint && Number.isFinite(Number(project.locationEnrichment.latitude)) && Number.isFinite(Number(project.locationEnrichment.longitude))) return false;
+  const address = addressCandidate(project);
+  project.locationEnrichment = {
+    ...(project.locationEnrichment || {}),
+    addressLookupRequired: Boolean(address),
+  };
   for (const query of queries(project)) {
     try {
       const result = await lookup(query);
@@ -132,11 +140,19 @@ async function enrich(project) {
       console.warn("Kartverket-oppslag feilet", project.sourceDocumentId, error.message);
     }
   }
+  if (address) {
+    project.locationEnrichment = {
+      ...(project.locationEnrichment || {}),
+      hasMapPoint: false,
+      lookupStatus: "adresse funnet, kartoppslag mislyktes",
+    };
+  }
   return false;
 }
 
 async function run() {
-  for (const region of regions) {
+  if (process.env.MAP_REGION && !selectedRegions.length) throw new Error(`Ukjent MAP_REGION: ${process.env.MAP_REGION}`);
+  for (const region of selectedRegions) {
     const file = `public/data/regions/${region}/projects_location_enriched.json`;
     const data = JSON.parse(await fs.readFile(file, "utf8"));
     const projects = data.projects || [];
