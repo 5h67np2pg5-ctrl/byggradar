@@ -3,6 +3,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
+import { writeSupplierRegistry } from "./lib/supplier-registry.mjs";
 
 const execFileAsync = promisify(execFile);
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
@@ -51,10 +52,9 @@ async function run(command, args, env = {}) {
 }
 
 const before = JSON.parse(await fs.readFile(registerPath, "utf8").catch(() => "[]"));
-const beforeFile = JSON.stringify(before, null, 2);
 const report = {
   startedAt: new Date().toISOString(),
-  schedule: "Mandag kl. 06.00 Europe/Oslo",
+  schedule: "Fredag kl. 18.00 Europe/Oslo",
   before: { rows: before.length, unique: new Set(before.map(identity)).size },
   sources: [],
 };
@@ -89,7 +89,7 @@ report.sources.push({ source: "orgnummer", ...(await run("enrich-supplier-org-nu
 const after = JSON.parse(await fs.readFile(registerPath, "utf8").catch(() => "[]"));
 const removed = before.filter((previous) => !after.some((current) => preservedIn(previous, current)));
 if (removed.length) {
-  await fs.writeFile(registerPath, `${beforeFile}\n`, "utf8");
+  await writeSupplierRegistry(registerPath, before);
   report.status = "aborted_existing_businesses_would_be_removed";
   report.removedCount = removed.length;
   report.removedExamples = removed.slice(0, 10).map((row) => row.name || row.orgNumber || row.website || "Ukjent virksomhet");

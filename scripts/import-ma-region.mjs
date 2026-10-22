@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { writeSupplierRegistry } from "./lib/supplier-registry.mjs";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const registerPath = path.join(root, "data", "google_ads_suppliers.json");
@@ -86,5 +87,5 @@ for (const row of incoming) {
   }
 }
 
-await fs.writeFile(registerPath, `${JSON.stringify([...merged.values()], null, 2)}\n`, "utf8");
+await writeSupplierRegistry(registerPath, [...merged.values()]);
 console.log(JSON.stringify({ regionId, sourceCandidates: incoming.length, imported, updated, totalSuppliers: merged.size }, null, 2));

@@ -1,5 +1,5 @@
 const userVersion = 442;
-const dashboardVersion = 442;
+const dashboardVersion = 450;
 const SALES_VERSION = userVersion + dashboardVersion;
 const salesEntryIsApproved = (() => {
   try {
@@ -296,7 +296,7 @@ function openSupplierDashboard(index) {
       suppliers: state.suppliers,
     }));
   } catch { /* Dashboardet viser en fallback hvis økten ikke kan lagres. */ }
-  window.location.href = "/dashboard?login=1&v=442";
+  window.location.href = "/dashboard?login=1&v=892";
 }
 
 function formatCalledDate(timestamp) {

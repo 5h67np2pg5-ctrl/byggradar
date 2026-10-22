@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.mjs",
     "dev": "node server.mjs",
-    "build": "node --check src/main.js && node --check server.mjs && node scripts/validate-region-structure.mjs",
+    "build": "node --check src/main.js && node --check server.mjs && node --check public/dashboard/dashboard.js && node --check public/sales/sales.js && node scripts/validate-region-structure.mjs && node scripts/validate-supplier-registry.mjs",
     "preview": "node server.mjs",
     "collect:national": "node scripts/collect-national-procurements.mjs",
     "collect:vestfold-kongsberg": "node scripts/collect-region-building-cases.mjs",
@@ -21,7 +21,10 @@
     "import:ma-all": "node scripts/import-ma-all-regions.mjs",
     "import:ma-municipality": "node scripts/import-ma-municipality.mjs",
     "sync:suppliers": "node scripts/weekly-supplier-refresh.mjs",
-    "validate:regions": "node scripts/validate-region-structure.mjs"
+    "sync:projects": "node scripts/weekly-project-refresh.mjs",
+    "validate:regions": "node scripts/validate-region-structure.mjs",
+    "normalize:regions": "node scripts/normalize-region-project-structure.mjs",
+    "validate:region-data": "node scripts/validate-region-project-data.mjs"
   },
   "dependencies": {},
   "devDependencies": {}

@@ -46,6 +46,11 @@ const state = {
   collaborationTrade: "",
   collaborationOpen: false,
   collaborationMap: null,
+  collaborationDirectories: new Map(),
+  collaborationDirectoryLoading: new Set(),
+  collaborationProfileLoading: new Set(),
+  collaborationProfileLoaded: new Set(),
+  collaborationRequestKey: "",
   partnerTrade: "",
   partnerFinderOpen: false,
   partnerMap: null,
@@ -92,7 +97,6 @@ const partnerRoleLabels = {
 const collaborationModule = window.NBRCollaboration;
 const collaborationTrades = collaborationModule.trades;
 const collaborationRoleLabels = collaborationModule.roleLabels;
-const collaborationDirectory = collaborationModule.directory;
 
 function resetPartnerSearch() {
   state.partnerSearchKey = "";
@@ -117,8 +121,8 @@ const loadMoreStep = 20;
 const weeklyDeliveryCount = 50;
 const statisticsSavedSearchesKey = "byggradar.statistics.savedSearches.v1";
 // Produktversjonen vises på forsiden. Hver ny implementering starter på innloggingssiden.
-const userVersion = 442;
-const dashboardVersion = 442;
+const userVersion = 458;
+const dashboardVersion = 450;
 const appVersion = userVersion + dashboardVersion;
 const loginAccessCodes = {
   vendor: "norskbyggradar1000",
@@ -1254,6 +1258,7 @@ function renderShell() {
   document.querySelector("#collaborationClose")?.addEventListener("click", () => {
     state.collaborationOpen = false;
     state.collaborationTrade = "";
+    state.collaborationRequestKey = "";
     renderCollaborationFinder();
   });
   document.querySelector("#locationButton").addEventListener("click", openAreaMap);
@@ -1723,8 +1728,19 @@ function renderCollaborationFinder() {
 
   select.value = state.collaborationTrade;
   const region = activePartnerRegion();
+  const requestKey = `${region.id}:${state.collaborationTrade}:${state.customerMunicipality || ""}`;
+  const requestTrade = state.collaborationTrade;
+  state.collaborationRequestKey = requestKey;
   const origin = municipalityMapAnchor(state.customerMunicipality) || region.anchor;
   const originName = state.customerMunicipality ? displayGeographyName(state.customerMunicipality) : region.name;
+  const hasDirectory = state.collaborationDirectories.has(region.id);
+  if (!hasDirectory && !state.collaborationDirectoryLoading.has(region.id)) {
+    void loadCollaborationDirectory(region);
+  }
+  if (!hasDirectory) {
+    results.innerHTML = `<div class="collaboration-empty">${state.collaborationDirectoryLoading.has(region.id) ? "Laster registrerte samarbeidspartnere ..." : "Henter registrerte samarbeidspartnere ..."}</div>`;
+    return;
+  }
   if (!state.collaborationTrade) {
     results.innerHTML = `<div class="collaboration-empty">Velg et fagområde for å se samarbeidspartnere i ${escapeHtml(region.name)}.</div>`;
     return;
@@ -1733,38 +1749,377 @@ function renderCollaborationFinder() {
     results.innerHTML = `<div class="collaboration-empty">Området mangler et gyldig kartpunkt.</div>`;
     return;
   }
-  const partners = collaborationDirectory
+  const directory = state.collaborationDirectories.get(region.id) || [];
+  const partners = directory
     .filter((partner) => partner.regionId === region.id && partner.trade === state.collaborationTrade)
     .map((partner) => ({ ...partner, distanceKm: distanceKm(origin.lat, origin.lon, partner.lat, partner.lon) }))
-    .sort((a, b) => a.distanceKm - b.distanceKm);
+    .sort((a, b) => Number(Boolean(b.payingUser)) - Number(Boolean(a.payingUser)) || a.distanceKm - b.distanceKm)
+    .slice(0, 10);
   if (!partners.length) {
     results.innerHTML = `<div class="collaboration-empty">Ingen samarbeidspartnere er registrert for dette fagområdet i ${escapeHtml(region.name)}.</div>`;
     return;
   }
-  results.innerHTML = partners.map((partner) => `
-    <article class="collaboration-row">
+  void enrichCollaborationPartners(partners, requestKey);
+  results.innerHTML = partners.map((partner) => {
+    const profileFacts = collaborationProfileFacts(partner);
+    const websiteUrl = collaborationWebsiteValue(partner.website);
+    const website = websiteUrl
+      ? `<a href="${escapeHtml(websiteUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(websiteUrl.replace(/^https?:\/\//i, "").replace(/\/$/, ""))}</a>`
+      : `<span>Nettsted ikke oppgitt</span>`;
+    const email = partner.email
+      ? `<a href="mailto:${escapeHtml(partner.email)}">${escapeHtml(partner.email)}</a>`
+      : `<span>E-post ikke oppgitt</span>`;
+    const phone = partner.phone && !/telefon\s+ikke\s+oppgitt/i.test(String(partner.phone))
+      ? `<a class="collaboration-phone" href="tel:${escapeHtml(String(partner.phone).replace(/\s/g, ""))}">${escapeHtml(partner.phone)}</a>`
+      : `<span class="collaboration-phone">Telefon ikke oppgitt</span>`;
+    return `
+    <article class="collaboration-row" data-collaboration-id="${escapeHtml(partner.id)}">
       <div class="collaboration-company">
-        <strong>${escapeHtml(partner.company)}</strong>
+        <strong>${collaborationSourceMarkup(partner)}${escapeHtml(partner.company)}</strong>
         <span>${escapeHtml(collaborationRoleLabels[partner.trade])} · ${escapeHtml(region.name)}</span>
+        <div class="collaboration-profile-facts" data-profile-facts>${profileFacts.map((fact) => `<span>${escapeHtml(fact)}</span>`).join("")}</div>
       </div>
       <div class="collaboration-contact">
         <span>${escapeHtml(partner.contact)}</span>
-        <a href="tel:${escapeHtml(partner.phone.replaceAll(" ", ""))}">${escapeHtml(partner.phone)}</a>
+        <span class="collaboration-phone-label">Telefon</span>
+        ${phone}
         <span>${partner.distanceKm.toLocaleString("nb-NO", { maximumFractionDigits: 1 })} km fra ${escapeHtml(originName)}</span>
       </div>
       <div class="collaboration-contact">
-        <a href="mailto:${escapeHtml(partner.email)}">${escapeHtml(partner.email)}</a>
-        <a href="${escapeHtml(partner.website)}" target="_blank" rel="noopener noreferrer">Nettsted</a>
+        ${email}
+        <span data-collaboration-website>${website}</span>
       </div>
     </article>
-  `).join("");
-  if (mapBlock) mapBlock.hidden = false;
-  renderCollaborationMap(partners, region, origin, originName);
+  `;
+  }).join("");
+  // A supplied point can be the region's fallback coordinate. An address is
+  // more precise, so geocode every addressed partner before drawing the map.
+  const needsGeocoding = partners.some((partner) => partner.address && !partner.addressGeocodeAttempted);
+  if (mapBlock) mapBlock.hidden = needsGeocoding;
+  if (!needsGeocoding) renderCollaborationMap(partners, region, origin, originName);
+  void geocodeCollaborationPartners(partners, requestKey).then((changed) => {
+    if (state.collaborationRequestKey !== requestKey || !state.collaborationOpen || state.collaborationTrade !== requestTrade) return;
+    const currentDirectory = state.collaborationDirectories.get(region.id);
+    if (currentDirectory) {
+      partners.forEach((partner) => {
+        partner.distanceKm = distanceKm(origin.lat, origin.lon, partner.lat, partner.lon);
+        const stored = currentDirectory.find((entry) => String(entry.id) === String(partner.id));
+        if (stored) Object.assign(stored, {
+          lat: partner.lat,
+          lon: partner.lon,
+          hasSupplierPoint: partner.hasSupplierPoint,
+          addressGeocodeAttempted: partner.addressGeocodeAttempted,
+        });
+      });
+    }
+    if (needsGeocoding) {
+      // Re-render the cards so their distances and map points use the same
+      // resolved coordinates. The attempt flag prevents a repeat loop.
+      renderCollaborationFinder();
+      return;
+    }
+    if (mapBlock) mapBlock.hidden = false;
+    renderCollaborationMap(partners, region, origin, originName);
+  });
+}
+
+function collaborationPhoneValue(supplier) {
+  const candidates = [
+    supplier?.phone,
+    supplier?.telephone,
+    supplier?.phoneNumber,
+    supplier?.contactPhone,
+    supplier?.contact?.phone,
+    supplier?.contactPerson?.phone,
+    supplier?.dashboardProfile?.phone,
+  ];
+  const phone = candidates.find((value) => value && !/telefon\s+ikke\s+oppgitt/i.test(String(value)));
+  return phone ? String(phone).trim() : "Telefon ikke oppgitt";
+}
+
+function collaborationWebsiteValue(value) {
+  const website = String(value || "").trim();
+  if (!website) return "";
+  try {
+    const hostname = new URL(/^https?:\/\//i.test(website) ? website : `https://${website}`).hostname.toLowerCase();
+    if (
+      /(^|\.)haandverkerportalen\.no$/.test(hostname)
+      || /(^|\.)mittanbud\.no$/.test(hostname)
+      || /(^|\.)anbudstorget\.no$/.test(hostname)
+    ) return "";
+  } catch {
+    return "";
+  }
+  return /^https?:\/\//i.test(website) ? website : `https://${website}`;
+}
+
+function collaborationSourceCodes(supplier) {
+  const rawSources = [
+    ...(Array.isArray(supplier?.sources) ? supplier.sources : []),
+    supplier?.source,
+    supplier?.sourceLabel,
+  ].map((value) => String(value || "").trim().toUpperCase());
+  const codes = rawSources.map((value) => {
+    if (value === "MITTANBUD") return "MA";
+    if (value === "HÅNDVERKERPORTALEN" || value === "HANDVERKERPORTALEN") return "HP";
+    if (value === "GOOGLE ADS") return "GA";
+    return value;
+  }).filter((value) => ["MA", "HP", "G", "GA", "DIB"].includes(value));
+  return [...new Set(codes)];
+}
+
+function collaborationSourceMarkup(supplier) {
+  const codes = collaborationSourceCodes(supplier);
+  return codes.length
+    ? `<span class="collaboration-source-summary" title="Kilder: ${escapeHtml(codes.join(", "))}">${escapeHtml(codes.join(", "))}</span>`
+    : "";
+}
+
+function collaborationProfileFacts(partner) {
+  const profile = partner.dashboardProfile || {};
+  return [
+    partner.address ? `Adresse: ${partner.address}` : "",
+    partner.orgNumber ? `Org.nr. ${partner.orgNumber}` : "",
+    profile.industryCode ? `Næringskode: ${profile.industryCode}` : "",
+    profile.employees !== "" && profile.employees !== undefined ? `${profile.employees} ansatte` : "",
+    profile.revenue !== "" && profile.revenue !== undefined ? `Omsetning ${new Intl.NumberFormat("nb-NO").format(Number(profile.revenue))} kr` : "",
+  ].filter(Boolean);
+}
+
+function updateCollaborationPartnerRows(partners) {
+  const rows = [...document.querySelectorAll("[data-collaboration-id]")];
+  partners.forEach((partner) => {
+    const row = rows.find((element) => element.dataset.collaborationId === String(partner.id));
+    if (!row) return;
+    const facts = row.querySelector("[data-profile-facts]");
+    if (facts) facts.innerHTML = collaborationProfileFacts(partner).map((fact) => `<span>${escapeHtml(fact)}</span>`).join("");
+    const phone = row.querySelector(".collaboration-phone");
+    if (phone && partner.phone && !/telefon\s+ikke\s+oppgitt/i.test(String(partner.phone))) {
+      phone.outerHTML = `<a class="collaboration-phone" href="tel:${escapeHtml(String(partner.phone).replace(/\s/g, ""))}">${escapeHtml(partner.phone)}</a>`;
+    }
+    const website = row.querySelector("[data-collaboration-website]");
+    if (website) {
+      const websiteUrl = collaborationWebsiteValue(partner.website);
+      website.innerHTML = websiteUrl
+        ? `<a href="${escapeHtml(websiteUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(websiteUrl.replace(/^https?:\/\//i, "").replace(/\/$/, ""))}</a>`
+        : "<span>Nettsted ikke oppgitt</span>";
+    }
+  });
+}
+
+function isCurrentCollaborationRequest(requestKey) {
+  return state.collaborationRequestKey === requestKey && state.collaborationOpen;
+}
+
+async function enrichCollaborationPartners(partners, requestKey) {
+  const enrichOne = async (partner) => {
+    const key = String(partner.id || partner.company || "");
+    if (!key || state.collaborationProfileLoaded.has(key) || state.collaborationProfileLoading.has(key)) return;
+    state.collaborationProfileLoading.add(key);
+    try {
+      if (!isCurrentCollaborationRequest(requestKey)) return;
+      const params = new URLSearchParams({
+        name: partner.company,
+        orgNumber: String(partner.orgNumber || "").replace(/\D/g, ""),
+        address: partner.address || partner.municipality || "",
+      });
+      const response = await fetch(`/api/business-profile?${params.toString()}`, { signal: AbortSignal.timeout(8000) });
+      const payload = await response.json().catch(() => ({}));
+      const profile = payload.profile;
+      if (profile && isCurrentCollaborationRequest(requestKey)) {
+        if (!partner.phone || /telefon\s+ikke\s+oppgitt/i.test(String(partner.phone))) partner.phone = profile.phone || profile.telephone || profile.phoneNumber || partner.phone;
+        if (!partner.website) partner.website = collaborationWebsiteValue(profile.businessWebsite || profile.companyWebsite || "");
+        if (!partner.address) partner.address = profile.registeredAddress || profile.businessAddress || profile.address || partner.address;
+        if (!partner.orgNumber) partner.orgNumber = profile.organizationNumber || profile.orgNumber || partner.orgNumber;
+        if (!partner.contact || partner.contact === "Kontakt ikke oppgitt") {
+          partner.contact = profile.contactName || "Kontakt ikke oppgitt";
+        }
+        partner.dashboardProfile = {
+          employees: profile.employees ?? "",
+          revenue: profile.revenue ?? "",
+          industryCode: profile.industryCode || "",
+        };
+        const storedPartner = [...state.collaborationDirectories.values()].flat().find((entry) => String(entry.id) === key);
+        if (storedPartner) Object.assign(storedPartner, partner);
+      }
+      if (isCurrentCollaborationRequest(requestKey) && (!partner.phone || /telefon\s+ikke\s+oppgitt/i.test(String(partner.phone)))) {
+        const phoneResponse = await fetch(`/api/ai-phone-search?q=${encodeURIComponent(partner.company)}`, { signal: AbortSignal.timeout(3500) });
+        const phonePayload = await phoneResponse.json().catch(() => ({}));
+        const foundPhone = phonePayload.phone || phonePayload.phones?.[0] || phonePayload.telephone || phonePayload.phoneNumber || "";
+        if (phoneResponse.ok && foundPhone && isCurrentCollaborationRequest(requestKey)) {
+          partner.phone = foundPhone;
+          const storedPartner = [...state.collaborationDirectories.values()].flat().find((entry) => String(entry.id) === key);
+          if (storedPartner) storedPartner.phone = partner.phone;
+        }
+      }
+    } catch {
+      // Listen skal vises selv om et enkelt virksomhetsoppslag ikke svarer.
+    } finally {
+      state.collaborationProfileLoading.delete(key);
+      state.collaborationProfileLoaded.add(key);
+    }
+  };
+  // Begrens samtidige profiloppslag slik at samarbeidslisten ikke fryser
+  // når ti virksomheter skal berikes fra dashboard-kilden.
+  for (let index = 0; index < partners.length; index += 5) {
+    await Promise.all(partners.slice(index, index + 5).map(enrichOne));
+  }
+  if (isCurrentCollaborationRequest(requestKey)) updateCollaborationPartnerRows(partners);
+}
+
+function collaborationTradeValues(value) {
+  const text = normalize(value);
+  return [
+    ["entreprenør", /(entreprenør|entreprenoer|byggmester)/],
+    ["elektro", /(elektro|elektriker)/],
+    ["rørlegger", /(rør|ror|vvs|rørlegger|rorlegger)/],
+    ["tømrer", /(tømrer|tomrer|snekker)/],
+    ["murer", /murer/],
+    ["maler", /maler/],
+    ["ventilasjon", /(ventilasjon|inneklima)/],
+    ["tak", /(tak|taktekker|taklegger)/],
+  ].filter(([, pattern]) => pattern.test(text)).map(([trade]) => trade);
+}
+
+async function loadCollaborationDirectory(region) {
+  if (!region || state.collaborationDirectories.has(region.id) || state.collaborationDirectoryLoading.has(region.id)) return;
+  state.collaborationDirectoryLoading.add(region.id);
+  renderCollaborationFinder();
+  try {
+    const query = new URLSearchParams({ regionId: region.id, municipalityNames: region.municipalities.join(",") });
+    const response = await fetch(`/api/registered-suppliers?${query.toString()}`, { cache: "no-store" });
+    if (!response.ok) throw new Error(`Leverandørregisteret svarte ${response.status}`);
+    const payload = await response.json();
+    const suppliers = Array.isArray(payload.suppliers) ? payload.suppliers : [];
+    const actual = suppliers.flatMap((supplier, index) => {
+      const trades = collaborationTradeValues([
+        ...(Array.isArray(supplier.trades) ? supplier.trades : []),
+        supplier.trade,
+        supplier.description,
+        supplier.industry,
+      ].filter(Boolean).join(" "));
+      const anchor = municipalityMapAnchor(supplier.municipality) || region.anchor;
+      const suppliedLat = Number(supplier.lat || supplier.latitude);
+      const suppliedLon = Number(supplier.lon || supplier.longitude);
+      const hasSupplierPoint = validMapCoordinate(suppliedLat, suppliedLon);
+      const address = String(
+        supplier.address
+          || supplier.businessAddress
+          || supplier.registeredAddress
+          || supplier.forretningsadresse
+          || ""
+      ).trim();
+      return trades.map((trade) => ({
+        id: `${supplier.orgNumber || supplier.organizationNumber || `${region.id}-registered-${index}`}:${trade}`,
+        regionId: region.id,
+        trade,
+        company: supplier.name || supplier.company || "Ukjent virksomhet",
+        phone: collaborationPhoneValue(supplier),
+        contact: supplier.contactName || supplier.contactPerson || supplier.contact?.name || "Kontakt ikke oppgitt",
+        website: collaborationWebsiteValue(supplier.businessWebsite || supplier.companyWebsite || supplier.website || ""),
+        email: supplier.email || supplier.emailAddress || supplier.contactEmail || "",
+        orgNumber: supplier.orgNumber || supplier.organizationNumber || "",
+        address,
+        dashboardProfile: {
+          employees: supplier.employees ?? supplier.numberOfEmployees ?? supplier.employeeCount ?? "",
+          revenue: supplier.revenue ?? supplier.annualRevenue ?? supplier.turnover ?? "",
+          industryCode: supplier.industryCode || supplier.naceCode || supplier.naeringskode || supplier.næringskode || "",
+        },
+        sources: Array.isArray(supplier.sources) ? supplier.sources : [],
+        source: supplier.source || supplier.sourceLabel || "",
+        sourceLabel: supplier.sourceLabel || supplier.source || "",
+        payingUser: Boolean(supplier.payingUser),
+        lat: hasSupplierPoint ? suppliedLat : anchor.lat,
+        lon: hasSupplierPoint ? suppliedLon : anchor.lon,
+        hasSupplierPoint,
+        addressGeocodeAttempted: false,
+        municipality: supplier.municipality || "",
+      }));
+    }).flat();
+    state.collaborationDirectories.set(region.id, actual);
+  } catch (error) {
+    console.error("Kunne ikke hente registrerte samarbeidspartnere:", error);
+    state.collaborationDirectories.set(region.id, []);
+  } finally {
+    state.collaborationDirectoryLoading.delete(region.id);
+    renderCollaborationFinder();
+  }
+}
+
+async function geocodeCollaborationPartners(partners, requestKey) {
+  const pending = partners.filter((partner) => partner.address && !partner.addressGeocodeAttempted);
+  let changed = false;
+  for (let index = 0; index < pending.length; index += 5) {
+    if (!isCurrentCollaborationRequest(requestKey)) return changed;
+    await Promise.all(pending.slice(index, index + 5).map(async (partner) => {
+      partner.addressGeocodeAttempted = true;
+      const municipality = normalizeMunicipalityName(partner.municipality);
+      const kommunenummer = municipalityNumbers[municipality] || "";
+      try {
+        const rawAddress = String(partner.address || "").replace(/\s+/g, " ").trim();
+        const withoutCareOf = rawAddress.replace(/^c\/o\s+[^,]+,\s*/i, "");
+        const postalMatch = withoutCareOf.match(/\b\d{4}\b/);
+        const streetPart = withoutCareOf.split(",")[0].trim();
+        const placePart = withoutCareOf.split(",").slice(1).join(" ").trim();
+        const searches = [
+          rawAddress,
+          withoutCareOf,
+          postalMatch && streetPart ? `${streetPart}, ${postalMatch[0]} ${placePart}`.trim() : "",
+          streetPart && municipality ? `${streetPart}, ${municipality}`.trim() : "",
+        ].filter((value, searchIndex, values) => value && values.indexOf(value) === searchIndex);
+        let point = null;
+        for (const search of searches) {
+          const params = new URLSearchParams({
+            sok: search,
+            treffPerSide: "1",
+            utkoordsys: "4258",
+            filtrer: "adresser.representasjonspunkt",
+          });
+          if (kommunenummer) params.set("kommunenummer", kommunenummer);
+          const response = await fetch(`/api/geocode?${params.toString()}`, { signal: AbortSignal.timeout(8000) });
+          if (!response.ok) continue;
+          const payload = await response.json().catch(() => ({}));
+          point = payload.adresser?.[0]?.representasjonspunkt || null;
+          if (point?.lat && point?.lon) break;
+        }
+        if (!point?.lat || !point?.lon) return;
+        partner.lat = Number(point.lat);
+        partner.lon = Number(point.lon);
+        partner.hasSupplierPoint = true;
+        changed = true;
+      } catch {
+        // Virksomheten beholdes i listen selv om Kartverket ikke svarer.
+      }
+    }));
+  }
+  return changed;
+}
+
+function collaborationMapPoint(partner, index, usedPoints) {
+  const baseLat = Number(partner.lat);
+  const baseLon = Number(partner.lon);
+  const key = `${baseLat.toFixed(5)}|${baseLon.toFixed(5)}`;
+  const samePointIndex = usedPoints.get(key) || 0;
+  usedPoints.set(key, samePointIndex + 1);
+  if (!samePointIndex) return { lat: baseLat, lon: baseLon };
+
+  // Flere virksomheter kan ha samme kommuneanker når adressen ikke er
+  // geokodet. Spre bare selve kartmarkøren litt, slik at alle kan velges.
+  const offset = stableMapOffset(`${partner.id || partner.company || index}|${samePointIndex}`);
+  const scale = 1 + Math.min(samePointIndex, 5) * 0.35;
+  return {
+    lat: baseLat + offset.lat * scale,
+    lon: baseLon + offset.lon * scale,
+  };
 }
 
 function renderCollaborationMap(partners, region, origin, originName) {
   const canvas = document.querySelector("#collaborationMapCanvas");
   if (!canvas || !window.L || !partners.length) return;
+  if (state.collaborationMap) {
+    state.collaborationMap.remove();
+    state.collaborationMap = null;
+  }
   state.collaborationMap = L.map(canvas, {
     zoomControl: true,
     attributionControl: true,
@@ -1786,22 +2141,32 @@ function renderCollaborationMap(partners, region, origin, originName) {
   originMarker.bindTooltip(`Valgt kommune: ${escapeHtml(originName)}`, { direction: "top" });
   originMarker.addTo(state.collaborationMap);
   bounds.extend([origin.lat, origin.lon]);
+  const usedPoints = new Map();
   partners.forEach((partner) => {
-    const marker = L.circleMarker([partner.lat, partner.lon], {
-      radius: 8,
-      color: "#8c5b27",
-      weight: 2,
-      fillColor: "#e7a24e",
+    if (!validMapCoordinate(partner.lat, partner.lon)) return;
+    const point = collaborationMapPoint(partner, partners.indexOf(partner), usedPoints);
+    const marker = L.circleMarker([point.lat, point.lon], {
+      radius: 10,
+      color: "#6f3d00",
+      weight: 2.5,
+      fillColor: "#f0a22e",
       fillOpacity: 0.92,
     });
     marker.bindTooltip(`${escapeHtml(partner.company)} · ${escapeHtml(collaborationRoleLabels[partner.trade])}`, {
       direction: "top",
       sticky: true,
     });
+    marker.bindPopup(`
+      <strong>${escapeHtml(partner.company)}</strong><br>
+      ${escapeHtml(partner.address || "Adresse ikke oppgitt")}
+    `, { closeButton: true });
     marker.addTo(state.collaborationMap);
-    bounds.extend([partner.lat, partner.lon]);
+    bounds.extend([point.lat, point.lon]);
   });
-  if (bounds.isValid()) state.collaborationMap.fitBounds(bounds.pad(0.22), { maxZoom: 12 });
+  // Keep the BR supplier points readable on the compact map. A wide regional
+  // zoom makes correctly geocoded businesses appear to disappear on top of
+  // one another, especially in Bergen sentrum.
+  if (bounds.isValid()) state.collaborationMap.fitBounds(bounds.pad(0.12), { maxZoom: 15 });
   refreshMapSize(state.collaborationMap);
 }
 
@@ -3278,6 +3643,9 @@ function bindFullMapProjectSelection() {
 
 function openProjectFromMap(project) {
   const selectedProject = state.projects.find((candidate) => candidate.id === project.id) || project;
+  // A marker selection is a project selection. Close the full map before
+  // rendering the selected project so the list, not the map, gets focus.
+  closeFullMap({ force: true });
   state.selected = selectedProject;
   resetPartnerSearch();
   writeSavedValue("selectedProjectId", selectedProject.id);

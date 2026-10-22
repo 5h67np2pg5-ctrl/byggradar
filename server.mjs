@@ -3,11 +3,13 @@ import { spawn } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { readSupplierRegistry, writeSupplierRegistry } from "./scripts/lib/supplier-registry.mjs";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const incomingJobRequestsPath = path.join(root, "data", "incoming_job_requests.json");
 const smsOutboxPath = path.join(root, "data", "sms_outbox.json");
 const googleAdsSuppliersPath = path.join(root, "data", "google_ads_suppliers.json");
+const payingUsersPath = path.join(root, "data", "paying_users.json");
 const supplierContactNotesPath = path.join(root, "data", "supplier_contact_notes.json");
 const port = Number(process.env.PORT || 4173);
 const host = process.env.HOST || "0.0.0.0";
@@ -28,6 +30,7 @@ const mittanbudMunicipalityCache = { expiresAt: 0, values: new Map() };
 const brregBusinessCache = new Map();
 const proffEmployeeCache = new Map();
 const incomingJobRequests = [];
+let supplierRegistryCache = { signature: "", suppliers: null };
 
 const verifiedProffProfileUrls = {
   "935000548": "https://www.proff.no/selskap/alt-i-r%C3%B8r-as/bergen/r%C3%B8rleggertjenester/IFGOB1G07RG",
@@ -107,17 +110,54 @@ async function lookupProffEmployees({ name = "", orgNumber = "", profileUrl = ""
 
 async function readGoogleAdsSuppliers() {
   try {
-    const payload = JSON.parse(await fs.readFile(googleAdsSuppliersPath, "utf8"));
-    return Array.isArray(payload) ? payload.map(normalizeSupplierSource) : [];
+    const stat = await fs.stat(googleAdsSuppliersPath);
+    const signature = `${stat.size}:${stat.mtimeMs}`;
+    if (supplierRegistryCache.signature === signature && Array.isArray(supplierRegistryCache.suppliers)) {
+      return supplierRegistryCache.suppliers;
+    }
+    const suppliers = (await readSupplierRegistry(googleAdsSuppliersPath)).map(normalizeSupplierSource);
+    supplierRegistryCache = { signature, suppliers };
+    return suppliers;
   } catch (error) {
-    if (error.code === "ENOENT") return [];
+    if (error.code === "ENOENT") {
+      supplierRegistryCache = { signature: "missing", suppliers: [] };
+      return [];
+    }
+    if (Array.isArray(supplierRegistryCache.suppliers)) return supplierRegistryCache.suppliers;
     throw error;
   }
 }
 
+async function readPayingUsers() {
+  try {
+    const payload = JSON.parse(await fs.readFile(payingUsersPath, "utf8"));
+    return Array.isArray(payload) ? payload : [];
+  } catch (error) {
+    if (error.code === "ENOENT") return [];
+    console.error(`Betalende brukere kunne ikke leses: ${error.message || error}`);
+    return [];
+  }
+}
+
+function expandPayingUser(user) {
+  const trades = Array.isArray(user.trades) ? user.trades : [user.trade];
+  return trades.filter(Boolean).map((trade) => ({
+    ...user,
+    name: user.name || user.company || "",
+    company: user.company || user.name || "",
+    organizationNumber: user.organizationNumber || user.orgNumber || "",
+    trade,
+    source: "NBR",
+    sourceLabel: "NBR",
+    sources: ["NBR"],
+    payingUser: true,
+  }));
+}
+
 async function writeGoogleAdsSuppliers(suppliers) {
-  await fs.mkdir(path.dirname(googleAdsSuppliersPath), { recursive: true });
-  await fs.writeFile(googleAdsSuppliersPath, `${JSON.stringify(suppliers, null, 2)}\n`, "utf8");
+  await writeSupplierRegistry(googleAdsSuppliersPath, suppliers);
+  const stat = await fs.stat(googleAdsSuppliersPath);
+  supplierRegistryCache = { signature: `${stat.size}:${stat.mtimeMs}`, suppliers: suppliers.map(normalizeSupplierSource) };
 }
 
 // Alle kilder skriver til samme register. Serialisering hindrer at parallelle
@@ -324,14 +364,86 @@ function supplierRegistryKey(supplier) {
   return address ? `address:${address}` : "";
 }
 
+function isSupplierSourceUrl(value) {
+  try {
+    const hostname = new URL(String(value || "")).hostname.toLowerCase();
+    return /(^|\.)haandverkerportalen\.no$/.test(hostname)
+      || /(^|\.)mittanbud\.no$/.test(hostname)
+      || /(^|\.)anbudstorget\.no$/.test(hostname);
+  } catch {
+    return false;
+  }
+}
+
 function normalizeSupplierSource(supplier) {
   const raw = String(supplier.source || supplier.sourceLabel || "").trim().toUpperCase();
   const source = raw === "MITTANBUD" ? "MA" : raw;
+  const suppliedWebsite = String(supplier.website || "").trim();
+  const address = String(
+    supplier.address
+      || supplier.businessAddress
+      || supplier.registeredAddress
+      || supplier.forretningsadresse
+      || ""
+  ).trim();
+  const phone = String(
+    supplier.phone
+      || supplier.telephone
+      || supplier.phoneNumber
+      || supplier.contactPhone
+      || ""
+  ).trim();
+  const email = String(supplier.email || supplier.emailAddress || supplier.contactEmail || "").trim();
+  const sourceUrl = String(supplier.sourceUrl || "").trim() || (isSupplierSourceUrl(suppliedWebsite) ? suppliedWebsite : "");
+  const businessWebsite = String(
+    supplier.businessWebsite || supplier.companyWebsite || (isSupplierSourceUrl(suppliedWebsite) ? "" : suppliedWebsite)
+  ).trim();
   const sources = [...new Set([
     ...(Array.isArray(supplier.sources) ? supplier.sources : []),
     source,
   ].filter(Boolean).map((value) => String(value).toUpperCase() === "MITTANBUD" ? "MA" : String(value).toUpperCase()))];
-  return { ...supplier, source: source || "MA", sourceLabel: source || "MA", sources };
+  const trades = [...new Set([
+    ...(Array.isArray(supplier.trades) ? supplier.trades : []),
+    supplier.trade,
+  ].filter(Boolean).map((value) => String(value).trim()).filter(Boolean))];
+  return {
+    ...supplier,
+    address,
+    phone,
+    email,
+    website: businessWebsite,
+    businessWebsite,
+    sourceUrl,
+    source: source || "MA",
+    sourceLabel: source || "MA",
+    sources,
+    trades,
+  };
+}
+
+function mergeSupplierRecords(existing, incoming) {
+  const first = normalizeSupplierSource(existing);
+  const second = normalizeSupplierSource(incoming);
+  const merged = { ...first };
+  for (const [key, value] of Object.entries(second)) {
+    if (key === "sources" || key === "trades") continue;
+    if ((merged[key] === undefined || merged[key] === null || merged[key] === "") && value !== "") merged[key] = value;
+  }
+  merged.payingUser = Boolean(first.payingUser || second.payingUser);
+  merged.sources = [...new Set([...(first.sources || []), ...(second.sources || [])])];
+  merged.trades = [...new Set([...(first.trades || []), ...(second.trades || [])])];
+  if (!merged.trade && merged.trades.length) merged.trade = merged.trades[0];
+  return merged;
+}
+
+function mergeSupplierList(suppliers) {
+  const merged = new Map();
+  for (const supplier of suppliers) {
+    const key = supplierRegistryKey(supplier);
+    if (!key) continue;
+    merged.set(key, merged.has(key) ? mergeSupplierRecords(merged.get(key), supplier) : normalizeSupplierSource(supplier));
+  }
+  return [...merged.values()];
 }
 
 function supplierFromGoogleAd(ad, context) {
@@ -883,6 +995,36 @@ const server = http.createServer(async (request, response) => {
       return;
     }
 
+    if (url.pathname === "/api/registered-suppliers" && request.method === "GET") {
+      const regionId = String(url.searchParams.get("regionId") || "").replace(/[^a-z0-9-]/gi, "");
+      const municipalityNames = String(url.searchParams.get("municipalityNames") || "")
+        .split(",").map((value) => value.trim()).filter(Boolean);
+      const allowedPlaces = municipalityNames.map((name) => normalizeSupplierText(name)).filter(Boolean);
+      const payingUsers = (await readPayingUsers()).flatMap(expandPayingUser);
+      const localSuppliers = await readGoogleAdsSuppliers();
+      const sameContext = (supplier) => {
+        const supplierRegions = [
+          ...(Array.isArray(supplier.regionIds) ? supplier.regionIds : []),
+          ...(Array.isArray(supplier.regions) ? supplier.regions : []),
+          supplier.regionId,
+        ].filter(Boolean);
+        const sameRegion = !regionId || supplierRegions.includes(regionId);
+        const supplierMunicipality = normalizeSupplierText(supplier.municipality);
+        const sameMunicipality = !allowedPlaces.length || !supplierMunicipality || municipalityNames.some((name) => {
+          const normalizedName = normalizeSupplierText(name);
+          return supplierMunicipality === normalizedName || supplierMunicipality.includes(normalizedName);
+        });
+        return sameRegion && sameMunicipality;
+      };
+      const suppliers = mergeSupplierList([
+        ...payingUsers.filter(sameContext),
+        ...localSuppliers.filter(sameContext),
+      ]);
+      response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
+      response.end(JSON.stringify({ suppliers, source: "Norsk ByggRadar: betalende brukere først, deretter leverandørregister" }));
+      return;
+    }
+
     if (url.pathname === "/api/mittanbud-suppliers" && request.method === "GET") {
       const requestedMunicipalities = String(url.searchParams.get("municipalities") || "").replace(/[^0-9,]/g, "");
       const municipalityNames = String(url.searchParams.get("municipalityNames") || "").split(",").map((value) => value.trim()).filter(Boolean);
@@ -923,32 +1065,29 @@ const server = http.createServer(async (request, response) => {
       const groups = requestedGroups
         ? JSON.parse(requestedGroups).filter((group) => Array.isArray(group?.municipalities) && group.municipalities.length)
         : [{ id: "", municipalities: String(url.searchParams.get("municipalityNames") || "").split(",").map((value) => value.trim()).filter(Boolean) }];
-      const googleAdsSuppliers = await readGoogleAdsSuppliers();
-      const regionResults = await Promise.all(groups.map(async (group) => {
+      // Denne endepunktet brukes i bakgrunnen ved oppstart. Det skal ikke starte
+      // eksterne søk for alle regioner samtidig; det gjorde at brukerflaten frøs.
+      // Det lokale registeret er allerede deduplisert og inneholder kildene MA,
+      // HP, G, GA og DIB. Eksterne søk kjøres bare når brukeren ber om et søk.
+      const localSuppliers = await readGoogleAdsSuppliers();
+      const regionResults = groups.map((group) => {
         const municipalityNames = group.municipalities;
-        const municipalities = await resolveMittanbudMunicipalityIds(municipalityNames, "");
-        let mittanbudSuppliers = [];
-        if (municipalities) {
-          try {
-            mittanbudSuppliers = await fetchAllMittanbudSuppliers(municipalities, "", "", true, true, municipalityNames);
-          } catch { /* Lokale NBR-kilder skal fortsatt inngå i summeringen. */ }
-        }
         const allowedPlaces = municipalityNames.map((name) => normalizeSupplierText(name)).filter(Boolean);
-        const localSuppliers = googleAdsSuppliers.filter((supplier) => {
+        const suppliers = localSuppliers.filter((supplier) => {
           const sameRegion = !group.id || supplier.regionId === group.id;
-          const hasLocalAddress = supplierPlaceMatchesAllowed(
+          const hasLocalAddress = !allowedPlaces.length || supplierPlaceMatchesAllowed(
             String(supplier.municipality || supplier.address || "").split(",").pop(),
             allowedPlaces
           );
           return sameRegion && hasLocalAddress;
         });
-        return { id: group.id || "ukjent", suppliers: [...mittanbudSuppliers, ...localSuppliers] };
-      }));
+        return { id: group.id || "ukjent", suppliers };
+      });
       const suppliers = [...new Map(regionResults.flatMap((result) => result.suppliers).map((supplier) => [supplier.website || `${supplier.name}|${supplier.address}`, supplier])).values()]
         .map(normalizeSupplierSource);
       const byRegion = Object.fromEntries(regionResults.map((result) => [result.id, [...new Set(result.suppliers.map((supplier) => supplier.website || `${supplier.name}|${supplier.address}`))].length]));
       response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
-      response.end(JSON.stringify({ count: suppliers.length, byRegion }));
+      response.end(JSON.stringify({ count: suppliers.length, byRegion, source: "Norsk ByggRadar lokalt leverandørregister" }));
       return;
     }
 
@@ -1905,6 +2044,21 @@ async function queuePendingSmsMessages() {
 }
 
 let lastWeeklySupplierRefresh = "";
+let lastWeeklyProjectRefresh = "";
+function startWeeklyProjectRefreshScheduler() {
+  if (String(process.env.NBR_WEEKLY_PROJECT_REFRESH || "true").toLowerCase() === "false") return;
+  setInterval(() => {
+    const now = new Date();
+    const parts = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Oslo", weekday: "short", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false }).formatToParts(now);
+    const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+    const runKey = `${values.year}-${values.month}-${values.day}`;
+    if (values.weekday !== "Fri" || values.hour !== "15" || values.minute !== "00" || lastWeeklyProjectRefresh === runKey) return;
+    lastWeeklyProjectRefresh = runKey;
+    const child = spawn(process.execPath, [path.join(root, "scripts", "weekly-project-refresh.mjs")], { cwd: root, env: process.env, stdio: "inherit" });
+    child.on("error", (error) => console.error(`Ukentlig prosjektinnhenting feilet: ${error.message || error}`));
+  }, 60 * 1000).unref();
+}
+
 function startWeeklySupplierRefreshScheduler() {
   if (String(process.env.NBR_WEEKLY_SUPPLIER_REFRESH || "true").toLowerCase() === "false") return;
   setInterval(() => {
@@ -1912,7 +2066,7 @@ function startWeeklySupplierRefreshScheduler() {
     const parts = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Oslo", weekday: "short", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false }).formatToParts(now);
     const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
     const runKey = `${values.year}-${values.month}-${values.day}`;
-    if (values.weekday !== "Mon" || values.hour !== "06" || values.minute !== "00" || lastWeeklySupplierRefresh === runKey) return;
+    if (values.weekday !== "Fri" || values.hour !== "18" || values.minute !== "00" || lastWeeklySupplierRefresh === runKey) return;
     lastWeeklySupplierRefresh = runKey;
     const child = spawn(process.execPath, [path.join(root, "scripts", "weekly-supplier-refresh.mjs")], { cwd: root, env: process.env, stdio: "inherit" });
     child.on("error", (error) => console.error(`Ukentlig bedriftsinnhenting feilet: ${error.message || error}`));
@@ -1925,6 +2079,7 @@ queuePendingSmsMessages().catch((error) => {
 
 server.listen(port, host, () => {
   console.log(`Norsk ByggRadar local UI: http://${host}:${port}/`);
+  startWeeklyProjectRefreshScheduler();
   startWeeklySupplierRefreshScheduler();
 });
 

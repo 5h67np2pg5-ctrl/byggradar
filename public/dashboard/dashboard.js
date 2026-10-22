@@ -1,5 +1,5 @@
 const userVersion = 442;
-const dashboardBuildVersion = 442;
+const dashboardBuildVersion = 450;
 const DASHBOARD_VERSION = userVersion + dashboardBuildVersion;
 const DASHBOARD_PASSWORD = "norskbyggradar3000";
 const dashboardAuthKey = "nbr-dashboard-auth-v1";
@@ -32,8 +32,10 @@ let regionalSuppliers = [];
 let dashboardTradeFilter = "";
 let regionalSuppliersLoading = false;
 let regionalSupplierRequestId = 0;
+let regionalSupplierAbortController = null;
 let dashboardServerNotes = {};
 let dashboardNoteSaveQueue = Promise.resolve();
+let dashboardContactNoteIndex = null;
 
 function sortSuppliersAlphabetically(suppliers) {
   return [...suppliers].sort((a, b) => String(a.name || "").localeCompare(String(b.name || ""), "nb-NO", { sensitivity: "base" }));
@@ -86,6 +88,12 @@ async function loadDashboardRegions() {
 async function startDashboard() {
   await loadDashboardRegions();
   await loadDashboardContactNotes();
+  if (!supplier) {
+    try { sessionStorage.removeItem(dashboardRegionContextKey); } catch { /* Oppstart skal være uten tidligere regionvalg. */ }
+    regionalSupplierAbortController?.abort();
+    regionalSupplierAbortController = null;
+    regionalSuppliers = [];
+  }
   render();
 }
 
@@ -102,6 +110,7 @@ async function loadDashboardContactNotes() {
     local = parsed && typeof parsed === "object" ? parsed : {};
   } catch { /* Serverregisteret skal fortsatt brukes når nettleseren blokkerer lokal lagring. */ }
   dashboardServerNotes = { ...serverNotes, ...local };
+  dashboardContactNoteIndex = null;
   if (Object.keys(local).length) persistDashboardNotes(dashboardServerNotes);
 }
 
@@ -137,7 +146,7 @@ function getRegionContext() {
     );
     if (context?.id && Array.isArray(context.municipalities)) return context;
   } catch { /* Bruk standardregion dersom arbeidsøkten ikke har regionkontekst. */ }
-  return defaultRegionContext;
+  return null;
 }
 
 function dashboardIsAuthenticated() {
@@ -347,26 +356,37 @@ function readDashboardContactNote(value) {
   if (inline && typeof inline === "object") {
     return { heading: String(inline.heading || "").slice(0, 40), text: String(inline.text || "").slice(0, 50) };
   }
-  let notes = {};
+  const stored = dashboardContactNoteKeys(value).map((key) => getDashboardContactNoteIndex().get(key)).find(Boolean);
+  return stored && typeof stored === "object"
+    ? { heading: String(stored.heading || "").slice(0, 40), text: String(stored.text || "").slice(0, 50) }
+    : { heading: "", text: "" };
+}
+
+function getDashboardContactNoteIndex() {
+  if (dashboardContactNoteIndex) return dashboardContactNoteIndex;
+  const index = new Map();
+  const addSupplierNote = (value, note) => {
+    if (!note || typeof note !== "object") return;
+    dashboardContactNoteKeys(value).forEach((key) => index.set(key, note));
+  };
+  const addStoredEntry = (key, note) => {
+    if (!note || typeof note !== "object") return;
+    index.set(String(key), note);
+    const candidate = String(key).replace(/^normalized-name:/, "").split("|")[0];
+    const normalized = dashboardNormalizedName(candidate);
+    if (normalized) index.set(`normalized-name:${normalized}`, note);
+  };
+  Object.entries(dashboardServerNotes || {}).forEach(([key, note]) => addStoredEntry(key, note));
   try {
     const parsed = JSON.parse(localStorage.getItem(supplierContactNoteStorageKey) || "{}");
-    notes = parsed && typeof parsed === "object" ? parsed : {};
-  } catch { /* Serverregisteret leses uavhengig av nettleserlagring. */ }
-  const stored = dashboardContactNoteKeys(value).map((key) => dashboardServerNotes?.[key] || notes?.[key]).find(Boolean);
-  if (stored && typeof stored === "object") return { heading: String(stored.heading || "").slice(0, 40), text: String(stored.text || "").slice(0, 50) };
+    if (parsed && typeof parsed === "object") Object.entries(parsed).forEach(([key, note]) => addStoredEntry(key, note));
+  } catch { /* Serverregisteret brukes når lokal lagring ikke er tilgjengelig. */ }
   try {
-    const normalizedName = dashboardNormalizedName(value?.name);
-    const legacyStored = Object.entries(notes).find(([key]) => {
-      const candidate = String(key).replace(/^normalized-name:/, "").split("|")[0];
-      return normalizedName && dashboardNormalizedName(candidate) === normalizedName;
-    })?.[1];
-    if (legacyStored && typeof legacyStored === "object") return { heading: String(legacyStored.heading || "").slice(0, 40), text: String(legacyStored.text || "").slice(0, 50) };
     const snapshot = JSON.parse(sessionStorage.getItem(overviewSnapshotKey) || "null");
-    const snapshotItem = snapshot?.suppliers?.find((item) => dashboardContactNoteKeys(item).some((key) => dashboardContactNoteKeys(value).includes(key)));
-    const snapshotNote = snapshotItem?.dashboardContactNote || snapshotItem?.contactNote;
-    if (snapshotNote && typeof snapshotNote === "object") return { heading: String(snapshotNote.heading || "").slice(0, 40), text: String(snapshotNote.text || "").slice(0, 50) };
-    return { heading: "", text: String(stored || "").slice(0, 50) };
-  } catch { return { heading: "", text: "" }; }
+    if (Array.isArray(snapshot?.suppliers)) snapshot.suppliers.forEach((item) => addSupplierNote(item, item.dashboardContactNote || item.contactNote));
+  } catch { /* Notater skal ikke stoppe virksomhetslisten. */ }
+  dashboardContactNoteIndex = index;
+  return index;
 }
 
 function saveDashboardContactNote(value, heading, text) {
@@ -377,6 +397,7 @@ function saveDashboardContactNote(value, heading, text) {
     dashboardContactNoteKeys(value).forEach((key) => { notes[key] = entry; });
     dashboardContactNoteKeys(value).forEach((key) => { dashboardServerNotes[key] = entry; });
     localStorage.setItem(supplierContactNoteStorageKey, JSON.stringify(notes));
+    dashboardContactNoteIndex = null;
     persistDashboardNotes(dashboardServerNotes);
   } catch { /* Notatet gjelder bare når nettleseren tillater lokal lagring. */ }
 }
@@ -696,15 +717,16 @@ function renderDashboardMap() {
   const element = document.querySelector("#dashboardMap");
   const status = document.querySelector("#dashboardMapStatus");
   if (!element || !window.L) return;
+  const regionContext = getRegionContext() || {};
   if (dashboardMap) dashboardMap.remove();
-  dashboardMap = L.map(element, { zoomControl: true, scrollWheelZoom: true, dragging: true, doubleClickZoom: true, touchZoom: true, zoomSnap: 0.5 }).setView(dashboardCustomerPoint ? [dashboardCustomerPoint.lat, dashboardCustomerPoint.lon] : [60.39, 5.32], dashboardCustomerPoint ? 13 : 8);
+  dashboardMap = L.map(element, { zoomControl: true, scrollWheelZoom: true, dragging: true, doubleClickZoom: true, touchZoom: true, zoomSnap: 0.5, preferCanvas: true }).setView(dashboardCustomerPoint ? [dashboardCustomerPoint.lat, dashboardCustomerPoint.lon] : [60.39, 5.32], dashboardCustomerPoint ? 13 : 8);
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(dashboardMap);
-  const projectIcon = L.divIcon({ className: "dashboard-project-marker", html: "", iconSize: [12, 12], iconAnchor: [6, 6] });
   const customerIcon = L.divIcon({ className: "dashboard-customer-marker", html: "", iconSize: [22, 22], iconAnchor: [11, 11] });
+  const projectRenderer = L.canvas({ padding: 0.5 });
   const bounds = L.latLngBounds([]);
   dashboardProjects.forEach((project) => {
     const { lat, lon } = project.coordinates;
-    const marker = L.marker([lat, lon], { icon: projectIcon, keyboard: false }).addTo(dashboardMap);
+    const marker = L.circleMarker([lat, lon], { radius: 5, color: "#fff", weight: 1, fillColor: "#287fa8", fillOpacity: 1, renderer: projectRenderer, keyboard: false }).addTo(dashboardMap);
     marker.bindTooltip(esc(projectLabel(project)), { direction: "top", sticky: true });
     marker.on("click", () => {
       dashboardMap.panTo([lat, lon], { animate: true, duration: 0.25 });
@@ -862,6 +884,7 @@ void startDashboard();
 
 function renderRegionalSupplierOverview() {
   const context = getRegionContext();
+  const selectedRegionId = context?.id || "";
   app.innerHTML = `
     <main class="dashboard-shell">
       <header class="dashboard-topbar">
@@ -869,11 +892,14 @@ function renderRegionalSupplierOverview() {
         <div class="dashboard-heading"><span>Dashboard</span><strong>Velg virksomhet for å starte</strong><small id="dashboardNationalSupplierCount">Laster registrerte bedrifter...</small></div>
       </header>
       <section class="dashboard-context"><div><h1>Virksomheter i valgt region</h1><p>Velg region. Virksomhetene lastes automatisk når området er valgt.</p></div></section>
-      <main class="dashboard-region-list"><div class="dashboard-region-picker"><label for="dashboardRegionSelect">Region</label><select id="dashboardRegionSelect">${dashboardRegions.map((item) => `<option value="${esc(item.id)}" ${item.id === context.id ? "selected" : ""}>${esc(item.name)}</option>`).join("")}</select><label for="dashboardTradeSelect">Fagområde</label><select id="dashboardTradeSelect"><option value="">Alle fagområder</option>${["Elektriker", "Snekker", "Rørlegger", "Ventilasjon", "Grunnarbeid", "Murer", "Maler", "Taklegger", "Gulvlegger", "Byggmester", "Varmepumpemontør", "Prosjektering"].map((trade) => `<option value="${esc(trade)}" ${trade === dashboardTradeFilter ? "selected" : ""}>${esc(trade)}</option>`).join("")}</select></div><div class="region-list-heading"><div><span class="panel-kicker">Regionregister</span><h2>Alle virksomheter i ${esc(context.name)}</h2><p>Velg region og fagområde for å avgrense virksomhetslisten.</p></div><strong id="dashboardRegionalSupplierCount" class="regional-supplier-count">Laster antall virksomheter...</strong></div><div id="regionalSupplierRows" class="regional-supplier-rows"><p class="dashboard-map-status">Henter virksomheter i regionen...</p></div></main>
+      <main class="dashboard-region-list"><div class="dashboard-region-picker"><label for="dashboardRegionSelect">Region</label><select id="dashboardRegionSelect"><option value="" ${selectedRegionId ? "" : "selected"}>Velg region</option>${dashboardRegions.map((item) => `<option value="${esc(item.id)}" ${item.id === selectedRegionId ? "selected" : ""}>${esc(item.name)}</option>`).join("")}</select><label for="dashboardTradeSelect">Fagområde</label><select id="dashboardTradeSelect"><option value="">Alle fagområder</option>${["Elektriker", "Snekker", "Rørlegger", "Ventilasjon", "Grunnarbeid", "Murer", "Maler", "Taklegger", "Gulvlegger", "Byggmester", "Varmepumpemontør", "Prosjektering"].map((trade) => `<option value="${esc(trade)}" ${trade === dashboardTradeFilter ? "selected" : ""}>${esc(trade)}</option>`).join("")}</select></div><div class="region-list-heading"><div><span class="panel-kicker">Regionregister</span><h2>${context ? `Alle virksomheter i ${esc(context.name)}` : "Velg region"}</h2><p>Velg region. Virksomheter lastes først etter at et område er valgt.</p></div><strong id="dashboardRegionalSupplierCount" class="regional-supplier-count">${context ? "Laster antall virksomheter..." : "Velg region for å laste virksomheter"}</strong></div><div id="regionalSupplierRows" class="regional-supplier-rows"><p class="dashboard-map-status">${context ? "Henter virksomheter i regionen..." : "Velg region for å hente virksomheter."}</p></div></main>
     </main>`;
   document.querySelector("#dashboardRegionSelect")?.addEventListener("change", (event) => {
-    const nextContext = dashboardRegions.find((item) => item.id === event.target.value) || defaultRegionContext;
+    const nextContext = dashboardRegions.find((item) => item.id === event.target.value);
+    if (!nextContext) return;
     try { sessionStorage.setItem(dashboardRegionContextKey, JSON.stringify(nextContext)); } catch { /* Regionvalget gjelder bare den aktive arbeidsøkten. */ }
+    regionalSupplierAbortController?.abort();
+    regionalSupplierAbortController = null;
     regionalSuppliers = [];
     dashboardTradeFilter = "";
     regionalSupplierRequestId += 1;
@@ -885,8 +911,8 @@ function renderRegionalSupplierOverview() {
     renderRegionalSupplierRows(context);
   });
   void loadDashboardNationalSupplierCount();
-  if (regionalSuppliers.length) renderRegionalSupplierRows(context);
-  else void loadRegionalSuppliers(context);
+  if (context && regionalSuppliers.length) renderRegionalSupplierRows(context);
+  else if (context) void loadRegionalSuppliers(context);
 }
 
 function renderRegionalSupplierRows(context) {
@@ -944,11 +970,14 @@ function renderRegionalSupplierRows(context) {
 async function loadRegionalSuppliers(context) {
   if (regionalSuppliersLoading) return;
   const requestId = ++regionalSupplierRequestId;
+  regionalSupplierAbortController?.abort();
+  const abortController = new AbortController();
+  regionalSupplierAbortController = abortController;
   regionalSuppliersLoading = true;
   const rows = document.querySelector("#regionalSupplierRows");
   try {
     const params = new URLSearchParams({ all: "1", regionId: context.id, regionName: context.name, municipalityNames: context.municipalities.join(",") });
-    const response = await fetch(`/api/mittanbud-suppliers?${params}`);
+    const response = await fetch(`/api/registered-suppliers?${params}`, { signal: abortController.signal });
     const payload = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(payload.error || "Virksomhetslisten kunne ikke hentes.");
     if (requestId !== regionalSupplierRequestId) return;
@@ -956,9 +985,13 @@ async function loadRegionalSuppliers(context) {
     renderRegionalSupplierRows(context);
   } catch (error) {
     if (requestId !== regionalSupplierRequestId) return;
+    if (error?.name === "AbortError") return;
     if (rows) rows.innerHTML = `<p class="dashboard-map-status">${esc(error.message || "Virksomhetslisten kunne ikke hentes.")}</p>`;
   } finally {
-    if (requestId === regionalSupplierRequestId) regionalSuppliersLoading = false;
+    if (requestId === regionalSupplierRequestId) {
+      regionalSuppliersLoading = false;
+      if (regionalSupplierAbortController === abortController) regionalSupplierAbortController = null;
+    }
   }
 }
 

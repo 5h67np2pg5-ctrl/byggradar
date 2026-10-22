@@ -1,4 +1,5 @@
 import fs from "node:fs/promises";
+import { writeSupplierRegistry } from "./lib/supplier-registry.mjs";
 
 const registerPath = "data/google_ads_suppliers.json";
 const region = {
@@ -127,7 +128,7 @@ if (process.env.IMPORT_SR === "1") {
     const key = identity(row);
     if (!merged.has(key)) { merged.set(key, row); imported += 1; }
   }
-  await fs.writeFile(registerPath, `${JSON.stringify([...merged.values()], null, 2)}\n`);
+  await writeSupplierRegistry(registerPath, [...merged.values()]);
   report.imported = imported;
   report.note = "211 adresse-/postnummersamsvarende virksomheter ble importert; avvikskandidater ble ikke importert.";
 }

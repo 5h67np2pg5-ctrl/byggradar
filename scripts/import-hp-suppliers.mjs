@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { writeSupplierRegistry } from "./lib/supplier-registry.mjs";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const registerPath = path.join(root, "data", "google_ads_suppliers.json");
@@ -144,8 +145,8 @@ for (let index = 0; index < sources.length; index += 3) {
     console.log(`${source[1]} · ${source[3]}: ${result.rows.length} oppføringer (${result.listingUrl})`);
   });
   await fs.mkdir(path.dirname(registerPath), { recursive: true });
-  await fs.writeFile(registerPath, `${JSON.stringify([...merged.values()], null, 2)}\n`, "utf8");
+  await writeSupplierRegistry(registerPath, [...merged.values()]);
 }
 await fs.mkdir(path.dirname(registerPath), { recursive: true });
-await fs.writeFile(registerPath, `${JSON.stringify([...merged.values()], null, 2)}\n`, "utf8");
+await writeSupplierRegistry(registerPath, [...merged.values()]);
 console.log(`Importert: ${imported}. Unike i registeret: ${merged.size}.`);

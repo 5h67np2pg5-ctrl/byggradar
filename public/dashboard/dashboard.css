@@ -130,7 +130,7 @@ body { margin: 0; min-width: 320px; background: #eaf4f7; }
 .region-list-heading p { margin: 6px 0 0; color: #597681; font-size: .82rem; }
 .region-list-count { color: #24725f; font-size: .78rem; font-weight: 600; white-space: nowrap; }
 .regional-supplier-rows { display: grid; gap: 7px; }
-.regional-supplier-row { display: grid; grid-template-columns: minmax(190px, 1fr) minmax(180px, .9fr) minmax(220px, 1.25fr); gap: 14px; width: 100%; border: 1px solid #c6dce3; border-radius: 6px; padding: 11px 13px; background: #fff; color: #285668; text-align: left; font: inherit; cursor: pointer; align-items: start; }
+.regional-supplier-row { display: grid; grid-template-columns: minmax(190px, 1fr) minmax(180px, .9fr) minmax(220px, 1.25fr); gap: 14px; width: 100%; border: 1px solid #c6dce3; border-radius: 6px; padding: 11px 13px; background: #fff; color: #285668; text-align: left; font: inherit; cursor: pointer; align-items: start; content-visibility: auto; contain-intrinsic-size: 64px; }
 .regional-supplier-row:hover { border-color: #3a927f; background: #eff9f4; }
 .regional-supplier-row span:first-child { display: grid; gap: 3px; min-width: 0; }
 .regional-supplier-row strong { color: #214b5d; font-size: .82rem; overflow-wrap: anywhere; }

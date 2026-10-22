@@ -1,3 +1,4 @@
 # Lokale innsendelser og SMS-kø kan inneholde personopplysninger.
 data/*.json
 data/*.log
+!data/paying_users.json

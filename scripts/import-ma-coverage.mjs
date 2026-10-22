@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { writeSupplierRegistry } from "./lib/supplier-registry.mjs";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const registerPath = path.join(root, "data", "google_ads_suppliers.json");
@@ -126,7 +127,7 @@ for (const entry of confirmedNew) {
 }
 
 await fs.mkdir(reportDir, { recursive: true });
-await fs.writeFile(registerPath, `${JSON.stringify([...merged.values()], null, 2)}\n`, "utf8");
+await writeSupplierRegistry(registerPath, [...merged.values()]);
 await fs.writeFile(path.join(reportDir, "oygarden-latest.json"), `${JSON.stringify({
   municipality: coverageMunicipality,
   municipalityId: maMunicipalityId,
