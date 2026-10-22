@@ -1,0 +1,12 @@
+{
+  "municipality": "Askøy kommune",
+  "municipalityNumber": "4627",
+  "sourceUrl": "https://innsynpluss.onacos.no/askoy/sok/",
+  "endpoint": "https://innsynpluss.onacos.no/api/presentation/v2/nye-innsyn/overview",
+  "overviewType": 0,
+  "searchTerm": "bygg",
+  "pageSize": 100,
+  "lookbackDays": 90,
+  "include": "bygg|bygge|byggesak|byggjesak|byggesøknad|byggjesøknad|byggetillatelse|rammetillatelse|rammeløyve|igangsetting|igangsetjing|tilbygg|påbygg|bruksendring|garasje|bolig|bustad|næring|fasade|tak|terreng|mur|oppføring|riving|rivning|fradeling|frådeling|seksjonering|dispensasjon|løyve|søknad",
+  "exclude": "avslag|klage|ferdigmelding|ferdigattest|tilsyn|ulovlighet|ulovleg|innsyn|møteinnkalling|postmottak|arkiv|anmodning om dokument|bero|stanset|avsluttet|trukket|tilbakekalt|spørsmål|veiledning|gebyr|høring|høyring"
+}

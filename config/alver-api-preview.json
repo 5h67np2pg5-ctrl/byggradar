@@ -1,0 +1,9 @@
+{
+  "municipality": "Alver kommune",
+  "municipalityNumber": "4631",
+  "sourceUrl": "https://innsyn.sing.no/alver/innsyn/wfinnsyn.ashx",
+  "lookbackDays": 90,
+  "pageSize": 100,
+  "include": "bygg|bygge|byggesak|byggjesak|byggesøknad|byggjesøknad|byggetillatelse|rammetillatelse|rammeløyve|igangsetting|igangsetjing|tilbygg|påbygg|bruksendring|garasje|bolig|bustad|næring|fasade|tak|terreng|mur|oppføring|riving|rivning|fradeling|frådeling|seksjonering|dispensasjon|løyve|søknad",
+  "exclude": "avslag|klage|ferdigmelding|ferdigattest|tilsyn|ulovlighet|ulovleg|innsyn|møteinnkalling|postmottak|arkiv|anmodning om dokument|bero|stanset|avsluttet|trukket|tilbakekalt|spørsmål|veiledning|gebyr|høring|høyring"
+}

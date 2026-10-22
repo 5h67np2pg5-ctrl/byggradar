@@ -1,0 +1,27 @@
+{
+  "municipality": "Bjørnafjorden kommune",
+  "municipalityNumber": "4624",
+  "sourceUrl": "https://www.bjornafjorden.kommune.no/sok-etter-sak/sok-etter-sak-i-gamle-fusa-og-os-kommune/sok-i-bjornafjorden-si-innsynsloysing/",
+  "endpoint": "https://www.bjornafjorden.kommune.no/api/presentation/v2/nye-innsyn/overview",
+  "overviewType": 4,
+  "searchTerms": ["bygg"],
+  "pageSize": 100,
+  "maxPages": 100,
+  "lookbackDays": 90,
+  "include": [
+    "bygg", "bygge", "byggesak", "byggjesak", "byggesøknad", "byggjesøknad",
+    "byggetillatelse", "byggjeløyve", "rammetillatelse", "rammeløyve",
+    "igangsetting", "igangsetjing", "igangsettingsløyve", "igangsetjingsløyve",
+    "tilbygg", "påbygg", "bruksendring", "garasje", "bolig", "bustad",
+    "næring", "fasade", "tak", "terreng", "mur", "oppføring", "riving",
+    "rivning", "fradeling", "frådeling", "seksjonering", "dispensasjon",
+    "løyve", "søknad"
+  ],
+  "exclude": [
+    "avslag", "klage", "ferdigmelding", "ferdigattest", "tilsyn",
+    "ulovlighet", "ulovleg", "innsyn", "møteinnkalling", "postmottak",
+    "arkiv", "anmodning om dokument", "bero", "stanset", "avsluttet",
+    "trukket", "tilbakekalt", "spørsmål", "sporsmål", "veiledning", "gebyr",
+    "høring", "høyring"
+  ]
+}
