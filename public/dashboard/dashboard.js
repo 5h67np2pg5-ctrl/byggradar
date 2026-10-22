@@ -1,7 +1,8 @@
-const DASHBOARD_VERSION = 441;
+const DASHBOARD_VERSION = 442;
 const DASHBOARD_PASSWORD = "norskbyggradar3000";
 const dashboardAuthKey = "nbr-dashboard-auth-v1";
-const storageKey = "nbr-sales-dashboard-handoff";
+const dashboardSupplierHandoffKey = "nbr-dashboard-supplier-handoff";
+const dashboardRegionContextKey = "nbr-dashboard-region-context";
 const overviewSnapshotKey = "nbr-dashboard-overview-snapshot";
 const supplierCalledStorageKey = "nbr-supplier-called-v1";
 const supplierContactNoteStorageKey = "nbr-supplier-contact-note-v1";
@@ -9,10 +10,10 @@ const supplierContactNoteStorageKey = "nbr-supplier-contact-note-v1";
 const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" })[char]);
 const getSupplier = () => {
   try {
-    const rawSupplier = sessionStorage.getItem(storageKey);
+    const rawSupplier = sessionStorage.getItem(dashboardSupplierHandoffKey);
     // Dashboardet skal bare åpnes med virksomhet når den nettopp er valgt
-    // fra leverandøroversikten. Gamle valg skal ikke bli hengende igjen.
-    sessionStorage.removeItem(storageKey);
+    // fra virksomhetsoversikten. Gamle valg skal ikke bli hengende igjen.
+    sessionStorage.removeItem(dashboardSupplierHandoffKey);
     const supplier = JSON.parse(rawSupplier || "null");
     return supplier && typeof supplier === "object" ? supplier : null;
   } catch { return null; }
@@ -119,9 +120,19 @@ function persistDashboardNotes(notes) {
 }
 
 function getRegionContext() {
-  if (supplier?.salesRegionId) return { id: supplier.salesRegionId, name: supplier.salesRegionName || supplier.salesRegionId, municipalities: supplier.salesMunicipalities || [] };
+  const supplierRegionId = supplier?.dashboardRegionId;
+  if (supplierRegionId) {
+    return {
+      id: supplierRegionId,
+      name: supplier.dashboardRegionName || supplierRegionId,
+      municipalities: supplier.dashboardMunicipalities || [],
+    };
+  }
   try {
-    const context = JSON.parse(sessionStorage.getItem("nbr-sales-region-context") || "null");
+    const context = JSON.parse(
+      sessionStorage.getItem(dashboardRegionContextKey)
+      || "null",
+    );
     if (context?.id && Array.isArray(context.municipalities)) return context;
   } catch { /* Bruk standardregion dersom arbeidsøkten ikke har regionkontekst. */ }
   return defaultRegionContext;
@@ -483,7 +494,7 @@ function render() {
       </header>
       <div class="dashboard-context">
         <div><span class="eyebrow">Valgt virksomhet</span><h1>${esc(name)}</h1><p class="dashboard-company-meta">${esc(trade)} · ${esc(address)}</p><p class="dashboard-industry-line">Næringskode: ${esc(industryCode || "Ikke oppgitt")} · ${esc(industryMeaning)}</p></div>
-        <button class="back-button dashboard-context-back" id="backToSales" type="button">Tilbake til oversikt</button>
+        <button class="back-button dashboard-context-back" id="backToOverview" type="button">Tilbake til virksomhetsoversikt</button>
       </div>
       <section class="dashboard-grid" aria-label="Dashboard">
         <div class="dashboard-column dashboard-column-primary">
@@ -565,7 +576,7 @@ function render() {
         </div>
       </section>
     </main>`;
-  document.querySelector("#backToSales")?.addEventListener("click", () => {
+  document.querySelector("#backToOverview")?.addEventListener("click", () => {
     if (dashboardMap) {
       dashboardMap.remove();
       dashboardMap = null;
@@ -617,7 +628,8 @@ function render() {
 async function initializeMapOverview() {
   if (mapOverviewStarted || !supplier) return;
   mapOverviewStarted = true;
-  const regionId = supplier.salesRegionId || "bergensregionen";
+  const regionContext = getRegionContext();
+  const regionId = regionContext.id || "bergensregionen";
   const mapStatus = document.querySelector("#dashboardMapStatus");
   try {
     if (!window.L) throw new Error("Kartbiblioteket kunne ikke lastes.");
@@ -705,7 +717,7 @@ function renderDashboardMap() {
   } else if (bounds.isValid()) {
     dashboardMap.fitBounds(bounds.pad(0.15), { maxZoom: 11 });
   }
-  if (status) status.textContent = `${dashboardProjects.length} prosjekter med kartpunkt i ${esc(supplier.salesRegionName || "valgt region")}.`;
+  if (status) status.textContent = `${dashboardProjects.length} prosjekter med kartpunkt i ${esc(regionContext.name || "valgt region")}.`;
   setTimeout(() => dashboardMap?.invalidateSize(), 100);
 }
 
@@ -859,7 +871,7 @@ function renderRegionalSupplierOverview() {
     </main>`;
   document.querySelector("#dashboardRegionSelect")?.addEventListener("change", (event) => {
     const nextContext = dashboardRegions.find((item) => item.id === event.target.value) || defaultRegionContext;
-    try { sessionStorage.setItem("nbr-sales-region-context", JSON.stringify(nextContext)); } catch { /* Regionvalget gjelder bare den aktive arbeidsøkten. */ }
+    try { sessionStorage.setItem(dashboardRegionContextKey, JSON.stringify(nextContext)); } catch { /* Regionvalget gjelder bare den aktive arbeidsøkten. */ }
     regionalSuppliers = [];
     dashboardTradeFilter = "";
     regionalSupplierRequestId += 1;
@@ -920,7 +932,7 @@ function renderRegionalSupplierRows(context) {
         suppliers: regionalSuppliers,
       }));
     } catch { /* Oversikten beholdes i minnet dersom øktlagring ikke er tilgjengelig. */ }
-    supplier = { ...selected, salesRegionId: context.id, salesRegionName: context.name, salesMunicipalities: context.municipalities };
+    supplier = { ...selected, dashboardRegionId: context.id, dashboardRegionName: context.name, dashboardMunicipalities: context.municipalities };
     profileLookupStarted = false;
     mapOverviewStarted = false;
     render();

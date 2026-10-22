@@ -1,4 +1,4 @@
-const SALES_VERSION = 441;
+const SALES_VERSION = 442;
 const salesEntryIsApproved = (() => {
   try {
     return sessionStorage.getItem("nbr-entry-version") === String(SALES_VERSION)
@@ -294,7 +294,7 @@ function openSupplierDashboard(index) {
       suppliers: state.suppliers,
     }));
   } catch { /* Dashboardet viser en fallback hvis økten ikke kan lagres. */ }
-  window.location.href = "/dashboard?login=1&v=441";
+  window.location.href = "/dashboard?login=1&v=442";
 }
 
 function formatCalledDate(timestamp) {
