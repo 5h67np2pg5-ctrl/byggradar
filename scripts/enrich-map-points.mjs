@@ -23,10 +23,11 @@ const municipalityNumbers = {
   vinje: "4036", seljord: "4022", kviteseid: "4028", siljan: "4010", tokke: "4034",
   hjartdal: "4024", nissedal: "4030", fyresdal: "4032", drammen: "3301", sandefjord: "3907",
   tønsberg: "3905", larvik: "3909", horten: "3901", holmestrand: "3903", lier: "3312",
-  kongsberg: "3306", færder: "3911", "øvre eiker": "3314",
+  kongsberg: "3306", færder: "3911", "øvre eiker": "3314", trondheim: "5001",
 };
 
-const streetPattern = /\b([A-ZÆØÅ][\p{L}.'-]*(?:\s+[A-ZÆØÅ][\p{L}.'-]*)*\s+(?:vegen|veien|veg|vei|gata|gate|gaten|plassen|bakken|haugen|lia|marka|åsen|stien|tunet|hagen|holmen|myra|odden|berget|toppen|jordet))\s+(\d+[A-Za-z]?)\b/iu;
+const streetPattern = /\b((?:[A-ZÆØÅ][\p{L}.'-]*\s+){0,5}[A-ZÆØÅ][\p{L}.'-]*(?:vegen|veien|veg|vei|gata|gate|gaten|plassen|bakken|haugen|lia|marka|åsen|stien|tunet|hagen|holmen|myra|odden|berget|toppen|jordet))\s+(\d+[A-Za-z]?(?:\s*[-–]\s*\d+[A-Za-z]?)?)\b/iu;
+const streetOnlyPattern = /\b((?:[A-ZÆØÅ][\p{L}.'-]*\s+){0,5}[A-ZÆØÅ][\p{L}.'-]*(?:vegen|veien|veg|vei|gata|gate|gaten|plassen|bakken|haugen|lia|marka|åsen|stien|tunet|hagen|holmen|myra|odden|berget|toppen|jordet))\b/iu;
 
 function municipalityName(value) {
   return String(value || "")
@@ -36,13 +37,27 @@ function municipalityName(value) {
     .trim();
 }
 
+function cleanAddress(value) {
+  const normalized = String(value || "")
+    .replace(/\s+/g, " ")
+    .split("|")[0]
+    .trim();
+  return normalized.match(streetPattern)?.[0]
+    || normalized.match(streetOnlyPattern)?.[0]
+    || normalized
+      .replace(/^vedr\.?\s+/iu, "")
+      .replace(/^[A-ZÆØÅ]+[-/]\d+(?:[-/]\d+){1,4}\s*[-:]\s*/iu, "")
+      .trim();
+}
+
 function addressCandidate(project) {
   const explicit = [project.address, project.locationEnrichment?.address]
-    .map((value) => String(value || "").replace(/\s+/g, " ").trim())
+    .map(cleanAddress)
     .find((value) => value && /\d/.test(value) && !/\b(gbnr|gnr|bnr|matrikkel|s\.?nr\.?|seksjonsnummer|tiltak på|godkjent|søknad om)\b/i.test(value));
-  if (explicit) return explicit.split("|")[0].trim();
+  if (explicit) return explicit;
   for (const value of [project.caseTitle, project.shortFacts, project.documentTitle, project.title, project.description]) {
-    const match = String(value || "").match(streetPattern);
+    const text = String(value || "");
+    const match = text.match(streetPattern) || text.match(streetOnlyPattern);
     if (match) return match[0];
   }
   return "";
@@ -84,6 +99,8 @@ function queries(project) {
       address.replace(/sveien\b/iu, "veien"),
       address.replace(/vegen\b/iu, "veien"),
       address.replace(/veien\b/iu, "vegen"),
+      address.replace(/([a-zæøå])(?=(veg|vegen|vei|veien|gata|gate)\b)/iu, "$1 "),
+      address.replace(/\b(\d+)[A-Za-z]?\s*[-–]\s*\d+\b/, "$1"),
     ]);
     for (const variant of variants) {
       list.push({ kind: "address", sok: `${variant} ${municipalityName(project.municipality)}`.trim(), kommunenummer });

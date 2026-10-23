@@ -1,5 +1,5 @@
 const userVersion = 442;
-const dashboardBuildVersion = 450;
+const dashboardBuildVersion = 451;
 const DASHBOARD_VERSION = userVersion + dashboardBuildVersion;
 const DASHBOARD_PASSWORD = "norskbyggradar3000";
 const dashboardAuthKey = "nbr-dashboard-auth-v1";
@@ -222,7 +222,7 @@ function projectType(project) {
 function projectPhase(project) {
   const classification = project?.classification || {};
   const phaseCandidate = firstValue(classification.phase, classification.stage, project?.phase, project?.stage);
-  if (/^fase\s*[12]$/i.test(String(phaseCandidate || "").trim())) {
+  if (/^fase\s*[1-5]$/i.test(String(phaseCandidate || "").trim())) {
     return String(phaseCandidate).replace(/\s+/g, " ").replace(/^fase\s*/i, "Fase ");
   }
   const status = String(firstValue(classification.stage, project?.status, project?.stage, project?.documentType) || "").toLocaleLowerCase("nb-NO");

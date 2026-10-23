@@ -47,6 +47,12 @@
       "name": "Vestfold- og Kongsbergregionen",
       "anchor": { "lat": 59.25, "lon": 10.2 },
       "municipalities": ["Drammen kommune", "Sandefjord kommune", "Tønsberg kommune", "Larvik kommune", "Horten kommune", "Holmestrand kommune", "Lier kommune", "Kongsberg kommune", "Færder kommune", "Øvre Eiker kommune"]
+    },
+    {
+      "id": "trondheim",
+      "name": "Trondheim kommune",
+      "anchor": { "lat": 63.4305, "lon": 10.3951 },
+      "municipalities": ["Trondheim kommune"]
     }
   ]
 }

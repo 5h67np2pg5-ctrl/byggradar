@@ -9,7 +9,7 @@ const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const outputDir = path.join(root, "public/data/regions/vestfoldkongsbergregionen");
 const config = JSON.parse(await fs.readFile(path.join(root, "config/vestfold-kongsberg-postlist-sources.json"), "utf8"));
 const sources = config.municipalities.filter((item) => item.adapter === "elements");
-const terms = ["bygg", "bygge", "byggesak", "byggesøknad", "byggetillatelse", "rammetillatelse", "igangsetting", "tilbygg"];
+const terms = ["bygg", "bygge", "byggje", "byggesak", "byggjesak", "byggesøknad", "byggjesøknad", "byggetillatelse", "byggjeløyve", "rammetillatelse", "rammeløyve", "igangsetting", "igangsetjing", "igangsettingstillatelse", "igangsettingsløyve", "igangsetjingsløyve", "tilbygg", "påbygg", "fradeling", "frådeling", "løyve"];
 const excluded = new RegExp(config.filter.exclude.join("|"), "i");
 const cutoff = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
 const today = new Date().toISOString().slice(0, 10);

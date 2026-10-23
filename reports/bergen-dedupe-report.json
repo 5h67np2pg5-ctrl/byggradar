@@ -1,0 +1,16 @@
+{
+  "generatedAt": "2026-10-22T23:23:19.322Z",
+  "region": "bergensregionen",
+  "before": {
+    "locationProjects": 7340,
+    "contactProjects": 7340
+  },
+  "after": {
+    "locationProjects": 6694,
+    "contactProjects": 6694
+  },
+  "mergedGroups": 321,
+  "removedDuplicateRows": 646,
+  "preservedDocuments": 1091,
+  "rule": "Ett prosjekt per saksnummer eller prosjekttekst/adresse; dokumenter og kildekoblinger beholdes."
+}

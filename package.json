@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.mjs",
     "dev": "node server.mjs",
-    "build": "node --check src/main.js && node --check server.mjs && node --check public/dashboard/dashboard.js && node --check public/sales/sales.js && node scripts/validate-region-structure.mjs && node scripts/validate-supplier-registry.mjs",
+    "build": "node --check src/main.js && node --check server.mjs && node --check public/dashboard/dashboard.js && node --check public/sales/sales.js && node scripts/validate-region-structure.mjs && node scripts/validate-supplier-registry.mjs && node scripts/validate-region-project-data.mjs",
     "preview": "node server.mjs",
     "collect:national": "node scripts/collect-national-procurements.mjs",
     "collect:vestfold-kongsberg": "node scripts/collect-region-building-cases.mjs",
@@ -14,6 +14,9 @@
     "collect:drammen": "node scripts/collect-drammen-postjournal.mjs",
     "collect:larvik": "node scripts/collect-larvik-onacos.mjs",
     "preview:bergen-api": "node scripts/preview-bergen-api.mjs",
+    "preview:trondheim-api": "node scripts/preview-trondheim-api.mjs",
+    "preview:trondheim-postjournal": "node scripts/preview-trondheim-postjournal.mjs",
+    "collect:trondheim": "node scripts/collect-trondheim-region.mjs",
     "preview:oygarden-api": "node scripts/preview-oygarden-api.mjs",
     "preview:askoy-api": "node scripts/preview-askoy-api.mjs",
     "preview:alver-api": "node scripts/preview-alver-api.mjs",
@@ -29,6 +32,7 @@
     "sync:projects": "node scripts/weekly-project-refresh.mjs",
     "validate:regions": "node scripts/validate-region-structure.mjs",
     "normalize:regions": "node scripts/normalize-region-project-structure.mjs",
+    "classify:phases": "node scripts/classify-project-phases.mjs",
     "validate:region-data": "node scripts/validate-region-project-data.mjs"
   },
   "dependencies": {},

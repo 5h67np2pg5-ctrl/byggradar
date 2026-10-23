@@ -1,0 +1,27 @@
+{
+  "generatedAt": "2026-10-22T22:54:33.077Z",
+  "adapter": "alver-municipality-singsak-api-preview",
+  "municipality": "Alver kommune",
+  "municipalityNumber": "4631",
+  "source": "https://innsyn.sing.no/alver/innsyn/wfinnsyn.ashx",
+  "doesNotModifyNbrProjectFiles": true,
+  "status": "ok",
+  "cutoff": "2026-07-24T22:54:33.077Z",
+  "counts": {
+    "rawRows": 31,
+    "recentByDate": 0,
+    "afterNbrPreviewFilter": 0,
+    "uniqueAfterCaseDeduplication": 0
+  },
+  "termCounts": {
+    "bygg": 10,
+    "byggesak": 10,
+    "byggjesak": 1,
+    "søknad": 10
+  },
+  "examples": [],
+  "filter": {
+    "include": "bygg|bygge|byggesak|byggjesak|byggesøknad|byggjesøknad|byggetillatelse|rammetillatelse|rammeløyve|igangsetting|igangsetjing|tilbygg|påbygg|bruksendring|garasje|bolig|bustad|næring|fasade|tak|terreng|mur|oppføring|riving|rivning|fradeling|frådeling|seksjonering|dispensasjon|løyve|søknad",
+    "exclude": "avslag|klage|ferdigmelding|ferdigattest|tilsyn|ulovlighet|ulovleg|innsyn|møteinnkalling|postmottak|arkiv|anmodning om dokument|bero|stanset|avsluttet|trukket|tilbakekalt|spørsmål|veiledning|gebyr|høring|høyring"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "municipality": "Trondheim kommune",
+  "municipalityNumber": "5001",
+  "sourceUrl": "https://www.trondheim.kommune.no/tema/bygg-kart-og-eiendom/bygging/byggesak/innsyn-i-byggesaker/",
+  "portalUrl": "https://trondheim.innsynsportal.no/postjournal-v2/5a4964b5-a7aa-4b48-9d48-f58dd271c656",
+  "endpoint": "https://trondheim.innsynsportal.no/graphql",
+  "listId": "5a4964b5-a7aa-4b48-9d48-f58dd271c656",
+  "query": "bygg",
+  "pageSize": 100,
+  "maxPages": 1000,
+  "include": [
+    "bygg", "bygge", "byggje", "byggesak", "byggjesak", "byggesøknad", "byggjesøknad",
+    "byggetillatelse", "byggjeløyve", "rammetillatelse", "rammeløyve",
+    "igangsetting", "igangsetjing", "igangsettingstillatelse", "igangsettingsløyve", "igangsetjingsløyve",
+    "tilbygg", "påbygg", "bruksendring", "garasje", "bolig", "bustad", "næring",
+    "fasade", "tak", "terreng", "mur", "oppføring", "rivning", "riving",
+    "fradeling", "frådeling", "seksjonering", "dispensasjon", "løyve", "søknad"
+  ],
+  "exclude": [
+    "adressendring", "adresseendring", "avslag", "klage", "ferdigmelding", "ferdigattest", "tilsyn", "ulovlighet",
+    "innsyn", "møteinnkalling", "postmottak", "arkiv", "anmodning om dokument",
+    "bero", "stanset", "avsluttet", "trukket", "tilbakekalt", "spørsmål",
+    "veiledning", "gebyr", "høring", "høyring", "ulovleg", "avslutta", "trekt", "tilbakekalla"
+  ]
+}

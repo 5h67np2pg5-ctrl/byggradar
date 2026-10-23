@@ -7,7 +7,7 @@
   "pageSize": 100,
   "lookbackDays": 90,
   "include": [
-    "bygg", "bygge", "byggesak", "byggjesak", "byggesøknad", "byggjesøknad",
+    "bygg", "bygge", "byggje", "byggesak", "byggjesak", "byggesøknad", "byggjesøknad",
     "byggetillatelse", "byggjeløyve", "rammetillatelse", "rammeløyve",
     "igangsetting", "igangsetjing", "igangsettingsløyve", "igangsetjingsløyve",
     "tilbygg", "påbygg", "bruksendring", "garasje", "bolig", "bustad",
@@ -16,7 +16,7 @@
     "løyve", "søknad"
   ],
   "exclude": [
-    "avslag", "klage", "ferdigmelding", "ferdigattest", "tilsyn",
+    "adressendring", "adresseendring", "avslag", "klage", "ferdigmelding", "ferdigattest", "tilsyn",
     "ulovlighet", "ulovleg", "innsyn", "møteinnkalling", "postmottak",
     "arkiv", "anmodning om dokument", "bero", "stanset", "avsluttet",
     "trukket", "tilbakekalt", "spørsmål", "sporsmål", "veiledning", "gebyr",

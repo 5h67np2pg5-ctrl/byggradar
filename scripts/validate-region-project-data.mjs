@@ -10,7 +10,7 @@ const regions = manifest.regions.filter((region) => !requested || region.id === 
 if (!regions.length) throw new Error(`Ukjent region: ${requested}`);
 const phaseStatus = (project) => String(project.classification?.stage || project.classification?.reason || "").toLocaleLowerCase("nb-NO");
 const requiresPhase = (project) => /igangsettingstillatelse gitt|igangsetting søkt|tillatelse gitt|rammetillatelse gitt|saksbehandling pågår|søknad mottatt/.test(phaseStatus(project));
-const knownPhase = (project) => /^(Fase 1|Fase 2)$/.test(String(project.phase || ""));
+const knownPhase = (project) => /^(Fase 1|Fase 2|Fase 3|Fase 4|Fase 5)$/.test(String(project.phase || ""));
 for (const region of regions) {
   const base = path.join(root, "public", "data", "regions", region.id);
   const location = JSON.parse(await fs.readFile(path.join(base, "projects_location_enriched.json"), "utf8"));

@@ -1,0 +1,411 @@
+{
+  "generatedAt": "2026-10-22T22:58:09.603Z",
+  "adapter": "bergen-municipality-api-preview",
+  "source": "https://www.bergen.kommune.no/innsynplanogbyggesak/api/saker",
+  "query": "bygg",
+  "lookbackDays": 90,
+  "cutoff": "2026-07-24T22:58:09.603Z",
+  "doesNotModifyNbrProjectFiles": true,
+  "counts": {
+    "rawFetched": 9000,
+    "recentByStatusDate": 8211,
+    "buildingCaseType": 8123,
+    "activeBuildingCaseType": 5655,
+    "afterNbrPreviewFilter": 5625,
+    "uniqueAfterCaseDeduplication": 5122
+  },
+  "statusCounts": {
+    "Under behandling": 5654,
+    "Reservert": 1
+  },
+  "caseTypeCounts": {
+    "Byggesak": 8123,
+    "Henvendelse": 42,
+    "Klagesak": 9,
+    "Landbrukssak": 1,
+    "Tilsynssak": 22,
+    "Ulovlighetssak": 14
+  },
+  "examples": [
+    {
+      "id": "BYGG-2026/00368_ebyggesak_sak",
+      "caseNumber": "BYGG-2026/00368",
+      "title": "182/301/0/0 Lokketovegen 11, bruksendring",
+      "address": [
+        "Lokketovegen 11, 5136 Mjølkeråen"
+      ],
+      "status": "Under behandling",
+      "statusDate": 1792684842000,
+      "caseType": "Byggesak",
+      "applicant": [
+        "SWECO NORGE AS (1)"
+      ],
+      "propertyNumbers": [
+        "182/301"
+      ]
+    },
+    {
+      "id": "BYGG-2025/18312_ebyggesak_sak",
+      "caseNumber": "BYGG-2025/18312",
+      "title": "113/85/0/0 Skagevegen 31B, oppføring av 2 tomannsboliger, riving av eks. bygg m.m.",
+      "address": [
+        "Skagevegen 31b"
+      ],
+      "status": "Under behandling",
+      "statusDate": 1792683132000,
+      "caseType": "Byggesak",
+      "applicant": [
+        "DELTA BOLIG PROSJEKTERING AS (1)"
+      ],
+      "propertyNumbers": [
+        "113/85"
+      ]
+    },
+    {
+      "id": "BYGG-2026/17156_ebyggesak_sak",
+      "caseNumber": "BYGG-2026/17156",
+      "title": "-",
+      "address": [
+        "Strømgaten 4, 5015 Bergen"
+      ],
+      "status": "Under behandling",
+      "statusDate": 1792682822000,
+      "caseType": "Byggesak",
+      "applicant": [
+        "NORCONSULT NORGE AS (1)"
+      ],
+      "propertyNumbers": [
+        "166/952"
+      ]
+    },
+    {
+      "id": "BYGG-2026/17172_ebyggesak_sak",
+      "caseNumber": "BYGG-2026/17172",
+      "title": "140/57/0/0 Leirvikåsen 38, mikrohus til boligformål",
+      "address": [
+        "Leirvikåsen 38, 5179 Godvik"
+      ],
+      "status": "Under behandling",
+      "statusDate": 1792682821000,
+      "caseType": "Byggesak",
+      "applicant": [
+        "BYGGMESTER JAN H TVEDT AS"
+      ],
+      "propertyNumbers": [
+        "140/57"
+      ]
+    },
+    {
+      "id": "BYGG-2026/17153_ebyggesak_sak",
+      "caseNumber": "BYGG-2026/17153",
+      "title": "163/602/0/0 Møllendalsveien 62A, innglassing av balkong/terrasse",
+      "address": [],
+      "status": "Under behandling",
+      "statusDate": 1792681572000,
+      "caseType": "Byggesak",
+      "applicant": [
+        "VARDE RÅDGIVNING AS"
+      ],
+      "propertyNumbers": [
+        "163/602"
+      ]
+    },
+    {
+      "id": "BYGG-2026/17193_ebyggesak_sak",
+      "caseNumber": "BYGG-2026/17193",
+      "title": "37/106/0/0 Skranelia 16, fasadeendring",
+      "address": [
+        "Skranelia 16"
+      ],
+      "status": "Under behandling",
+      "statusDate": 1792681432000,
+      "caseType": "Byggesak",
+      "applicant": [
+        "BYGGMESTER JAN H TVEDT AS"
+      ],
+      "propertyNumbers": [
+        "37/106"
+      ]
+    },
+    {
+      "id": "BYGG-2026/17176_ebyggesak_sak",
+      "caseNumber": "BYGG-2026/17176",
+      "title": "50/68/0/0 Nedre Kirkebirkeland 20, bruksendring bolig",
+      "address": [
+        "Nedre kirkebirkeland 20, 5227 Nesttun"
+      ],
+      "status": "Under behandling",
+      "statusDate": 1792681384000,
+      "caseType": "Byggesak",
+      "applicant": [
+        "Hilde Bjurgren"
+      ],
+      "propertyNumbers": [
+        "50/68"
+      ]
+    },
+    {
+      "id": "BYGG-2026/17152_ebyggesak_sak",
+      "caseNumber": "BYGG-2026/17152",
+      "title": "40/130/0/0 Nordgardsvegen 6, nybygg rekkehus",
+      "address": [
+        "Nordgardsvegen 6, 5236 Rådal"
+      ],
+      "status": "Under behandling",
+      "statusDate": 1792681262000,
+      "caseType": "Byggesak",
+      "applicant": [
+        "ARKOCONSULT AS"
+      ],
+      "propertyNumbers": [
+        "40/130"
+      ]
+    },
+    {
+      "id": "BYGG-2026/15868_ebyggesak_sak",
+      "caseNumber": "BYGG-2026/15868",
+      "title": "157/106/0/0 Utsikten 10, fasadeendring, tilbygg og bruksendring bolig",
+      "address": [],
+      "status": "Under behandling",
+      "statusDate": 1792680677000,
+      "caseType": "Byggesak",
+      "applicant": [
+        "ARKOCONSULT AS"
+      ],
+      "propertyNumbers": [
+        "157/106"
+      ]
+    },
+    {
+      "id": "BYGG-2026/16737_ebyggesak_sak",
+      "caseNumber": "BYGG-2026/16737",
+      "title": "168/1078/0/0 Hegrenesveien 15A, forhåndskonferanse, byggetiltak",
+      "address": [
+        "Hegrenesveien 15a, 5042 Bergen"
+      ],
+      "status": "Under behandling",
+      "statusDate": 1792680677000,
+      "caseType": "Byggesak",
+      "applicant": [
+        "Arkitektgruppen Cubus A/S"
+      ],
+      "propertyNumbers": [
+        "168/1078"
+      ]
+    },
+    {
+      "id": "BYGG-2026/16183_ebyggesak_sak",
+      "caseNumber": "BYGG-2026/16183",
+      "title": "158/839/0/0 Solheimsgaten 18, fasadeendring og bruksendring",
+      "address": [
+        "Solheimsgaten 18"
+      ],
+      "status": "Under behandling",
+      "statusDate": 1792680361000,
+      "caseType": "Byggesak",
+      "applicant": [
+        "SWECO NORGE AS (1)"
+      ],
+      "propertyNumbers": [
+        "158/839"
+      ]
+    },
+    {
+      "id": "BYGG-2026/15932_ebyggesak_sak",
+      "caseNumber": "BYGG-2026/15932",
+      "title": "34/345/0/0 Kokstadvegen 37, forhåndskonferanse, nybygg bolig",
+      "address": [
+        "Kokstadvegen 37, 5257 Kokstad"
+      ],
+      "status": "Under behandling",
+      "statusDate": 1792680361000,
+      "caseType": "Byggesak",
+      "applicant": [
+        "ARTEC AS"
+      ],
+      "propertyNumbers": [
+        "34/345"
+      ]
+    },
+    {
+      "id": "BYGG-2026/17187_ebyggesak_sak",
+      "caseNumber": "BYGG-2026/17187",
+      "title": "159/542/0/0 Skrivergaten 35, endring av takstein",
+      "address": [],
+      "status": "Under behandling",
+      "statusDate": 1792679590000,
+      "caseType": "Byggesak",
+      "applicant": [
+        "BYGG PROSJEKT AS"
+      ],
+      "propertyNumbers": [
+        "159/542"
+      ]
+    },
+    {
+      "id": "BYGG-2026/17208_ebyggesak_sak",
+      "caseNumber": "BYGG-2026/17208",
+      "title": "20/1388/0/0 Bønesskogen 28, tilbygg med samlet areal mindre enn 50 m2",
+      "address": [],
+      "status": "Under behandling",
+      "statusDate": 1792679299000,
+      "caseType": "Byggesak",
+      "applicant": [],
+      "propertyNumbers": [
+        "20/1388"
+      ]
+    },
+    {
+      "id": "BYGG-2026/17188_ebyggesak_sak",
+      "caseNumber": "BYGG-2026/17188",
+      "title": "160/246/0/0 Astrups vei 46, bruksendring og innvendige endringer bolig",
+      "address": [
+        "Astrups vei 46"
+      ],
+      "status": "Under behandling",
+      "statusDate": 1792679299000,
+      "caseType": "Byggesak",
+      "applicant": [
+        "BOLIGPLANER AS"
+      ],
+      "propertyNumbers": [
+        "160/246"
+      ]
+    },
+    {
+      "id": "BYGG-2026/17288_ebyggesak_sak",
+      "caseNumber": "BYGG-2026/17288",
+      "title": "36/211/0/0 Nordeidevegen 47, nytt bygg - Boligformål",
+      "address": [],
+      "status": "Under behandling",
+      "statusDate": 1792679299000,
+      "caseType": "Byggesak",
+      "applicant": [
+        "SVEN GUNDERSEN AS"
+      ],
+      "propertyNumbers": [
+        "36/211"
+      ]
+    },
+    {
+      "id": "BYGG-2026/17171_ebyggesak_sak",
+      "caseNumber": "BYGG-2026/17171",
+      "title": "22/4/0/0 Torgny Segerstedts vei 176, fasadeendring bolig mm",
+      "address": [],
+      "status": "Under behandling",
+      "statusDate": 1792679299000,
+      "caseType": "Byggesak",
+      "applicant": [
+        "Arkitektgruppen Cubus A/S"
+      ],
+      "propertyNumbers": [
+        "22/4"
+      ]
+    },
+    {
+      "id": "BYGG-2026/00589_ebyggesak_sak",
+      "caseNumber": "BYGG-2026/00589",
+      "title": "167/899// Bontelabo 8, oppføring heis",
+      "address": [],
+      "status": "Under behandling",
+      "statusDate": 1792679298000,
+      "caseType": "Byggesak",
+      "applicant": [
+        "HEISCONSULT AS"
+      ],
+      "propertyNumbers": [
+        "167/899"
+      ]
+    },
+    {
+      "id": "BYGG-2026/17178_ebyggesak_sak",
+      "caseNumber": "BYGG-2026/17178",
+      "title": "168/2168/0/0 Biskopshavn V/ Ellerhusens vei 26, nytt bygg - Boligformål",
+      "address": [
+        "Biskopshavn v/ ellerhusens vei 26"
+      ],
+      "status": "Under behandling",
+      "statusDate": 1792679297000,
+      "caseType": "Byggesak",
+      "applicant": [
+        "SIVILARKITEKT TOR HELGE VALEN AS"
+      ],
+      "propertyNumbers": []
+    },
+    {
+      "id": "BYGG-2026/17166_ebyggesak_sak",
+      "caseNumber": "BYGG-2026/17166",
+      "title": "20/1448/0/0 Øvre Kråkenes 172, bruksendring fra tilleggsdel til hoveddel",
+      "address": [
+        "Øvre kråkenes 172"
+      ],
+      "status": "Under behandling",
+      "statusDate": 1792679071000,
+      "caseType": "Byggesak",
+      "applicant": [],
+      "propertyNumbers": [
+        "20/1448"
+      ]
+    }
+  ],
+  "filter": {
+    "include": [
+      "bygg",
+      "bygge",
+      "byggesak",
+      "byggjesak",
+      "byggesøknad",
+      "byggjesøknad",
+      "byggetillatelse",
+      "byggjeløyve",
+      "rammetillatelse",
+      "rammeløyve",
+      "igangsetting",
+      "igangsetjing",
+      "igangsettingsløyve",
+      "igangsetjingsløyve",
+      "tilbygg",
+      "påbygg",
+      "bruksendring",
+      "garasje",
+      "bolig",
+      "bustad",
+      "næring",
+      "fasade",
+      "tak",
+      "terreng",
+      "mur",
+      "oppføring",
+      "rivning",
+      "riving",
+      "fradeling",
+      "frådeling",
+      "seksjonering",
+      "dispensasjon",
+      "løyve",
+      "søknad"
+    ],
+    "exclude": [
+      "avslag",
+      "klage",
+      "ferdigmelding",
+      "ferdigattest",
+      "tilsyn",
+      "ulovlighet",
+      "innsyn",
+      "møteinnkalling",
+      "postmottak",
+      "arkiv",
+      "anmodning om dokument",
+      "bero",
+      "stanset",
+      "avsluttet",
+      "trukket",
+      "tilbakekalt",
+      "spørsmål",
+      "veiledning",
+      "gebyr",
+      "høring"
+    ]
+  }
+}

@@ -4,6 +4,8 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { readSupplierRegistry, writeSupplierRegistry } from "./scripts/lib/supplier-registry.mjs";
+import { fetchTrondheimBuildingCases } from "./scripts/lib/trondheim-adapter.mjs";
+import { fetchTrondheimNplBuildingCases } from "./scripts/lib/trondheim-npl-adapter.mjs";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const incomingJobRequestsPath = path.join(root, "data", "incoming_job_requests.json");
@@ -18,6 +20,7 @@ const projectRegionIds = [
   "grenlandsregionen",
   "sorlandsregionen",
   "vestfoldkongsbergregionen",
+  "trondheim",
 ];
 const projectDataCache = new Map();
 const port = Number(process.env.PORT || 4173);
@@ -46,11 +49,11 @@ const verifiedProffProfileUrls = {
 };
 
 async function readProjectJson(regionId, filename) {
-  const safeRegionId = projectRegionIds.includes(regionId) ? regionId : "bergensregionen";
-  const cacheKey = `${safeRegionId}/${filename}`;
+  if (!projectRegionIds.includes(regionId)) throw new Error(`Ugyldig region: ${regionId || "mangler"}`);
+  const cacheKey = `${regionId}/${filename}`;
   const cached = projectDataCache.get(cacheKey);
   if (cached) return cached;
-  const filePath = path.join(root, "public", "data", "regions", safeRegionId, filename);
+  const filePath = path.join(root, "public", "data", "regions", regionId, filename);
   const payload = JSON.parse(await fs.readFile(filePath, "utf8"));
   projectDataCache.set(cacheKey, payload);
   return payload;
@@ -784,6 +787,10 @@ const localSupplierDirectorySeed = [
   ["byggevarehus", "Montér Sandefjord", "Sandefjord", 59.1250, 10.2250, "https://www.monter.no"],
   ["byggevarehus", "Byggmakker Tønsberg", "Tønsberg", 59.2700, 10.4100, "https://www.byggmakker.no"],
   ["byggevarehus", "Optimera Vestfold", "Vestfold", 59.2705, 10.4120, "https://www.optimera.no"],
+  ["byggevarehus", "Biltema Trondheim", "Tiller, Trondheim", 63.3555, 10.3790, "https://www.biltema.no"],
+  ["byggevarehus", "Montér Trondheim", "Trondheim", 63.4305, 10.3951, "https://www.monter.no"],
+  ["byggevarehus", "Byggmakker Trondheim", "Trondheim", 63.4300, 10.4000, "https://www.byggmakker.no"],
+  ["byggevarehus", "Optimera Trondheim", "Trondheim", 63.4400, 10.4100, "https://www.optimera.no"],
 ].map(([category, company, address, lat, lon, website]) => ({ category, company, address, lat, lon, website }));
 
 const localSupplierHubs = [
@@ -793,6 +800,7 @@ const localSupplierHubs = [
   { place: "Grenland", lat: 59.170, lon: 9.630, suffix: "Grenland" },
   { place: "Kristiansand", lat: 58.150, lon: 8.000, suffix: "Kristiansand" },
   { place: "Vestfold", lat: 59.270, lon: 10.410, suffix: "Vestfold" },
+  { place: "Trondheim", lat: 63.4305, lon: 10.3951, suffix: "Trondheim" },
 ];
 
 const localSupplierNetworks = {
@@ -934,9 +942,13 @@ const server = http.createServer(async (request, response) => {
 
     if (url.pathname === "/api/project-data" && request.method === "GET") {
       const requestedRegion = String(url.searchParams.get("regionId") || "").trim().toLowerCase();
-      const regionId = projectRegionIds.includes(requestedRegion) ? requestedRegion : "bergensregionen";
       const scope = url.searchParams.get("scope") === "national" ? "national" : "region";
-      const regionIds = scope === "national" ? projectRegionIds : [regionId];
+      if (scope !== "national" && !projectRegionIds.includes(requestedRegion)) {
+        response.writeHead(400, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
+        response.end(JSON.stringify({ error: "regionId må være valgt før prosjektdata kan hentes" }));
+        return;
+      }
+      const regionIds = scope === "national" ? projectRegionIds : [requestedRegion];
       const bundles = await Promise.all(regionIds.map(async (id) => ({
         regionId: id,
         locationData: await readProjectJson(id, "projects_location_enriched.json"),
@@ -947,6 +959,18 @@ const server = http.createServer(async (request, response) => {
         "cache-control": "public, max-age=300, stale-while-revalidate=3600",
       });
       response.end(JSON.stringify({ bundles, source: "Railway project data service" }));
+      return;
+    }
+
+    if (url.pathname === "/api/municipalities/trondheim/building-cases" && request.method === "GET") {
+      const report = url.searchParams.get("source") === "norske-postlister"
+        ? await fetchTrondheimNplBuildingCases({ forceRefresh: url.searchParams.get("refresh") === "1" })
+        : await fetchTrondheimBuildingCases({ forceRefresh: url.searchParams.get("refresh") === "1" });
+      response.writeHead(report.status === "ok" ? 200 : 503, {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": report.status === "ok" ? "private, max-age=900" : "no-store",
+      });
+      response.end(JSON.stringify(report));
       return;
     }
 

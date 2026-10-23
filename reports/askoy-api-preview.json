@@ -1,0 +1,275 @@
+{
+  "generatedAt": "2026-10-22T22:54:32.678Z",
+  "adapter": "askoy-municipality-onacos-api-preview",
+  "municipality": "Askøy kommune",
+  "municipalityNumber": "4627",
+  "source": "https://innsynpluss.onacos.no/askoy/sok/",
+  "endpoint": "https://innsynpluss.onacos.no/api/presentation/v2/nye-innsyn/overview",
+  "doesNotModifyNbrProjectFiles": true,
+  "filter": {
+    "searchTerm": "bygg",
+    "lookbackDays": 90,
+    "include": "bygg|bygge|byggesak|byggjesak|byggesøknad|byggjesøknad|byggetillatelse|rammetillatelse|rammeløyve|igangsetting|igangsetjing|tilbygg|påbygg|bruksendring|garasje|bolig|bustad|næring|fasade|tak|terreng|mur|oppføring|riving|rivning|fradeling|frådeling|seksjonering|dispensasjon|løyve|søknad",
+    "exclude": "avslag|klage|ferdigmelding|ferdigattest|tilsyn|ulovlighet|ulovleg|innsyn|møteinnkalling|postmottak|arkiv|anmodning om dokument|bero|stanset|avsluttet|trukket|tilbakekalt|spørsmål|veiledning|gebyr|høring|høyring"
+  },
+  "status": "ok",
+  "cutoff": "2026-07-24T22:54:32.678Z",
+  "counts": {
+    "rawFetched": 1345,
+    "recentByDate": 133,
+    "afterNbrPreviewFilter": 83,
+    "uniqueAfterCaseDeduplication": 83
+  },
+  "examples": [
+    {
+      "identifier": "d-7e894922__c71e__4716__b926__1b515c96ede9-1100524491!WYeG63",
+      "title": "Referat - Byggemøte 10",
+      "type": "Inngående dokument",
+      "caseNumber": "",
+      "documentNumber": "2026/90148",
+      "date": "14.10.2026",
+      "sender": "Norconsult",
+      "recipient": ""
+    },
+    {
+      "identifier": "d-7e894922__c71e__4716__b926__1b515c96ede9-1100530131!fO8c2n",
+      "title": "Tilslutning til rammeavtale for Byggevarer (EØS 026-2026)",
+      "type": "Utgående dokument",
+      "caseNumber": "",
+      "documentNumber": "2026/95788",
+      "date": "13.10.2026",
+      "sender": "",
+      "recipient": "Bergen Kommune"
+    },
+    {
+      "identifier": "d-7e894922__c71e__4716__b926__1b515c96ede9-1100531341!40k4s1",
+      "title": "Gbnr 12/609 - Kopi - Vedtak - Tillatelse til bygging av naust og rehabilitering av båtopptrekk i sjø",
+      "type": "Inngående dokument",
+      "caseNumber": "",
+      "documentNumber": "2026/96998",
+      "date": "12.10.2026",
+      "sender": "Bergen Havn Farvannsforvaltning IKS",
+      "recipient": ""
+    },
+    {
+      "identifier": "d-7e894922__c71e__4716__b926__1b515c96ede9-1100529727!r3E65g",
+      "title": "Interpellasjon v/ Bård Espelid (Askøylisten) - Særbehandler kommunen egen byggesøknad for ombygging og rehabilitering av Askøyhallen?",
+      "type": "Inngående dokument",
+      "caseNumber": "",
+      "documentNumber": "2026/95384",
+      "date": "06.10.2026",
+      "sender": "Askøylisten v/ Bård Espelid",
+      "recipient": ""
+    },
+    {
+      "identifier": "a-7e894922__c71e__4716__b926__1b515c96ede9-1100092350!YjpDGs",
+      "title": "Interpellasjon v/ Bård Espelid (Askøylisten) - Særbehandler kommunen egen byggesøknad for ombygging og rehabilitering av Askøyhallen?",
+      "type": "Interpellasjon",
+      "caseNumber": "2026/12354",
+      "documentNumber": "",
+      "date": "06.10.2026",
+      "sender": "",
+      "recipient": ""
+    },
+    {
+      "identifier": "d-7e894922__c71e__4716__b926__1b515c96ede9-1100529220!7ripdS",
+      "title": "Gbnr 15/728 - Svar på merknad i byggesaken",
+      "type": "Inngående dokument",
+      "caseNumber": "",
+      "documentNumber": "2026/94877",
+      "date": "05.10.2026",
+      "sender": "Flere avsendere",
+      "recipient": ""
+    },
+    {
+      "identifier": "d-7e894922__c71e__4716__b926__1b515c96ede9-1100529487!kh7l8e",
+      "title": "Årskontroll 2026 - Servicerapport for håndslokkere og slangetrommel - Bygg A - Servicerapport 126100203",
+      "type": "Inngående dokument",
+      "caseNumber": "",
+      "documentNumber": "2026/95144",
+      "date": "05.10.2026",
+      "sender": "Noha Norway As",
+      "recipient": ""
+    },
+    {
+      "identifier": "d-7e894922__c71e__4716__b926__1b515c96ede9-1100529482!9MAxiD",
+      "title": "Årskontroll 2026 - Servicerapport for håndslokkere og slangetrommel - Bygg B og C - Servicerapport 126100204",
+      "type": "Inngående dokument",
+      "caseNumber": "",
+      "documentNumber": "2026/95139",
+      "date": "05.10.2026",
+      "sender": "Noha Norway As",
+      "recipient": ""
+    },
+    {
+      "identifier": "a-7e894922__c71e__4716__b926__1b515c96ede9-1100092265!vXTuSz",
+      "title": "Plan og bygg - Forenklet saksbehandling av søknad om igangsettingstillatelse",
+      "type": "Generell sak",
+      "caseNumber": "2026/12270",
+      "documentNumber": "",
+      "date": "02.10.2026",
+      "sender": "",
+      "recipient": ""
+    },
+    {
+      "identifier": "d-7e894922__c71e__4716__b926__1b515c96ede9-1100513771!fW0KSJ",
+      "title": "Ferdigstillelse og vedlikehold av bygg og uteområde",
+      "type": "Utgående dokument",
+      "caseNumber": "",
+      "documentNumber": "2026/79428",
+      "date": "02.10.2026",
+      "sender": "",
+      "recipient": ""
+    },
+    {
+      "identifier": "d-7e894922__c71e__4716__b926__1b515c96ede9-1100518112!a7jMYN",
+      "title": "Referat - Byggemøte MIS og Fysak 20.08.2026",
+      "type": "Inngående dokument",
+      "caseNumber": "",
+      "documentNumber": "2026/83769",
+      "date": "01.10.2026",
+      "sender": "Backe",
+      "recipient": ""
+    },
+    {
+      "identifier": "d-7e894922__c71e__4716__b926__1b515c96ede9-1100514538!t8Ikqj",
+      "title": "Referat - Byggemøte 08",
+      "type": "Inngående dokument",
+      "caseNumber": "",
+      "documentNumber": "2026/80195",
+      "date": "01.10.2026",
+      "sender": "Norconsult",
+      "recipient": ""
+    },
+    {
+      "identifier": "d-7e894922__c71e__4716__b926__1b515c96ede9-1100524353!hlbFlj",
+      "title": "Referat - Byggemøte 09",
+      "type": "Inngående dokument",
+      "caseNumber": "",
+      "documentNumber": "2026/90010",
+      "date": "01.10.2026",
+      "sender": "Norconsult Norge AS",
+      "recipient": ""
+    },
+    {
+      "identifier": "d-7e894922__c71e__4716__b926__1b515c96ede9-1100514055!XlT4Qm",
+      "title": "Kommentar til referat byggemøte",
+      "type": "Inngående dokument",
+      "caseNumber": "",
+      "documentNumber": "2026/79712",
+      "date": "29.09.2026",
+      "sender": "Kepla",
+      "recipient": ""
+    },
+    {
+      "identifier": "d-7e894922__c71e__4716__b926__1b515c96ede9-1100514591!k2FuxA",
+      "title": "Merknad - Byggesøknad - Befaring 6 august alternative løsninger",
+      "type": "Inngående dokument",
+      "caseNumber": "",
+      "documentNumber": "2026/80248",
+      "date": "29.09.2026",
+      "sender": "Hylland",
+      "recipient": ""
+    },
+    {
+      "identifier": "d-7e894922__c71e__4716__b926__1b515c96ede9-1100514594!L9doIt",
+      "title": "Merknad 3 - Byggesøknad - Befaring 6 august alternative løsninger",
+      "type": "Inngående dokument",
+      "caseNumber": "",
+      "documentNumber": "2026/80251",
+      "date": "28.09.2026",
+      "sender": "Hylland",
+      "recipient": ""
+    },
+    {
+      "identifier": "d-7e894922__c71e__4716__b926__1b515c96ede9-1100514449!JdqwbU",
+      "title": "Referat - Byggemøte 07",
+      "type": "Inngående dokument",
+      "caseNumber": "",
+      "documentNumber": "2026/80106",
+      "date": "28.09.2026",
+      "sender": "Norconsult Norge As",
+      "recipient": ""
+    },
+    {
+      "identifier": "d-7e894922__c71e__4716__b926__1b515c96ede9-1100514595!GBku2u",
+      "title": "Korrespondanse - Fakturagrunnlag frem til byggestopp",
+      "type": "Inngående dokument",
+      "caseNumber": "",
+      "documentNumber": "2026/80252",
+      "date": "28.09.2026",
+      "sender": "Hylland",
+      "recipient": ""
+    },
+    {
+      "identifier": "d-7e894922__c71e__4716__b926__1b515c96ede9-1100511515!jYImSt",
+      "title": "Byggesak, samt størrelse på farvannskilt",
+      "type": "Inngående dokument",
+      "caseNumber": "",
+      "documentNumber": "2026/77172",
+      "date": "28.09.2026",
+      "sender": "Norconsult",
+      "recipient": ""
+    },
+    {
+      "identifier": "d-7e894922__c71e__4716__b926__1b515c96ede9-1100511977!PdbGPo",
+      "title": "Gbnr 6/1087, 577 - Tilbakemelding og tillatelse til å gjenoppta arbeider på byggetomt",
+      "type": "Utgående dokument",
+      "caseNumber": "",
+      "documentNumber": "2026/77634",
+      "date": "23.09.2026",
+      "sender": "",
+      "recipient": "Flere mottakere"
+    },
+    {
+      "identifier": "d-7e894922__c71e__4716__b926__1b515c96ede9-1100524509!ZW5b4S",
+      "title": "Gbnr 4/1170 - Oversendelse av mottatt merknad i byggesaken",
+      "type": "Utgående dokument",
+      "caseNumber": "",
+      "documentNumber": "2026/90166",
+      "date": "23.09.2026",
+      "sender": "",
+      "recipient": "Aasebø Sag As"
+    },
+    {
+      "identifier": "d-7e894922__c71e__4716__b926__1b515c96ede9-1100524919!C5krWS",
+      "title": "Gbnr 8/457 - Oversendelse av mottatt merknad i byggesaken",
+      "type": "Utgående dokument",
+      "caseNumber": "",
+      "documentNumber": "2026/90576",
+      "date": "23.09.2026",
+      "sender": "",
+      "recipient": "Follesø Byggkonsulent"
+    },
+    {
+      "identifier": "d-7e894922__c71e__4716__b926__1b515c96ede9-1100525420!REYeLs",
+      "title": "Gbnr 4/1170 - Tilbakemelding - Oversendelse av mottatt merknad i byggesaken",
+      "type": "Inngående dokument",
+      "caseNumber": "",
+      "documentNumber": "2026/91077",
+      "date": "23.09.2026",
+      "sender": "Aasebø Sag As",
+      "recipient": ""
+    },
+    {
+      "identifier": "d-7e894922__c71e__4716__b926__1b515c96ede9-1100281652!5lKoxY",
+      "title": "Kontrollørmelding fra byggherre - KM-0003 - Strekkfaste bend",
+      "type": "Inngående dokument",
+      "caseNumber": "",
+      "documentNumber": "2025/4954",
+      "date": "22.09.2026",
+      "sender": "",
+      "recipient": ""
+    },
+    {
+      "identifier": "d-7e894922__c71e__4716__b926__1b515c96ede9-1100281631!xYMKt8",
+      "title": "Endringsordre fra byggherre - EO-0003 - Fjerning av mur ved AMK",
+      "type": "Inngående dokument",
+      "caseNumber": "",
+      "documentNumber": "2025/4933",
+      "date": "22.09.2026",
+      "sender": "",
+      "recipient": ""
+    }
+  ]
+}

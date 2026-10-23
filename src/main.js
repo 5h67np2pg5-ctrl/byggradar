@@ -11,10 +11,12 @@ const state = {
   customerMunicipality: "",
   productModel: "pro",
   showMap: false,
-  visibleCount: 200,
+  // Pro har alle prosjekter tilgjengelig, men starter med en liten DOM-puls
+  // slik at store regioner ikke fryser nettleseren under første rendering.
+  visibleCount: 50,
   userLocation: null,
   activeRegion: null,
-  regionKey: "bergensregionen",
+  regionKey: "",
   regionSelectionCleared: true,
   map: null,
   mapMarkers: [],
@@ -110,18 +112,18 @@ function partnerSearchOrigin() {
 }
 
 // Midlertidig visning av regionvalg. Valget kobles til kundens faste region senere.
-const illustrationRegions = ["Bergensregionen", "Stavangerregionen", "Haugalandsregionen", "Grenlandsregionen", "Sørlandsregionen", "Vestfold- og Kongsbergregionen"];
+const illustrationRegions = ["Bergensregionen", "Stavangerregionen", "Haugalandsregionen", "Grenlandsregionen", "Sørlandsregionen", "Vestfold- og Kongsbergregionen", "Trondheim kommune"];
 
 const savedFiltersKey = "byggradar.filters.v1";
 const markedProjectsKey = "byggradar.markedProjects.v1";
 const standardProjectLimit = 200;
 const productModelLimits = { model75: 50, model150: 75, pro: Infinity };
-const loadMoreStep = 20;
+const loadMoreStep = 200;
 const weeklyDeliveryCount = 50;
 const statisticsSavedSearchesKey = "byggradar.statistics.savedSearches.v1";
 // Produktversjonen vises på forsiden. Hver ny implementering starter på innloggingssiden.
-const userVersion = 458;
-const dashboardVersion = 450;
+const userVersion = 480;
+const dashboardVersion = 458;
 const appVersion = userVersion + dashboardVersion;
 const loginAccessCodes = {
   vendor: "norskbyggradar1000",
@@ -130,6 +132,11 @@ const loginAccessCodes = {
 
 function currentModelLimit() {
   return productModelLimits[state.productModel] || standardProjectLimit;
+}
+
+function initialVisibleCount() {
+  const limit = currentModelLimit();
+  return Number.isFinite(limit) ? limit : 200;
 }
 
 function currentModelLabel() {
@@ -320,6 +327,14 @@ const locationRegions = [
       "Færder kommune", "Øvre Eiker kommune",
     ],
   },
+  {
+    id: "trondheim",
+    name: "Trondheim kommune",
+    anchor: { lat: 63.4305, lon: 10.3951 },
+    constructionBusinessCount: 0,
+    constructionBusinessCountBasis: "SSB-tall hentes for Trondheim kommune.",
+    municipalities: ["Trondheim kommune"],
+  },
 ];
 
 const regionDataPaths = {
@@ -329,6 +344,7 @@ const regionDataPaths = {
   grenlandsregionen: "/data/regions/grenlandsregionen",
   sorlandsregionen: "/data/regions/sorlandsregionen",
   vestfoldkongsbergregionen: "/data/regions/vestfoldkongsbergregionen",
+  trondheim: "/data/regions/trondheim",
 };
 
 const municipalityMapAnchors = {
@@ -415,6 +431,7 @@ const municipalityMapAnchors = {
   "kongsberg": { lat: 59.6686, lon: 9.6502 },
   "færder": { lat: 59.2272, lon: 10.4154 },
   "øvre eiker": { lat: 59.7710, lon: 9.9090 },
+  "trondheim": { lat: 63.4305, lon: 10.3951 },
   "hægebostad": { lat: 58.3750, lon: 7.2200 },
   "iveland": { lat: 58.4610, lon: 7.8660 },
 };
@@ -476,6 +493,7 @@ const municipalityNumbers = {
   "flekkefjord": "4207",
   "kvinesdal": "4227",
   "birkenes": "4216",
+  "trondheim": "5001",
   "sirdal": "4228",
   "hægebostad": "4226",
   "iveland": "4218",
@@ -513,6 +531,21 @@ const nationalSourceStreams = new Set([
 
 function isNationalProjectRecord(project) {
   return nationalSourceStreams.has(String(project?.sourceStream || ""));
+}
+
+function isAddressChangeRecord(project) {
+  return /\badress(?:e)?endring\b/i.test([
+    project?.title,
+    project?.caseTitle,
+    project?.documentTitle,
+    project?.shortFacts,
+    project?.description,
+  ].filter(Boolean).join(" | "));
+}
+
+function isExcludedProjectListingRecord(project) {
+  if (isAddressChangeRecord(project)) return true;
+  return /\b(?:innspill|omadressering|reguleringsplan|nye adresser|supplering)\b/i.test(String(project?.title || ""));
 }
 
 // Offisielle innganger til postjournal/saksinnsyn for kommunene i regionen.
@@ -649,14 +682,14 @@ async function initVendorApplication() {
     renderShell();
     restoreSavedFilters();
     state.area = "";
-    state.regionKey = "bergensregionen";
-    state.activeRegion = locationRegions.find((region) => region.id === "bergensregionen") || null;
-    state.regionSelectionCleared = false;
-    state.customerMunicipality = normalizeMunicipalityName("Bergen");
+    state.regionKey = "";
+    state.activeRegion = null;
+    state.regionSelectionCleared = true;
+    state.customerMunicipality = "";
     document.querySelector("#areaInput").value = "";
     updateCustomerMunicipalityOptions();
-    document.querySelector("#regionIllustration").value = "bergensregionen";
-    document.querySelector("#customerMunicipality").value = state.customerMunicipality;
+    document.querySelector("#regionIllustration").value = "";
+    document.querySelector("#customerMunicipality").value = "";
     restoreMarkedProjects();
     state.projects = [];
     state.filtered = [];
@@ -664,9 +697,11 @@ async function initVendorApplication() {
     state.selected = null;
     scheduleRefreshes();
     render();
-    await loadProjects();
-    state.filtered = filterProjects();
-    render();
+    if (state.activeRegion) {
+      await loadProjects();
+      state.filtered = filterProjects();
+      render();
+    }
   } catch (error) {
     app.innerHTML = `
       <main class="fatal">
@@ -793,11 +828,17 @@ async function loadProjects() {
     rawProjects.push(...(locationData.projects || []));
   });
   if (state.projectScope === "national") rawProjects.push(...(nationalData.projects || []));
-  const scopedProjects = rawProjects.filter((project) => state.projectScope === "national"
-    ? isNationalProjectRecord(project)
-    : !isNationalProjectRecord(project));
-  const normalizedProjects = scopedProjects.map((project, index) => normalizeProject(project, contacts.get(project.sourceDocumentId), index));
-  state.projects = deduplicateClosedProjectText(deduplicateProjects(normalizedProjects));
+  const scopedProjects = rawProjects.filter((project) => {
+    if (isExcludedProjectListingRecord(project)) return false;
+    return state.projectScope === "national"
+      ? isNationalProjectRecord(project)
+      : !isNationalProjectRecord(project);
+  });
+  const normalizedProjects = scopedProjects
+    .map((project, index) => normalizeProject(project, contacts.get(project.sourceDocumentId), index))
+    .filter((project) => projectBelongsToLoadedRegion(project));
+  state.projects = deduplicateClosedProjectText(deduplicateProjects(normalizedProjects))
+    .filter((project) => !project.excludedFromProjectListing);
   state.rawProjectCount = state.projects.length;
   // Utvidet prosjektinformasjon er nå tilgjengelig på alle prosjekter.
   // Feltene filtreres i renderExpandedPreviewFields slik at tomme etiketter aldri vises.
@@ -805,6 +846,24 @@ async function loadProjects() {
   state.projects.forEach((project) => {
     project.isExpandedPreview = true;
   });
+}
+
+function projectBelongsToLoadedRegion(project) {
+  if (state.projectScope === "national") return true;
+  const region = state.activeRegion || locationRegions.find((candidate) => candidate.id === state.regionKey);
+  if (!region) return true;
+
+  const municipality = normalizeMunicipalityName(project.municipality || "");
+  if (municipality && !region.municipalities.some((candidate) => normalizeMunicipalityName(candidate) === municipality)) {
+    return false;
+  }
+
+  // A municipality label is not sufficient: bad geocoding can place a card in
+  // another county or even another part of the country. Trondheim is a single-
+  // municipality region, so use a deliberately strict distance gate here.
+  if (region.id !== "trondheim" || !validMapCoordinate(project.lat, project.lon)) return true;
+  const origin = municipalityMapAnchor("Trondheim kommune");
+  return Boolean(origin && distanceKm(origin.lat, origin.lon, project.lat, project.lon) <= 38);
 }
 
 function deduplicateProjects(projects) {
@@ -883,13 +942,32 @@ function normalizeProject(project, contactProject, index) {
   const derivedMatrikkel = extractMatrikkelFromProject(project);
   const title = cleanTitle(project.title || project.shortFacts || project.caseTitle || "Ukjent prosjekt");
   const status = classification.stage || project.status || project.phase || "Ukjent status";
-  const phaseLabel = /^fase\s*[12]$/i.test(String(classification.phase || "").trim())
-    ? String(classification.phase).replace(/\s+/g, " ").replace(/^fase\s*/i, "Fase ")
+  const phaseCandidate = classification.phase || project.phase || "";
+  const approvedTitle = /\bgodkjent\b/i.test(title);
+  const approvedPhase = /\bigangsetting(?:stillatelse)?\b|\bigangsetjing(?:sløyve)?\b/i.test(`${title} ${status}`)
+    ? "Fase 5"
+    : "Fase 4";
+  const phaseLabel = approvedTitle
+    ? approvedPhase
+    : /^fase\s*[1-5]$/i.test(String(phaseCandidate).trim())
+    ? String(phaseCandidate).replace(/\s+/g, " ").replace(/^fase\s*/i, "Fase ")
     : classifyProjectPhase(status);
   const projectText = projectClassificationText(project, title);
   const classifiedTypes = (classification.projectTypes || []).filter((type) => !/^ukjent$/i.test(String(type || "").trim()));
   const inferredTypes = inferProjectTypes(projectText);
   const projectTypes = classifiedTypes.length ? classifiedTypes : inferredTypes;
+  const nonProjectOnlyTypes = new Set([
+    "nettstasjon",
+    "tekniske installasjoner",
+    "statsforvaltervedtak",
+    "pålegg/tilsyn",
+    "eiendomsforvaltning",
+  ]);
+  const normalizedTypeLabels = projectTypes.map((type) => normalize(type));
+  const hasConstructionType = normalizedTypeLabels.some((type) => !nonProjectOnlyTypes.has(type));
+  const nonProjectText = /\b(nettstasjon|statsforvaltervedtak|palegg|tvangsmulkt|eiendomsskatt|eiendomsforvaltning)\b/.test(normalize(projectText));
+  const excludedFromProjectListing = !hasConstructionType
+    && (normalizedTypeLabels.length > 0 || nonProjectText);
   const tradeRelevance = meaningfulProjectText(project.tradeRelevance)
     ? project.tradeRelevance
     : projectTypes.join("; ") || inferTrade(projectText);
@@ -924,6 +1002,7 @@ function normalizeProject(project, contactProject, index) {
     tradeRelevance,
     projectTypes,
     projectTypeText: projectTypes.join("; ") || "Ukjent tiltak",
+    excludedFromProjectListing,
     municipality: project.municipality || "",
     organizationNumber: project.organizationNumber || "",
     marketRole,
@@ -1120,7 +1199,7 @@ function renderShell() {
 
   updateCustomerMunicipalityOptions();
 
-  const helpText = "Åpne prosjektene du har interesse for og kontakt tiltakshaver eller ansvarlig aktør så tidlig som mulig.\n\nSi gjerne:\n\"Hei, jeg ser at dere har et prosjekt på gang i [adresse]. Vi jobber med [fag], og kan raskt avklare om vi kan bidra i planleggingen eller i utførelsen. Kan jeg sende en kort mail, eller kan jeg komme på en rask befaring?\"\n\nSender du mail, må du velge faggruppen din først. Det genereres da en e-post direkte til kontaktpersonen når du trykker på e-postadressen i prosjektet.\n\nFase 1: Rammetillatelse gitt, saksbehandling pågår eller søknad mottatt.\nFase 2: Tillatelse gitt, igangsetting søkt eller igangsettingstillatelse gitt.";
+  const helpText = "Åpne prosjektene du har interesse for og kontakt tiltakshaver eller ansvarlig aktør så tidlig som mulig.\n\nSi gjerne:\n\"Hei, jeg ser at dere har et prosjekt på gang i [adresse]. Vi jobber med [fag], og kan raskt avklare om vi kan bidra i planleggingen eller i utførelsen. Kan jeg sende en kort mail, eller kan jeg komme på en rask befaring?\"\n\nSender du mail, må du velge faggruppen din først. Det genereres da en e-post direkte til kontaktpersonen når du trykker på e-postadressen i prosjektet.\n\nFase 1: Søknad mottatt eller saken opprettet.\nFase 2: Saksbehandling, mangler eller supplering.\nFase 3: Rammetillatelse eller rammeløyve gitt.\nFase 4: Søknad om igangsetting registrert.\nFase 5: Igangsettingstillatelse eller annen tillatelse/godkjenning gitt.";
   document.querySelector("#regionIllustration")?.addEventListener("change", async (event) => {
     const selected = event.target.value;
     if (!regionDataPaths[selected]) return;
@@ -1136,7 +1215,7 @@ function renderShell() {
     }
     updateCustomerMunicipalityOptions();
     state.selected = null;
-    state.visibleCount = currentModelLimit();
+    state.visibleCount = initialVisibleCount();
     state.projects = [];
     state.filtered = [];
     state.rawProjectCount = 0;
@@ -1181,7 +1260,7 @@ function renderShell() {
       state.projects = [];
       state.filtered = [];
       state.rawProjectCount = 0;
-      state.visibleCount = currentModelLimit();
+      state.visibleCount = initialVisibleCount();
       resetPartnerSearch();
       if (nextScope === "national") {
         state.activeRegion = null;
@@ -1215,7 +1294,7 @@ function renderShell() {
   document.querySelectorAll("input[name=productModel]").forEach((input) => {
     input.addEventListener("change", () => {
       state.productModel = input.value;
-      state.visibleCount = currentModelLimit();
+      state.visibleCount = initialVisibleCount();
       state.selected = null;
       resetPartnerSearch();
       render();
@@ -1251,7 +1330,7 @@ function renderShell() {
       if (regionSelect) regionSelect.value = selectedRegion.id;
     }
     resetPartnerSearch();
-    state.visibleCount = currentModelLimit();
+    state.visibleCount = initialVisibleCount();
     state.mapViewKey = "";
     state.selected = null;
     state.projects = [];
@@ -1641,7 +1720,7 @@ function bindInput(id, key) {
       state.userLocation = null;
       resetPartnerSearch();
     }
-    state.visibleCount = currentModelLimit();
+    state.visibleCount = initialVisibleCount();
     saveFilters();
     render();
   };
@@ -1654,7 +1733,7 @@ function render() {
     state.selected = null;
   }
 
-  state.visibleCount = Math.max(currentModelLimit(), state.visibleCount);
+  state.visibleCount = Math.max(initialVisibleCount(), state.visibleCount);
   const visibleProjects = visibleDeliveryProjects();
   const summaryText = document.querySelector("#summaryText");
   const regionName = state.activeRegion?.name || locationRegions.find((region) => region.id === state.regionKey)?.name || "valgt region";
@@ -2464,13 +2543,13 @@ function renderList() {
     `).join("")}
     ${state.productModel === "pro" && state.visibleCount < state.filtered.length ? `
       <button class="load-more" id="loadMoreButton" type="button">
-        Vis 20 flere prosjekter
+        Vis 200 flere prosjekter
       </button>
     ` : ""}
   `;
   list.querySelector("#projectSortButton")?.addEventListener("click", () => {
     state.projectSortMode = state.projectSortMode === "date" ? "actuality" : "date";
-    state.visibleCount = currentModelLimit();
+    state.visibleCount = initialVisibleCount();
     render();
   });
   list.querySelector("#projectPhaseButton")?.addEventListener("click", () => {
@@ -2478,7 +2557,7 @@ function renderList() {
       ? "phase1"
       : state.projectPhaseFilter === "phase1" ? "phase2" : "all";
     state.selected = null;
-    state.visibleCount = currentModelLimit();
+    state.visibleCount = initialVisibleCount();
     render();
   });
   list.querySelectorAll(".project-summary").forEach((row) => {
@@ -3078,7 +3157,8 @@ function renderMiniMap() {
   addBaseMap(state.miniMap, { compact: true });
   // Små kart skal bare gi oversikt og hover-info. Prosjektvalg skjer først
   // når brukeren åpner det store områdekartet.
-  addProjectMarkers(state.miniMap, mapPointProjects(), selectedPoint, {
+  // Småkartet viser kun valgt prosjekt. Områdekartet viser regionens øvrige prosjekter.
+  addProjectMarkers(state.miniMap, state.selected ? [state.selected] : [], selectedPoint, {
     compact: true,
   });
   refreshMapSize(state.miniMap);
@@ -3255,9 +3335,9 @@ function bindFullMapTouchGuards() {
 }
 
 function mapPointProjects() {
-  // Kartet følger den valgte modellen. Mini og Standard viser sine respektive
-  // leveransegrenser, mens Pro viser alle filtrerte prosjekter med kartpunkt.
-  return standardDeliveryProjects()
+  // Kartet skal alltid speile prosjektlisten som faktisk er synlig. Når flere
+  // kort lastes inn, oppdateres kartgrunnlaget samtidig.
+  return visibleDeliveryProjects()
     .filter((project) => state.projectScope !== "national" || (project.hasMapPoint && validMapCoordinate(project.lat, project.lon)))
     .map((project) => projectMapPoint(project))
     .filter(Boolean);
@@ -3323,6 +3403,9 @@ function extractAddressFromProject(project, location = {}) {
     project.caseDescription,
     project.documentDescription,
     project.text,
+    project.project,
+    project.notes,
+    project.comments,
     attachmentText,
   ];
   for (const candidate of candidates) {
@@ -3496,6 +3579,11 @@ function parseMatrikkel(value) {
 
 function applyGeocodeResult(project, result) {
   if (!result?.lat || !result?.lon) return false;
+  const region = state.activeRegion || locationRegions.find((candidate) => candidate.id === state.regionKey);
+  if (region?.id === "trondheim") {
+    const origin = municipalityMapAnchor("Trondheim kommune");
+    if (origin && distanceKm(origin.lat, origin.lon, result.lat, result.lon) > 38) return false;
+  }
   project.lat = result.lat;
   project.lon = result.lon;
   project.hasMapPoint = true;
@@ -3823,9 +3911,9 @@ function standardDeliveryProjects() {
   }
 
   // Når kunden har valgt kommune, skal leveransen alltid bestå av de nærmeste
-  // prosjektene. Fase brukes bare som sekundær sortering ved lik avstand.
+  // prosjektene. Fasefordelingen brukes innenfor nærhetsrekkefølgen.
   if (state.projectScope !== "national" && state.customerMunicipality) {
-    return ranked.sort(customerDistanceSort).slice(0, modelLimit);
+    return phaseBalancedSelection(ranked.sort(customerDistanceSort), modelLimit);
   }
 
   // Fordel kartgrunnlaget mellom kommunene. Prosjektene står fortsatt i
@@ -3857,27 +3945,71 @@ function standardDeliveryProjects() {
 }
 
 function phaseBalancedSelection(projects, limit) {
-  const phaseOne = [];
-  const phaseTwo = [];
+  const phaseGroups = new Map([
+    ["fase 1", []],
+    ["fase 2", []],
+    ["fase 3", []],
+    ["fase 4", []],
+    ["fase 5", []],
+  ]);
   const other = [];
   projects.forEach((project) => {
-    const phase = projectPhaseRank(project);
-    if (phase === 0) phaseTwo.push(project);
-    else if (phase === 1) phaseOne.push(project);
+    const phase = normalize(project?.phaseLabel || project?.phase || "");
+    const group = phaseGroups.get(phase);
+    if (group) group.push(project);
     else other.push(project);
   });
 
-  const targetPerPhase = Math.floor(limit / 2);
-  const selected = [
-    ...phaseTwo.slice(0, targetPerPhase),
-    ...phaseOne.slice(0, targetPerPhase),
-  ];
-  const remaining = [
-    ...phaseTwo.slice(targetPerPhase),
-    ...phaseOne.slice(targetPerPhase),
-    ...other,
-  ];
-  return [...selected, ...remaining].slice(0, limit);
+  const phases = [...phaseGroups.keys()];
+  const baseTarget = Math.floor(limit / phases.length);
+  let remainder = limit % phases.length;
+  const selected = [];
+  const used = new Map();
+
+  phases.forEach((phase) => {
+    const target = baseTarget + (remainder > 0 ? 1 : 0);
+    if (remainder > 0) remainder -= 1;
+    const group = phaseGroups.get(phase);
+    used.set(phase, Math.min(target, group.length));
+  });
+
+  // Interleave fasene, slik at de fem fasene også blir synlige i selve listen
+  // og ikke bare finnes som en skjult fordeling bak en fasebasert sortering.
+  let added = true;
+  while (selected.length < limit && added) {
+    added = false;
+    phases.forEach((phase) => {
+      const group = phaseGroups.get(phase);
+      const index = selected.filter((project) => normalize(project?.phaseLabel || project?.phase || "") === phase).length;
+      const target = used.get(phase);
+      if (index < target && selected.length < limit) {
+        selected.push(group[index]);
+        added = true;
+      }
+    });
+  }
+
+  // Fyll eventuelle ledige plasser fra resten av fasegruppene før ukjent fase.
+  const remaining = [];
+  phases.forEach((phase) => {
+    const group = phaseGroups.get(phase);
+    remaining.push(...group.slice(used.get(phase)));
+  });
+  remaining.push(...other);
+  // Bland fasene deterministisk etter prosjekt-ID. Det gir en variert liste
+  // uten at rekkefølgen endres ved hver rendering eller ved nytt trykk.
+  const mixed = [...selected, ...remaining].slice(0, limit);
+  return mixed.sort((a, b) => stableProjectMixKey(a).localeCompare(stableProjectMixKey(b)));
+}
+
+function stableProjectMixKey(project) {
+  const source = `${project?.id || project?.caseNumber || project?.address || ""}|phase-mix-v1`;
+  let hash = 2166136261;
+  for (let index = 0; index < source.length; index += 1) {
+    hash ^= source.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+  return `${(hash >>> 0).toString(16).padStart(8, "0")}:${source}`;
 }
 
 function visibleDeliveryProjects() {
@@ -3885,7 +4017,7 @@ function visibleDeliveryProjects() {
   const visible = state.projectSortMode === "date"
     ? state.filtered.slice().sort(projectSort).slice(0, limit)
     : state.projectScope !== "national" && state.customerMunicipality
-      ? state.filtered.slice().sort(customerDistanceSort).slice(0, limit)
+      ? phaseBalancedSelection(state.filtered.slice().sort(customerDistanceSort), limit)
       : phaseBalancedSelection(state.filtered, limit);
   const selected = state.selected && state.filtered.find((project) => project.id === state.selected.id);
 
@@ -3896,9 +4028,7 @@ function visibleDeliveryProjects() {
     visible.splice(Math.max(visible.length - 1, 0), 1, selected);
   }
 
-  return visible.sort(state.projectSortMode === "date"
-    ? markedThenDateSort
-    : state.projectScope !== "national" && state.customerMunicipality ? markedThenCustomerDistanceSort : markedFirstSort);
+  return visible.sort(state.projectSortMode === "date" ? markedThenDateSort : markedOnlySort);
 }
 
 function deliverySort(a, b) {
@@ -3945,6 +4075,10 @@ function markedThenCustomerDistanceSort(a, b) {
 
 function markedThenDateSort(a, b) {
   return Number(isMarkedProject(b.id)) - Number(isMarkedProject(a.id)) || dateSort(a, b);
+}
+
+function markedOnlySort(a, b) {
+  return Number(isMarkedProject(b.id)) - Number(isMarkedProject(a.id));
 }
 
 function projectPhaseRank(project) {
@@ -4297,8 +4431,7 @@ function fileDisplayTitle(value) {
     .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
     .replace(/\\/g, "")
     .replace(/\s+/g, " ")
-    .trim()
-    .slice(0, 100);
+    .trim();
 }
 
 function meaningfulProjectText(value) {
@@ -4344,6 +4477,27 @@ function inferProjectTypes(value) {
   add("Veg/infrastruktur", /\b(veg|vei|veganlegg|infrastruktur|avkjorsel|avkoyrsle|vann- og avlop|va-anlegg|bekkelop)\b/);
   add("Tekniske installasjoner", /\b(skorstein|vedkomfyr|sanitaer|ventilasjon|elektro|solcelle|transformator|ladestasjon)\b/);
   add("Fradeling/oppmåling", /\b(fradeling|matrikkeleining|matrikkelforing|oppmalingsforretning|tomtedeling)\b/);
+  add("Seksjonering", /\b(seksjonering|reseksjonering)\b/);
+  add("Dispensasjon", /\b(dispensasjon|dispensasjonssoknad)\b/);
+  add("Reguleringsplan", /\b(reguleringsplan|arealplan|planendring|planinitiativ)\b/);
+  add("Tillatelse/vedtak", /\b(tillatelse|tillatelsen|loyve|rammetillatelse|rammeloyve|igangsettingstillatelse|igangsettingsloyve|vedtak)\b/);
+  add("Fasadeendring", /\b(fasadeendring|fasade|skilt)\b/);
+  add("Vann og avløp", /\b(vann.?og.?avlop|va.?anlegg|avlop|overvann|spillvann)\b/);
+  add("Nabovarsel", /\bnabovarsel\b/);
+  add("Byggesøknad", /\b(byggesoknad|byggjesoknad|soknad om|soknaden)\b/);
+  add("Endring av tiltak", /\b(endring av tiltak|tiltakshaver|tiltaket)\b/);
+  add("Pålegg/tilsyn", /\b(palegg|retting|tvangsmulkt|tilsyn|brannsikring)\b/);
+  add("Utomhusarbeid", /\b(trefelling|uteareal|uteomrade|utomhus|vegetasjon)\b/);
+  add("Eiendomsforvaltning", /\b(eiendomsskatt|konsesjonsfrihet|eiendomsgrense|eiendomsforvaltning|sammenslaing av eiendommer)\b/);
+  add("Saksoppfølging", /\b(henvendelse|anmodning|purring|supplering|komplettering|oppfolgende svar|generell henvendelse|kontaktutvalg|sakskostnader|omgjøringsvedtak)\b/);
+  add("Tekniske installasjoner", /\b(nettstasjon|kabelanlegg|brannsikring|energiforsyning)\b/);
+  add("Bruksendring", /\b(bruks.?og.?fasadeendring|bruks.?og.?endring)\b/);
+  add("Seksjonering", /\b(seksjoneringsvedtak|seksjonering)\b/);
+  add("Reguleringsplan", /\b(politisk behandling|markagrensa|arealbruk|planarbeid)\b/);
+  add("Pålegg/tilsyn", /\b(bekymringsmelding|statsforvaltervedtak|opphevelse|klagebehandling)\b/);
+  if (!types.length && /\b(bygg|bygge|byggesak|tiltak|soknad|saksbehandling)\b/.test(text)) types.push("Byggesak");
+  if (!types.length && /\b(eiendom|eiendommen|godkjent|bygging|tegning|boligformål|oppbygget|forlengelse av fristen|utsatt frist|vedrørende)\b/.test(text)) types.push("Annen byggesak");
+  if (!types.length) types.push("Annen byggesak");
   return types;
 }
 
@@ -4476,7 +4630,13 @@ function marketRoleLabel(role) {
 }
 
 function normalize(value) {
-  return String(value || "").toLocaleLowerCase("nb-NO").normalize("NFKD").replace(/[\u0300-\u036f]/g, "");
+  return String(value || "")
+    .toLocaleLowerCase("nb-NO")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replaceAll("æ", "ae")
+    .replaceAll("ø", "o")
+    .replaceAll("å", "a");
 }
 
 function normalizePhone(value) {
@@ -4556,8 +4716,8 @@ function restoreSavedFilters() {
     state.trade = tradePresets.includes(savedTrade) ? savedTrade : "";
     state.area = /^min posisjon|^region ved min posisjon/i.test(saved.area || "") ? "" : saved.area || "";
     state.customerMunicipality = saved.customerMunicipality || "";
-    state.regionKey = regionDataPaths[saved.regionKey] ? saved.regionKey : "bergensregionen";
-    state.activeRegion = locationRegions.find((region) => region.id === state.regionKey) || findRegionByText(state.area);
+    state.regionKey = "";
+    state.activeRegion = null;
     document.querySelector("#tradeInput").value = state.trade;
     document.querySelector("#areaInput").value = state.area;
     updateCustomerMunicipalityOptions();
@@ -4565,8 +4725,8 @@ function restoreSavedFilters() {
     state.trade = "";
     state.area = "";
     state.customerMunicipality = "";
-    state.regionKey = "bergensregionen";
-    state.activeRegion = locationRegions.find((region) => region.id === state.regionKey) || null;
+    state.regionKey = "";
+    state.activeRegion = null;
   }
 }
 
@@ -4668,7 +4828,7 @@ async function applyWeeklyDelivery() {
     return;
   }
   await loadProjects();
-    state.visibleCount = currentModelLimit();
+    state.visibleCount = initialVisibleCount();
   state.filtered = filterProjects();
   state.selected = null;
   render();

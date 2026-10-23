@@ -4,6 +4,6 @@
   "sourceUrl": "https://innsyn.sing.no/alver/innsyn/wfinnsyn.ashx",
   "lookbackDays": 90,
   "pageSize": 100,
-  "include": "bygg|bygge|byggesak|byggjesak|byggesøknad|byggjesøknad|byggetillatelse|rammetillatelse|rammeløyve|igangsetting|igangsetjing|tilbygg|påbygg|bruksendring|garasje|bolig|bustad|næring|fasade|tak|terreng|mur|oppføring|riving|rivning|fradeling|frådeling|seksjonering|dispensasjon|løyve|søknad",
-  "exclude": "avslag|klage|ferdigmelding|ferdigattest|tilsyn|ulovlighet|ulovleg|innsyn|møteinnkalling|postmottak|arkiv|anmodning om dokument|bero|stanset|avsluttet|trukket|tilbakekalt|spørsmål|veiledning|gebyr|høring|høyring"
+  "include": "bygg|bygge|byggje|byggesak|byggjesak|byggesøknad|byggjesøknad|byggetillatelse|byggjeløyve|rammetillatelse|rammeløyve|igangsetting|igangsetjing|igangsettingstillatelse|igangsettingsløyve|igangsetjingsløyve|tilbygg|påbygg|bruksendring|garasje|bolig|bustad|næring|fasade|tak|terreng|mur|oppføring|riving|rivning|fradeling|frådeling|seksjonering|dispensasjon|tillatelse|løyve|søknad",
+  "exclude": "adress(?:e)?endring|avslag|klage|ferdigmelding|ferdigattest|tilsyn|ulovlighet|ulovleg|innsyn|møteinnkalling|postmottak|arkiv|anmodning om dokument|bero|stanset|avsluttet|avslutta|trukket|trekt|tilbakekalt|tilbakekalla|spørsmål|veiledning|gebyr|høring|høyring"
 }

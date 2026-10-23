@@ -6,6 +6,7 @@
   "include": [
     "bygg",
     "bygge",
+    "byggje",
     "byggesak",
     "byggjesak",
     "byggesøknad",
@@ -40,6 +41,8 @@
     "søknad"
   ],
   "exclude": [
+    "adressendring",
+    "adresseendring",
     "avslag",
     "klage",
     "ferdigmelding",
@@ -59,6 +62,11 @@
     "spørsmål",
     "veiledning",
     "gebyr",
-    "høring"
+    "høring",
+    "høyring",
+    "ulovleg",
+    "avslutta",
+    "trekt",
+    "tilbakekalla"
   ]
 }

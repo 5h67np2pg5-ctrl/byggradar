@@ -8,7 +8,7 @@ const outputDir = path.join(root, "public/data/regions", config.regionId);
 const cutoff = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000);
 const userAgent = "NorskByggRadar/1.0 (åpen kommunal innsynskilde)";
 const delay = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
-const terms = ["bygg", "bygge", "byggesak", "byggesøknad", "byggetillatelse", "rammetillatelse", "igangsetting", "tilbygg"];
+const terms = ["bygg", "bygge", "byggje", "byggesak", "byggjesak", "byggesøknad", "byggjesøknad", "byggetillatelse", "byggjeløyve", "rammetillatelse", "rammeløyve", "igangsetting", "igangsetjing", "igangsettingstillatelse", "igangsettingsløyve", "igangsetjingsløyve", "tilbygg", "påbygg", "fradeling", "frådeling", "løyve"];
 const excluded = new RegExp(config.filter.exclude.join("|"), "i");
 const included = new RegExp(config.filter.include.join("|"), "i");
 const onlyMunicipality = String(process.env.NBR_MUNICIPALITY || "").trim().toLocaleLowerCase("nb-NO");

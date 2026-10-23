@@ -17,8 +17,8 @@ const toIsoDate = (value) => {
   const match = String(value || "").match(/(\d{1,2})\.(\d{1,2})\.(\d{4})/);
   return match ? `${match[3]}-${match[2].padStart(2, "0")}-${match[1].padStart(2, "0")}` : "";
 };
-const include = /byggesak|byggesøknad|byggetillatelse|rammetillatelse|igangsetting|fasade|påbygg|tilbygg|rivning|fradeling|seksjonering|reguleringsplan|planinitiativ|dispensasjon|oppføring|oppføre|garasje|bolig|næring|terreng|forstøtningsmur|bruksendring|nabovarsel|forhåndskonferanse|tillatelse|nytt bygg|søknad/i;
-const exclude = /avslag|klage|ferdigmelding|ferdigattest|tilsyn|ulovlighetsoppfølging|innsyn|dokumenter fra tidligere|møteinnkalling|postmottak|oversendelse|arkiv|anmodning om dokument|bero|stanset|avsluttet|trukket|tilbakekalt|spørsmål|veiledning|gebyrregulativ|gebyr|høring|prioritering av byggesaker|saksbehandling pågår|^tilbud\b|ikke operativt|cv\b|stilling|ansettelse/i;
+const include = /byggesak|byggjesak|byggesøknad|byggjesøknad|byggetillatelse|byggjeløyve|rammetillatelse|rammeløyve|igangsetting|igangsetjing|igangsettingstillatelse|igangsettingsløyve|igangsetjingsløyve|fasade|påbygg|tilbygg|rivning|fradeling|frådeling|seksjonering|reguleringsplan|planinitiativ|dispensasjon|oppføring|oppføre|garasje|bolig|bustad|næring|terreng|forstøtningsmur|bruksendring|nabovarsel|forhåndskonferanse|førehandskonferanse|tillatelse|løyve|nytt bygg|søknad/i;
+const exclude = /adress(?:e)?endring|avslag|klage|ferdigmelding|ferdigattest|tilsyn|ulovlighetsoppfølging|ulovleg|innsyn|dokumenter fra tidligere|dokument frå tidlegare|møteinnkalling|postmottak|oversendelse|oversending|arkiv|anmodning om dokument|bero|stanset|stansa|avsluttet|avslutta|trukket|trekt|tilbakekalt|tilbakekalla|spørsmål|veiledning|gebyrregulativ|gebyr|høring|høyring|prioritering av byggesaker|saksbehandling pågår|^tilbud\b|ikkje operativt|ikke operativt|cv\b|stilling|ansettelse|tilsetjing/i;
 const extractMatrikkel = (title) => (title.match(/\b(?:gbnr|gnr\.?\s*\/?)\s*([0-9]+\s*\/\s*[0-9]+(?:\s*\/\s*[0-9]+)?)/i)?.[1] || "").replace(/\s+/g, "");
 const extractAddress = (title) => {
   const match = title.match(/(?:-|,)\s*([^,-]+?\s+\d+[A-Za-z]?)\s*(?:-|,|$)/i);

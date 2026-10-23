@@ -1,0 +1,19 @@
+{
+  "regionId": "trondheim",
+  "regionName": "Trondheim",
+  "generatedAt": "2026-10-23T11:24:00.537Z",
+  "projectCount": 2343,
+  "source": "https://trondheim.innsynsportal.no/postjournal-v2/fc010204-2c07-4f3c-a8ef-879ec218111c",
+  "sourceType": "official-public-browser",
+  "status": "ok",
+  "dateWindow": {
+    "from": "2026-07-16",
+    "to": "2026-10-23"
+  },
+  "counts": {
+    "rowsRead": 8824,
+    "afterNbrFilter": 2361,
+    "uniqueDocuments": 2343,
+    "uniqueCases": 1368
+  }
+}

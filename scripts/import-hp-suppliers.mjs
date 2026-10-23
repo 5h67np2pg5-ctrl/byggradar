@@ -31,6 +31,7 @@ const regionMunicipalities = {
   grenlandsregionen: ["Skien kommune", "Porsgrunn kommune", "Bamble kommune", "Kragerø kommune", "Drangedal kommune", "Siljan kommune"],
   sorlandsregionen: ["Kristiansand kommune", "Lindesnes kommune", "Vennesla kommune", "Lillesand kommune", "Lyngdal kommune", "Farsund kommune", "Flekkefjord kommune", "Kvinesdal kommune", "Birkenes kommune", "Sirdal kommune", "Hægebostad kommune", "Iveland kommune"],
   vestfoldkongsbergregionen: ["Drammen kommune", "Sandefjord kommune", "Tønsberg kommune", "Larvik kommune", "Horten kommune", "Holmestrand kommune", "Lier kommune", "Kongsberg kommune", "Færder kommune", "Øvre Eiker kommune"],
+  trondheim: ["Trondheim kommune"],
 };
 const supportedTrades = [
   ["tomrer", "Snekker"], ["elektriker", "Elektriker"], ["rorlegger", "Rørlegger"], ["ventilasjon", "Ventilasjon"],

@@ -1,5 +1,5 @@
 const userVersion = 442;
-const dashboardVersion = 450;
+const dashboardVersion = 451;
 const SALES_VERSION = userVersion + dashboardVersion;
 const salesEntryIsApproved = (() => {
   try {
@@ -16,6 +16,7 @@ const regions = [
   { id: "grenlandsregionen", name: "Grenlandsregionen", anchor: [59.140, 9.610], municipalities: ["Skien kommune", "Porsgrunn kommune", "Bamble kommune", "Kragerø kommune", "Drangedal kommune", "Siljan kommune"] },
   { id: "sorlandsregionen", name: "Sørlandsregionen", anchor: [58.147, 7.996], municipalities: ["Kristiansand kommune", "Lindesnes kommune", "Vennesla kommune", "Lillesand kommune", "Lyngdal kommune", "Farsund kommune", "Flekkefjord kommune", "Kvinesdal kommune", "Birkenes kommune", "Sirdal kommune", "Hægebostad kommune", "Iveland kommune"] },
   { id: "vestfoldkongsbergregionen", name: "Vestfold- og Kongsbergregionen", anchor: [59.250, 10.200], municipalities: ["Drammen kommune", "Sandefjord kommune", "Tønsberg kommune", "Larvik kommune", "Horten kommune", "Holmestrand kommune", "Lier kommune", "Kongsberg kommune", "Færder kommune", "Øvre Eiker kommune"] },
+  { id: "trondheim", name: "Trondheim kommune", anchor: [63.4305, 10.3951], municipalities: ["Trondheim kommune"] },
 ];
 const allRegionMunicipalityNames = [...new Set(regions.flatMap((item) => item.municipalities))];
 

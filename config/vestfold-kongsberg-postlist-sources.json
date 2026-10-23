@@ -10,7 +10,7 @@
       "forhåndskonferanse", "tillatelse", "nytt bygg", "søknad"
     ],
     "exclude": [
-      "avslag", "klage", "ferdigmelding", "ferdigattest", "tilsyn",
+      "adressendring", "adresseendring", "avslag", "klage", "ferdigmelding", "ferdigattest", "tilsyn",
       "ulovlighetsoppfølging", "innsynsbegjæring", "møteinnkalling",
       "postmottak", "oversendelse", "arkiv", "anmodning om dokument",
       "innsyn", "dokumenter fra tidligere", "^cv\\b", "jobbsøknad",

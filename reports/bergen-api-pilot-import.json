@@ -1,0 +1,35 @@
+{
+  "imported": 20,
+  "phaseCounts": {
+    "Fase 1": 20
+  },
+  "source": "Bergen kommune direkte API",
+  "pilot": true,
+  "duplicatesSkipped": 0,
+  "caseNumbers": [
+    "BYGG-2026/00368",
+    "BYGG-2025/18312",
+    "BYGG-2026/17156",
+    "BYGG-2026/17172",
+    "BYGG-2026/17153",
+    "BYGG-2026/17193",
+    "BYGG-2026/17176",
+    "BYGG-2026/17152",
+    "BYGG-2026/15868",
+    "BYGG-2026/16737",
+    "BYGG-2026/16183",
+    "BYGG-2026/15932",
+    "BYGG-2026/17187",
+    "BYGG-2026/17208",
+    "BYGG-2026/17188",
+    "BYGG-2026/17288",
+    "BYGG-2026/17171",
+    "BYGG-2026/00589",
+    "BYGG-2026/17178",
+    "BYGG-2026/17166"
+  ],
+  "files": {
+    "locationPath": "/Users/sindregodager/Documents/Codex/2026-10-13/o/work/byggradar-ui/public/data/regions/bergensregionen/projects_location_enriched.json",
+    "contactPath": "/Users/sindregodager/Documents/Codex/2026-10-13/o/work/byggradar-ui/public/data/regions/bergensregionen/projects_contact_enriched.json"
+  }
+}

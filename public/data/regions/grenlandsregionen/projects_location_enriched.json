@@ -56,7 +56,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.183588545024314,
         "longitude": 9.61502483757226
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "tilbygg/påbygg, bruksendring",
+      "contactName": "Arkitekt Kristine Glenna Kragset AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-14",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -111,7 +119,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 58.93571194154034,
         "longitude": 9.616360490145407
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "bolig",
+      "contactName": "Arkitektkontoret Henning Karlsen As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-24",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -166,7 +182,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.037108487756704,
         "longitude": 9.65707567846002
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "bolig",
+      "contactName": "Be-Con AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-22",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -221,7 +245,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.214909569598056,
         "longitude": 9.54496445941672
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "tilbygg/påbygg",
+      "contactName": "Sigvarts 3d Tegne Og Byggetjenester As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-25",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -276,7 +308,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.213691941371486,
         "longitude": 9.601501749269463
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "tilbygg/påbygg",
+      "contactName": "Sivilarkitekt Silje Søntvedt",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-25",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -331,7 +371,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.15540756917785,
         "longitude": 9.637319640078351
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "tilbygg/påbygg",
+      "contactName": "BORGERAAS & MYRHOLT AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-21",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -390,7 +438,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4016/15/297/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "garasje/bod, bolig",
+      "contactName": "EIKEN HYTTER AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-25",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -445,7 +501,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 58.927626649989605,
         "longitude": 9.142602066597128
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "tilbygg/påbygg",
+      "contactName": "Bygg og Tømrermester Tom Aasen as",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-07-21",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -500,7 +564,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.270400157726804,
         "longitude": 9.545290529448149
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "næring/offentlig",
+      "contactName": "Ck Nor Bygg As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-01",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -555,7 +627,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.17308530231949,
         "longitude": 9.62171140662717
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "næring/offentlig",
+      "contactName": "Rambøll Norge AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-26",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -610,7 +690,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.17554310601679,
         "longitude": 9.637865585523501
-      }
+      },
+      "phase": "Fase 2",
+      "projectType": "teknisk installasjon",
+      "contactName": "TELEMARK FYLKESKOMMUNE",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Saksbehandling eller supplering registrert",
+      "phaseStartDate": "2026-08-21",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -665,7 +753,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.166376873398015,
         "longitude": 9.634690191218873
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "teknisk installasjon",
+      "contactName": "KNOBEL AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-20",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -721,7 +817,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 58.95632192979728,
         "longitude": 9.624133831969738
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "tilbygg/påbygg, bolig",
+      "contactName": "Ta Takst Og Eiendom As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-05",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -776,7 +880,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.134979405089254,
         "longitude": 9.639552699101436
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Sh Prosjekt As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-30",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -831,7 +943,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.046974964068674,
         "longitude": 9.698128781124144
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Maxbo Tekniske Tjenester As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-24",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -886,7 +1006,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.17629856148572,
         "longitude": 9.612636963598288
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "riving",
+      "contactName": "H H Prosjektassistanse AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-17",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -941,7 +1069,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.18146990077529,
         "longitude": 9.631715242880862
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Navn navnesen63",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-09",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -999,7 +1135,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (2 treff)",
         "lookupKey": "4016/25/64/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "ENVIDAN AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-07",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -1054,7 +1198,15 @@
         "lookupStatus": "matrikkel slått opp i Kartverket",
         "latitude": 59.26997,
         "longitude": 9.56721
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Telemarkhus AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-19",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -1109,7 +1261,15 @@
         "lookupStatus": "matrikkel slått opp i Kartverket",
         "latitude": 59.26997,
         "longitude": 9.56721
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Telemarkhus AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-17",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -1164,7 +1324,15 @@
         "lookupStatus": "matrikkel slått opp i Kartverket",
         "latitude": 59.26997,
         "longitude": 9.56721
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Telemarkhus AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-17",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -1220,7 +1388,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.16618093606395,
         "longitude": 9.647104894042293
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "bruksendring, garasje/bod",
+      "contactName": "Siv Ing Sakariasen",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-11",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -1276,7 +1452,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.00271045834569,
         "longitude": 9.73970192814463
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "tilbygg/påbygg, bolig",
+      "contactName": "H H Prosjektassistanse AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-10",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -1331,7 +1515,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.088235374829964,
         "longitude": 9.818662339409805
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Flere avsendere",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-07-27",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -1386,7 +1578,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.04627881064262,
         "longitude": 9.697587797681262
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "Norges Peis Forum Nina Emina Bruni",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-13",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -1441,7 +1641,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.09151750770118,
         "longitude": 9.056789052218926
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "Joakim Seppola",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-13",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -1496,7 +1704,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.21523170457541,
         "longitude": 9.600618022372213
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "NORSK PIPEREHABILITERING AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-12",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -1551,7 +1767,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.175538251919114,
         "longitude": 9.645409684672938
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "NORSK PIPEREHABILITERING AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-12",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -1606,7 +1830,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.239466699317035,
         "longitude": 9.637239567350104
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "NORSK PIPEREHABILITERING AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-06",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -1661,7 +1893,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.011720073482444,
         "longitude": 9.66488857802484
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "Piperehabilitering As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-28",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -1716,7 +1956,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.192510469277366,
         "longitude": 9.6291708834225
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "bruksendring",
+      "contactName": "Mathisen Byggrådgiving",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-28",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -1771,7 +2019,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.23351235349027,
         "longitude": 9.597539479818783
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "NORSK PIPEREHABILITERING AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-23",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -1826,7 +2082,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.20065531311664,
         "longitude": 9.620618833965162
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "NORSK PIPEREHABILITERING AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-23",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -1881,7 +2145,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.20641045738251,
         "longitude": 9.623998082145073
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "NORSK PIPEREHABILITERING AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-23",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -1936,7 +2208,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.05115958187685,
         "longitude": 9.83772471595071
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "Vestfold Peis Og Pipe As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-21",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -1991,7 +2271,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.00617481625738,
         "longitude": 9.744865230474861
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "Piperehabilitering Sør-Øst As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-18",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -2046,7 +2334,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.020114797405284,
         "longitude": 9.194100372670412
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "VSJ ARKITEKTUR AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-14",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -2104,7 +2400,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (2 treff)",
         "lookupKey": "4003/263/4/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "næring/offentlig",
+      "contactName": "FAU ved Melum skole v/Morten Oterkiil",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-14",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -2159,7 +2463,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 58.95225135533924,
         "longitude": 9.50982526329516
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "Piperehabilitering Sør-Øst As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-10",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -2214,7 +2526,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.04372560687445,
         "longitude": 9.699474592115626
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "Piperehabilitering Sør-Øst As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-10",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -2269,7 +2589,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 58.95412653719222,
         "longitude": 9.510287507065215
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "Piperehabilitering Sør-Øst As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-10",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -2324,7 +2652,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.08488826452629,
         "longitude": 9.077297786099582
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "Johnny Jensen AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-08",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -2379,7 +2715,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.0905779741979,
         "longitude": 9.002495578308334
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "VSJ ARKITEKTUR AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-02",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -2434,7 +2778,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.0927548275268,
         "longitude": 9.061171726438234
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "VSJ ARKITEKTUR AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-02",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -2489,7 +2841,15 @@
         "lookupStatus": "matrikkel slått opp i Kartverket",
         "latitude": 59.12915,
         "longitude": 9.55015
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "næring/offentlig",
+      "contactName": "ARKITEKTKONTORET MORTEN JAHREN AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-02",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -2544,7 +2904,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.065595528975216,
         "longitude": 9.604490582407477
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "Piperehabilitering Sør-Øst As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-28",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -2599,7 +2967,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.06839872247446,
         "longitude": 9.208761108005104
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "Joakim Seppola",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-28",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -2654,7 +3030,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 58.99849468201803,
         "longitude": 9.746142576775812
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "bruksendring",
+      "contactName": "Tor Inge Hestvik",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-27",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -2709,7 +3093,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.235591332006805,
         "longitude": 9.62368252486159
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "bruksendring",
+      "contactName": "Per Åge Husby",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-27",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -2764,7 +3156,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.20694147299686,
         "longitude": 9.579091062739726
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "Varme & Bad As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-24",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -2819,7 +3219,15 @@
         "lookupStatus": "matrikkel slått opp i Kartverket",
         "latitude": 59.13915,
         "longitude": 9.63381
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "Norsk Piperehabilitering As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-20",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -2874,7 +3282,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.15037642581422,
         "longitude": 9.655757612574478
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "Norsk Piperehabilitering As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-19",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -2929,7 +3345,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.22342053471752,
         "longitude": 9.600595666198362
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "NORSK PIPEREHABILITERING AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-19",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -2987,7 +3411,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4012/7/4/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "næring/offentlig",
+      "contactName": "Norconsult Norge As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-18",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -3042,7 +3474,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.03590715332363,
         "longitude": 9.713586453518213
-      }
+      },
+      "phase": "Fase 3",
+      "projectType": "bruksendring",
+      "contactName": "Fjord Arkitekter As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Rammetillatelse eller rammeløyve registrert",
+      "phaseStartDate": "2026-08-13",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -3097,7 +3537,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.06459014941061,
         "longitude": 9.627091148913726
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "Piperehabilitering Sør-Øst As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-13",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -3152,7 +3600,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.15611245165461,
         "longitude": 9.643256505547845
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "bruksendring",
+      "contactName": "Truls Enger Hansen",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-11",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -3207,7 +3663,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.0503658066763,
         "longitude": 9.191220470305824
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ombygging/rehabilitering",
+      "contactName": "Komplett Oppvarming As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-06",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -3263,7 +3727,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.138652331720685,
         "longitude": 9.57515888289748
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "nybygg, riving",
+      "contactName": "It-Tek As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-13",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -3318,7 +3790,15 @@
         "lookupStatus": "matrikkel slått opp i Kartverket",
         "latitude": 59.19008,
         "longitude": 9.55202
-      }
+      },
+      "phase": "Fase 2",
+      "projectType": "ukjent",
+      "contactName": "NORCONSULT NORGE AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Saksbehandling eller supplering registrert",
+      "phaseStartDate": "2026-09-23",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -3373,7 +3853,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.13599322497957,
         "longitude": 9.636923932899272
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "nybygg",
+      "contactName": "Adapt Arkitekter As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-21",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -3428,7 +3916,15 @@
         "lookupStatus": "matrikkel slått opp i Kartverket",
         "latitude": 59.19008,
         "longitude": 9.55202
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "NORCONSULT NORGE AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-17",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -3483,7 +3979,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.054367235544454,
         "longitude": 8.686724116501148
-      }
+      },
+      "phase": "Fase 2",
+      "projectType": "tilbygg/påbygg",
+      "contactName": "Frida Ødegaarden",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Saksbehandling eller supplering registrert",
+      "phaseStartDate": "2026-09-03",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -3541,7 +4045,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4003/300/5385/0/0"
-      }
+      },
+      "phase": "Fase 3",
+      "projectType": "ukjent",
+      "contactName": "Børve Borchsenius Arkitekter AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Rammetillatelse eller rammeløyve registrert",
+      "phaseStartDate": "2026-09-01",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -3596,7 +4108,15 @@
         "lookupStatus": "matrikkel slått opp i Kartverket",
         "latitude": 59.25273,
         "longitude": 9.56622
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "nybygg",
+      "contactName": "Jon Arne Hoppestad",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-31",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -3652,7 +4172,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 58.9681893730631,
         "longitude": 9.159978416980849
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "tilbygg/påbygg, garasje/bod",
+      "contactName": "Per Augon Sauar",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-19",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -3707,7 +4235,15 @@
         "lookupStatus": "matrikkel slått opp i Kartverket",
         "latitude": 59.25273,
         "longitude": 9.56622
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "nybygg",
+      "contactName": "Jon Arne Hoppestad",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-19",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -3762,7 +4298,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.18327207969565,
         "longitude": 9.605919520795656
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Cn Heavy Transport As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-04",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -3822,7 +4366,15 @@
         "lookupStatus": "matrikkel slått opp i Kartverket",
         "latitude": 59.26997,
         "longitude": 9.56721
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-18",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -3877,7 +4429,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.03732170877397,
         "longitude": 9.71112395782024
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "bolig",
+      "contactName": "Varde Rådgivning As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-08",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -3932,7 +4492,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 58.95659689692156,
         "longitude": 9.163705731192024
-      }
+      },
+      "phase": "Fase 2",
+      "projectType": "nybygg",
+      "contactName": "",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Saksbehandling eller supplering registrert",
+      "phaseStartDate": "2026-10-08",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -3987,7 +4555,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.304444785756544,
         "longitude": 9.313816007821657
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "bolig",
+      "contactName": "RABB ARKITEKTER AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-03",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -4042,7 +4618,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 58.998044652654215,
         "longitude": 9.704014940238393
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "bolig",
+      "contactName": "Tinde Hytter AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-14",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -4097,7 +4681,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.192843771768196,
         "longitude": 9.57950960908477
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "bolig",
+      "contactName": "RABB ARKITEKTER AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-06",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -4152,7 +4744,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.25100423015396,
         "longitude": 9.571516225585565
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "tilbygg/påbygg",
+      "contactName": "ARKITEKT SØLVE GRØNVOLD",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-12",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -4207,7 +4807,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.20643060998997,
         "longitude": 9.586874852108169
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "tilbygg/påbygg",
+      "contactName": "H H Prosjektassistanse AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-09",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -4262,7 +4870,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.21848363117363,
         "longitude": 9.636305387503079
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "tilbygg/påbygg",
+      "contactName": "Kjell Sletten",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-09",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -4317,7 +4933,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.21848363117363,
         "longitude": 9.636305387503079
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "tilbygg/påbygg",
+      "contactName": "ING KJELL A SLETTEN AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-28",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -4372,7 +4996,15 @@
         "lookupStatus": "matrikkel slått opp i Kartverket",
         "latitude": 59.10471,
         "longitude": 9.55255
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "tilbygg/påbygg",
+      "contactName": "Tom Roger Arvesen Johansen",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-09",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -4427,7 +5059,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.178482659050395,
         "longitude": 9.642035787392924
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "tilbygg/påbygg",
+      "contactName": "Ronnie Skavlid",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-01",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -4482,7 +5122,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 58.980457591393176,
         "longitude": 9.246099933256039
-      }
+      },
+      "phase": "Fase 2",
+      "projectType": "garasje/bod",
+      "contactName": "Gabriele Skodziute",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Saksbehandling eller supplering registrert",
+      "phaseStartDate": "2026-08-03",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -4542,7 +5190,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.127185298789286,
         "longitude": 9.647382635758424
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "tilbygg/påbygg",
+      "contactName": "Roy Bakke Andersen",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-07-30",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -4597,7 +5253,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.05290794489228,
         "longitude": 8.724322084877047
-      }
+      },
+      "phase": "Fase 2",
+      "projectType": "garasje/bod",
+      "contactName": "Rolf Castor Simonsen",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Saksbehandling eller supplering registrert",
+      "phaseStartDate": "2026-07-28",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -4650,7 +5314,15 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "mangler matrikkel/adresse"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "næring/offentlig",
+      "contactName": "Marthinsen & Duvholt As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-04",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -4703,7 +5375,15 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "mangler matrikkel/adresse"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Langesund Vel",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-28",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -4758,7 +5438,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.04638717606491,
         "longitude": 9.68201174017278
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "garasje/bod",
+      "contactName": "Vetle Bjørtuft Skåra",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-14",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -4813,7 +5501,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.17025207031643,
         "longitude": 9.597064984129755
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "garasje/bod",
+      "contactName": "H H Prosjektassistanse AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-12",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -4866,7 +5562,15 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "mangler matrikkel/adresse"
-      }
+      },
+      "phase": "Fase 2",
+      "projectType": "nybygg",
+      "contactName": "Sindre Høgli",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Saksbehandling eller supplering registrert",
+      "phaseStartDate": "2026-10-08",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -4921,7 +5625,15 @@
         "lookupStatus": "matrikkel slått opp i Kartverket",
         "latitude": 59.04269,
         "longitude": 9.64227
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "garasje/bod",
+      "contactName": "Flere avsendere",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-30",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -4976,7 +5688,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.19898877954963,
         "longitude": 9.451045914921488
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "garasje/bod",
+      "contactName": "SKIEN TAKST AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-30",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -5031,7 +5751,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.2192120219164,
         "longitude": 9.636108731540808
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "garasje/bod",
+      "contactName": "Arkitekt Kristine Glenna Kragset AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-25",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -5086,7 +5814,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 58.996815035516654,
         "longitude": 9.746699450158829
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "garasje/bod",
+      "contactName": "Flere mottakere",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-23",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -5144,7 +5880,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4012/48/16/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "bolig",
+      "contactName": "Planhuset as",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-15",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -5202,7 +5946,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4016/15/299/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "bolig",
+      "contactName": "Stav Arkitekter Sør AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-15",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -5257,7 +6009,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 58.996815035516654,
         "longitude": 9.746699450158829
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "garasje/bod",
+      "contactName": "Mustad Bygg As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-11",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -5312,7 +6072,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.04178294241367,
         "longitude": 9.665167444018264
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "garasje/bod",
+      "contactName": "Maxbo Tekniske Tjenester As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-02",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -5367,7 +6135,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.01721151721645,
         "longitude": 9.688100570612521
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "garasje/bod",
+      "contactName": "Thor Inge Polland",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-31",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -5422,7 +6198,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.05820544480254,
         "longitude": 9.150657428109634
-      }
+      },
+      "phase": "Fase 2",
+      "projectType": "riving",
+      "contactName": "Bjørn Paust Range",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Saksbehandling eller supplering registrert",
+      "phaseStartDate": "2026-08-28",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -5477,7 +6261,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.24312111812401,
         "longitude": 9.644670344555404
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "garasje/bod",
+      "contactName": "Nils-Kristian Halvorsen",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-25",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -5532,7 +6324,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.23444359239495,
         "longitude": 9.592245548419847
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "garasje/bod",
+      "contactName": "Christoffer Sannes",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-19",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -5587,7 +6387,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.03934658212084,
         "longitude": 9.232954772066282
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "garasje/bod",
+      "contactName": "Magnar Moland",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-17",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -5642,7 +6450,15 @@
         "lookupStatus": "matrikkel slått opp i Kartverket",
         "latitude": 59.24789,
         "longitude": 9.58665
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "bolig",
+      "contactName": "RABB ARKITEKTER AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-06",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -5700,7 +6516,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (3 treff)",
         "lookupKey": "4003/56/211/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "bolig",
+      "contactName": "BORGESTAD BYGG AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-07-30",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -5755,7 +6579,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.06166508565087,
         "longitude": 8.737817917627558
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "bolig",
+      "contactName": "",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-25",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -5810,7 +6642,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.094372194156804,
         "longitude": 9.05928962484226
-      }
+      },
+      "phase": "Fase 2",
+      "projectType": "garasje/bod",
+      "contactName": "",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Saksbehandling eller supplering registrert",
+      "phaseStartDate": "2026-09-29",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -5865,7 +6705,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.04635261615201,
         "longitude": 9.696133124485309
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Feste Landskap Arkitektur Sør As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-13",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -5920,7 +6768,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.13545558602812,
         "longitude": 9.656520842784653
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Flere avsendere",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-13",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -5975,7 +6831,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.1414414303856,
         "longitude": 9.641202355888929
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Brand Factory Norge As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-13",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -6030,7 +6894,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.14159165110129,
         "longitude": 9.623255204769917
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Arkitektkontoret Henning Karlsen As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-13",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -6085,7 +6957,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.11019640978054,
         "longitude": 9.654012211304648
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Flere avsendere",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-13",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -6140,7 +7020,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.14948989073831,
         "longitude": 9.672820697364275
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Norsk Piperehabilitering As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-13",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -6195,7 +7083,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.05862909930094,
         "longitude": 9.152390620129177
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Tor Espeland",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-12",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -6250,7 +7146,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.05571230411285,
         "longitude": 9.15533624303764
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Tor Espeland",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-12",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -6305,7 +7209,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.01202173497515,
         "longitude": 9.622234197537852
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Jan Erik Tinderholt",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-09",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -6360,7 +7272,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.080720224078355,
         "longitude": 9.65247430199456
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Børve Borchsenius Arkitekter AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-09",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -6415,7 +7335,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.059941308744214,
         "longitude": 9.509536984069662
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Bamble Kommune Kommunalteknikk",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-08",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -6470,7 +7398,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.13237550762772,
         "longitude": 9.619907615490238
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Murer Lasse Johnsen As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-08",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -6525,7 +7461,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.13170032150787,
         "longitude": 9.63511440294052
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Komplett Oppvarming As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-07",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -6580,7 +7524,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.13239860274527,
         "longitude": 9.633729460500614
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Norsk Piperehabilitering As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-06",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -6635,7 +7587,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.13263258786262,
         "longitude": 9.620611199671469
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Ocab As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-06",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -6690,7 +7650,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.19305230793918,
         "longitude": 9.594172255207274
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "AART Architects NO AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-06",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -6745,7 +7713,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.08315983275078,
         "longitude": 9.671785017361245
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Wincon As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-05",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -6800,7 +7776,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.13329691596049,
         "longitude": 9.669480093926332
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Flere avsendere",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-05",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -6855,7 +7839,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.17293339922311,
         "longitude": 9.609131591200809
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "ELEKTROVAKUUM AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-05",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -6910,7 +7902,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.269953668953036,
         "longitude": 9.518779375052366
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "ASPLAN VIAK AS AVD SKIEN",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-05",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -6965,7 +7965,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 58.94718329781295,
         "longitude": 9.568701738141586
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Arve Tveten",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-02",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -7020,7 +8028,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.059941308744214,
         "longitude": 9.509536984069662
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Bamble kommune, Kommunalteknikk",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-01",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -7075,7 +8091,15 @@
         "lookupStatus": "matrikkel slått opp i Kartverket",
         "latitude": 59.10396,
         "longitude": 9.65923
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Norsk Piperehabilitering As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-01",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -7130,7 +8154,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 58.99599495960086,
         "longitude": 9.664794279309135
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Bent Fosse",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-30",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -7185,7 +8217,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.05387732068831,
         "longitude": 9.698861544646117
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Mustad Bygg As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-30",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -7240,7 +8280,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.12326929142069,
         "longitude": 9.654628169313174
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Piperehabilitering Sør-Øst As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-29",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -7295,7 +8343,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.113512607250385,
         "longitude": 9.651770162758456
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Piperehabilitering Sør-Øst As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-29",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -7350,7 +8406,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.167351597186844,
         "longitude": 9.83547425257646
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Piperehabilitering Sør-Øst As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-29",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -7405,7 +8469,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.054899183768505,
         "longitude": 9.69420995696541
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Abdi-Kafi Abdi-Hashi",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-29",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -7460,7 +8532,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.229665470434774,
         "longitude": 9.596280649148413
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Ario AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-29",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -7520,7 +8600,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.18146990077529,
         "longitude": 9.631715242880862
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "SIV.ING SAKARIASEN",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-28",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -7575,7 +8663,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.19107096567626,
         "longitude": 9.624120972828731
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Ine Hauger AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-28",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -7630,7 +8726,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.110963130829624,
         "longitude": 9.65334577836344
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Norsk Piperehabilitering As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-25",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -7685,7 +8789,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.135463306599185,
         "longitude": 9.665590503405719
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "H H Prosjektassistanse AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-25",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -7740,7 +8852,15 @@
         "lookupStatus": "matrikkel slått opp i Kartverket",
         "latitude": 59.0903,
         "longitude": 9.79478
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Norsk Piperehabilitering As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-25",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -7795,7 +8915,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.088198569511256,
         "longitude": 9.717621169454738
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Norsk Piperehabilitering As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-25",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -7850,7 +8978,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 58.94079011021406,
         "longitude": 9.621510247431473
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "H H Prosjektassistanse AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-24",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -7905,7 +9041,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.06974115044217,
         "longitude": 9.719555734033891
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "riving",
+      "contactName": "Børve Borchsenius Arkitekter As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-24",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -7960,7 +9104,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.05492065266685,
         "longitude": 9.641472307850961
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Trafo Arkitektur As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-23",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -8015,7 +9167,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 58.996815035516654,
         "longitude": 9.746699450158829
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Sondre Bakkan",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-18",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -8070,7 +9230,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.0836208294643,
         "longitude": 9.722027361727358
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Vestfold Peis Og Pipe As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-18",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -8125,7 +9293,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.00105600103893,
         "longitude": 9.698034486265792
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "riving",
+      "contactName": "Byggesakskonsulenten As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-17",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -8180,7 +9356,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.11665733298854,
         "longitude": 9.649202377559366
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Ario AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-17",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -8235,7 +9419,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.21058821700308,
         "longitude": 9.602673088311548
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "SELTOR AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-17",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -8290,7 +9482,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.03798276262932,
         "longitude": 9.708488923764195
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Ludvig Thommesen",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-16",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -8345,7 +9545,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.20669364761818,
         "longitude": 9.617348958447996
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "BORGERAAS & MYRHOLT AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-16",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -8400,7 +9608,15 @@
         "lookupStatus": "matrikkel slått opp i Kartverket",
         "latitude": 59.19611,
         "longitude": 9.612
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "SWECO NORGE AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-16",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -8455,7 +9671,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 58.94718329781295,
         "longitude": 9.568701738141586
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Arve Tveten",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-15",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -8510,7 +9734,15 @@
         "lookupStatus": "matrikkel slått opp i Kartverket",
         "latitude": 59.09137,
         "longitude": 9.66842
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Siv Ing Stener Sørensen As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-14",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -8565,7 +9797,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.05329810445014,
         "longitude": 9.706311236938962
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Varde Rådgivning As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-14",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -8620,7 +9860,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.05492065266685,
         "longitude": 9.641472307850961
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Trafo Arkitektur As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-10",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -8675,7 +9923,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.098842970628816,
         "longitude": 9.062526663609793
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "ALLSTAD AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-08",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -8730,7 +9986,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.13624517280905,
         "longitude": 9.660205783276048
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Audun Boklund",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-08",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -8790,7 +10054,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.211669582449396,
         "longitude": 9.611501594403855
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Bjørn Henning Bjørnback",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-08",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -8845,7 +10117,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 58.939863639774316,
         "longitude": 9.62147353099366
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Hr-Eiendom As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-07",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -8900,7 +10180,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.048506991840775,
         "longitude": 9.191105562277578
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Petter Straume",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-07",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -8955,7 +10243,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.10863380952139,
         "longitude": 9.688730512392585
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "MAXBO TEKNISKE TJENESTER AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-04",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -9010,7 +10306,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.14389276528147,
         "longitude": 9.657451460664307
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "MAXBO TEKNISKE TJENESTER AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-04",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -9065,7 +10369,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.23139082609144,
         "longitude": 9.478221359101068
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "riving",
+      "contactName": "Bjørn Thunes",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-04",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -9120,7 +10432,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.10548111656659,
         "longitude": 9.693870296231415
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "BORGERAAS & MYRHOLT AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-03",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -9175,7 +10495,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.04160168572863,
         "longitude": 9.643826368426476
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Lars Olaf Olafsen",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-01",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -9230,7 +10558,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.01315456331161,
         "longitude": 9.723998501238174
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Jan Fredrik Gundersen Holm",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-01",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -9285,7 +10621,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.042141297365575,
         "longitude": 9.646748122126827
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Andreas Sortedal Haugstuen",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-31",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -9340,7 +10684,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.136125597736495,
         "longitude": 9.64648537027426
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Piperehabilitering As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-28",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -9395,7 +10747,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.15038676642318,
         "longitude": 9.642908125805466
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Ta Takst Og Eiendom As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-28",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -9450,7 +10810,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.10052763720347,
         "longitude": 9.68467500551779
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Piperehabilitering As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-28",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -9505,7 +10873,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.136125597736495,
         "longitude": 9.64648537027426
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Piperehabilitering As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-28",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -9560,7 +10936,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.054074338250786,
         "longitude": 9.693949245673995
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Bjørnar Sandersen",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-27",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -9615,7 +10999,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.02479945544103,
         "longitude": 9.671048914950399
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Håkon Johnsen Bjurholt",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-25",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -9670,7 +11062,15 @@
         "lookupStatus": "matrikkel slått opp i Kartverket",
         "latitude": 59.04136,
         "longitude": 9.69773
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Steinar Riis",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-24",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -9725,7 +11125,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 58.93836903454738,
         "longitude": 9.591070719126323
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Varde Rådgivning As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-24",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -9780,7 +11188,15 @@
         "lookupStatus": "matrikkel slått opp i Kartverket",
         "latitude": 58.89869,
         "longitude": 9.13393
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Jim Nicolay Tønnesland",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-24",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -9835,7 +11251,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.07021768202346,
         "longitude": 8.739339884324462
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Drangedal Kommune",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-24",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -9890,7 +11314,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.00895772884353,
         "longitude": 9.703295859230504
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Mustad Bygg As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-21",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -9945,7 +11377,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 58.96510281454053,
         "longitude": 9.651045041335847
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Varde Rådgivning As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-20",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -10000,7 +11440,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.20935572056755,
         "longitude": 9.614647523961459
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "ADAPT ARKITEKTER AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-19",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -10055,7 +11503,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.01264595217105,
         "longitude": 9.726617148107152
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Maskin Entreprenør Roger Nærum As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-18",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -10110,7 +11566,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.03479132017599,
         "longitude": 9.71208106086472
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Stig Bjørnsvik",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-18",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -10165,7 +11629,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 58.99706198878027,
         "longitude": 9.749037060319209
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Sven-Olaf Olafsen",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-17",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -10220,7 +11692,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 58.99599495960086,
         "longitude": 9.664794279309135
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Bent Fosse",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-17",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -10275,7 +11755,15 @@
         "lookupStatus": "matrikkel slått opp i Kartverket",
         "latitude": 59.06782,
         "longitude": 8.78926
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "SØNDRE LIA GÅRD",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-17",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -10330,7 +11818,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.088235374829964,
         "longitude": 9.818662339409805
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Flere avsendere",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-14",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -10385,7 +11881,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 58.99124281286262,
         "longitude": 9.370805992603115
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Arkitektkontoret Henning Karlsen As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-13",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -10440,7 +11944,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.207324138577455,
         "longitude": 9.60934002505228
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "ARKITEKTKONTORET MORTEN JAHREN AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-13",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -10495,7 +12007,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.080929570482226,
         "longitude": 9.81691980905394
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Per Christian Sindberg Andersen",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-12",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -10550,7 +12070,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.004032640633056,
         "longitude": 9.702290165363488
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Varde Rådgivning As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-11",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -10605,7 +12133,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.048951309230524,
         "longitude": 9.738556799613606
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Flere avsendere",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-11",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -10660,7 +12196,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.21721447991393,
         "longitude": 9.614491011765327
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Monika Anna Pasternak",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-11",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -10715,7 +12259,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.047296642711096,
         "longitude": 9.22766461953998
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Byggmester Magnar Moland",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-10",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -10770,7 +12322,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.03927259350303,
         "longitude": 9.677200605019765
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Be-Con AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-07",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -10825,7 +12385,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.16448548980206,
         "longitude": 9.648524521980205
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "MANNHART AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-06",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -10880,7 +12448,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.197287516344105,
         "longitude": 9.452234396767611
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "VSJ ARKITEKTUR AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-06",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -10935,7 +12511,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.13655705462587,
         "longitude": 9.65891859697301
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "The Wagonshed Project As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-05",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -10990,7 +12574,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.10541862247997,
         "longitude": 9.699989897103428
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Gjestland Tormod",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-04",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -11045,7 +12637,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.007410156633775,
         "longitude": 9.740870171188918
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Lars Inge Kvamme",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-03",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -11100,7 +12700,15 @@
         "lookupStatus": "matrikkel slått opp i Kartverket",
         "latitude": 59.0498,
         "longitude": 9.17724
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Tor Espeland",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-07-28",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -11155,7 +12763,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.1414414303856,
         "longitude": 9.641202355888929
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Pp Senteret As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-07-21",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -11210,7 +12826,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.21453353554847,
         "longitude": 9.602059526885899
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "NORSK PIPEREHABILITERING AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-07-20",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -11263,7 +12887,15 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "mangler matrikkel/adresse"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "",
+      "phaseBasis": "illustrativ",
+      "phaseReason": "Illustrativ fordeling etter dokumentdato",
+      "phaseStartDate": "2026-10-12",
+      "phaseIllustrative": true,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -11321,7 +12953,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (2 treff)",
         "lookupKey": "4016/32/45/0/0"
-      }
+      },
+      "phase": "Fase 2",
+      "projectType": "ukjent",
+      "contactName": "Magnus Hauso",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Saksbehandling eller supplering registrert",
+      "phaseStartDate": "2026-09-29",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -11379,7 +13019,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4016/44/1/140/0"
-      }
+      },
+      "phase": "Fase 2",
+      "projectType": "ukjent",
+      "contactName": "Kristian De Lange",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Saksbehandling eller supplering registrert",
+      "phaseStartDate": "2026-08-25",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -11434,7 +13082,15 @@
         "lookupStatus": "matrikkel slått opp i Kartverket",
         "latitude": 59.22655,
         "longitude": 9.57424
-      }
+      },
+      "phase": "Fase 2",
+      "projectType": "ukjent",
+      "contactName": "Statsforvalteren i Vestfold og Telemark",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Saksbehandling eller supplering registrert",
+      "phaseStartDate": "2026-08-10",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -11492,7 +13148,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4001/200/2038/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Norsk Piperehabilitering As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-13",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -11550,7 +13214,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4001/66/30/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Sivilarkitekt Silje Søntvedt",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-09",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -11608,7 +13280,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4016/45/5/1/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Jonas Pettersen, Nordvik Skien",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-05",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -11666,7 +13346,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (2 treff)",
         "lookupKey": "4016/25/64/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "ARKITEKTHUSET KRAGERØ AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-02",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -11724,7 +13412,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (2 treff)",
         "lookupKey": "4016/15/199/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Drangedal Kommune",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-29",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -11777,7 +13473,15 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "må slås opp fra matrikkel"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Piperehabilitering Sør-Øst As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-29",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -11832,7 +13536,15 @@
         "lookupStatus": "matrikkel slått opp i Kartverket",
         "latitude": 59.1742,
         "longitude": 9.59945
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "ARKITEKTKONTORET MORTEN JAHREN AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-28",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -11890,7 +13602,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (10 treff)",
         "lookupKey": "4016/44/2/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Terje Gautefall",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-25",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -11948,7 +13668,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4001/1/128/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Norsk Piperehabilitering AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-24",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -12006,7 +13734,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4001/124/257/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Norsk Piperehabilitering As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-24",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -12064,7 +13800,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4001/51/14/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Norsk Piperehabilitering AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-23",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -12122,7 +13866,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4016/19/37/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "VSJ ARKITEKTUR AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-22",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -12180,7 +13932,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (2 treff)",
         "lookupKey": "4003/300/1880/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Rambøll Norge AS (Hovedkontor)",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-18",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -12238,7 +13998,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (3 treff)",
         "lookupKey": "4010/16/202/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Siljan Kommune",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-17",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -12296,7 +14064,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4001/60/369/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Rabb Arkitekter As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-16",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -12354,7 +14130,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4001/81/60/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "TANGEN BLIKK AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-14",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -12412,7 +14196,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4001/33/47/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Fred Lyngmyr",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-11",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -12470,7 +14262,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4001/32/92/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Ing Kjell A Sletten As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-08",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -12528,7 +14328,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4001/61/109/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "10BLANK AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-03",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -12586,7 +14394,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (2 treff)",
         "lookupKey": "4016/15/6/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Heidi Rønningen",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-02",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -12644,7 +14460,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4001/61/48/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Skien Varmesenter As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-01",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -12702,7 +14526,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4001/32/164/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Varde Rådgivning As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-01",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -12760,7 +14592,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4016/52/4/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "SOLBERG VVS- OG LANDBRUKSTJENESTER",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-25",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -12818,7 +14658,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (2 treff)",
         "lookupKey": "4001/200/2200/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Flere avsendere",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-24",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -12876,7 +14724,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4001/200/951/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Marthinsen & Duvholt As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-20",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -12934,7 +14790,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (3 treff)",
         "lookupKey": "4016/68/2/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Siri Elsa Arnesen",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-19",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -12992,7 +14856,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4001/61/507/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "T. Gjestland Arkitektkontor",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-12",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -13050,7 +14922,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4001/59/96/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Flere avsendere",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-12",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -13108,7 +14988,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4001/20/68/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Flere avsendere",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-12",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -13166,7 +15054,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4001/53/103/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "John Wedege Askersrud",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-07-27",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -13224,7 +15120,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (1 treff)",
         "lookupKey": "4001/82/250/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Flere avsendere",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-07-21",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -13277,7 +15181,15 @@
         "addressSource": "kilde/tittel",
         "coordinateSystem": "",
         "lookupStatus": "adresse funnet i tittel"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Eiril Matilde Paulsen Hem Løvland Linge",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-07",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -13332,7 +15244,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.10343893645178,
         "longitude": 9.719266448066845
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Bjørn Gunnar Heinrich",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-23",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -13390,7 +15310,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (2 treff)",
         "lookupKey": "4016/15/6/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-02",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -13445,7 +15373,15 @@
         "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
         "latitude": 59.21721447991393,
         "longitude": 9.614491011765327
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-11",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -13503,7 +15439,15 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "mangler matrikkel/adresse"
-      }
+      },
+      "phase": "Fase 2",
+      "projectType": "ukjent",
+      "contactName": "Bjørn Paust Range",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Saksbehandling eller supplering registrert",
+      "phaseStartDate": "2026-09-16",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -13556,7 +15500,15 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "mangler matrikkel/adresse"
-      }
+      },
+      "phase": "Fase 2",
+      "projectType": "ukjent",
+      "contactName": "Gabriele Skodziute",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Saksbehandling eller supplering registrert",
+      "phaseStartDate": "2026-08-11",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -13609,7 +15561,15 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "mangler matrikkel/adresse"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "tilbygg/påbygg",
+      "contactName": "",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-09",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -13662,7 +15622,15 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "mangler matrikkel/adresse"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Carl Fredrik Lenning",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-10",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -13715,7 +15683,15 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "mangler matrikkel/adresse"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Sweco Norge As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-08",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -13768,7 +15744,15 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "mangler matrikkel/adresse"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Stannah As",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-28",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -13821,7 +15805,15 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "mangler matrikkel/adresse"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Gunnar Storm-Olsen",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-25",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -13874,7 +15866,15 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "mangler matrikkel/adresse"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Hans Christian Tjønnås",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-25",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -13927,7 +15927,15 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "mangler matrikkel/adresse"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "MILTON SYKKELSHOP AS",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-25",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -13980,7 +15988,15 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "mangler matrikkel/adresse"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Tom-Richard Løfgren",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-21",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -14033,7 +16049,15 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "mangler matrikkel/adresse"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Statsforvalteren i Vestfold og Telemark",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-17",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -14091,7 +16115,15 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "mangler matrikkel/adresse"
-      }
+      },
+      "phase": "Fase 2",
+      "projectType": "ukjent",
+      "contactName": "Sara Laurense Mørch",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Saksbehandling eller supplering registrert",
+      "phaseStartDate": "2026-09-15",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -14149,7 +16181,15 @@
         "coordinateSystem": "EPSG:4258",
         "lookupStatus": "adresse slått opp fra matrikkel (3 treff)",
         "lookupKey": "4010/16/202/0/0"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-15",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -14202,7 +16242,15 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "mangler matrikkel/adresse"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Tom-Richard Løfgren",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-11",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -14255,7 +16303,15 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "mangler matrikkel/adresse"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Truls Brubakken",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-09",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -14308,7 +16364,15 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "mangler matrikkel/adresse"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Odd-Steinar Olsen",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-02",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -14361,7 +16425,15 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "mangler matrikkel/adresse"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Odd-Steinar Olsen",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-09-01",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -14414,7 +16486,15 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "mangler matrikkel/adresse"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Statsforvalteren i Vestfold og Telemark",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-08-04",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -14467,7 +16547,15 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "mangler matrikkel/adresse"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "Flere mottakere",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-07-21",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     },
     {
       "sourceStream": "municipal_acos_innsyn",
@@ -14520,7 +16608,18 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "mangler matrikkel/adresse"
-      }
+      },
+      "phase": "Fase 1",
+      "projectType": "ukjent",
+      "contactName": "",
+      "phaseBasis": "dokumentert",
+      "phaseReason": "Søknad eller mottak registrert",
+      "phaseStartDate": "2026-10-12",
+      "phaseIllustrative": false,
+      "phaseTimelineScope": "same-case-only"
     }
-  ]
+  ],
+  "regionId": "grenlandsregionen",
+  "regionName": "Grenlandsregionen",
+  "generatedAt": "2026-10-23T12:39:09.091Z"
 }
