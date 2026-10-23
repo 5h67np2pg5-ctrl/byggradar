@@ -2357,6 +2357,15 @@ body[data-map="open"] .map-pane {
   pointer-events: auto;
 }
 
+.exclusive-projects-block { margin-top: 12px; border-top: 1px solid rgba(189, 218, 223, .8); padding: 14px 16px 16px; background: #f4fafb; }
+.exclusive-projects-heading { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.exclusive-projects-heading h2 { margin: 2px 0 0; color: #1d5665; font-size: .98rem; }
+.exclusive-projects-button { min-height: 38px; border: 1px solid #c7a04b; border-radius: 6px; padding: 0 14px; background: #fff8df; color: #76570d; font: inherit; font-size: .77rem; font-weight: 700; cursor: pointer; }
+.exclusive-projects-button:hover { background: #fff1bb; border-color: #ad8528; }
+.exclusive-projects-panel { margin-top: 11px; padding: 11px 12px; border-left: 3px solid #d1a52f; background: #fffdf2; color: #5d5d43; font-size: .78rem; line-height: 1.45; }
+.exclusive-projects-panel p { margin: 0; }
+@media (max-width: 620px) { .exclusive-projects-heading { align-items: stretch; flex-direction: column; } .exclusive-projects-button { width: 100%; } }
+
 .map-dialog-toolbar {
   position: relative;
   z-index: 3201;

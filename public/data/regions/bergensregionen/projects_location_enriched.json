@@ -106449,8 +106449,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "",
-        "addressLookupRequired": false
+        "lookupStatus": "adresse funnet, kartoppslag mislyktes",
+        "addressLookupRequired": true
       },
       "municipalityNumber": "",
       "files": [],
@@ -116638,7 +116638,7 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "adresse funnet, kartoppslag mislyktes",
-        "addressLookupRequired": true
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -117106,7 +117106,7 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "adresse funnet, kartoppslag mislyktes",
-        "addressLookupRequired": true
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -119355,7 +119355,7 @@
         "addressSource": "",
         "coordinateSystem": "",
         "lookupStatus": "adresse funnet, kartoppslag mislyktes",
-        "addressLookupRequired": true
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -119736,13 +119736,15 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Trefelling - Søre Austmarka 39",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet, kartoppslag mislyktes",
-        "addressLookupRequired": true
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "addressLookupRequired": true,
+        "latitude": 60.61680873226582,
+        "longitude": 5.1814394840427935
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -120853,12 +120855,15 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "lookupStatus": "mangler matrikkel/adresse",
-        "addressLookupRequired": false
+        "addressSource": "Kartverket Adresse-API",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "addressLookupRequired": true,
+        "latitude": 60.62729137267483,
+        "longitude": 6.434907307933572,
+        "coordinateSystem": "EPSG:4258"
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -128078,8 +128083,14 @@
         "status": "pending",
         "source": "bergen_municipality_direct_api",
         "addressLookupRequired": true,
-        "hasMapPoint": false,
-        "lookupStatus": "adresse funnet, kartoppslag mislyktes"
+        "hasMapPoint": true,
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 60.358318674547384,
+        "longitude": 5.34652321245001,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258"
       },
       "phase": "Fase 5",
       "projectType": "15/73/0/0 Elvebakken 11, tilbygg bolig",
@@ -181364,7 +181375,15 @@
       "locationEnrichment": {
         "status": "pending",
         "source": "bergen_municipality_direct_api",
-        "addressLookupRequired": false
+        "addressLookupRequired": true,
+        "hasMapPoint": true,
+        "latitude": 60.35789410541217,
+        "longitude": 5.346216979778693,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket"
       },
       "phase": "Fase 5",
       "projectType": "15/73/0/0 Elvebakken 11J, nytt bygg - Boligformål",
@@ -184042,7 +184061,9 @@
       "locationEnrichment": {
         "status": "pending",
         "source": "bergen_municipality_direct_api",
-        "addressLookupRequired": false
+        "addressLookupRequired": true,
+        "hasMapPoint": false,
+        "lookupStatus": "adresse funnet, kartoppslag mislyktes"
       },
       "phase": "Fase 5",
       "projectType": "Flere, generell tillatelse for bruk av skilt \"Gangvei\" og \"Snarvei\"",
@@ -304597,8 +304618,14 @@
         "status": "pending",
         "source": "bergen_municipality_direct_api",
         "addressLookupRequired": true,
-        "hasMapPoint": false,
-        "lookupStatus": "adresse funnet, kartoppslag mislyktes"
+        "hasMapPoint": true,
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 60.36064038834432,
+        "longitude": 5.347932424340014,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258"
       },
       "phase": "Fase 2",
       "projectType": "15/211/0/0 Minde allé 20F - Bergensmeieriet, parkeringskjeller",
@@ -395390,8 +395417,14 @@
         "status": "pending",
         "source": "bergen_municipality_direct_api",
         "addressLookupRequired": true,
-        "hasMapPoint": false,
-        "lookupStatus": "adresse funnet, kartoppslag mislyktes"
+        "hasMapPoint": true,
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 60.36064038834432,
+        "longitude": 5.347932424340014,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258"
       },
       "phase": "Fase 2",
       "projectType": "15/211/0/0 Minde allé 20F - Bergensmeieriet, utomhusareal",
@@ -409269,7 +409302,15 @@
       "locationEnrichment": {
         "status": "pending",
         "source": "bergen_municipality_direct_api",
-        "addressLookupRequired": false
+        "addressLookupRequired": true,
+        "hasMapPoint": true,
+        "latitude": 60.38149393582544,
+        "longitude": 5.476309604937779,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket"
       },
       "phase": "Fase 1",
       "projectType": "295/133/0/0 Moldalia, nybygg to boliger",
@@ -440973,7 +441014,15 @@
       "locationEnrichment": {
         "status": "pending",
         "source": "bergen_municipality_direct_api",
-        "addressLookupRequired": false
+        "addressLookupRequired": true,
+        "hasMapPoint": true,
+        "latitude": 60.4799850358912,
+        "longitude": 5.325421902450345,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket"
       },
       "phase": "Fase 2",
       "projectType": "Dalavegen- Heiane, Langavatne, forhåndskonferanse, fresing av spor til kabel",
@@ -474274,8 +474323,14 @@
         "status": "pending",
         "source": "bergen_municipality_direct_api",
         "addressLookupRequired": true,
-        "hasMapPoint": false,
-        "lookupStatus": "adresse funnet, kartoppslag mislyktes"
+        "hasMapPoint": true,
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "latitude": 60.38549134647069,
+        "longitude": 5.327333081866755,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258"
       },
       "phase": "Fase 1",
       "projectType": "164/715/0/0 Allégaten 31, endring av bygg - innvendig - Brannskille i bygg",

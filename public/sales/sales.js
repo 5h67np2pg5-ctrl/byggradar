@@ -1,5 +1,5 @@
 const userVersion = 442;
-const dashboardVersion = 451;
+const dashboardVersion = 457;
 const SALES_VERSION = userVersion + dashboardVersion;
 const salesEntryIsApproved = (() => {
   try {

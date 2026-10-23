@@ -7312,7 +7312,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "lookupStatus": "adresse funnet, kartoppslag mislyktes",
+        "addressLookupRequired": true
       },
       "projectFolder": {
         "caseNumber": "2020/2476",
@@ -10969,7 +10970,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "adresse funnet, kartoppslag mislyktes",
+        "addressLookupRequired": true
       },
       "projectFolder": {
         "caseNumber": "2020/2476",
@@ -27346,7 +27348,8 @@
         "mapLabel": "Område",
         "address": "",
         "addressSource": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/12424",
@@ -39437,7 +39440,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2024/2460",
@@ -51205,7 +51209,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/15",
@@ -64362,7 +64367,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/10480",
@@ -64622,7 +64628,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/155",
@@ -64718,7 +64725,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/9191",
@@ -64801,7 +64809,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/9191",
@@ -64884,7 +64893,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/155",
@@ -66405,7 +66415,8 @@
         "address": "Rive eksisterende enebolig på eiendommen - Ølbergvegen 189",
         "addressSource": "kilde/tittel",
         "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "lookupStatus": "adresse funnet, kartoppslag mislyktes",
+        "addressLookupRequired": true
       },
       "projectFolder": {
         "caseNumber": "2026/2789",
@@ -69131,7 +69142,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/42384",
@@ -70159,12 +70171,15 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Søknad om tillatelse til påslipp til kommunalt avløpsnett og midlertidig dispensasjon fra krav om fettutskiller - Kantine i Olav Kyrresgate 23",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "addressLookupRequired": true,
+        "latitude": 58.96965946303982,
+        "longitude": 5.727241101911392
       },
       "projectFolder": {
         "caseNumber": "2026/40161",
@@ -70247,12 +70262,15 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
-        "address": "Søknad om tillatelse til påslipp til kommunalt avløpsnett og midlertidig dispensasjon fra krav om fettutskiller - Kantine i Olav Kyrresgate 23",
-        "addressSource": "kilde/tittel",
-        "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
+        "address": "",
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "addressLookupRequired": true,
+        "latitude": 58.96965946303982,
+        "longitude": 5.727241101911392
       },
       "projectFolder": {
         "caseNumber": "2026/35179",
@@ -71789,7 +71807,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/124",
@@ -72353,7 +72372,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/467",
@@ -72432,7 +72452,8 @@
         "mapLabel": "Område",
         "address": "",
         "addressSource": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/13047",
@@ -72502,7 +72523,8 @@
         "mapLabel": "Område",
         "address": "",
         "addressSource": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/12987",
@@ -72573,7 +72595,8 @@
         "mapLabel": "Område",
         "address": "",
         "addressSource": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/9068",
@@ -72873,7 +72896,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/1606",
@@ -72956,7 +72980,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/1606",
@@ -73126,7 +73151,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/1606",
@@ -73208,7 +73234,8 @@
         "mapLabel": "Område",
         "address": "",
         "addressSource": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/11434",
@@ -73284,7 +73311,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/43214",
@@ -73454,7 +73482,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/43214",
@@ -73535,7 +73564,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/42592",
@@ -73609,7 +73639,8 @@
         "mapLabel": "Område",
         "address": "",
         "addressSource": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/11263",
@@ -73766,7 +73797,8 @@
         "mapLabel": "Område",
         "address": "",
         "addressSource": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/11149",
@@ -73836,7 +73868,8 @@
         "mapLabel": "Område",
         "address": "",
         "addressSource": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/10971",
@@ -73906,7 +73939,8 @@
         "mapLabel": "Område",
         "address": "",
         "addressSource": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/10965",
@@ -73976,7 +74010,8 @@
         "mapLabel": "Område",
         "address": "",
         "addressSource": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/10960",
@@ -74204,7 +74239,8 @@
         "mapLabel": "Område",
         "address": "",
         "addressSource": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/10772",
@@ -74705,7 +74741,8 @@
         "mapLabel": "Område",
         "address": "",
         "addressSource": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/10087",
@@ -74851,7 +74888,8 @@
         "mapLabel": "Område",
         "address": "",
         "addressSource": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/10057",
@@ -75193,7 +75231,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/2868",
@@ -75505,7 +75544,8 @@
         "mapLabel": "Område",
         "address": "",
         "addressSource": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/10058",
@@ -75710,7 +75750,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/2804",
@@ -76206,7 +76247,8 @@
         "address": "Nedre Holmgate 30",
         "addressSource": "kilde/tittel",
         "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "lookupStatus": "adresse funnet, kartoppslag mislyktes",
+        "addressLookupRequired": true
       },
       "projectFolder": {
         "caseNumber": "2026/38682",
@@ -76315,7 +76357,8 @@
         "address": "Nedre Holmgate 30",
         "addressSource": "kilde/tittel",
         "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "lookupStatus": "adresse funnet, kartoppslag mislyktes",
+        "addressLookupRequired": true
       },
       "projectFolder": {
         "caseNumber": "2026/38682",
@@ -76395,7 +76438,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/467",
@@ -76657,12 +76701,15 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "addressLookupRequired": true,
+        "latitude": 58.963760504600565,
+        "longitude": 5.728183522472705
       },
       "projectFolder": {
         "caseNumber": "2026/43926",
@@ -77009,7 +77056,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/1606",
@@ -77092,7 +77140,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/1606",
@@ -77175,7 +77224,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/1606",
@@ -77258,7 +77308,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/1606",
@@ -77341,7 +77392,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/1606",
@@ -77429,7 +77481,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/42271",
@@ -77535,12 +77588,15 @@
         "priority": "B"
       },
       "locationEnrichment": {
-        "hasMapPoint": false,
-        "mapLabel": "Område",
+        "hasMapPoint": true,
+        "mapLabel": "Kart",
         "address": "",
-        "addressSource": "",
-        "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "addressSource": "Kartverket Adresse-API",
+        "coordinateSystem": "EPSG:4258",
+        "lookupStatus": "adresse/matrikkel slått opp i Kartverket",
+        "addressLookupRequired": true,
+        "latitude": 58.963760504600565,
+        "longitude": 5.728183522472705
       },
       "projectFolder": {
         "caseNumber": "2026/43926",
@@ -77621,7 +77677,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/42271",
@@ -77716,7 +77773,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/43731",
@@ -77795,7 +77853,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/43731",
@@ -77977,7 +78036,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/42592",
@@ -78073,7 +78133,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/42271",
@@ -78616,7 +78677,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/467",
@@ -78696,7 +78758,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/467",
@@ -78870,7 +78933,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/467",
@@ -79504,7 +79568,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/2834",
@@ -79576,7 +79641,8 @@
         "mapLabel": "Område",
         "address": "",
         "addressSource": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/13121",
@@ -79661,7 +79727,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "projectFolder": {
         "caseNumber": "2026/2783",

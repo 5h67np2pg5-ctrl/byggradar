@@ -5313,7 +5313,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "adresse funnet, kartoppslag mislyktes",
+        "addressLookupRequired": true
       },
       "phase": "Fase 1",
       "projectType": "næring/offentlig",
@@ -5374,7 +5375,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -5561,7 +5563,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 2",
       "projectType": "nybygg",
@@ -12886,7 +12889,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -13472,7 +13476,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "lookupStatus": "må slås opp fra matrikkel",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -15180,7 +15185,8 @@
         "address": "Hovedveien 121",
         "addressSource": "kilde/tittel",
         "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "lookupStatus": "adresse funnet, kartoppslag mislyktes",
+        "addressLookupRequired": true
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -15438,7 +15444,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 2",
       "projectType": "ukjent",
@@ -15499,7 +15506,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 2",
       "projectType": "ukjent",
@@ -15560,7 +15568,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "tilbygg/påbygg",
@@ -15621,7 +15630,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -15682,7 +15692,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -15743,7 +15754,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -15804,7 +15816,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -15865,7 +15878,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "adresse funnet, kartoppslag mislyktes",
+        "addressLookupRequired": true
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -15926,7 +15940,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -15987,7 +16002,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -16048,7 +16064,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -16114,7 +16131,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 2",
       "projectType": "ukjent",
@@ -16241,7 +16259,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -16302,7 +16321,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "adresse funnet, kartoppslag mislyktes",
+        "addressLookupRequired": true
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -16363,7 +16383,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -16424,7 +16445,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -16485,7 +16507,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -16546,7 +16569,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -16607,7 +16631,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",

@@ -1,13 +1,15 @@
 const userVersion = 442;
-const dashboardBuildVersion = 451;
+const dashboardBuildVersion = 462;
 const DASHBOARD_VERSION = userVersion + dashboardBuildVersion;
 const DASHBOARD_PASSWORD = "norskbyggradar3000";
 const dashboardAuthKey = "nbr-dashboard-auth-v1";
 const dashboardSupplierHandoffKey = "nbr-dashboard-supplier-handoff";
 const dashboardRegionContextKey = "nbr-dashboard-region-context";
+const dashboardCustomerLoginKey = "nbr-dashboard-customer-login";
 const overviewSnapshotKey = "nbr-dashboard-overview-snapshot";
 const supplierCalledStorageKey = "nbr-supplier-called-v1";
 const supplierContactNoteStorageKey = "nbr-supplier-contact-note-v1";
+const manualSupplierStorageKey = "nbr-dashboard-manual-suppliers-v1";
 
 const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" })[char]);
 const getSupplier = () => {
@@ -36,6 +38,14 @@ let regionalSupplierAbortController = null;
 let dashboardServerNotes = {};
 let dashboardNoteSaveQueue = Promise.resolve();
 let dashboardContactNoteIndex = null;
+let dashboardCustomerRecord = null;
+let dashboardCustomerFormOpen = false;
+let customerOverviewOpen = false;
+let customerRecords = [];
+let customerTradeFilter = "";
+let regionalSupplierSearchResult = null;
+let regionalSupplierSearchLoading = false;
+let regionalSupplierSearchRequestId = 0;
 
 function sortSuppliersAlphabetically(suppliers) {
   return [...suppliers].sort((a, b) => String(a.name || "").localeCompare(String(b.name || ""), "nb-NO", { sensitivity: "base" }));
@@ -88,8 +98,15 @@ async function loadDashboardRegions() {
 async function startDashboard() {
   await loadDashboardRegions();
   await loadDashboardContactNotes();
+  await loadDashboardCustomerRecord();
   if (!supplier) {
-    try { sessionStorage.removeItem(dashboardRegionContextKey); } catch { /* Oppstart skal være uten tidligere regionvalg. */ }
+    const loggedInCustomer = readDashboardCustomerLogin();
+    const matchedRegion = resolveCustomerRegion(loggedInCustomer?.municipality)
+      || dashboardRegions.find((region) => region.id === loggedInCustomer?.regionId);
+    try {
+      if (matchedRegion) sessionStorage.setItem(dashboardRegionContextKey, JSON.stringify(matchedRegion));
+      else sessionStorage.removeItem(dashboardRegionContextKey);
+    } catch { /* Oppstart skal være uten tidligere regionvalg når kunden ikke er identifisert. */ }
     regionalSupplierAbortController?.abort();
     regionalSupplierAbortController = null;
     regionalSuppliers = [];
@@ -154,6 +171,11 @@ function dashboardIsAuthenticated() {
   catch { return false; }
 }
 
+function readDashboardCustomerLogin() {
+  try { return JSON.parse(sessionStorage.getItem(dashboardCustomerLoginKey) || "null"); }
+  catch { return null; }
+}
+
 function renderAccessGate() {
   app.innerHTML = `
     <main class="dashboard-gate">
@@ -163,7 +185,9 @@ function renderAccessGate() {
         <h1>Logg inn til Dashboard</h1>
         <p>Skriv inn tilgangskoden for å åpne virksomhetsdashboardet.</p>
         <form id="dashboardLoginForm">
-          <label for="dashboardPassword">Tilgangskode</label>
+          <label for="dashboardUsername">Kundebrukernavn (valgfritt)</label>
+          <input id="dashboardUsername" type="text" autocomplete="username" />
+          <label for="dashboardPassword">Tilgangskode eller kundepassord</label>
           <input id="dashboardPassword" type="password" autocomplete="current-password" required />
           <button type="submit">Åpne dashboard</button>
           <div id="dashboardLoginError" class="dashboard-login-error" role="alert" hidden>Tilgangskoden er ikke riktig.</div>
@@ -171,14 +195,27 @@ function renderAccessGate() {
         <a class="dashboard-gate-back" href="/user">Tilbake til brukerplattformen</a>
       </section>
     </main>`;
-  document.querySelector("#dashboardLoginForm")?.addEventListener("submit", (event) => {
+  document.querySelector("#dashboardLoginForm")?.addEventListener("submit", async (event) => {
     event.preventDefault();
     const input = document.querySelector("#dashboardPassword");
+    const usernameInput = document.querySelector("#dashboardUsername");
     const error = document.querySelector("#dashboardLoginError");
     if (input.value === DASHBOARD_PASSWORD) {
-      try { sessionStorage.setItem(dashboardAuthKey, "ok"); } catch { /* Tilgang gjelder bare for aktiv nettleserøkt. */ }
+      try { sessionStorage.setItem(dashboardAuthKey, "ok"); sessionStorage.removeItem(dashboardCustomerLoginKey); } catch { /* Tilgang gjelder bare for aktiv nettleserøkt. */ }
       void startDashboard();
       return;
+    }
+    if (usernameInput?.value.trim()) {
+      try {
+        const response = await fetch("/api/customer-login", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ username: usernameInput.value, password: input.value }) });
+        const payload = await response.json().catch(() => ({}));
+        if (response.ok && payload.customer) {
+          sessionStorage.setItem(dashboardAuthKey, "ok");
+          sessionStorage.setItem(dashboardCustomerLoginKey, JSON.stringify(payload.customer));
+          void startDashboard();
+          return;
+        }
+      } catch { /* Feil vises som ordinær innloggingsfeil. */ }
     }
     error.hidden = false;
     input.select();
@@ -207,16 +244,42 @@ function projectAddress(project) {
   return firstValue(project?.address, project?.locationEnrichment?.address, project?.location, project?.place);
 }
 
+function inferDashboardProjectTypes(project) {
+  const text = String([
+    project?.caseTitle,
+    project?.documentTitle,
+    project?.title,
+    project?.shortFacts,
+    project?.description,
+    project?.measureType,
+    project?.projectType,
+  ].filter(Boolean).join(" ")).toLocaleLowerCase("nb-NO");
+  const matches = [
+    ["Tilbygg/påbygg", /tilbygg|tilbygging|påbygg|pabygg|utvidelse|utviding/],
+    ["Fasadeendring", /fasadeendring|fasade/],
+    ["Ombygging/rehabilitering", /ombygg|rehabiliter|oppgradering|modernisering/],
+    ["Bruksendring", /bruksendring|endring av bruk/],
+    ["Nybygg", /nybygg|oppføring|oppforing|ny bolig|ny bustad/],
+    ["Garasje/bod", /garasje|carport|bod|uthus/],
+    ["Terrengarbeid", /terreng|planering|fylling|støttemur|stottemur/],
+    ["Riving", /riving|rive|rivning/],
+    ["Seksjonering", /seksjonering|reseksjonering/],
+    ["Næring/offentlig", /næring|naering|kontor|lager|butikk|offentlig|skole|barnehage/],
+  ];
+  return matches.filter(([, pattern]) => pattern.test(text)).map(([label]) => label);
+}
+
 function projectType(project) {
   const classification = project?.classification || {};
-  return firstValue(
-    Array.isArray(classification.projectTypes) ? classification.projectTypes.join(", ") : classification.projectTypes,
-    project?.projectType,
-    project?.measureType,
-    project?.tiltakstype,
-    project?.status,
-    project?.documentType,
-  );
+  const explicit = (Array.isArray(classification.projectTypes)
+    ? classification.projectTypes
+    : [classification.projectTypes, project?.projectType, project?.measureType, project?.tiltakstype]
+  ).filter((value) => value && !/^(ukjent|ukjent tiltak|ikke oppgitt|ikke tolket)$/i.test(String(value).trim()));
+  const inferred = inferDashboardProjectTypes(project);
+  const types = [...explicit, ...inferred].filter((value, index, values) => (
+    values.findIndex((candidate) => String(candidate).toLocaleLowerCase("nb-NO") === String(value).toLocaleLowerCase("nb-NO")) === index
+  ));
+  return types.join(", ") || firstValue(project?.status, project?.documentType);
 }
 
 function projectPhase(project) {
@@ -416,6 +479,197 @@ function saveEnrichedSupplierToOverview(value) {
   } catch { /* Oversikten beholder eksisterende data ved blokkert øktlagring. */ }
 }
 
+async function loadDashboardCustomerRecord() {
+  const organizationNumber = String(supplier?.organizationNumber || supplier?.orgNumber || "").replace(/\D/g, "");
+  const companyName = String(supplier?.name || supplier?.company || "").trim();
+  if (!organizationNumber && !companyName) return;
+  try {
+    const query = organizationNumber
+      ? `organizationNumber=${encodeURIComponent(organizationNumber)}`
+      : `companyName=${encodeURIComponent(companyName)}`;
+    const response = await fetch(`/api/customer-records?${query}`, { cache: "no-store" });
+    const payload = await response.json().catch(() => ({}));
+    if (response.ok && payload.record) dashboardCustomerRecord = payload.record;
+  } catch { /* Kundeopprettelsen kan startes uten at et tidligere utkast finnes. */ }
+}
+
+async function loadDashboardCustomerRecords() {
+  try {
+    const response = await fetch("/api/customer-records", { cache: "no-store" });
+    const payload = await response.json().catch(() => ({}));
+    customerRecords = response.ok && Array.isArray(payload.records) ? payload.records : [];
+  } catch {
+    customerRecords = [];
+  }
+}
+
+function customerRecordValue(record, ...keys) {
+  return keys.map((key) => record?.[key]).find((value) => String(value || "").trim()) || "Ikke oppgitt";
+}
+
+function renderCustomerRecordRows() {
+  const rows = document.querySelector("#customerOverviewRows");
+  const count = document.querySelector("#customerOverviewCount");
+  const visible = customerTradeFilter
+    ? customerRecords.filter((record) => String(record.trade || "").toLocaleLowerCase("nb-NO") === customerTradeFilter.toLocaleLowerCase("nb-NO"))
+    : customerRecords;
+  const ordered = [...visible].sort((left, right) => String(left.companyName || "").localeCompare(String(right.companyName || ""), "nb-NO", { sensitivity: "base" }));
+  if (count) count.textContent = `${ordered.length.toLocaleString("nb-NO")} kunder`;
+  if (!ordered.length) {
+    if (rows) rows.innerHTML = `<p class="dashboard-map-status">Ingen registrerte kunder${customerTradeFilter ? ` i bransjen ${esc(customerTradeFilter)}` : ""}.</p>`;
+    return;
+  }
+  if (rows) rows.innerHTML = ordered.map((record) => {
+    const organizationNumber = customerRecordValue(record, "organizationNumber");
+    const contact = customerRecordValue(record, "contactPerson");
+    const phone = customerRecordValue(record, "phone");
+    const email = customerRecordValue(record, "email", "invoiceEmail");
+    const region = customerRecordValue(record, "regionName");
+    const model = customerRecordValue(record, "model");
+    const interval = customerRecordValue(record, "billingInterval");
+    const annualCost = customerRecordValue(record, "annualCost");
+    return `<article class="customer-overview-row"><div class="customer-overview-main"><strong>${esc(customerRecordValue(record, "companyName"))}</strong><span>${esc(customerRecordValue(record, "trade"))}</span></div><div><b>Organisasjonsnummer</b><span>${esc(organizationNumber)}</span></div><div><b>Kontakt</b><span>${esc(contact)} · ${esc(phone)}</span><span>${esc(email)}</span></div><div><b>Område</b><span>${esc(region)}</span></div><div><b>Avtale</b><span>${esc(model)} · ${esc(interval)}</span><span>År: ${esc(annualCost)}</span></div></article>`;
+  }).join("");
+}
+
+function renderCustomerOverview() {
+  app.innerHTML = `
+    <main class="dashboard-shell">
+      <header class="dashboard-topbar">
+        <a class="dashboard-brand" href="/user"><img src="/assets/byggradar-radar.png" alt="" /><span>Norsk ByggRadar</span></a>
+        <div class="dashboard-heading"><span>Dashboard</span><strong>Kundeoversikt</strong><small>Registrerte kunder og avtalegrunnlag</small></div>
+        <button class="dashboard-customer-overview-button" id="backToSupplierOverview" type="button">Tilbake til virksomhetsoversikt</button>
+      </header>
+      <section class="dashboard-context"><div><span class="eyebrow">Kunder</span><h1>Alle registrerte kunder</h1><p>Filtrer kunderegisteret på bransje. Kundeopplysninger ligger separat fra prosjekt- og virksomhetsregisteret.</p></div><strong id="customerOverviewCount" class="regional-supplier-count">Laster kunder...</strong></section>
+      <main class="dashboard-region-list customer-overview-list"><div class="customer-overview-toolbar"><label for="customerTradeFilter">Bransje</label><select id="customerTradeFilter"><option value="">Alle bransjer</option>${[...new Set(customerRecords.map((record) => String(record.trade || "").trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b, "nb-NO")).map((trade) => `<option value="${esc(trade)}" ${trade === customerTradeFilter ? "selected" : ""}>${esc(trade)}</option>`).join("")}</select></div><div id="customerOverviewRows" class="customer-overview-rows"><p class="dashboard-map-status">Laster kunder...</p></div></main>
+    </main>`;
+  document.querySelector("#customerTradeFilter")?.addEventListener("change", (event) => {
+    customerTradeFilter = String(event.target.value || "");
+    renderCustomerRecordRows();
+  });
+  document.querySelector("#backToSupplierOverview")?.addEventListener("click", () => {
+    customerOverviewOpen = false;
+    supplier = null;
+    renderRegionalSupplierOverview();
+  });
+  renderCustomerRecordRows();
+}
+
+async function openCustomerOverview() {
+  customerOverviewOpen = true;
+  await loadDashboardCustomerRecords();
+  renderCustomerOverview();
+}
+
+function bindCustomerOverviewButton() {
+  document.querySelector("#openCustomerOverview")?.addEventListener("click", () => { void openCustomerOverview(); });
+}
+
+function customerFieldValue(name, fallback = "") {
+  return dashboardCustomerRecord?.[name] ?? fallback;
+}
+
+function normalizeCustomerMunicipality(value) {
+  return String(value || "")
+    .toLocaleLowerCase("nb-NO")
+    .replace(/[–—-]/g, " ")
+    .replace(/\b(kommune|herad|kommuna)\b/g, "")
+    .replace(/[^a-z0-9æøå]+/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function resolveCustomerRegion(municipality) {
+  const normalized = normalizeCustomerMunicipality(municipality);
+  if (!normalized) return null;
+  return dashboardRegions.find((region) => region.municipalities.some((item) => normalizeCustomerMunicipality(item) === normalized)) || null;
+}
+
+function customerLoginSuggestion(companyName, organizationNumber) {
+  const normalizedName = String(companyName || "kunde")
+    .toLocaleLowerCase("nb-NO")
+    .replace(/æ/g, "ae").replace(/ø/g, "o").replace(/å/g, "a")
+    .replace(/[^a-z0-9]+/g, "")
+    .slice(0, 18) || "kunde";
+  const digits = String(organizationNumber || "").replace(/\D/g, "");
+  const suffix = digits.slice(-4) || "2026";
+  return { username: `${normalizedName}.${suffix}`, password: `NBR-${normalizedName.slice(0, 6).toUpperCase()}-${suffix}!` };
+}
+
+function parseCustomerCost(value) {
+  const normalized = String(value || "").trim().replace(/\s/g, "").replace(",", ".");
+  if (!normalized) return null;
+  const number = Number(normalized);
+  return Number.isFinite(number) && number >= 0 ? number : null;
+}
+
+function formatCustomerCost(value) {
+  return Number(value.toFixed(2)).toLocaleString("nb-NO", { useGrouping: false, maximumFractionDigits: 2 });
+}
+
+function bindCustomerCostCalculation() {
+  const form = document.querySelector("#customerRecordForm");
+  if (!form) return;
+  const fields = {
+    monthlyCost: form.elements.namedItem("monthlyCost"),
+    quarterlyCost: form.elements.namedItem("quarterlyCost"),
+    halfYearCost: form.elements.namedItem("halfYearCost"),
+    annualCost: form.elements.namedItem("annualCost"),
+  };
+  const discountField = form.elements.namedItem("discount");
+  const multipliers = { monthlyCost: 1, quarterlyCost: 3, halfYearCost: 6, annualCost: 12 };
+  const parseDiscount = () => Math.min(100, Math.max(0, parseCustomerCost(discountField?.value) || 0));
+  let monthlyBasis = null;
+  const initialMonthly = parseCustomerCost(fields.monthlyCost?.value);
+  if (initialMonthly !== null) monthlyBasis = initialMonthly / (1 - parseDiscount() / 100);
+
+  const applyCustomerCosts = () => {
+    if (monthlyBasis === null) return;
+    const netMultiplier = 1 - parseDiscount() / 100;
+    Object.entries(fields).forEach(([fieldName, field]) => {
+      if (field) field.value = formatCustomerCost(monthlyBasis * multipliers[fieldName] * netMultiplier);
+    });
+  };
+
+  Object.entries(fields).forEach(([sourceName, sourceField]) => {
+    sourceField?.addEventListener("input", () => {
+      const sourceValue = parseCustomerCost(sourceField.value);
+      if (sourceValue === null) return;
+      monthlyBasis = sourceValue / multipliers[sourceName];
+      applyCustomerCosts();
+    });
+  });
+  discountField?.addEventListener("input", applyCustomerCosts);
+}
+
+async function saveDashboardCustomerRecord(form) {
+  const data = new FormData(form);
+  const payload = Object.fromEntries(data.entries());
+  const organizationNumber = String(supplier?.organizationNumber || supplier?.orgNumber || payload.organizationNumber || "").replace(/\D/g, "");
+  const matchedRegion = resolveCustomerRegion(payload.municipality);
+  const loginSuggestion = customerLoginSuggestion(payload.companyName || supplier?.name, organizationNumber);
+  const record = {
+    ...payload,
+    companyName: String(payload.companyName || supplier?.name || "").trim(),
+    organizationNumber,
+    regionId: matchedRegion?.id || getRegionContext()?.id || supplier?.dashboardRegionId || "",
+    regionName: matchedRegion?.name || getRegionContext()?.name || supplier?.dashboardRegionName || "",
+    loginUsername: String(payload.loginUsername || loginSuggestion.username).trim(),
+    loginPassword: String(payload.loginPassword || loginSuggestion.password).trim(),
+  };
+  const status = document.querySelector("#customerRecordStatus");
+  if (status) status.textContent = "Lagrer kundeopplysninger...";
+  try {
+    const response = await fetch("/api/customer-records", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(record) });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(result.error || "Kundeopplysningene kunne ikke lagres.");
+    dashboardCustomerRecord = result.record || record;
+    if (status) status.textContent = "Kundeopplysningene er lagret lokalt og klare for senere fakturaeksport.";
+  } catch (error) {
+    if (status) status.textContent = error.message || "Kundeopplysningene kunne ikke lagres.";
+  }
+}
+
 async function enrichBusinessProfile() {
   if (profileLookupStarted || !supplier) return;
   profileLookupStarted = true;
@@ -468,6 +722,10 @@ function render() {
     renderAccessGate();
     return;
   }
+  if (customerOverviewOpen) {
+    renderCustomerOverview();
+    return;
+  }
   if (!supplier) {
     renderRegionalSupplierOverview();
     return;
@@ -481,6 +739,10 @@ function render() {
   const industryMeaning = valueOrFallback(firstValue(supplier.industry, tradeFromIndustryCode(industryCode)), "Betydning ikke oppgitt");
   const trade = valueOrFallback(firstValue(usableTrade, supplier.industry, tradeFromIndustryCode(industryCode)), "Fagområde ikke oppgitt");
   const organizationNumber = firstValue(supplier.organizationNumber, supplier.orgNumber);
+  const supplierMunicipality = firstValue(supplier.municipality, supplier.municipalityName, supplier.kommune, supplier.kommuneName, supplier.registeredMunicipality, supplier.addressMunicipality);
+  const customerMunicipality = customerFieldValue("municipality", supplierMunicipality);
+  const customerRegion = resolveCustomerRegion(customerMunicipality) || getRegionContext() || {};
+  const loginSuggestion = customerLoginSuggestion(customerFieldValue("companyName", name), customerFieldValue("organizationNumber", organizationNumber));
   const contactNote = readDashboardContactNote(supplier);
   const phone = supplier.phone ? `<a href="tel:${esc(String(supplier.phone).replace(/\D/g, ""))}">${esc(supplier.phone)}</a>` : `<span class="profile-missing">Ikke oppgitt</span>`;
   const companyWebsite = normalizeWebsite(firstValue(supplier.businessWebsite, supplier.companyWebsite));
@@ -514,6 +776,7 @@ function render() {
       <header class="dashboard-topbar">
         <a class="dashboard-brand" href="/user"><img src="/assets/byggradar-radar.png" alt="" /><span>Norsk ByggRadar</span></a>
         <div class="dashboard-heading"><span>Dashboard</span><strong>Arbeidsflate for salgspersonell</strong></div>
+        <button class="dashboard-customer-overview-button" id="openCustomerOverview" type="button">Kundeoversikt</button>
       </header>
       <div class="dashboard-context">
         <div><span class="eyebrow">Valgt virksomhet</span><h1>${esc(name)}</h1><p class="dashboard-company-meta">${esc(trade)} · ${esc(address)}</p><p class="dashboard-industry-line">Næringskode: ${esc(industryCode || "Ikke oppgitt")} · ${esc(industryMeaning)}</p></div>
@@ -591,10 +854,19 @@ function render() {
           <section class="nearest-projects" aria-labelledby="nearestProjectsHeading"><h3 id="nearestProjectsHeading">20 nærmeste prosjekter</h3><div id="dashboardNearestProjects" class="nearest-project-list"><p class="dashboard-map-status">Finner prosjekter nær kundens adresse...</p></div></section>
         </article>
         <article class="dashboard-panel panel-onboarding">
-          <div class="panel-kicker">06 · Aksept</div><h2>Opprett kundeforhold</h2><p class="panel-intro">Når kunden sier ja, samler du opplysningene i ett siste steg.</p>
-          <div class="onboarding-summary"><strong>${esc(name)}</strong><span>${esc(trade)}</span><span>${esc(address)}</span></div>
-          <button class="primary-action" type="button">Start kundeopprettelse</button>
-          <p class="fine-print">Kundeopprettelse kobles senere til avtale, fakturagrunnlag og tilgangsstyring.</p>
+          <div class="panel-kicker">06 · Opprett kunde</div><h2>Opprett kunde</h2><p class="panel-intro">Samle kunde- og avtaleopplysninger i ett strukturert grunnlag for senere fakturaeksport.</p>
+          <div class="onboarding-summary"><strong>${esc(customerFieldValue("companyName", name))}</strong><span>${esc(customerFieldValue("trade", trade))}</span><span>${esc(customerFieldValue("address", address))}</span></div>
+          <button class="primary-action" id="openCustomerRecord" type="button" aria-expanded="${dashboardCustomerFormOpen ? "true" : "false"}">${dashboardCustomerFormOpen ? "Lukk kundeopplysninger" : "Opprett kunde"}</button>
+          <div id="customerRecordExpanded" class="customer-record-expanded" ${dashboardCustomerFormOpen ? "" : "hidden"}>
+            <form id="customerRecordForm" class="customer-record-form">
+              <fieldset><legend>Kundeinformasjon</legend><div class="customer-form-grid"><label>Bedriftsnavn<input name="companyName" value="${esc(customerFieldValue("companyName", name))}" required /></label><label>Organisasjonsnummer<input name="organizationNumber" value="${esc(customerFieldValue("organizationNumber", organizationNumber))}" inputmode="numeric" /></label><label>Bransje<input name="trade" value="${esc(customerFieldValue("trade", trade))}" required /></label><label>Kontaktperson<input name="contactPerson" value="${esc(customerFieldValue("contactPerson"))}" /></label><label>Telefon<input name="phone" value="${esc(customerFieldValue("phone", supplier.phone || ""))}" type="tel" /></label><label>E-post<input name="email" value="${esc(customerFieldValue("email"))}" type="email" /></label><label>Nettsted<input name="website" value="${esc(customerFieldValue("website", companyWebsite))}" type="url" /></label><label class="customer-form-wide">Fakturaadresse<input name="invoiceAddress" value="${esc(customerFieldValue("invoiceAddress", address))}" /></label><label>Kommune<input id="customerMunicipalityInput" name="municipality" value="${esc(customerMunicipality)}" /></label><label>Region<input id="customerRegionName" name="regionName" value="${esc(customerFieldValue("regionName", customerRegion.name || ""))}" readonly /><input id="customerRegionId" name="regionId" type="hidden" value="${esc(customerFieldValue("regionId", customerRegion.id || ""))}" /></label></div><p id="customerRegionMatch" class="customer-region-match">${customerMunicipality && customerRegion.name ? `Kommunen er koblet til ${esc(customerRegion.name)}.` : "Skriv inn kundens kommune for å koble riktig region."}</p></fieldset>
+              <fieldset><legend>Innloggingsopplysninger</legend><p class="customer-login-help">Forslagene kan brukes når kunden skal få sin egen tilgang. De lagres sammen med kundeoppføringen.</p><div class="customer-form-grid"><label>Brukernavn<input name="loginUsername" value="${esc(customerFieldValue("loginUsername", loginSuggestion.username))}" required /></label><label>Passord<input name="loginPassword" value="${esc(customerFieldValue("loginPassword", loginSuggestion.password))}" required /></label></div></fieldset>
+              <fieldset><legend>Avtale og kostnader</legend><div class="customer-form-grid"><label>Modell<select name="model"><option ${customerFieldValue("model") === "Mini" ? "selected" : ""}>Mini</option><option ${customerFieldValue("model") === "Standard" ? "selected" : ""}>Standard</option><option ${customerFieldValue("model") === "Pro" ? "selected" : ""}>Pro</option></select></label><label>Startdato<input name="startDate" type="date" value="${esc(customerFieldValue("startDate"))}" /></label><label>Månedskostnad<input name="monthlyCost" inputmode="decimal" value="${esc(customerFieldValue("monthlyCost"))}" /></label><label>Kvartalskostnad<input name="quarterlyCost" inputmode="decimal" value="${esc(customerFieldValue("quarterlyCost"))}" /></label><label>Halvårskostnad<input name="halfYearCost" inputmode="decimal" value="${esc(customerFieldValue("halfYearCost"))}" /></label><label>Årskostnad<input name="annualCost" inputmode="decimal" value="${esc(customerFieldValue("annualCost"))}" /></label><label>Etableringskostnad<input name="setupCost" inputmode="decimal" value="${esc(customerFieldValue("setupCost"))}" /></label><label>Rabatt (%)<input name="discount" inputmode="decimal" value="${esc(customerFieldValue("discount"))}" /></label><label>MVA (%)<input name="vat" inputmode="decimal" value="${esc(customerFieldValue("vat", "25"))}" /></label><label>Fakturaintervall<select name="billingInterval"><option ${customerFieldValue("billingInterval") === "Månedlig" ? "selected" : ""}>Månedlig</option><option ${customerFieldValue("billingInterval") === "Kvartalsvis" ? "selected" : ""}>Kvartalsvis</option><option ${customerFieldValue("billingInterval") === "Halvårlig" ? "selected" : ""}>Halvårlig</option><option ${customerFieldValue("billingInterval") === "Årlig" ? "selected" : ""}>Årlig</option></select></label><label>Neste fakturadato<input name="nextInvoiceDate" type="date" value="${esc(customerFieldValue("nextInvoiceDate"))}" /></label></div></fieldset>
+              <fieldset><legend>Fakturagrunnlag</legend><div class="customer-form-grid"><label>Fakturamottaker<input name="invoiceRecipient" value="${esc(customerFieldValue("invoiceRecipient"))}" /></label><label>EHF-organisasjonsnummer<input name="ehfOrganizationNumber" inputmode="numeric" value="${esc(customerFieldValue("ehfOrganizationNumber", organizationNumber))}" /></label><label>Faktura-e-post<input name="invoiceEmail" type="email" value="${esc(customerFieldValue("invoiceEmail"))}" /></label><label>Avtalenummer<input name="agreementNumber" value="${esc(customerFieldValue("agreementNumber"))}" /></label><label class="customer-form-wide">Notat til fakturering<textarea name="invoiceNote" rows="3">${esc(customerFieldValue("invoiceNote"))}</textarea></label></div></fieldset>
+              <div class="customer-record-actions"><button class="primary-action" type="submit">Lagre kundeopplysninger</button><button class="secondary-action" id="closeCustomerRecord" type="button">Lukk</button></div><p id="customerRecordStatus" class="customer-record-status" role="status"></p>
+            </form>
+          </div>
+          <p class="fine-print">Kundeopplysninger lagres separat fra prosjekter og leverandører.</p>
         </article>
         </div>
       </section>
@@ -643,6 +915,34 @@ function render() {
   };
   document.querySelector("#dashboardContactNoteHeading")?.addEventListener("input", updateContactNote);
   document.querySelector("#dashboardContactNote")?.addEventListener("input", updateContactNote);
+  document.querySelector("#openCustomerRecord")?.addEventListener("click", () => {
+    dashboardCustomerFormOpen = !dashboardCustomerFormOpen;
+    const expanded = document.querySelector("#customerRecordExpanded");
+    const button = document.querySelector("#openCustomerRecord");
+    if (expanded) expanded.hidden = !dashboardCustomerFormOpen;
+    if (button) { button.textContent = dashboardCustomerFormOpen ? "Lukk kundeopplysninger" : "Opprett kunde"; button.setAttribute("aria-expanded", String(dashboardCustomerFormOpen)); }
+  });
+  document.querySelector("#closeCustomerRecord")?.addEventListener("click", () => {
+    dashboardCustomerFormOpen = false;
+    document.querySelector("#customerRecordExpanded")?.setAttribute("hidden", "");
+    const button = document.querySelector("#openCustomerRecord");
+    if (button) { button.textContent = "Opprett kunde"; button.setAttribute("aria-expanded", "false"); }
+  });
+  document.querySelector("#customerRecordForm")?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    await saveDashboardCustomerRecord(event.currentTarget);
+  });
+  bindCustomerCostCalculation();
+  document.querySelector("#customerMunicipalityInput")?.addEventListener("input", (event) => {
+    const matchedRegion = resolveCustomerRegion(event.target.value);
+    const regionInput = document.querySelector("#customerRegionName");
+    const regionIdInput = document.querySelector("#customerRegionId");
+    const match = document.querySelector("#customerRegionMatch");
+    if (regionInput) regionInput.value = matchedRegion?.name || "Ingen region funnet";
+    if (regionIdInput) regionIdInput.value = matchedRegion?.id || "";
+    if (match) match.textContent = matchedRegion ? `Kommunen er koblet til ${matchedRegion.name}.` : "Skriv inn kommunen slik den står i regionregisteret.";
+  });
+  bindCustomerOverviewButton();
   syncDashboardMapAddress(supplier);
   void enrichBusinessProfile();
   void initializeMapOverview();
@@ -735,7 +1035,8 @@ function renderDashboardMap() {
     bounds.extend([lat, lon]);
   });
   if (dashboardCustomerPoint) {
-    L.marker([dashboardCustomerPoint.lat, dashboardCustomerPoint.lon], { icon: customerIcon, keyboard: false }).addTo(dashboardMap).bindTooltip(`Kundens adresse: ${esc(dashboardCustomerPoint.label)}`, { direction: "top" });
+    const customerPhone = firstValue(supplier?.phone, "Telefon ikke oppgitt");
+    L.marker([dashboardCustomerPoint.lat, dashboardCustomerPoint.lon], { icon: customerIcon, keyboard: false }).addTo(dashboardMap).bindTooltip(`<strong>${esc(supplier?.name || "Kunde")}</strong><br>${esc(customerPhone)}`, { direction: "top" });
     bounds.extend([dashboardCustomerPoint.lat, dashboardCustomerPoint.lon]);
     dashboardMap.setView([dashboardCustomerPoint.lat, dashboardCustomerPoint.lon], 13, { animate: false });
   } else if (bounds.isValid()) {
@@ -804,6 +1105,23 @@ function readDashboardCalledSuppliers() {
   } catch { return {}; }
 }
 
+function readManualSuppliers(regionId) {
+  try {
+    const entries = JSON.parse(localStorage.getItem(manualSupplierStorageKey) || "{}");
+    return Array.isArray(entries?.[regionId]) ? entries[regionId] : [];
+  } catch { return []; }
+}
+
+function saveManualSupplier(region, supplierValue) {
+  if (!region?.id || !supplierValue) return;
+  try {
+    const entries = JSON.parse(localStorage.getItem(manualSupplierStorageKey) || "{}");
+    const current = Array.isArray(entries?.[region.id]) ? entries[region.id] : [];
+    entries[region.id] = dedupeDashboardSuppliers([...current, supplierValue]);
+    localStorage.setItem(manualSupplierStorageKey, JSON.stringify(entries));
+  } catch { /* Den lokale oversikten fungerer fortsatt i aktiv økt. */ }
+}
+
 function markDashboardSupplierCalled(selected, context) {
   if (!selected) return;
   try {
@@ -824,7 +1142,7 @@ function renderDashboardProjectDetail(project) {
   const phone = firstValue(contact.displayContact?.phone, contact.phone, project.contactPhone);
   const email = firstValue(contact.displayContact?.email, contact.email, project.contactEmail);
   const projectTitle = firstValue(project.caseTitle, project.documentTitle, project.shortFacts, project.title, "Prosjekt");
-  const projectTypes = Array.isArray(classification.projectTypes) ? classification.projectTypes.join(", ") : firstValue(project.projectType, project.measureType);
+  const projectTypes = projectType(project);
   const caseUrl = projectDetailHref(project.caseUrl || project.sourceUrl);
   const files = (project.files || []).map((file) => {
     const href = projectDetailHref(file.url || file.href);
@@ -834,6 +1152,10 @@ function renderDashboardProjectDetail(project) {
   panel.innerHTML = `<div class="dashboard-project-detail-heading"><div><span class="panel-kicker">Utvidet prosjektinformasjon</span><h3>${esc(projectTitle)}</h3></div><button type="button" id="closeDashboardProjectDetail" aria-label="Lukk prosjektinformasjon">Lukk</button></div><dl class="dashboard-project-facts">${projectDetailValue("Adresse", firstValue(project.address, location.address))}${projectDetailValue("Kommune", project.municipality)}${projectDetailValue("Fag/tema", projectTypes)}${projectDetailValue("Matrikkel", project.matrikkel)}${projectDetailValue("Saksnummer", project.caseNumber)}${projectDetailValue("Dokumentdato", project.documentDate)}${projectDetailValue("Dokumenttype", project.documentType)}${projectDetailValue("Fase/status", firstValue(classification.phase, classification.stage, project.phase, project.status))}${projectDetailValue("Avsender/mottaker", [project.fromName, project.toName].filter(Boolean).join(" → "))}</dl>${actor || phone || email ? `<section class="dashboard-project-contact"><h4>Aktør og kontakt</h4>${actor ? `<p><strong>${esc(actor)}</strong></p>` : ""}${phone ? `<a href="tel:${esc(phone.replace(/\D/g, ""))}">${esc(phone)}</a>` : ""}${email ? `<a href="mailto:${esc(email)}">${esc(email)}</a>` : ""}</section>` : ""}${project.description || project.shortFacts ? `<p class="dashboard-project-description">${esc(project.description || project.shortFacts)}</p>` : ""}${files.length || caseUrl ? `<div class="dashboard-project-links">${caseUrl ? `<a href="${esc(caseUrl)}" target="_blank" rel="noopener noreferrer">Åpne innsyn</a>` : ""}${files.join("")}</div>` : ""}`;
   document.querySelector("#closeDashboardProjectDetail")?.addEventListener("click", () => { panel.hidden = true; panel.innerHTML = ""; });
   panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function dashboardProjectKey(project) {
+  return String(project?.sourceDocumentId || project?.id || "");
 }
 
 function renderNearestProjects(message = "") {
@@ -848,9 +1170,9 @@ function renderNearestProjects(message = "") {
   // men fylle opp med tilgjengelige prosjekter dersom en fase mangler.
   const phaseOne = ranked.filter((project) => projectPhase(project) === "Fase 1").slice(0, 12);
   const phaseTwo = ranked.filter((project) => projectPhase(project) === "Fase 2").slice(0, 8);
-  const selectedIds = new Set([...phaseOne, ...phaseTwo].map((project) => project.sourceDocumentId || project.id));
+  const selectedIds = new Set([...phaseOne, ...phaseTwo].map(dashboardProjectKey));
   const nearest = [...phaseOne, ...phaseTwo,
-    ...ranked.filter((project) => !selectedIds.has(project.sourceDocumentId || project.id))]
+    ...ranked.filter((project) => !selectedIds.has(dashboardProjectKey(project)))]
     .sort((a, b) => a.distance - b.distance)
     .slice(0, 20);
   if (!nearest.length) { list.innerHTML = "<p class=\"dashboard-map-status\">Ingen prosjekter med bekreftet kartpunkt.</p>"; return; }
@@ -859,11 +1181,21 @@ function renderNearestProjects(message = "") {
     const municipality = firstValue(project.municipality, "Kommune ikke oppgitt");
     const date = projectDate(project);
     const distance = Number.isFinite(project.distance) ? `${project.distance.toFixed(1).replace(".", ",")} km` : "";
-    return `<div class="nearest-project-row"><span class="nearest-project-number">${index + 1}</span><div><strong>${esc(addressText)}</strong><span>${esc(municipality)}${projectType(project) ? ` · ${esc(projectType(project))}` : ""}</span></div><div class="nearest-project-meta">${projectPhase(project) ? `<b>${esc(projectPhase(project))}</b>` : ""}${date ? `<time>${esc(formatProjectDate(date))}</time>` : ""}${distance ? `<small>${esc(distance)}</small>` : ""}</div></div>`;
+    return `<button type="button" class="nearest-project-row" data-dashboard-project-id="${esc(dashboardProjectKey(project))}" aria-label="Åpne prosjekt ${esc(addressText)}"><span class="nearest-project-number">${index + 1}</span><span><strong>${esc(addressText)}</strong><span>${esc(municipality)}${projectType(project) ? ` · ${esc(projectType(project))}` : ""}</span></span><span class="nearest-project-meta">${projectPhase(project) ? `<b>${esc(projectPhase(project))}</b>` : ""}${date ? `<time>${esc(formatProjectDate(date))}</time>` : ""}${distance ? `<small>${esc(distance)}</small>` : ""}</span></button>`;
   }).join("");
 }
 
 document.addEventListener("click", async (event) => {
+  const projectRow = event.target.closest("[data-dashboard-project-id]");
+  if (projectRow) {
+    const project = dashboardProjects.find((candidate) => dashboardProjectKey(candidate) === projectRow.dataset.dashboardProjectId);
+    if (project) {
+      const coordinates = project.coordinates;
+      if (dashboardMap && coordinates) dashboardMap.panTo([coordinates.lat, coordinates.lon], { animate: true, duration: 0.25 });
+      renderDashboardProjectDetail(project);
+    }
+    return;
+  }
   if (event.target.closest("#dashboardFindAddress")) {
     await geocodeDashboardAddress(true);
     renderDashboardMap();
@@ -890,10 +1222,12 @@ function renderRegionalSupplierOverview() {
       <header class="dashboard-topbar">
         <a class="dashboard-brand" href="/user"><img src="/assets/byggradar-radar.png" alt="" /><span>Norsk ByggRadar</span></a>
         <div class="dashboard-heading"><span>Dashboard</span><strong>Velg virksomhet for å starte</strong><small id="dashboardNationalSupplierCount">Laster registrerte bedrifter...</small></div>
+        <button class="dashboard-customer-overview-button" id="openCustomerOverview" type="button">Kundeoversikt</button>
       </header>
       <section class="dashboard-context"><div><h1>Virksomheter i valgt region</h1><p>Velg region. Virksomhetene lastes automatisk når området er valgt.</p></div></section>
       <main class="dashboard-region-list"><div class="dashboard-region-picker"><label for="dashboardRegionSelect">Region</label><select id="dashboardRegionSelect"><option value="" ${selectedRegionId ? "" : "selected"}>Velg region</option>${dashboardRegions.map((item) => `<option value="${esc(item.id)}" ${item.id === selectedRegionId ? "selected" : ""}>${esc(item.name)}</option>`).join("")}</select><label for="dashboardTradeSelect">Fagområde</label><select id="dashboardTradeSelect"><option value="">Alle fagområder</option>${["Elektriker", "Snekker", "Rørlegger", "Ventilasjon", "Grunnarbeid", "Murer", "Maler", "Taklegger", "Gulvlegger", "Byggmester", "Varmepumpemontør", "Prosjektering"].map((trade) => `<option value="${esc(trade)}" ${trade === dashboardTradeFilter ? "selected" : ""}>${esc(trade)}</option>`).join("")}</select></div><div class="region-list-heading"><div><span class="panel-kicker">Regionregister</span><h2>${context ? `Alle virksomheter i ${esc(context.name)}` : "Velg region"}</h2><p>Velg region. Virksomheter lastes først etter at et område er valgt.</p></div><strong id="dashboardRegionalSupplierCount" class="regional-supplier-count">${context ? "Laster antall virksomheter..." : "Velg region for å laste virksomheter"}</strong></div><div id="regionalSupplierRows" class="regional-supplier-rows"><p class="dashboard-map-status">${context ? "Henter virksomheter i regionen..." : "Velg region for å hente virksomheter."}</p></div></main>
     </main>`;
+  bindCustomerOverviewButton();
   document.querySelector("#dashboardRegionSelect")?.addEventListener("change", (event) => {
     const nextContext = dashboardRegions.find((item) => item.id === event.target.value);
     if (!nextContext) return;
@@ -901,6 +1235,9 @@ function renderRegionalSupplierOverview() {
     regionalSupplierAbortController?.abort();
     regionalSupplierAbortController = null;
     regionalSuppliers = [];
+    regionalSupplierSearchResult = null;
+    regionalSupplierSearchLoading = false;
+    regionalSupplierSearchRequestId += 1;
     dashboardTradeFilter = "";
     regionalSupplierRequestId += 1;
     regionalSuppliersLoading = false;
@@ -910,9 +1247,92 @@ function renderRegionalSupplierOverview() {
     dashboardTradeFilter = String(event.target.value || "");
     renderRegionalSupplierRows(context);
   });
+  if (context) mountRegionalSupplierSearch(context);
   void loadDashboardNationalSupplierCount();
   if (context && regionalSuppliers.length) renderRegionalSupplierRows(context);
   else if (context) void loadRegionalSuppliers(context);
+}
+
+function mountRegionalSupplierSearch(context) {
+  const rows = document.querySelector("#regionalSupplierRows");
+  if (!rows) return;
+  rows.insertAdjacentHTML("beforebegin", `<section class="regional-supplier-search" aria-labelledby="regionalSupplierSearchHeading"><h3 id="regionalSupplierSearchHeading">Søk etter ikke-listet virksomhet</h3><p>Legg inn virksomhetsnavn eller organisasjonsnummer. Treffet hentes fra samme virksomhetskilder som de listede virksomhetene.</p><form id="regionalSupplierSearchForm"><label for="regionalSupplierSearchInput">Virksomhet</label><div class="regional-supplier-search-row"><input id="regionalSupplierSearchInput" name="query" type="search" placeholder="Søk etter virksomhetsnavn eller organisasjonsnummer" autocomplete="organization" /><button type="submit">Søk virksomhet</button></div><p id="regionalSupplierSearchStatus" class="regional-supplier-search-status" role="status"></p></form><div id="regionalSupplierSearchResult"></div></section>`);
+  document.querySelector("#regionalSupplierSearchForm")?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const query = String(new FormData(event.currentTarget).get("query") || "").trim();
+    void searchRegionalSupplier(query, context);
+  });
+  renderRegionalSupplierSearchResult(context);
+}
+
+function renderRegionalSupplierSearchResult(context) {
+  const resultContainer = document.querySelector("#regionalSupplierSearchResult");
+  const status = document.querySelector("#regionalSupplierSearchStatus");
+  if (!resultContainer || !context) return;
+  if (status && regionalSupplierSearchLoading) status.textContent = "Henter virksomhetsinformasjon...";
+  if (!regionalSupplierSearchResult) {
+    resultContainer.innerHTML = "";
+    return;
+  }
+  const profile = regionalSupplierSearchResult;
+  const name = profile.legalName || profile.name || "Ukjent virksomhet";
+  const address = supplierAddress(profile) || "Adresse ikke oppgitt";
+  const trade = profile.industry || tradeFromIndustryCode(profile.industryCode) || "Fagområde ikke oppgitt";
+  const phone = profile.phone || profile.telephone || "Telefon ikke oppgitt";
+  const website = normalizeWebsite(firstValue(profile.businessWebsite, profile.companyWebsite, profile.website));
+  const websiteMarkup = website ? `<a href="${esc(website)}" target="_blank" rel="noreferrer">${esc(website.replace(/^https?:\/\//i, "").replace(/\/$/, ""))}</a>` : "Nettsted ikke oppgitt";
+  const employees = firstValue(profile.employees, profile.employeeCount, profile.employeeRange) || "Ansatte ikke oppgitt";
+  const revenue = formatRevenue(firstValue(profile.revenue, profile.annualRevenue, profile.turnover)) || "Omsetning ikke oppgitt";
+  resultContainer.innerHTML = `<article class="regional-supplier-search-result"><div><span class="panel-kicker">Søkeresultat · lagt til i regionoversikten</span><h4>${esc(name)}</h4><p>${esc(trade)} · ${esc(address)}</p></div><dl><div><dt>Organisasjonsnummer</dt><dd>${esc(profile.organizationNumber || profile.orgNumber || "Ikke oppgitt")}</dd></div><div><dt>Telefon</dt><dd>${esc(phone)}</dd></div><div><dt>Nettsted</dt><dd>${websiteMarkup}</dd></div><div><dt>Ansatte</dt><dd>${esc(String(employees))}</dd></div><div><dt>Omsetning</dt><dd>${esc(String(revenue))}</dd></div></dl><button type="button" class="regional-supplier-search-open" id="openRegionalSupplierSearchResult">Åpne virksomhetsprofil</button></article>`;
+  document.querySelector("#openRegionalSupplierSearchResult")?.addEventListener("click", () => {
+    supplier = { ...profile, name, trade, dashboardRegionId: context.id, dashboardRegionName: context.name, dashboardMunicipalities: context.municipalities };
+    profileLookupStarted = true;
+    mapOverviewStarted = false;
+    render();
+  });
+}
+
+async function searchRegionalSupplier(query, context) {
+  const status = document.querySelector("#regionalSupplierSearchStatus");
+  if (!query) {
+    if (status) status.textContent = "Skriv inn virksomhetsnavn eller organisasjonsnummer.";
+    return;
+  }
+  const requestId = ++regionalSupplierSearchRequestId;
+  regionalSupplierSearchLoading = true;
+  regionalSupplierSearchResult = null;
+  if (status) status.textContent = "Henter virksomhetsinformasjon...";
+  renderRegionalSupplierSearchResult(context);
+  try {
+    const params = new URLSearchParams({ name: query });
+    if (/^\d{9}$/.test(query.replace(/\s/g, ""))) params.set("orgNumber", query.replace(/\s/g, ""));
+    const response = await fetch(`/api/business-profile?${params}`, { cache: "no-store", signal: AbortSignal.timeout(10000) });
+    const payload = await response.json().catch(() => ({}));
+    if (requestId !== regionalSupplierSearchRequestId) return;
+    if (!response.ok || !payload.profile) throw new Error("Ingen virksomhet ble funnet.");
+    const searchedSupplier = {
+      ...payload.profile,
+      profileSource: payload.source || payload.profile.profileSource,
+      name: payload.profile.legalName || query,
+      dashboardRegionId: context.id,
+      dashboardRegionName: context.name,
+      dashboardMunicipalities: context.municipalities,
+      source: "Søk i virksomhetsregister",
+    };
+    regionalSupplierSearchResult = searchedSupplier;
+    regionalSuppliers = sortSuppliersAlphabetically(hydrateDashboardContactNotes(dedupeDashboardSuppliers([...regionalSuppliers, searchedSupplier])));
+    saveManualSupplier(context, searchedSupplier);
+    markDashboardSupplierCalled(searchedSupplier, context);
+    if (status) status.textContent = "Virksomheten er funnet og ligger over regionlisten.";
+  } catch (error) {
+    if (requestId !== regionalSupplierSearchRequestId) return;
+    if (status) status.textContent = error?.name === "TimeoutError" ? "Oppslaget tok for lang tid. Prøv igjen." : (error.message || "Virksomheten kunne ikke hentes.");
+  } finally {
+    if (requestId === regionalSupplierSearchRequestId) {
+      regionalSupplierSearchLoading = false;
+      renderRegionalSupplierSearchResult(context);
+    }
+  }
 }
 
 function renderRegionalSupplierRows(context) {
@@ -981,7 +1401,10 @@ async function loadRegionalSuppliers(context) {
     const payload = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(payload.error || "Virksomhetslisten kunne ikke hentes.");
     if (requestId !== regionalSupplierRequestId) return;
-    regionalSuppliers = sortSuppliersAlphabetically(hydrateDashboardContactNotes(dedupeDashboardSuppliers(Array.isArray(payload.suppliers) ? payload.suppliers : [])));
+    regionalSuppliers = sortSuppliersAlphabetically(hydrateDashboardContactNotes(dedupeDashboardSuppliers([
+      ...(Array.isArray(payload.suppliers) ? payload.suppliers : []),
+      ...readManualSuppliers(context.id),
+    ])));
     renderRegionalSupplierRows(context);
   } catch (error) {
     if (requestId !== regionalSupplierRequestId) return;

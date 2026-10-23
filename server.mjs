@@ -13,6 +13,7 @@ const smsOutboxPath = path.join(root, "data", "sms_outbox.json");
 const googleAdsSuppliersPath = path.join(root, "data", "google_ads_suppliers.json");
 const payingUsersPath = path.join(root, "data", "paying_users.json");
 const supplierContactNotesPath = path.join(root, "data", "supplier_contact_notes.json");
+const customerRecordsPath = path.join(root, "data", "customers", "customer_records.json");
 const projectRegionIds = [
   "bergensregionen",
   "stavangerregionen",
@@ -43,6 +44,7 @@ const brregBusinessCache = new Map();
 const proffEmployeeCache = new Map();
 const incomingJobRequests = [];
 let supplierRegistryCache = { signature: "", suppliers: null };
+let customerRecordsWriteQueue = Promise.resolve();
 
 const verifiedProffProfileUrls = {
   "935000548": "https://www.proff.no/selskap/alt-i-r%C3%B8r-as/bergen/r%C3%B8rleggertjenester/IFGOB1G07RG",
@@ -1047,6 +1049,109 @@ const server = http.createServer(async (request, response) => {
       await operation;
       response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
       response.end(JSON.stringify({ saved: true }));
+      return;
+    }
+
+    if (url.pathname === "/api/customer-records" && request.method === "GET") {
+      const organizationNumber = String(url.searchParams.get("organizationNumber") || "").replace(/\D/g, "");
+      const companyName = String(url.searchParams.get("companyName") || "").trim().toLocaleLowerCase("nb-NO");
+      let records = [];
+      try { records = JSON.parse(await fs.readFile(customerRecordsPath, "utf8")); } catch { /* Første oppslag før registeret er opprettet. */ }
+      const record = Array.isArray(records)
+        ? records.find((item) => (
+          organizationNumber && String(item.organizationNumber || "").replace(/\D/g, "") === organizationNumber
+        ) || (
+          !organizationNumber && companyName && String(item.companyName || "").trim().toLocaleLowerCase("nb-NO") === companyName
+        ))
+        : null;
+      response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
+      response.end(JSON.stringify(organizationNumber || companyName ? { record: record || null } : { records: Array.isArray(records) ? records : [] }));
+      return;
+    }
+
+    if (url.pathname === "/api/customer-records" && request.method === "POST") {
+      let body = "";
+      for await (const chunk of request) {
+        body += chunk;
+        if (body.length > 256 * 1024) { response.writeHead(413, { "content-type": "application/json; charset=utf-8" }); response.end(JSON.stringify({ error: "Kunderegisteret er for stort." })); return; }
+      }
+      let incoming;
+      try { incoming = JSON.parse(body || "{}"); } catch {
+        response.writeHead(400, { "content-type": "application/json; charset=utf-8" });
+        response.end(JSON.stringify({ error: "Ugyldig kundeformat." }));
+        return;
+      }
+      const organizationNumber = String(incoming.organizationNumber || "").replace(/\D/g, "").slice(0, 9);
+      const companyName = String(incoming.companyName || "").trim().slice(0, 180);
+      if (!organizationNumber && !companyName) {
+        response.writeHead(400, { "content-type": "application/json; charset=utf-8" });
+        response.end(JSON.stringify({ error: "Organisasjonsnummer eller bedriftsnavn mangler." }));
+        return;
+      }
+      const operation = customerRecordsWriteQueue.then(async () => {
+        let records = [];
+        try { records = JSON.parse(await fs.readFile(customerRecordsPath, "utf8")); } catch { /* Første lagring oppretter registeret. */ }
+        if (!Array.isArray(records)) records = [];
+        const key = organizationNumber || companyName.toLocaleLowerCase("nb-NO");
+        const index = records.findIndex((item) => (String(item.organizationNumber || "").replace(/\D/g, "") || String(item.companyName || "").toLocaleLowerCase("nb-NO")) === key);
+        const record = {
+          ...incoming,
+          organizationNumber,
+          companyName,
+          updatedAt: new Date().toISOString(),
+          createdAt: index >= 0 ? records[index].createdAt || new Date().toISOString() : new Date().toISOString(),
+        };
+        if (index >= 0) records[index] = { ...records[index], ...record };
+        else records.push(record);
+        await fs.mkdir(path.dirname(customerRecordsPath), { recursive: true });
+        const temporaryPath = `${customerRecordsPath}.tmp`;
+        await fs.writeFile(temporaryPath, `${JSON.stringify(records, null, 2)}\n`, "utf8");
+        await fs.rename(temporaryPath, customerRecordsPath);
+        return record;
+      });
+      customerRecordsWriteQueue = operation.catch(() => {});
+      try {
+        const record = await operation;
+        response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
+        response.end(JSON.stringify({ saved: true, record }));
+      } catch (error) {
+        response.writeHead(500, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
+        response.end(JSON.stringify({ error: error.message || "Kundeforholdet kunne ikke lagres." }));
+      }
+      return;
+    }
+
+    if (url.pathname === "/api/customer-login" && request.method === "POST") {
+      let body = "";
+      for await (const chunk of request) {
+        body += chunk;
+        if (body.length > 16 * 1024) { response.writeHead(413, { "content-type": "application/json; charset=utf-8" }); response.end(JSON.stringify({ error: "Innloggingsforespørselen er for stor." })); return; }
+      }
+      let incoming;
+      try { incoming = JSON.parse(body || "{}"); } catch {
+        response.writeHead(400, { "content-type": "application/json; charset=utf-8" });
+        response.end(JSON.stringify({ error: "Ugyldig innloggingsformat." }));
+        return;
+      }
+      const username = String(incoming.username || "").trim().toLocaleLowerCase("nb-NO");
+      const password = String(incoming.password || "").trim();
+      let records = [];
+      try { records = JSON.parse(await fs.readFile(customerRecordsPath, "utf8")); } catch { /* Tomt kunderegister gir ingen treff. */ }
+      const record = Array.isArray(records)
+        ? records.find((item) => String(item.loginUsername || "").trim().toLocaleLowerCase("nb-NO") === username && String(item.loginPassword || "") === password)
+        : null;
+      if (!record) {
+        response.writeHead(401, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
+        response.end(JSON.stringify({ error: "Brukernavn eller passord er ikke riktig." }));
+        return;
+      }
+      response.writeHead(200, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" });
+      response.end(JSON.stringify({ authenticated: true, customer: {
+        companyName: record.companyName || "",
+        municipality: record.municipality || "",
+        regionId: record.regionId || "",
+        regionName: record.regionName || "",
+      } }));
       return;
     }
 

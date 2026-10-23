@@ -5645,7 +5645,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -7261,7 +7262,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 2",
       "projectType": "ukjent",
@@ -7331,7 +7333,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -8222,7 +8225,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "lookupStatus": "må slås opp fra matrikkel",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "nybygg",
@@ -14246,7 +14250,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -19597,7 +19602,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -22213,7 +22219,8 @@
         "address": "Bjørnsons gate 39/39B",
         "addressSource": "kilde/tittel",
         "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "lookupStatus": "adresse funnet, kartoppslag mislyktes",
+        "addressLookupRequired": true
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -22912,7 +22919,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "lookupStatus": "må slås opp fra matrikkel",
+        "addressLookupRequired": false
       },
       "phase": "Fase 5",
       "projectType": "ukjent",
@@ -23114,7 +23122,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "må slås opp fra matrikkel"
+        "lookupStatus": "må slås opp fra matrikkel",
+        "addressLookupRequired": false
       },
       "phase": "Fase 5",
       "projectType": "ukjent",
@@ -24216,7 +24225,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -27692,7 +27702,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -31329,7 +31340,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -35179,7 +35191,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -35573,7 +35586,8 @@
         "address": "Bjørnsons gate 39",
         "addressSource": "kilde/tittel",
         "coordinateSystem": "",
-        "lookupStatus": "adresse funnet i tittel"
+        "lookupStatus": "adresse funnet, kartoppslag mislyktes",
+        "addressLookupRequired": true
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -44696,7 +44710,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -49774,7 +49789,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -53213,7 +53229,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -53839,7 +53856,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "ukjent",
@@ -55384,7 +55402,8 @@
         "address": "",
         "addressSource": "",
         "coordinateSystem": "",
-        "lookupStatus": "mangler matrikkel/adresse"
+        "lookupStatus": "mangler matrikkel/adresse",
+        "addressLookupRequired": false
       },
       "phase": "Fase 1",
       "projectType": "teknisk installasjon",

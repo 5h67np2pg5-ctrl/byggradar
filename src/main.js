@@ -122,8 +122,8 @@ const loadMoreStep = 200;
 const weeklyDeliveryCount = 50;
 const statisticsSavedSearchesKey = "byggradar.statistics.savedSearches.v1";
 // Produktversjonen vises på forsiden. Hver ny implementering starter på innloggingssiden.
-const userVersion = 480;
-const dashboardVersion = 458;
+const userVersion = 481;
+const dashboardVersion = 471;
 const appVersion = userVersion + dashboardVersion;
 const loginAccessCodes = {
   vendor: "norskbyggradar1000",
@@ -953,9 +953,7 @@ function normalizeProject(project, contactProject, index) {
     ? String(phaseCandidate).replace(/\s+/g, " ").replace(/^fase\s*/i, "Fase ")
     : classifyProjectPhase(status);
   const projectText = projectClassificationText(project, title);
-  const classifiedTypes = (classification.projectTypes || []).filter((type) => !/^ukjent$/i.test(String(type || "").trim()));
-  const inferredTypes = inferProjectTypes(projectText);
-  const projectTypes = classifiedTypes.length ? classifiedTypes : inferredTypes;
+  const projectTypes = resolveProjectTypes(project, projectText);
   const nonProjectOnlyTypes = new Set([
     "nettstasjon",
     "tekniske installasjoner",
@@ -1192,6 +1190,13 @@ function renderShell() {
             <button class="close-button map-dialog-close" id="mapDialogClose" type="button">Lukk</button>
           </div>
           <div id="fullMapCanvas" class="full-map-canvas"></div>
+          <section class="exclusive-projects-block" aria-labelledby="exclusiveProjectsTitle">
+            <div class="exclusive-projects-heading">
+              <div><span class="panel-kicker">Kundeområde</span><h2 id="exclusiveProjectsTitle">Mine eksklusive oppdrag</h2></div>
+              <button class="exclusive-projects-button" id="exclusiveProjectsButton" type="button" aria-expanded="false">Mine skjulte prosjekter</button>
+            </div>
+            <div id="exclusiveProjectsPanel" class="exclusive-projects-panel" hidden><p>Her vises prosjekter som er reservert for dette kundeforholdet når eksklusivitetsordningen er aktivert.</p></div>
+          </section>
         </div>
       </section>
     </main>
@@ -1248,6 +1253,14 @@ function renderShell() {
     event.preventDefault();
     event.stopPropagation();
     closeFullMap();
+  });
+  document.querySelector("#exclusiveProjectsButton")?.addEventListener("click", () => {
+    const button = document.querySelector("#exclusiveProjectsButton");
+    const panel = document.querySelector("#exclusiveProjectsPanel");
+    if (!button || !panel) return;
+    const open = button.getAttribute("aria-expanded") === "true";
+    button.setAttribute("aria-expanded", String(!open));
+    panel.hidden = open;
   });
   bindInput("tradeInput", "trade");
   bindInput("areaInput", "area");
@@ -4451,6 +4464,9 @@ function projectClassificationText(project, title = "") {
     project.caseTitle,
     project.documentTitle,
     project.description,
+    project.measureType,
+    project.projectType,
+    project.tiltakstype,
     project.address,
     attachments,
   ].filter(Boolean).join(" ");
@@ -4499,6 +4515,22 @@ function inferProjectTypes(value) {
   if (!types.length && /\b(eiendom|eiendommen|godkjent|bygging|tegning|boligformål|oppbygget|forlengelse av fristen|utsatt frist|vedrørende)\b/.test(text)) types.push("Annen byggesak");
   if (!types.length) types.push("Annen byggesak");
   return types;
+}
+
+function resolveProjectTypes(project = {}, projectText = projectClassificationText(project)) {
+  const classification = project.classification || {};
+  const explicitTypes = (Array.isArray(classification.projectTypes)
+    ? classification.projectTypes
+    : [classification.projectTypes, project.projectType, project.measureType, project.tiltakstype]
+  )
+    .flatMap((value) => String(value || "").split(/[;,|]/))
+    .map((value) => String(value || "").trim())
+    .filter((value) => value && !/^(ukjent|ukjent tiltak|ikke oppgitt|ikke tolket)$/i.test(value));
+  const inferredTypes = inferProjectTypes(projectText);
+  const merged = [...explicitTypes, ...inferredTypes].filter((value, index, values) => (
+    values.findIndex((candidate) => normalize(candidate) === normalize(value)) === index
+  ));
+  return merged.length ? merged : ["Ukjent tiltak"];
 }
 
 function inferTrade(...values) {
