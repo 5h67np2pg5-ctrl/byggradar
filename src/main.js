@@ -122,7 +122,7 @@ const loadMoreStep = 200;
 const weeklyDeliveryCount = 50;
 const statisticsSavedSearchesKey = "byggradar.statistics.savedSearches.v1";
 // Produktversjonen vises på forsiden. Hver ny implementering starter på innloggingssiden.
-const userVersion = 481;
+const userVersion = 502;
 const dashboardVersion = 471;
 const appVersion = userVersion + dashboardVersion;
 const loginAccessCodes = {
@@ -614,18 +614,6 @@ const stageRank = {
   "søknad mottatt": 6,
 };
 
-const phaseTwoStatuses = new Set([
-  "igangsettingstillatelse gitt",
-  "igangsetting søkt",
-  "tillatelse gitt",
-]);
-
-const phaseOneStatuses = new Set([
-  "rammetillatelse gitt",
-  "saksbehandling pågår",
-  "søknad mottatt",
-]);
-
 const app = document.querySelector("#app");
 
 function readSessionValue(key) {
@@ -687,9 +675,7 @@ async function initVendorApplication() {
     state.regionSelectionCleared = true;
     state.customerMunicipality = "";
     document.querySelector("#areaInput").value = "";
-    updateCustomerMunicipalityOptions();
     document.querySelector("#regionIllustration").value = "";
-    document.querySelector("#customerMunicipality").value = "";
     restoreMarkedProjects();
     state.projects = [];
     state.filtered = [];
@@ -943,16 +929,10 @@ function normalizeProject(project, contactProject, index) {
   const title = cleanTitle(project.title || project.shortFacts || project.caseTitle || "Ukjent prosjekt");
   const status = classification.stage || project.status || project.phase || "Ukjent status";
   const phaseCandidate = classification.phase || project.phase || "";
-  const approvedTitle = /\bgodkjent\b/i.test(title);
-  const approvedPhase = /\bigangsetting(?:stillatelse)?\b|\bigangsetjing(?:sløyve)?\b/i.test(`${title} ${status}`)
-    ? "Fase 5"
-    : "Fase 4";
-  const phaseLabel = approvedTitle
-    ? approvedPhase
-    : /^fase\s*[1-5]$/i.test(String(phaseCandidate).trim())
-    ? String(phaseCandidate).replace(/\s+/g, " ").replace(/^fase\s*/i, "Fase ")
-    : classifyProjectPhase(status);
   const projectText = projectClassificationText(project, title);
+  const phaseContext = [status, classification.reason, projectText].filter(Boolean).join(" ");
+  const storedPhase = canonicalPhaseLabel(phaseCandidate);
+  const phaseLabel = classifyProjectPhase(phaseContext) || storedPhase || "Fase 1";
   const projectTypes = resolveProjectTypes(project, projectText);
   const nonProjectOnlyTypes = new Set([
     "nettstasjon",
@@ -1119,12 +1099,6 @@ function renderShell() {
               </select>
             </label>
           </div>
-          <label class="topbar-picker topbar-customer customer-location-field">
-            <span class="visually-hidden">Kundens kommune</span>
-            <select id="customerMunicipality" class="filter-select" aria-label="Velg kundens kommune">
-              <option value="">Velg kommune</option>
-            </select>
-          </label>
         </div>
       </header>
 
@@ -1202,8 +1176,6 @@ function renderShell() {
     </main>
   `;
 
-  updateCustomerMunicipalityOptions();
-
   const helpText = "Åpne prosjektene du har interesse for og kontakt tiltakshaver eller ansvarlig aktør så tidlig som mulig.\n\nSi gjerne:\n\"Hei, jeg ser at dere har et prosjekt på gang i [adresse]. Vi jobber med [fag], og kan raskt avklare om vi kan bidra i planleggingen eller i utførelsen. Kan jeg sende en kort mail, eller kan jeg komme på en rask befaring?\"\n\nSender du mail, må du velge faggruppen din først. Det genereres da en e-post direkte til kontaktpersonen når du trykker på e-postadressen i prosjektet.\n\nFase 1: Søknad mottatt eller saken opprettet.\nFase 2: Saksbehandling, mangler eller supplering.\nFase 3: Rammetillatelse eller rammeløyve gitt.\nFase 4: Søknad om igangsetting registrert.\nFase 5: Igangsettingstillatelse eller annen tillatelse/godkjenning gitt.";
   document.querySelector("#regionIllustration")?.addEventListener("change", async (event) => {
     const selected = event.target.value;
@@ -1215,10 +1187,7 @@ function renderShell() {
     state.area = "";
     state.userLocation = null;
     resetPartnerSearch();
-    if (!state.activeRegion?.municipalities.some((municipality) => normalizeMunicipalityName(municipality) === state.customerMunicipality)) {
-      state.customerMunicipality = "";
-    }
-    updateCustomerMunicipalityOptions();
+    state.customerMunicipality = "";
     state.selected = null;
     state.visibleCount = initialVisibleCount();
     state.projects = [];
@@ -1286,7 +1255,6 @@ function renderShell() {
         if (regionSelect) regionSelect.value = "";
         const areaInput = document.querySelector("#areaInput");
         if (areaInput) areaInput.value = "";
-        updateCustomerMunicipalityOptions();
         saveFilters();
       }
       render();
@@ -1294,7 +1262,7 @@ function renderShell() {
       if (nextScope === "municipal" && !state.activeRegion) return;
       if (notice) notice.textContent = nextScope === "national"
         ? "Laster nasjonale prosjekter ..."
-        : `Laster kommuneprosjekter for ${displayGeographyName(state.customerMunicipality)} ...`;
+        : `Laster prosjekter for ${state.activeRegion?.name || "valgt region"} ...`;
       try {
         await loadProjects();
         state.filtered = filterProjects();
@@ -1329,45 +1297,6 @@ function renderShell() {
     renderCollaborationFinder();
   });
   document.querySelector("#locationButton").addEventListener("click", openAreaMap);
-  document.querySelector("#customerMunicipality")?.addEventListener("change", async (event) => {
-    state.customerMunicipality = event.target.value;
-    state.userLocation = null;
-    const selectedRegion = locationRegions.find((region) => region.municipalities.some(
-      (municipality) => normalizeMunicipalityName(municipality) === state.customerMunicipality,
-    ));
-    if (selectedRegion) {
-      state.activeRegion = selectedRegion;
-      state.regionKey = selectedRegion.id;
-      state.regionSelectionCleared = false;
-      const regionSelect = document.querySelector("#regionIllustration");
-      if (regionSelect) regionSelect.value = selectedRegion.id;
-    }
-    resetPartnerSearch();
-    state.visibleCount = initialVisibleCount();
-    state.mapViewKey = "";
-    state.selected = null;
-    state.projects = [];
-    state.filtered = [];
-    saveFilters();
-    const notice = document.querySelector("#regionNotice");
-    if (!state.activeRegion) {
-      if (notice) notice.textContent = "Velg region for å laste prosjekter.";
-      render();
-      return;
-    }
-    if (notice) notice.textContent = state.customerMunicipality
-      ? `Laster prosjekter for ${displayGeographyName(state.customerMunicipality)} ...`
-      : `Laster prosjekter for ${state.activeRegion.name} ...`;
-    render();
-    try {
-      await loadProjects();
-      state.filtered = filterProjects();
-      render();
-      if (state.showMap) renderMap();
-    } catch (error) {
-      if (notice) notice.textContent = error.message || "Prosjektene kunne ikke lastes.";
-    }
-  });
 }
 
 function renderStatisticsShell() {
@@ -2497,11 +2426,8 @@ function renderRegionNotice(summary = {}) {
   const visibleCount = summary.visibleCount ?? visibleDeliveryProjects().length;
   const totalCount = summary.totalCount ?? state.filtered.length;
   const regionName = summary.regionName || selectedRegion.name;
-  const businessText = selectedRegion.constructionBusinessCount
-    ? ` Regionen består av ca. ${selectedRegion.constructionBusinessCount.toLocaleString("nb-NO")} virksomheter innen bygg- og anleggsbransjen.`
-    : "";
   const primaryLine = `Valgt område: ${selectedRegion.name} (${selectedRegion.municipalities.length} kommuner) ${visibleCount} aktive prosjekter vises, av ${totalCount} for ${regionName}.`;
-  notice.innerHTML = `<span>${escapeHtml(primaryLine)}</span>${businessText ? `<span>${escapeHtml(businessText.trim())}</span>` : ""}`;
+  notice.innerHTML = `<span>${escapeHtml(primaryLine)}</span>`;
 }
 
 function renderList() {
@@ -2522,7 +2448,9 @@ function renderList() {
         <span aria-hidden="true"></span>
         <div class="project-list-sort-actions">
           <button class="sort-button" id="projectSortButton" type="button" aria-pressed="${state.projectSortMode === "date"}" title="${state.projectSortMode === "date" ? "Vis prosjekter etter aktualitet" : "Ranger prosjektene etter dato"}">${state.projectSortMode === "date" ? "Aktualitet" : "Dato"}</button>
-          <button class="sort-button phase-filter-button" id="projectPhaseButton" type="button" aria-pressed="${state.projectPhaseFilter !== "all"}">${state.projectPhaseFilter === "phase1" ? "Kun fase 1" : state.projectPhaseFilter === "phase2" ? "Kun fase 2" : "Alle faser"}</button>
+          <select class="sort-button phase-filter-select" id="projectPhaseButton" aria-label="Velg fase">
+            ${[["all", "Alle faser"], ["phase1", "Fase 1"], ["phase2", "Fase 2"], ["phase3", "Fase 3"], ["phase4", "Fase 4"], ["phase5", "Fase 5"]].map(([value, label]) => `<option value="${value}" ${state.projectPhaseFilter === value ? "selected" : ""}>${label}</option>`).join("")}
+          </select>
         </div>
         <span aria-hidden="true"></span>
       </div>
@@ -2549,6 +2477,7 @@ function renderList() {
         <span class="row-copy">
           <span class="line-primary">${escapeHtml(project.firstLine)}</span>
           <span class="line-secondary">${escapeHtml(project.secondLine)}</span>
+          ${renderPhaseIndicator(project)}
         </span>
       </button>
       ${state.selected?.id === project.id ? renderExpandedProject(project) : ""}
@@ -2565,10 +2494,8 @@ function renderList() {
     state.visibleCount = initialVisibleCount();
     render();
   });
-  list.querySelector("#projectPhaseButton")?.addEventListener("click", () => {
-    state.projectPhaseFilter = state.projectPhaseFilter === "all"
-      ? "phase1"
-      : state.projectPhaseFilter === "phase1" ? "phase2" : "all";
+  list.querySelector("#projectPhaseButton")?.addEventListener("change", (event) => {
+    state.projectPhaseFilter = event.currentTarget.value;
     state.selected = null;
     state.visibleCount = initialVisibleCount();
     render();
@@ -2751,7 +2678,7 @@ function renderExpandedPreviewFields(project) {
   const documentCount = project.files.filter((file) => file && (file.url || file.href)).length;
   const files = project.files.filter((file) => file && (file.url || file.href)).slice(0, 5).map((file) => {
     const title = fileDisplayTitle(file.title || file.name || "Vedlegg");
-    return `<li><a href="${escapeHtml(projectDocumentUrl(project, file))}" target="_blank" rel="noreferrer">${escapeHtml(title)}</a></li>`;
+    return `<li><a class="case-document-link" href="${escapeHtml(projectDocumentUrl(project, file))}" target="_blank" rel="noopener noreferrer" data-open-in-new-window="true">${escapeHtml(title)}</a></li>`;
   }).join("");
   const hasProcurementInfo = project.buyer || project.procurementContactName || project.procurementType || project.estimatedValue || project.deadline;
   const caseFacts = [
@@ -2811,7 +2738,7 @@ function renderExpandedPreviewFields(project) {
       ${renderFactGroup("Anskaffelse", procurementFacts)}
       ${renderFactGroup("Kilde og referanse", sourceFacts)}
       ${files ? `<div class="preview-subsection"><strong>Vedlegg (${documentCount})</strong><ul class="attachment-list">${files}</ul></div>` : ""}
-      ${project.sourceUrl ? `<a class="full-case-link" href="${escapeHtml(project.sourceUrl)}" target="_blank" rel="noreferrer">${isNationalProjectRecord(project) ? "Åpne sak eller kunngjøring" : "Åpne innsyn"}</a>` : ""}
+      ${project.sourceUrl ? `<a class="full-case-link case-document-link" href="${escapeHtml(project.sourceUrl)}" target="_blank" rel="noopener noreferrer" data-open-in-new-window="true">${isNationalProjectRecord(project) ? "Åpne sak eller kunngjøring" : "Åpne innsyn"}</a>` : ""}
     </section>
   `;
 }
@@ -2970,7 +2897,7 @@ function renderContactQuality(project) {
       ${missingProjectContact ? `
         <div class="missing-project-contact">
           <span>Søker eller ansvarlig aktør er ikke identifisert i prosjektdataene. Se sakspapirene for informasjon om søker, tiltakshaver og prosjektet.</span>
-          ${project.sourceUrl ? `<a class="full-case-link" href="${escapeHtml(project.sourceUrl)}" target="_blank" rel="noreferrer">${isNationalProjectRecord(project) ? "Åpne sak eller kunngjøring" : "Se i sakspapirer"}</a>` : ""}
+          ${project.sourceUrl ? `<a class="full-case-link case-document-link" href="${escapeHtml(project.sourceUrl)}" target="_blank" rel="noopener noreferrer" data-open-in-new-window="true">${isNationalProjectRecord(project) ? "Åpne sak eller kunngjøring" : "Se i sakspapirer"}</a>` : ""}
         </div>
       ` : ""}
       ${project.actors.length ? `
@@ -3205,13 +3132,9 @@ function openFullMap(project) {
   dialog.classList.remove("is-force-hidden");
   document.body.classList.add("has-map-dialog");
   const mapTitle = document.querySelector("#mapTitle");
-  const municipalityOption = document.querySelector("#customerMunicipality option:checked");
   if (mapTitle) {
-    const municipality = municipalityOption?.textContent?.trim() || "";
     const region = state.activeRegion || locationRegions.find((item) => item.id === state.regionKey);
-    mapTitle.textContent = municipality && municipality !== "Velg kommune"
-      ? `Områdekart for ${municipality}`
-      : region?.name ? `Områdekart for ${region.name}` : "Områdekart";
+    mapTitle.textContent = region?.name ? `Områdekart for ${region.name}` : "Områdekart";
   }
 
   if (state.fullMap) {
@@ -4265,7 +4188,17 @@ function contactLineSummary(contactQuality) {
 }
 
 function selectProjectContacts(project, contactProject) {
-  const candidates = uniqueByKey([
+  const responsibleNames = uniqueValues([
+    project.responsibleApplicantName,
+    project.responsibleApplicant,
+    project.applicantName,
+    project.applicantCompany,
+    project.fromName,
+    project.fromOrg,
+  ]).map((value) => normalize(value));
+  const responsiblePhone = project.responsibleApplicantPhone || project.applicantPhone || project.contactPhone || "";
+  const responsibleEmail = project.responsibleApplicantEmail || project.applicantEmail || project.contactEmail || "";
+  const sourceCandidates = [
     contactProject?.displayContact,
     ...(contactProject?.contacts || []),
     {
@@ -4274,6 +4207,27 @@ function selectProjectContacts(project, contactProject) {
       email: project.contactEmail || "",
       website: project.contactWebsite || "",
     },
+  ].filter((contact) => contact && (contact.name || contact.phone || contact.email)).map((contact) => {
+    const contactName = normalize(contact.name || contact.queryName || "");
+    const isResponsibleApplicant = contactName && responsibleNames.includes(contactName);
+    return isResponsibleApplicant
+      ? {
+        ...contact,
+        role: contact.role || "responsible_applicant",
+        phone: contact.phone || responsiblePhone,
+        email: contact.email || responsibleEmail,
+      }
+      : contact;
+  });
+  const explicitResponsible = {
+    name: project.responsibleApplicantName || project.responsibleApplicant || project.applicantName || project.applicantCompany || "",
+    phone: responsiblePhone,
+    email: responsibleEmail,
+    role: "responsible_applicant",
+  };
+  const candidates = uniqueByKey([
+    explicitResponsible,
+    ...sourceCandidates,
   ].filter((contact) => contact && (contact.name || contact.phone || contact.email)), (contact) => normalize(`${contact.name}|${contact.email}|${contact.phone}`));
 
   const authority = candidates.find((contact) => isMunicipalContact(contact, project)) || null;
@@ -4308,6 +4262,16 @@ function contactRoleForProject(contact, project) {
     project.applicantName,
     project.applicantCompany,
   ].filter(Boolean).join(" "));
+  const contactName = normalize(contact?.name || contact?.queryName || "");
+  const responsibleNames = [
+    project.responsibleApplicantName,
+    project.responsibleApplicant,
+    project.applicantName,
+    project.applicantCompany,
+    project.fromName,
+    project.fromOrg,
+  ].map((value) => normalize(value)).filter(Boolean);
+  if (contactName && responsibleNames.includes(contactName)) return "responsible_applicant";
   if (/ansvarlig soker|ansvarleg sokjar|soker/.test(text)) return "responsible_applicant";
   if (/tiltakshaver|utvikler|developer|eier|owner/.test(text)) return "applicant";
   return "company";
@@ -4615,12 +4579,32 @@ function shortStatus(value) {
   return normalizedStatus ? normalizedStatus.charAt(0).toLocaleUpperCase("nb-NO") + normalizedStatus.slice(1) : "Status ukjent";
 }
 
+function renderPhaseIndicator(project) {
+  const activePhase = Number(String(project?.phaseLabel || "").match(/[1-5]/)?.[0] || 1);
+  const phaseLabel = canonicalPhaseLabel(project?.phaseLabel) || `Fase ${activePhase}`;
+  return `<span class="phase-indicator" role="img" aria-label="${escapeHtml(phaseLabel)}">
+    <span class="phase-track" aria-hidden="true">
+      ${[1, 2, 3, 4, 5].map((phase) => `<span class="phase-node ${phase === activePhase ? "is-active" : phase < activePhase ? "is-complete" : ""}" title="Fase ${phase}">
+        <span class="phase-node-dot"></span>
+        <span class="phase-node-label">${phase}</span>
+      </span>`).join("")}
+    </span>
+  </span>`;
+}
+
+function canonicalPhaseLabel(value) {
+  const match = String(value || "").trim().match(/^fase\s*([1-5])$/i);
+  return match ? `Fase ${match[1]}` : "";
+}
+
 function classifyProjectPhase(status) {
   const normalized = normalize(status);
-  if (phaseTwoStatuses.has(normalized)) return "Fase 2";
-  if (phaseOneStatuses.has(normalized)) return "Fase 1";
-  if (/igangsetting|tillatelse|rammetillatelse|kontrakt|aktiv konkurranse|anbud/.test(normalized)) return "Fase 2";
-  return "Fase 1";
+  if (/igangsettingstillatelse|igangsettingsloyve|igangsettingsloyve/.test(normalized)) return "Fase 5";
+  if (/igangsetting\s*(sokt|soekt)|soknad\s+om\s+igangsetting/.test(normalized)) return "Fase 4";
+  if (/rammetillatelse|rammeloyve|rammetillatelse|tillatelse\s+gitt|loyve\s+gitt|godkjent\s+(?:ramme|tillatelse|loyve)|innvilget\s+(?:tillatelse|loyve)/.test(normalized)) return "Fase 3";
+  if (/saksbehandling|mangler|supplering|tilleggsopplys|horing|uttalelse|behov\s+for/.test(normalized)) return "Fase 2";
+  if (/soknad\s+mottatt|bekreftelse\s+pa\s+mottatt|\bsoknad\b|\bsoknaden\b|eitt-trinns|ett-trinns/.test(normalized)) return "Fase 1";
+  return "";
 }
 
 function shortTrade(value) {
@@ -4714,31 +4698,9 @@ function saveFilters() {
   writeSavedValue(savedFiltersKey, JSON.stringify({
     trade: state.trade,
     area: state.area,
-    customerMunicipality: state.customerMunicipality,
     regionId: state.activeRegion?.id || "",
     regionKey: state.regionKey,
   }));
-}
-
-function updateCustomerMunicipalityOptions() {
-  const select = document.querySelector("#customerMunicipality");
-  if (!select) return;
-  const region = state.regionSelectionCleared
-    ? null
-    : locationRegions.find((candidate) => candidate.id === state.regionKey) || state.activeRegion;
-  const municipalities = region?.municipalities || [];
-  const selected = municipalities.some((municipality) => normalizeMunicipalityName(municipality) === state.customerMunicipality)
-    ? state.customerMunicipality
-    : "";
-  if (selected !== state.customerMunicipality) state.customerMunicipality = selected;
-  select.innerHTML = [
-    `<option value="">Velg kommune</option>`,
-    ...municipalities.map((municipality) => {
-      const value = normalizeMunicipalityName(municipality);
-      return `<option value="${escapeHtml(value)}" ${value === selected ? "selected" : ""}>${escapeHtml(municipality)}</option>`;
-    }),
-  ].join("");
-  select.value = selected;
 }
 
 function restoreSavedFilters() {
@@ -4747,12 +4709,11 @@ function restoreSavedFilters() {
     const savedTrade = normalize(saved.trade || "");
     state.trade = tradePresets.includes(savedTrade) ? savedTrade : "";
     state.area = /^min posisjon|^region ved min posisjon/i.test(saved.area || "") ? "" : saved.area || "";
-    state.customerMunicipality = saved.customerMunicipality || "";
+    state.customerMunicipality = "";
     state.regionKey = "";
     state.activeRegion = null;
     document.querySelector("#tradeInput").value = state.trade;
     document.querySelector("#areaInput").value = state.area;
-    updateCustomerMunicipalityOptions();
   } catch {
     state.trade = "";
     state.area = "";

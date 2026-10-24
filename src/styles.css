@@ -7,6 +7,282 @@
   font-weight: 300;
 }
 
+/* Supplied reference UI, scoped to the user platform only. Data and behavior stay in NBR. */
+.app-shell.vendor-contrast {
+  min-height: 100vh;
+  background: #fff4eb;
+  color: #0d1117;
+}
+
+.app-shell.vendor-contrast .topbar {
+  position: static;
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) minmax(300px, 1.4fr) minmax(250px, 1fr);
+  align-items: center;
+  gap: 18px;
+  padding: 12px max(20px, 3vw);
+  background: #0d1117;
+  color: #e9edf1;
+  border-bottom: 1px solid #252d37;
+  box-shadow: 0 4px 18px rgba(13, 17, 23, .16);
+}
+
+.app-shell.vendor-contrast .product-model-picker {
+  position: static;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  width: auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.app-shell.vendor-contrast .product-model-picker legend {
+  width: 100%;
+  margin: 0 0 1px;
+  padding: 0;
+  color: #aab4bf;
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.app-shell.vendor-contrast .product-model-picker label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 4px 8px;
+  border: 1px solid #252d37;
+  border-radius: 8px;
+  background: #10151c;
+  color: #e9edf1;
+  cursor: pointer;
+  font-size: .73rem;
+}
+
+.app-shell.vendor-contrast .product-model-picker label:has(input:checked) {
+  border-color: #ff7a1a;
+  background: #1a140f;
+}
+
+.app-shell.vendor-contrast .product-model-picker input { margin: 0; accent-color: #ff7a1a; }
+.app-shell.vendor-contrast .product-model-picker label > span { display: grid; gap: 1px; white-space: nowrap; }
+.app-shell.vendor-contrast .product-model-picker .model-price,
+.app-shell.vendor-contrast .product-model-picker small { color: #aab4bf; font-size: .64rem; font-weight: 400; }
+
+.app-shell.vendor-contrast .topbar-copy { position: static; width: auto; min-width: 0; text-align: center; transform: none; }
+.app-shell.vendor-contrast .topbar-copy .brand {
+  color: #f4f6f8;
+  font-family: "Montserrat", "Arial Black", "Inter", sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: .03em;
+}
+.app-shell.vendor-contrast .region-project-count,
+.app-shell.vendor-contrast .subtle { color: #aab4bf; font-size: .72rem; }
+.app-shell.vendor-contrast .region-project-count { margin-top: 5px; line-height: 1.3; }
+.app-shell.vendor-contrast .topbar-controls { display: flex; justify-content: flex-end; align-items: center; gap: 8px; min-width: 0; }
+.app-shell.vendor-contrast .topbar:not(.statistics-topbar) .topbar-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  width: min(260px, 100%);
+  margin-inline: auto;
+}
+
+.app-shell.vendor-contrast .topbar-controls .filter-select,
+.app-shell.vendor-contrast .filters .filter-select,
+.app-shell.vendor-contrast .collaboration-finder .filter-select {
+  min-height: 42px;
+  border: 1px solid #d5dbe2;
+  border-radius: 10px;
+  background: #fff;
+  color: #0d1117;
+  box-shadow: none;
+}
+
+.app-shell.vendor-contrast .topbar-controls .filter-select:focus,
+.app-shell.vendor-contrast .filters .filter-select:focus,
+.app-shell.vendor-contrast .collaboration-finder .filter-select:focus {
+  border-color: #ff7a1a;
+  box-shadow: 0 0 0 3px rgba(255, 122, 26, .16);
+}
+
+.app-shell.vendor-contrast .filters {
+  display: grid;
+  grid-template-columns: minmax(210px, .8fr) minmax(260px, 1fr) auto;
+  align-items: end;
+  gap: 16px;
+  margin: 0;
+  padding: 18px max(20px, 3vw);
+  background: #fff;
+  border-bottom: 1px solid #e3e7ec;
+}
+.app-shell.vendor-contrast .search-field { min-width: 0; margin: 0; }
+.app-shell.vendor-contrast .search-field > span,
+.app-shell.vendor-contrast .project-scope-picker legend { color: #3d4753; font-size: .72rem; font-weight: 600; letter-spacing: .02em; }
+.app-shell.vendor-contrast .trade-guidance { margin: 8px 0 0; color: #5b6672; font-size: .78rem; line-height: 1.45; }
+.app-shell.vendor-contrast .area-control { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: end; min-width: 0; }
+.app-shell.vendor-contrast .area-actions { display: flex; gap: 8px; }
+
+.app-shell.vendor-contrast .location-button,
+.app-shell.vendor-contrast .help-pill,
+.app-shell.vendor-contrast .project-scope-option,
+.app-shell.vendor-contrast .sort-button,
+.app-shell.vendor-contrast .load-more,
+.app-shell.vendor-contrast .collaboration-open,
+.app-shell.vendor-contrast .collaboration-close {
+  min-height: 42px;
+  border: 1px solid #d5dbe2;
+  border-radius: 10px;
+  background: #fff;
+  color: #0d1117;
+  font-weight: 600;
+}
+.app-shell.vendor-contrast .location-button:hover,
+.app-shell.vendor-contrast .help-pill:hover,
+.app-shell.vendor-contrast .sort-button:hover,
+.app-shell.vendor-contrast .load-more:hover,
+.app-shell.vendor-contrast .collaboration-open:hover,
+.app-shell.vendor-contrast .collaboration-close:hover { border-color: #ff7a1a; background: #fff6ee; }
+
+.app-shell.vendor-contrast .project-scope-picker {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.app-shell.vendor-contrast .project-scope-picker legend {
+  grid-column: 1 / -1;
+  position: static;
+  margin: 0;
+  padding: 0;
+  color: #3d4753;
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+}
+.app-shell.vendor-contrast .project-scope-option { padding: 0 12px; white-space: nowrap; cursor: pointer; }
+.app-shell.vendor-contrast .project-scope-option.is-active,
+.app-shell.vendor-contrast .project-scope-option[aria-pressed="true"] { border-color: #ff7a1a; background: #fff6ee; color: #c2410c; }
+
+.app-shell.vendor-contrast .collaboration-finder,
+.app-shell.vendor-contrast .workspace { width: min(1240px, calc(100% - max(32px, 6vw))); margin-inline: auto; }
+.app-shell.vendor-contrast .collaboration-finder { margin-top: 22px; border: 1px solid #e3e7ec; border-radius: 16px; background: #fff; box-shadow: 0 2px 10px rgba(13, 17, 23, .05); }
+.app-shell.vendor-contrast .collaboration-heading { padding: 16px 20px; }
+.app-shell.vendor-contrast .collaboration-heading h2 { color: #0d1117; font-size: 1rem; }
+.app-shell.vendor-contrast .collaboration-heading span { color: #5b6672; }
+.app-shell.vendor-contrast .collaboration-content { border-top: 1px solid #e3e7ec; background: #f5f6f8; }
+.app-shell.vendor-contrast .workspace { margin-top: 22px; padding-bottom: 56px; }
+.app-shell.vendor-contrast .project-list { overflow: hidden; border: 1px solid #e3e7ec; border-radius: 16px; background: rgba(255, 122, 26, .25); box-shadow: 0 2px 10px rgba(13, 17, 23, .05); }
+.app-shell.vendor-contrast .project-list-sort-row { padding: 12px 20px; background: #f5f6f8; border-bottom: 1px solid #e3e7ec; }
+.app-shell.vendor-contrast .project-row { background: #fff; border-bottom-color: #edf0f3; }
+.app-shell.vendor-contrast .project-row:hover,
+.app-shell.vendor-contrast .project-row.is-selected { background: #fff6ee; }
+.app-shell.vendor-contrast .project-mark { color: #7a8591; }
+.app-shell.vendor-contrast .project-mark[aria-pressed="true"] { color: #ff7a1a; }
+.app-shell.vendor-contrast .project-summary { color: #0d1117; }
+.app-shell.vendor-contrast .line-primary { color: #0d1117; font-weight: 600; }
+.app-shell.vendor-contrast .line-secondary,
+.app-shell.vendor-contrast .date-value { color: #5b6672; }
+.app-shell.vendor-contrast .load-more { display: block; width: calc(100% - 32px); margin: 16px auto; padding-inline: 16px; }
+
+.app-shell.vendor-contrast .phase-indicator {
+  display: block;
+  width: min(100%, 330px);
+  margin-top: 5mm;
+}
+
+.app-shell.vendor-contrast .phase-track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: start;
+  min-height: 25px;
+}
+
+.app-shell.vendor-contrast .phase-track::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: #d5dbe2;
+}
+
+.app-shell.vendor-contrast .phase-node {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  min-width: 0;
+}
+
+.app-shell.vendor-contrast .phase-node-dot {
+  width: 12px;
+  height: 12px;
+  border: 2px solid #aab4bf;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.app-shell.vendor-contrast .phase-node.is-active .phase-node-dot {
+  border-color: #ff7a1a;
+  background: #ff7a1a;
+}
+
+.app-shell.vendor-contrast .phase-node.is-active .phase-node-dot {
+  animation: phase-pulse 1.6s ease-in-out infinite;
+}
+
+.app-shell.vendor-contrast .phase-node-label {
+  color: #7a8591;
+  font-size: .58rem;
+  line-height: 1;
+}
+
+.app-shell.vendor-contrast .phase-node.is-active .phase-node-label {
+  color: #c2410c;
+  font-weight: 700;
+}
+
+@keyframes phase-pulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(255, 122, 26, .18); transform: scale(1); }
+  50% { box-shadow: 0 0 0 7px rgba(255, 122, 26, 0); transform: scale(1.16); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-shell.vendor-contrast .phase-node.is-active .phase-node-dot { animation: none; }
+}
+
+@media (max-width: 980px) {
+  .app-shell.vendor-contrast .topbar { grid-template-columns: 1fr; justify-items: stretch; }
+  .app-shell.vendor-contrast .topbar-copy { grid-row: 1; }
+  .app-shell.vendor-contrast .product-model-picker,
+  .app-shell.vendor-contrast .topbar-controls { justify-content: center; }
+  .app-shell.vendor-contrast .product-model-picker { grid-column: 1; width: 100%; }
+  .app-shell.vendor-contrast .filters { grid-template-columns: 1fr 1fr; }
+  .app-shell.vendor-contrast .project-scope-picker { grid-column: 1 / -1; justify-content: center; }
+}
+
+@media (max-width: 640px) {
+  .app-shell.vendor-contrast .filters { grid-template-columns: 1fr; padding-inline: 16px; }
+  .app-shell.vendor-contrast .project-scope-picker { grid-column: auto; }
+  .app-shell.vendor-contrast .area-control { grid-template-columns: 1fr; }
+  .app-shell.vendor-contrast .area-actions { display: grid; grid-template-columns: 1fr 1fr; }
+  .app-shell.vendor-contrast .workspace,
+  .app-shell.vendor-contrast .collaboration-finder { width: calc(100% - 24px); }
+}
+
 :root {
   font-family: "Inter", "Aptos", "Segoe UI", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   color: #1c2f3e;
@@ -273,7 +549,7 @@ a {
 }
 
 .app-shell.vendor-contrast {
-  background: #eef5fb;
+  background: #fff4eb;
 }
 
 .topbar {
@@ -1460,7 +1736,7 @@ a {
   display: grid;
   grid-template-columns: 36px minmax(0, 1fr);
   width: 100%;
-  border: 1px solid #d3e3ef;
+  border: 1px solid #000;
   border-left: 4px solid transparent;
   border-radius: 8px;
   background: #fbfdff;
@@ -2716,6 +2992,14 @@ body.has-map-dialog .mini-map-card {
 
 .vendor-contrast .project-row.is-marked {
   background: #fffaf0;
+}
+
+/* Keep every project card outlined consistently in collapsed and expanded states. */
+.project-row,
+.vendor-contrast .project-row,
+.vendor-contrast .project-row.is-selected,
+.vendor-contrast .project-row.is-marked {
+  border: 1px solid #000 !important;
 }
 
 .vendor-contrast .project-number {
